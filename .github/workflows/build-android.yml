@@ -1,0 +1,99 @@
+name: Build LineageOS
+
+on:
+  workflow_dispatch:
+    inputs:
+      device:
+        description: 'Device codename (e.g. lineage_x86_64)'
+        required: true
+        default: 'lineage_x86_64'
+  push:
+    branches: [ lineage-23.0 ]
+  pull_request:
+    branches: [ lineage-23.0 ]
+
+jobs:
+  build:
+    name: Build ${{ github.event.inputs.device || 'lineage_x86_64' }}
+    runs-on: self-hosted   # requires Ubuntu machine with 400 GB disk + 64 GB RAM
+
+    env:
+      DEVICE: ${{ github.event.inputs.device || 'lineage_x86_64' }}
+
+    steps:
+      - name: Checkout manifest
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            bc bison build-essential ccache curl flex g++-multilib \
+            gcc-multilib git git-lfs gnupg gperf imagemagick lib32ncurses5-dev \
+            lib32readline-dev lib32z1-dev liblz4-tool libncurses5 libncurses5-dev \
+            libsdl1.2-dev libssl-dev libwxgtk3.0-gtk3-dev libxml2 libxml2-utils \
+            lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev \
+            openjdk-11-jdk
+
+      - name: Install repo tool
+        run: |
+          mkdir -p ~/bin
+          curl -s https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+          chmod a+x ~/bin/repo
+          echo "$HOME/bin" >> $GITHUB_PATH
+
+      - name: Configure git identity
+        run: |
+          git config --global user.email "ci@lineageos.org"
+          git config --global user.name "LineageOS CI"
+
+      - name: Initialize repo manifest
+        run: |
+          mkdir -p android-src
+          cd android-src
+          repo init \
+            -u ${{ github.server_url }}/${{ github.repository }} \
+            -b lineage-23.0 \
+            --depth=1 \
+            --no-repo-verify
+
+      - name: Restore repo cache
+        uses: actions/cache/restore@v4
+        id: cache-repo
+        with:
+          path: android-src/.repo/project-objects
+          key: repo-objects-${{ hashFiles('default.xml', 'snippets/lineage.xml') }}
+          restore-keys: repo-objects-
+
+      - name: Sync source
+        run: |
+          cd android-src
+          repo sync -c -j$(nproc --all) --no-tags --no-clone-bundle --force-sync
+
+      - name: Save repo cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: android-src/.repo/project-objects
+          key: repo-objects-${{ hashFiles('default.xml', 'snippets/lineage.xml') }}
+
+      - name: Set up ccache
+        run: |
+          ccache -M 50G
+          echo "USE_CCACHE=1" >> $GITHUB_ENV
+          echo "CCACHE_EXEC=$(which ccache)" >> $GITHUB_ENV
+
+      - name: Build
+        run: |
+          cd android-src
+          source build/envsetup.sh
+          breakfast ${{ env.DEVICE }}
+          brunch ${{ env.DEVICE }}
+
+      - name: Upload flashable ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: lineageos-${{ env.DEVICE }}-${{ github.run_number }}
+          path: android-src/out/target/product/${{ env.DEVICE }}/lineage-*.zip
+          if-no-files-found: error
+          retention-days: 7
