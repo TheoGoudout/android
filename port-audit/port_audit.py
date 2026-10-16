@@ -179,7 +179,9 @@ def audit_repo(workdir, eos_proj, old_proj, new_proj):
     res["eos_commits"] = len(commits)
     upstream_subjects = set(git("log", "--no-merges", "--format=%s", f"{old}..{new}", cwd=repo).stdout.splitlines())
 
-    cur = git("rev-parse", new, cwd=repo).stdout.strip()
+    # ^{commit}: AOSP-remote projects are pinned to annotated tags (refs/tags/android-*),
+    # whose ref points at a tag object that commit-tree rejects as a parent.
+    cur = git("rev-parse", f"{new}^{{commit}}", cwd=repo).stdout.strip()
     for c in commits:
         subject = git("log", "-1", "--format=%s", c, cwd=repo).stdout.strip()
         if subject in upstream_subjects:
@@ -262,8 +264,11 @@ def main():
     old = Manifest(old_dir, LINEAGE_MANIFEST_URL).by_path()
     new = Manifest(new_dir, LINEAGE_MANIFEST_URL).by_path()
 
+    # "android" is the /e/OS manifest repo itself, not a source fork: replaying it on
+    # LineageOS's manifest only produces noise conflicts.
     eos_projects = [eos.resolve(p) for p in eos.projects
-                    if (p.get("remote") or eos.default.get("remote")) in ("e", "e-priv")]
+                    if (p.get("remote") or eos.default.get("remote")) in ("e", "e-priv")
+                    and p["path"] != "android"]
     if args.only:
         eos_projects = [p for p in eos_projects if p["path"] in args.only]
     print(f">> {len(eos_projects)} /e/OS repos to audit")
@@ -271,7 +276,12 @@ def main():
     results = []
     for i, p in enumerate(eos_projects, 1):
         print(f"[{i}/{len(eos_projects)}] {p['path']}", flush=True)
-        r = audit_repo(wd, p, old.get(p["path"]), new.get(p["path"]))
+        try:
+            r = audit_repo(wd, p, old.get(p["path"]), new.get(p["path"]))
+        except RuntimeError as exc:  # one broken repo must not abort a multi-hour run
+            r = {"path": p["path"], "eos_repo": p["name"], "status": "error", "eos_commits": 0,
+                 "already_upstream": 0, "clean": 0, "conflicts": 0, "conflict_list": [],
+                 "note": f"Audit failed: {exc}"}
         print(f"    {r['status']}: {r['eos_commits']} e commits, {r['already_upstream']} upstream, "
               f"{r['clean']} clean, {r['conflicts']} conflicts", flush=True)
         results.append(r)
