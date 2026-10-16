@@ -129,8 +129,9 @@ KNOWN_ISSUES.md (Android Auto, theming). None of this has been compiled yet.
 - [x] vendor/lineage: 33 missing a16 commits triaged; only "Disable private space" still matters,
       re-implemented for Android 17 (vendor/eos overlay + vendor/lineage cp2a launcher flag).
 - [x] frameworks/libs/systemui (25 a16 commits): notification-badge/DotRenderer work for the old
-      BlissLauncher. The a17 BlissLauncher3 is a rewrite that builds against plain a17 libs/systemui and
-      draws its own badge, so nothing to carry. Revisit only if badges regress on device.
+      BlissLauncher. Not carried: /e/OS's new launcher implements count badges inside the launcher
+      (`CountBadge`, on BlissLauncher3 `epic265-a17-bringup` only, not yet on `a17`), without these
+      libs/systemui changes. Count badges are therefore a gap on `a17` (KNOWN_ISSUES #4).
 - [x] Remaining forks (DocumentsUI, SettingsIntelligence, WallpaperPicker2, LineageParts
       translations, Permission theming, SystemUI/SettingsLib palette): theming only, left to /e/OS.
 - [ ] Permission "deviceKeyHandler" role: needs frameworks/base `config_deviceKeyHandler` first
