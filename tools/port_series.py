@@ -47,9 +47,15 @@ def main():
     repo = os.path.join(args.cache, args.repo.rstrip("/").split("/")[-1].removesuffix(".git") + ".git")
     if not os.path.isdir(repo):
         git("init", "-q", "--bare", repo, cwd=args.cache)
+    # Partial (blob:none) promisor remotes: blobs are fetched lazily, only for the files the
+    # checkout and the cherry-picks touch. Keeps frameworks/base to a few GB instead of ~10.
+    remotes = git("remote", cwd=repo).stdout.split()
     for name, url, ref in (("old", args.repo, args.old), ("new", args.new_repo or args.repo, args.new),
                            ("src", args.src or args.repo, args.src_ref)):
-        git("fetch", "-q", "--no-tags", url, f"+refs/heads/{ref}:refs/ps/{name}", cwd=repo)
+        git("remote", "set-url" if name in remotes else "add", name, url, cwd=repo)
+        git("config", f"remote.{name}.promisor", "true", cwd=repo)
+        git("config", f"remote.{name}.partialclonefilter", "blob:none", cwd=repo)
+        git("fetch", "-q", "--no-tags", "--filter=blob:none", name, f"+refs/heads/{ref}:refs/ps/{name}", cwd=repo)
 
     commits = git("rev-list", "--no-merges", "--reverse", "refs/ps/old..refs/ps/src", cwd=repo).stdout.split()
     upstream = set(git("log", "--no-merges", "--format=%s", "refs/ps/old..refs/ps/new", cwd=repo).stdout.splitlines())

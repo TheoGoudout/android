@@ -22,11 +22,23 @@ Start every session by reading this file and `KNOWN_ISSUES.md`. Agent brief: `AG
   40 forks in `snippets/eos.xml`. **Every a17 fork has its branch** (`a17`, or `main`/`master`/`develop`
   where pinned), so an a17 `repo sync` should not fail on a missing ref.
 - /e/OS `a16` has 61 forks. The 21 that are not on `a17` are listed under Port status below.
+- **/e/OS ships FP4 from its own device/kernel forks** (`e/devices/android_device_fairphone_FP4`,
+  `e/devices/android_kernel_fairphone_sm7225`, branch `a16`; **no `a17` branch**). The device fork
+  imports Fairphone's proprietary camera (FPCamera) from a blob set that isn't public, so we
+  build on LineageOS's tree + TheMuppets blobs (like /e/OS's community builder) and carry the
+  open-source /e/OS FP4 commits as patches (`patches/README.md`). The only lineage-23.0 FP4 commit
+  missing from lineage-24.0 is a blob bump that 24.0 supersedes.
+- `tools/check_manifest.py` resolves /e/OS manifest + our local manifest offline: a16 and a17 both
+  clean (no duplicate paths, every path the FP4 tree references is provided).
 - Not verifiable from here: crave project IDs/names (`PROJECT_ID=99`, `crave.yaml` key `LOS 23.2`),
   whether this repo is public **from crave's side** (anonymous `git ls-remote` works from the sandbox).
 
 ## Build log (newest first)
 
+- 2026-10-16: a17 prep without a build (owner request). Added the patch mechanism
+  (`apply-patches.sh`, called by `remote-build.sh`) and the first a17 series: 10 FP4 device
+  patches + 9 patches on /e/OS forks whose a17 branch is still empty. All apply to fresh
+  checkouts. Not compiled.
 - 2026-10-16: branches `a16`/`a17` created (owner request). Deleting `claude/ci-android-xml-build-bWyCA` is refused from the agent sandbox: owner to delete it on GitHub.
 - 2026-10-16: no builds yet. Repo prepared; Phase A handed to owner (block below).
 
@@ -93,6 +105,16 @@ LineageOS 24.0 dropped it on purpose. It may matter for FP4 camera apps.
 signature spoofing, App Lounge/Advanced Privacy hooks in frameworks/base, but **stock LineageOS
 Settings/SetupWizard/SystemUI theming** (those /e/OS forks are still unported). Expect a bootable
 but visibly less "/e/" system; most UI gaps are /e/OS's in-progress work, not FP4 work.
+
+## a17 work items (no build needed)
+
+- [x] FP4 device: carry /e/OS FP4 audio/VoIP/CarrierConfig/bootanimation changes (`patches/a17/device/fairphone/FP4`)
+- [x] Small /e/OS forks: system/core, Connectivity, Telephony, Permission (part), ThemePicker, Contacts, FM
+- [ ] Big forks: replay frameworks/base, Settings, SetupWizard, vendor/lineage, frameworks/libs/systemui
+      (functional changes first: privacy, microG, account, parental control; theming last)
+- [ ] Verify the 11 a16 security self-carries against the Android 17 security bulletin level
+- [ ] Prepare /e/OS MRs (a17 branches) for the clean patches, so the series can shrink
+- [ ] Phase C build once crave LOS24 project ID is known (a16 baseline first if possible)
 
 ## Open questions for the owner
 
