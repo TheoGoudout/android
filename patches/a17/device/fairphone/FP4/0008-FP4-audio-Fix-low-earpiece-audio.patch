@@ -1,0 +1,24 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: bigjulien <julienleboss04@hotmail.fr>
+Date: Thu, 20 Aug 2026 13:38:53 +0530
+Subject: [PATCH 08/10] FP4: audio: Fix low earpiece audio
+
+  [0] https://github.com/bigjulien/earpiece-volume-fix
+
+(cherry picked from commit 2579747502b464518fa8e6dee6bc61a5c65b4673)
+---
+ audio/mixer_paths_lagoon_fp4.xml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/audio/mixer_paths_lagoon_fp4.xml b/audio/mixer_paths_lagoon_fp4.xml
+index 0892513..2c84856 100644
+--- a/audio/mixer_paths_lagoon_fp4.xml
++++ b/audio/mixer_paths_lagoon_fp4.xml
+@@ -3427,6 +3427,7 @@
+         <ctl name="QUIN_MI2S_RX Channels" value="One" />
+         <ctl name="aw882xx_mode_switch_l" value="Rcv" />
+         <ctl name="aw882xx_pa_switch_l" value="On" />
++        <ctl name="aw882xx_rx_volume_l" value="20" />
+     </path>
+ 
+     <path name="handset-mic">
