@@ -128,6 +128,11 @@ KNOWN_ISSUES.md (Android Auto, theming). None of this has been compiled yet.
       (KNOWN_ISSUES #1); SystemUI theming left to /e/OS.
 - [x] vendor/lineage: 33 missing a16 commits triaged; only "Disable private space" still matters,
       re-implemented for Android 17 (vendor/eos overlay + vendor/lineage cp2a launcher flag).
+- [x] frameworks/libs/systemui (25 a16 commits): notification-badge/DotRenderer work for the old
+      BlissLauncher. The a17 BlissLauncher3 is a rewrite that builds against plain a17 libs/systemui and
+      draws its own badge, so nothing to carry. Revisit only if badges regress on device.
+- [x] Remaining forks (DocumentsUI, SettingsIntelligence, WallpaperPicker2, LineageParts
+      translations, Permission theming, SystemUI/SettingsLib palette): theming only, left to /e/OS.
 - [ ] Permission "deviceKeyHandler" role: needs frameworks/base `config_deviceKeyHandler` first
 - [x] Verify the 11 a16 security self-carries: 8 present in lineage-24.0, 1 likely (rewritten), 2 still
       vulnerable (Matroska heap write, Telecomm caller check), now carried in `patches/a17/`.
