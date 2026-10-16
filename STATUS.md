@@ -112,7 +112,9 @@ but visibly less "/e/" system; most UI gaps are /e/OS's in-progress work, not FP
 - [x] Small /e/OS forks: system/core, Connectivity, Telephony, Permission (part), ThemePicker, Contacts, FM
 - [ ] Big forks: replay frameworks/base, Settings, SetupWizard, vendor/lineage, frameworks/libs/systemui
       (functional changes first: privacy, microG, account, parental control; theming last)
-- [ ] Verify the 11 a16 security self-carries against the Android 17 security bulletin level
+- [x] Verify the 11 a16 security self-carries: 8 present in lineage-24.0, 1 likely (rewritten), 2 still
+      vulnerable (Matroska heap write, Telecomm caller check), now carried in `patches/a17/`.
+      Worth reporting to LineageOS too.
 - [ ] Prepare /e/OS MRs (a17 branches) for the clean patches, so the series can shrink
 - [ ] Phase C build once crave LOS24 project ID is known (a16 baseline first if possible)
 

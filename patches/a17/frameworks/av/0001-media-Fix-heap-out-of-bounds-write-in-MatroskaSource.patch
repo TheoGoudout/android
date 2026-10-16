@@ -1,0 +1,44 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Venkatarama Avadhani <venkataramaa@google.com>
+Date: Wed, 8 Apr 2026 12:57:36 +0530
+Subject: [PATCH] [media] Fix heap out-of-bounds write in MatroskaSource::read
+
+The root cause was incorrect pointer arithmetic where a byte-level
+offset (frame->range_offset()) was added directly to a uint16_t*
+pointer. This caused the effective byte offset to be doubled (scaled by
+the size of uint16_t), leading the subsequent ntohs() operation to write
+past the end of the allocated buffer.
+
+This change corrects the pointer arithmetic by casting the data pointer
+to uint8_t* before applying the range offset, ensuring the pointer
+advances by the correct number of bytes.
+
+Bug: 485020640
+Test: Reproduced crash with PoC, verified patch fixes the issue.
+Flag: EXEMPT BUGFIX
+Cherrypick-From: https://googleplex-android-review.googlesource.com/q/commit:11fab348d2f19f961aa5f77ebd982302b1c6fb97
+Cherrypick-From: https://googleplex-android-review.googlesource.com/q/commit:a4955af6dee107f449137db905e6817c10a76610
+Merged-In: I723ea6520c30d3dcafb03bf15fabdd41ab58715f
+Change-Id: I723ea6520c30d3dcafb03bf15fabdd41ab58715f
+(cherry picked from commit f3bd2850bafd6014b1c287cc9b00fd5f7a0e71e4)
+---
+ media/module/extractors/mkv/MatroskaExtractor.cpp | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/media/module/extractors/mkv/MatroskaExtractor.cpp b/media/module/extractors/mkv/MatroskaExtractor.cpp
+index 10ae07adf3..0e99d4b327 100644
+--- a/media/module/extractors/mkv/MatroskaExtractor.cpp
++++ b/media/module/extractors/mkv/MatroskaExtractor.cpp
+@@ -1108,10 +1108,9 @@ media_status_t MatroskaSource::read(
+             AMediaFormat_delete(meta);
+             if (bigEndian == 1 && bitPerFrame == 16) {
+                 // Big-endian -> little-endian
+-                uint16_t *dstData = (uint16_t *)frame->data() + frame->range_offset();
+-                uint16_t *srcData = (uint16_t *)frame->data() + frame->range_offset();
++                uint16_t *data = (uint16_t *)((uint8_t *)frame->data() + frame->range_offset());
+                 for (size_t i = 0; i < frame->range_length() / 2; i++) {
+-                    dstData[i] = ntohs(srcData[i]);
++                    data[i] = ntohs(data[i]);
+                 }
+             }
+         }
