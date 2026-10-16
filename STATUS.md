@@ -127,7 +127,7 @@ but visibly less "/e/" system; most UI gaps are /e/OS's in-progress work, not FP
       Worth reporting to LineageOS too.
 - [ ] Prepare /e/OS MRs (a17 branches) for the clean patches, so the series can shrink
 - [ ] Phase C build once crave LOS24 project ID is known (a16 baseline first if possible).
-      Suggested a17 order, one variable per build: (1) a17 + FP4 + patches/a17 without Settings;
+      Suggested a17 order, one variable per build: (1) a17 + FP4 + patches/a17 with `PATCH_EXCLUDE="packages/apps/Settings"`;
       (2) + Settings series; (3) + `setupwizard-bringup`.
 
 ## Open questions for the owner

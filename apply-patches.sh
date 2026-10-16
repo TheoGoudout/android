@@ -2,6 +2,7 @@
 # Runs ON THE CRAVE BUILD NODE from the source root (called by remote-build.sh).
 #   apply-patches.sh undo                reset every project patched last time (run before repo sync)
 #   apply-patches.sh apply <patch-dir>   git am <patch-dir>/<project path>/*.patch onto each project
+#                                        (skips projects listed in $PATCH_EXCLUDE)
 # A ledger (.eos-patched-projects: "<path> <pre-patch HEAD>") lets `undo` restore exactly what
 # repo had checked out, so the next sync updates those projects normally.
 set -eo pipefail
@@ -23,6 +24,7 @@ case "$mode" in
     pdir="${2:?patch dir}"
     [ -d "$pdir" ] || exit 0
     find "$pdir" -name '*.patch' -printf '%h\n' | sort -u | sed "s|^$pdir/||" | while IFS= read -r proj; do
+      if [[ " ${PATCH_EXCLUDE:-} " == *" $proj "* ]]; then echo "   ~ $proj: excluded (PATCH_EXCLUDE)"; continue; fi
       [ -e "$proj/.git" ] || { echo ">> $pdir/$proj: no such project in the tree" >&2; exit 1; }
       grep -q "^$proj " "$LEDGER" 2>/dev/null || echo "$proj $(git -C "$proj" rev-parse HEAD)" >> "$LEDGER"
       have="$(git -C "$proj" log -1000 --format=%s)"
