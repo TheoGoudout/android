@@ -4,7 +4,8 @@ Target: a17 (LineageOS 24.0, Android 17), device FP4
 Last verified base facts: 2026-10-16 (from the agent sandbox: `git ls-remote`, manifest clones, hudson)
 Baseline a16 boots: **not yet built**. Waiting on the owner (Phase A)
 crave LOS24 project ID: pending from owner (ask on crave Discord)
-Project repo / branch: `github.com/TheoGoudout/android` @ `ccr-0f2cae73-f14zrb` (`LMANIFEST_BRANCH` in `build.sh`)
+Project repo: `github.com/TheoGoudout/android`, branches `a16` (baseline) and `a17` (main work, this file's home)
+crave account: requested by owner 2026-10-16, awaiting approval
 
 Start every session by reading this file and `KNOWN_ISSUES.md`. Agent brief: `AGENT_PLAN.md`.
 
@@ -26,6 +27,7 @@ Start every session by reading this file and `KNOWN_ISSUES.md`. Agent brief: `AG
 
 ## Build log (newest first)
 
+- 2026-10-16: branches renamed to `a16`/`a17`; old GitHub Actions branch deleted (owner request).
 - 2026-10-16: no builds yet. Repo prepared; Phase A handed to owner (block below).
 
 ## Phase A: owner action needed (a16 baseline)
@@ -33,7 +35,7 @@ Start every session by reading this file and `KNOWN_ISSUES.md`. Agent brief: `AG
 On your machine, with `crave.conf` in place (never commit it):
 
 ```
-git clone -b ccr-0f2cae73-f14zrb https://github.com/TheoGoudout/android eos-fp4 && cd eos-fp4
+git clone -b a16 https://github.com/TheoGoudout/android eos-fp4 && cd eos-fp4
 crave clone list          # confirm project 99 is the LineageOS 23.2 (Android 16) base and its exact name;
                           # if the name is not "LOS 23.2", fix the top-level key in crave.yaml
 crave devspace            # then, inside the devspace, from this checkout:
@@ -96,9 +98,5 @@ but visibly less "/e/" system; most UI gaps are /e/OS's in-progress work, not FP
 
 - Confirm crave project 99 = LineageOS 23.2 and its exact name in `crave clone list` (for `crave.yaml`).
 - Ask crave (Discord) for the LineageOS 24 base project ID and workspace path; give them to me for `build.sh`.
-- Do you want a dedicated branch name (e.g. `main`, or `a16`/`a17` per the brief) for the local
-  manifests instead of `ccr-0f2cae73-f14zrb`? I can only push to this branch; you can create others from it.
-- Branch `claude/ci-android-xml-build-bWyCA` (a GitHub Actions LineageOS build) is superseded by the
-  crave approach (see README "Why not GitHub Actions"). OK to delete it?
 - Phase 2 note: a17 `frameworks/base` carries `keystore: Block key attestation for SafetyNet`. Its
   interaction with BASIC on Android 17 needs testing once we get there.
