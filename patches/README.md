@@ -97,6 +97,21 @@ hooks, e colors…). Of the 57 a16 commits missing there:
 
 Tested with a sparse worktree of e/os frameworks/base a17: applies with `git am`.
 
+### vendor/eos + vendor/lineage: "Disable private space" (re-implemented)
+The a16 commit set `android.multiuser.enable_private_space_features` DISABLED. That flag no
+longer exists in Android 17 (private space shipped), so:
+- vendor/eos: framework overlay `config_user_types.xml` disables the
+  `android.os.usertype.profile.PRIVATE` user type. With `block_private_space_creation` ENABLED
+  (every AOSP release config), `UserManager.canAddPrivateProfile()` returns false and Settings
+  stops offering it.
+- vendor/lineage: `com.android.launcher3/enable_private_space` DISABLED in the `cp2a` value set.
+
+Other a16 vendor/lineage commits not on a17: version/security-string bumps (a17 has its own),
+MTK APN hookup (moved to vendor/eos on a17), BlissLauncher overlay rename (already on a17),
+help-URL removal (file gone on a17), "Revert settings card layout" (`homepage_revamp` flag gone
+in Android 17), "stop accepting the partner release type" (not carried: release-type policy
+belongs to /e/OS's own a17 versioning).
+
 ### Security fixes /e/OS self-carried on a16 that LineageOS 24.0 still lacks
 Checked 2026-10-16 against lineage-24.0 (frameworks/av tip 2026-10-04): the vulnerable code is
 still there, and /e/OS does not fork these repos on a17.

@@ -122,6 +122,8 @@ but visibly less "/e/" system; most UI gaps are /e/OS's in-progress work, not FP
 - [x] frameworks/base: 57 missing a16 commits triaged. Carried Hide-from-microG + USB lockdown
       security fix + SNHooks; 4 security fixes already in a17; Android Auto needs re-implementation
       (KNOWN_ISSUES #1); SystemUI theming left to /e/OS.
+- [x] vendor/lineage: 33 missing a16 commits triaged; only "Disable private space" still matters,
+      re-implemented for Android 17 (vendor/eos overlay + vendor/lineage cp2a launcher flag).
 - [ ] Permission "deviceKeyHandler" role: needs frameworks/base `config_deviceKeyHandler` first
 - [x] Verify the 11 a16 security self-carries: 8 present in lineage-24.0, 1 likely (rewritten), 2 still
       vulnerable (Matroska heap write, Telecomm caller check), now carried in `patches/a17/`.

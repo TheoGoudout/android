@@ -1,0 +1,51 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 16 Oct 2026 21:01:52 +0000
+Subject: [PATCH] overlay: Disable private space
+
+Android 17 port of /e/OS a16 vendor/lineage 9e0eb9a8 ("Disable private
+space"). The android.multiuser.enable_private_space_features flag it set
+no longer exists in Android 17 (private space has launched), so disable
+the private profile user type instead: with block_private_space_creation
+enabled (all AOSP release configs), UserManager.canAddPrivateProfile()
+then returns false and Settings no longer offers private space.
+
+The launcher side (com.android.launcher3 enable_private_space) is set in
+vendor/lineage's cp2a aconfig values.
+---
+ .../core/res/res/xml/config_user_types.xml    | 26 +++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+ create mode 100644 overlay/common/frameworks/base/core/res/res/xml/config_user_types.xml
+
+diff --git a/overlay/common/frameworks/base/core/res/res/xml/config_user_types.xml b/overlay/common/frameworks/base/core/res/res/xml/config_user_types.xml
+new file mode 100644
+index 0000000..96ba4d8
+--- /dev/null
++++ b/overlay/common/frameworks/base/core/res/res/xml/config_user_types.xml
+@@ -0,0 +1,26 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2026 ECORP SAS
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<!--
++    /e/OS: no private space. Disabling the user type stops new private profiles from being
++    created (UserManager.canAddPrivateProfile() returns false, so Settings hides the entry);
++    see frameworks/base/core/res/res/xml/config_user_types.xml for the format.
++-->
++<user-types>
++    <profile-type
++        name="android.os.usertype.profile.PRIVATE"
++        enabled="0" />
++</user-types>
