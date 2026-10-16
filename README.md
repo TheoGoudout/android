@@ -28,9 +28,11 @@ kept between builds → incremental rebuilds ~15–30 min).
    give name, email, GitHub profile). Join https://discord.crave.io.
 2. Download `crave.conf` from foss.crave.io → API Keys, install the client:
    `curl -s https://raw.githubusercontent.com/accupara/crave/master/get_crave.sh | bash -s --`
-3. Create a **public** repo `eos_fp4_local_manifests` with one branch per target
-   (`a16`, `a17`), each containing `local_manifests/<target>/eos_fp4.xml` from here
-   (same layout as this folder). Public only: crave forbids private repos.
+3. This repo (public, `github.com/TheoGoudout/android`) is the local-manifests repo: one
+   branch (`LMANIFEST_BRANCH` in `build.sh`) holds both `local_manifests/a16/` and
+   `local_manifests/a17/`, and the build picks the folder from `EOS_BRANCH`. Public only:
+   crave forbids private repos. (`default.xml`, `snippets/` and `README.mkdn` are the
+   LineageOS 23.0 manifest this repo was forked from; the build does not use them.)
 4. Run `crave clone list` and make the key in `crave.yaml` match the LOS 23.2 project name.
 5. Edit the variables at the top of `build.sh`, then from inside `crave devspace`:
    `./build.sh setup`
