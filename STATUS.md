@@ -110,13 +110,25 @@ but visibly less "/e/" system; most UI gaps are /e/OS's in-progress work, not FP
 
 - [x] FP4 device: carry /e/OS FP4 audio/VoIP/CarrierConfig/bootanimation changes (`patches/a17/device/fairphone/FP4`)
 - [x] Small /e/OS forks: system/core, Connectivity, Telephony, Permission (part), ThemePicker, Contacts, FM
-- [ ] Big forks: replay frameworks/base, Settings, SetupWizard, vendor/lineage, frameworks/libs/systemui
-      (functional changes first: privacy, microG, account, parental control; theming last)
+- [x] Big forks, first pass (2026-10-16). Mechanical replay barely works (Settings 9/62, SetupWizard
+      1/34, vendor/lineage 1/71, frameworks/base 11/191), but /e/OS has active a17 work:
+      - BlissLauncher3 `a17` is a fresh AOSP-17 rewrite (commits today), so the "316 missing" figure is an
+        artefact. Nothing for us to do.
+      - SetupWizard: /e/OS's `epic265-a17-bringup` has all /e/ pages, but on a pre-rewrite SUW base
+        (LineageOS rewrote SUW at the end of September). Opt-in `OPTIONAL_MANIFESTS="setupwizard-bringup"`.
+      - Settings, frameworks/base, frameworks/libs/systemui: bring-up branch = a17 (no hidden work).
+- [ ] Settings: hand-port /e/ entries (Advanced Privacy, parental control, accounts, /e/ legal,
+      Quad9 private DNS, dev options) on a17. Root conflict = "Set proper title for system version"
+      (creates res/values/e_strings.xml); everything after cascades from it.
+- [ ] frameworks/base: triage the 57 missing a16 commits by feature (the 11 that apply are SystemUI
+      tweaks, so hold them until the a17 SystemUI boots)
+- [ ] Permission "deviceKeyHandler" role: needs frameworks/base `config_deviceKeyHandler` first
 - [x] Verify the 11 a16 security self-carries: 8 present in lineage-24.0, 1 likely (rewritten), 2 still
       vulnerable (Matroska heap write, Telecomm caller check), now carried in `patches/a17/`.
       Worth reporting to LineageOS too.
 - [ ] Prepare /e/OS MRs (a17 branches) for the clean patches, so the series can shrink
-- [ ] Phase C build once crave LOS24 project ID is known (a16 baseline first if possible)
+- [ ] Phase C build once crave LOS24 project ID is known (a16 baseline first if possible).
+      Suggested a17 order, one variable per build: (1) a17 + FP4 + patches/a17; (2) + `setupwizard-bringup`.
 
 ## Open questions for the owner
 

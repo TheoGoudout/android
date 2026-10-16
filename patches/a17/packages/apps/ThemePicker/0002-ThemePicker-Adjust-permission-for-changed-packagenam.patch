@@ -4,10 +4,12 @@ Date: Tue, 4 Apr 2023 11:21:27 +0000
 Subject: [PATCH 2/2] ThemePicker: Adjust permission for changed packagename
 
 Change-Id: If81882ee61b9bcc652ff3c73f2507867c3d5a5a0
+[a17: keep the com.android.launcher3 permissions as well, because /e/OS's
+ a17 BlissLauncher bring-up branch ships as com.android.launcher3 for now]
 (cherry picked from commit f25b9a932f87381576432c272f663a67845a6874)
 ---
- AndroidManifest.xml | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ AndroidManifest.xml | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/AndroidManifest.xml b/AndroidManifest.xml
 index 3010f428..df6a26e9 100755
@@ -21,12 +23,12 @@ index 3010f428..df6a26e9 100755
          <package android:name="com.android.settings"/>
          <package android:name="com.android.systemui"/>
          <!-- Package of camera for icon shape -->
-@@ -64,8 +65,8 @@
+@@ -64,8 +65,10 @@
          </intent>
      </queries>
  
--    <uses-permission android:name="com.android.launcher3.permission.READ_SETTINGS" />
--    <uses-permission android:name="com.android.launcher3.permission.WRITE_SETTINGS" />
+     <uses-permission android:name="com.android.launcher3.permission.READ_SETTINGS" />
+     <uses-permission android:name="com.android.launcher3.permission.WRITE_SETTINGS" />
 +    <uses-permission android:name="foundation.e.blisslauncher.permission.READ_SETTINGS" />
 +    <uses-permission android:name="foundation.e.blisslauncher.permission.WRITE_SETTINGS" />
  

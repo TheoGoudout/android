@@ -69,6 +69,8 @@ def main():
     ap.add_argument("--eos-branch", required=True)
     ap.add_argument("--local", help="dir with local manifest XMLs (default local_manifests/<branch>)")
     ap.add_argument("--device-tree")
+    ap.add_argument("--optional", nargs="*", default=[],
+                    help="names from local_manifests/<branch>/optional/ to add, as OPTIONAL_MANIFESTS does")
     args = ap.parse_args()
     here = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     local = args.local or os.path.join(here, "local_manifests", args.eos_branch)
@@ -81,6 +83,8 @@ def main():
         for f in sorted(os.listdir(local)):
             if f.endswith(".xml"):
                 load(local, f, projects, removed, problems, "local")
+        for name in args.optional:
+            load(os.path.join(local, "optional"), f"{name}.xml", projects, removed, problems, "optional")
 
     print(f">> {len(projects)} projects after local manifests; /e/OS removes {len(eos_removed)} LineageOS projects without replacing them")
     if args.device_tree:

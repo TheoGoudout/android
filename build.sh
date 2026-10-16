@@ -16,6 +16,9 @@ EOS_BRANCH="a16"
 LMANIFEST_BRANCH="$EOS_BRANCH"
 DEVICE="FP4"
 BUILD_TYPE="userdebug"
+# Space-separated names from local_manifests/<target>/optional/*.xml to add to this build
+# (opt-in experiments, so each can be its own build iteration). a17: "setupwizard-bringup".
+OPTIONAL_MANIFESTS=""
 INCLUDE_IH8SN="true"        # /e/OS's prop-masking helper; only auto-enabled for community/official builds
 # crave base project "LineageOS 23.2" (ID used by sounddrill31/crave_aosp_builder): an
 # Android 16 base, valid for a16. For a17 ask crave (discord) for the LineageOS 24 project ID:
@@ -50,6 +53,7 @@ case "${1:-}" in
     crave run --no-patch -- "echo $payload | base64 -d > /tmp/eos-remote-build.sh && \
       EOS_BRANCH='$EOS_BRANCH' DEVICE='$DEVICE' BUILD_TYPE='$BUILD_TYPE' INCLUDE_IH8SN='$INCLUDE_IH8SN' \
       LMANIFEST_URL='$LMANIFEST_URL' LMANIFEST_BRANCH='$LMANIFEST_BRANCH' \
+      OPTIONAL_MANIFESTS='$OPTIONAL_MANIFESTS' \
       bash /tmp/eos-remote-build.sh"
     ;;
   pull)
