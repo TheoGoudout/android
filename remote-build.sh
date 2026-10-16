@@ -23,7 +23,8 @@ mkdir -p .repo/local_manifests
 cp "$tmp_lm/local_manifests/${EOS_BRANCH}/"*.xml .repo/local_manifests/
 # Patch series this project carries (patches/<target>/<project path>/*.patch) + its applier
 rm -rf .eos-patches && mkdir -p .eos-patches
-cp "$tmp_lm/apply-patches.sh" .eos-apply-patches.sh
+if [ -f "$tmp_lm/apply-patches.sh" ]; then cp "$tmp_lm/apply-patches.sh" .eos-apply-patches.sh
+elif [ ! -f .eos-apply-patches.sh ]; then printf '#!/bin/sh\nexit 0\n' > .eos-apply-patches.sh; fi
 if [ -d "$tmp_lm/patches/${EOS_BRANCH}" ]; then cp -r "$tmp_lm/patches/${EOS_BRANCH}/." .eos-patches/; fi
 rm -rf "$tmp_lm"
 
