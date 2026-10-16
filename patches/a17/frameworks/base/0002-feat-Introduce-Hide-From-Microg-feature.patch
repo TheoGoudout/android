@@ -1,0 +1,405 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jonathan Klee <jonathan.klee@e.email>
+Date: Wed, 25 Mar 2026 15:11:33 +0100
+Subject: [PATCH 2/3] feat: Introduce Hide From Microg feature
+
+[a17: kept upstream's new System validators and added HIDE_MICROG_PACKAGES_FOR_PACKAGE after them]
+(cherry picked from commit a40cb241c791ab4a754c3890ed7a0123e83fa0c4)
+---
+ core/java/android/provider/Settings.java      |  5 ++
+ .../validators/SystemSettingsValidators.java  | 15 ++++
+ .../com/android/server/pm/AppsFilterBase.java | 89 +++++++++++++++++++
+ .../com/android/server/pm/AppsFilterImpl.java | 83 +++++++++++++++++
+ .../server/pm/AppsFilterSnapshotImpl.java     |  4 +
+ .../server/pm/PackageManagerService.java      | 59 ++++++++++++
+ 6 files changed, 255 insertions(+)
+
+diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
+index 090c41d92bc7..495424902447 100644
+--- a/core/java/android/provider/Settings.java
++++ b/core/java/android/provider/Settings.java
+@@ -6822,6 +6822,10 @@ public final class Settings {
+          */
+         public static final String PREFERRED_REGION = "preferred_region";
+ 
++        /** @hide */
++        public static final String HIDE_MICROG_PACKAGES_FOR_PACKAGE =
++                "hide_microg_packages_for_package";
++
+         /**
+          * Setting to enable camera flash notification feature.
+          * <ul>
+@@ -7040,6 +7044,7 @@ public final class Settings {
+             PRIVATE_SETTINGS.add(PREFERRED_REGION);
+             PRIVATE_SETTINGS.add(MOUSE_SCROLLING_ACCELERATION);
+             PRIVATE_SETTINGS.add(MOUSE_SCROLLING_SPEED);
++            PRIVATE_SETTINGS.add(HIDE_MICROG_PACKAGES_FOR_PACKAGE);
+         }
+ 
+         /**
+diff --git a/packages/SettingsProvider/src/android/provider/settings/validators/SystemSettingsValidators.java b/packages/SettingsProvider/src/android/provider/settings/validators/SystemSettingsValidators.java
+index ab029e49744b..e830da930082 100644
+--- a/packages/SettingsProvider/src/android/provider/settings/validators/SystemSettingsValidators.java
++++ b/packages/SettingsProvider/src/android/provider/settings/validators/SystemSettingsValidators.java
+@@ -24,6 +24,7 @@ import static android.provider.settings.validators.SettingsValidators.FONT_SCALE
+ import static android.provider.settings.validators.SettingsValidators.LENIENT_IP_ADDRESS_VALIDATOR;
+ import static android.provider.settings.validators.SettingsValidators.NON_NEGATIVE_FLOAT_VALIDATOR;
+ import static android.provider.settings.validators.SettingsValidators.NON_NEGATIVE_INTEGER_VALIDATOR;
++import static android.provider.settings.validators.SettingsValidators.PACKAGE_NAME_VALIDATOR;
+ import static android.provider.settings.validators.SettingsValidators.URI_VALIDATOR;
+ import static android.provider.settings.validators.SettingsValidators.VIBRATION_INTENSITY_VALIDATOR;
+ import static android.view.PointerIcon.DEFAULT_POINTER_SCALE;
+@@ -287,5 +288,19 @@ public class SystemSettingsValidators {
+         VALIDATORS.put(
+                 System.ACCESSIBILITY_FORCE_INVERT_COLOR_OVERRIDE_PACKAGES_TO_DISABLE,
+                 new PackageNameListValidator(","));
++        VALIDATORS.put(System.HIDE_MICROG_PACKAGES_FOR_PACKAGE, value -> {
++            if (value == null) {
++                return true;
++            }
++
++            for (String packageName : value.split(",")) {
++                final String trimmedPackageName = packageName.trim();
++                if (trimmedPackageName.isEmpty()
++                        || !PACKAGE_NAME_VALIDATOR.validate(trimmedPackageName)) {
++                    return false;
++                }
++            }
++            return true;
++        });
+     }
+ }
+diff --git a/services/core/java/com/android/server/pm/AppsFilterBase.java b/services/core/java/com/android/server/pm/AppsFilterBase.java
+index 32795d030d87..a43444ba057d 100644
+--- a/services/core/java/com/android/server/pm/AppsFilterBase.java
++++ b/services/core/java/com/android/server/pm/AppsFilterBase.java
+@@ -62,6 +62,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
+  */
+ public abstract class AppsFilterBase implements AppsFilterSnapshot {
+     protected static final String TAG = "AppsFilter";
++    private static final String GOOGLE_PLAY_SERVICES_PACKAGE = "com.google.android.gms";
++    private static final String GOOGLE_PLAY_STORE_PACKAGE = "com.android.vending";
++    private static final String GOOGLE_SERVICES_FRAMEWORK_PACKAGE = "com.google.android.gsf";
+ 
+     // Logs all filtering instead of enforcing
+     protected static final boolean DEBUG_ALLOW_ALL = false;
+@@ -198,11 +201,81 @@ public abstract class AppsFilterBase implements AppsFilterSnapshot {
+     protected volatile boolean mCacheReady = false;
+     protected volatile boolean mCacheEnabled = true;
+     protected volatile boolean mNeedToUpdateCacheForImplicitAccess = false;
++    @NonNull
++    protected volatile SparseArray<ArraySet<String>> mHideMicrogPackagesForCallerByUser =
++            new SparseArray<>();
+ 
+     protected static final boolean CACHE_VALID = true;
+     protected static final boolean CACHE_INVALID = false;
+     protected final AtomicBoolean mCacheValid = new AtomicBoolean(CACHE_INVALID);
+ 
++    protected static SparseArray<ArraySet<String>> copyPackageNamesByUser(
++            @NonNull SparseArray<ArraySet<String>> packageNamesByUser) {
++        final SparseArray<ArraySet<String>> copy = new SparseArray<>(packageNamesByUser.size());
++        for (int i = 0; i < packageNamesByUser.size(); i++) {
++            final ArraySet<String> packageNames = packageNamesByUser.valueAt(i);
++            copy.put(packageNamesByUser.keyAt(i),
++                    packageNames == null ? null : new ArraySet<>(packageNames));
++        }
++        return copy;
++    }
++
++    private static boolean isMicrogPackageHiddenByConfig(@NonNull String packageName) {
++        return GOOGLE_PLAY_SERVICES_PACKAGE.equals(packageName)
++                || GOOGLE_PLAY_STORE_PACKAGE.equals(packageName)
++                || GOOGLE_SERVICES_FRAMEWORK_PACKAGE.equals(packageName);
++    }
++
++    private boolean shouldHideMicrogPackagesForCaller(int callingUserId,
++            @Nullable String[] callingPackageNames, @NonNull String targetPackageName) {
++        if (!isMicrogPackageHiddenByConfig(targetPackageName)) {
++            return false;
++        }
++
++        final ArraySet<String> configuredPackageNames =
++                mHideMicrogPackagesForCallerByUser.get(callingUserId);
++
++        if (configuredPackageNames == null || configuredPackageNames.isEmpty()
++                || callingPackageNames == null) {
++            return false;
++        }
++
++        for (String callingPackageName : callingPackageNames) {
++            if (configuredPackageNames.contains(callingPackageName)) {
++                return true;
++            }
++        }
++        return false;
++    }
++
++    private boolean shouldHideMicrogPackagesForCaller(int callingUid,
++            @Nullable PackageStateInternal callingPkgSetting,
++            @NonNull ArraySet<PackageStateInternal> callingSharedPkgSettings,
++            @NonNull PackageStateInternal targetPkgSetting) {
++        if (!isMicrogPackageHiddenByConfig(targetPkgSetting.getPackageName())) {
++            return false;
++        }
++
++        final ArraySet<String> configuredPackageNames =
++                mHideMicrogPackagesForCallerByUser.get(UserHandle.getUserId(callingUid));
++
++        if (configuredPackageNames == null || configuredPackageNames.isEmpty()) {
++            return false;
++        }
++
++        if (callingPkgSetting != null) {
++            return configuredPackageNames.contains(callingPkgSetting.getPackageName());
++        }
++
++        for (int i = 0; i < callingSharedPkgSettings.size(); i++) {
++            if (configuredPackageNames.contains(
++                    callingSharedPkgSettings.valueAt(i).getPackageName())) {
++                return true;
++            }
++        }
++        return false;
++    }
++
+     protected boolean isForceQueryable(int callingAppId) {
+         return mForceQueryable.contains(callingAppId);
+     }
+@@ -340,6 +413,13 @@ public abstract class AppsFilterBase implements AppsFilterSnapshot {
+                     || callingAppId == targetPkgSetting.getAppId()) {
+                 return false;
+             } else if (Process.isSdkSandboxUid(callingAppId)) {
++                final Computer computer = (Computer) snapshot;
++                if (shouldHideMicrogPackagesForCaller(UserHandle.getUserId(callingUid),
++                        computer.getPackagesForUid(Process.getAppUidForSdkSandboxUid(callingUid)),
++                        targetPkgSetting.getPackageName())) {
++                    return true;
++                }
++
+                 final int targetAppId = targetPkgSetting.getAppId();
+                 final int targetUid = UserHandle.getUid(userId, targetAppId);
+                 // we only allow sdk sandbox processes access to forcequeryable packages or
+@@ -467,6 +547,15 @@ public abstract class AppsFilterBase implements AppsFilterSnapshot {
+                 Trace.traceEnd(TRACE_TAG_PACKAGE_MANAGER);
+             }
+ 
++            if (shouldHideMicrogPackagesForCaller(callingUid, callingPkgSetting,
++                    callingSharedPkgSettings, targetPkgSetting)) {
++                if (DEBUG_LOGGING) {
++                    log(callingSetting, targetPkgSetting, "hidden package by microg config");
++                }
++
++                return true;
++            }
++
+             if (callingPkgSetting != null) {
+                 if (callingPkgSetting.getPkg() != null
+                         && !mFeatureConfig.packageIsEnabled(callingPkgSetting.getPkg())) {
+diff --git a/services/core/java/com/android/server/pm/AppsFilterImpl.java b/services/core/java/com/android/server/pm/AppsFilterImpl.java
+index 135fb7b8b22e..59a23bfccc16 100644
+--- a/services/core/java/com/android/server/pm/AppsFilterImpl.java
++++ b/services/core/java/com/android/server/pm/AppsFilterImpl.java
+@@ -56,6 +56,7 @@ import android.provider.DeviceConfig;
+ import android.util.ArrayMap;
+ import android.util.ArraySet;
+ import android.util.Slog;
++import android.util.SparseArray;
+ import android.util.SparseBooleanArray;
+ import android.util.SparseSetArray;
+ 
+@@ -505,6 +506,62 @@ public final class AppsFilterImpl extends AppsFilterLocked implements Watchable,
+                 PACKAGE_MANAGER_APPS_FILTER_CACHE_BUILD_REPORTED__EVENT_TYPE__BOOT);
+     }
+ 
++    public void updateHiddenMicrogPackagesConfig(Computer snapshot,
++            @NonNull SparseArray<ArraySet<String>> packageNamesByUser) {
++        final SparseArray<ArraySet<String>> oldPackageNamesByUser =
++                mHideMicrogPackagesForCallerByUser;
++        final SparseArray<ArraySet<String>> newPackageNamesByUser =
++                copyPackageNamesByUser(packageNamesByUser);
++
++        if (samePackageNamesByUser(oldPackageNamesByUser, newPackageNamesByUser)) {
++            return;
++        }
++
++        mHideMicrogPackagesForCallerByUser = newPackageNamesByUser;
++
++        if (mCacheReady) {
++            for (UserInfo userInfo : snapshot.getUserInfos()) {
++                final int userId = userInfo.id;
++                if (!Objects.equals(oldPackageNamesByUser.get(userId),
++                        newPackageNamesByUser.get(userId))) {
++                    updateEntireShouldFilterCache(snapshot, userId);
++                }
++            }
++        }
++
++        onChanged();
++    }
++
++    public void updateHiddenMicrogPackagesConfig(Computer snapshot, @UserIdInt int userId,
++            @Nullable ArraySet<String> packageNames) {
++        final SparseArray<ArraySet<String>> oldPackageNamesByUser =
++                mHideMicrogPackagesForCallerByUser;
++        final ArraySet<String> oldPackageNames = oldPackageNamesByUser.get(userId);
++        final ArraySet<String> newPackageNames =
++                packageNames == null ? null : new ArraySet<>(packageNames);
++
++        if (Objects.equals(oldPackageNames, newPackageNames)) {
++            return;
++        }
++
++        final SparseArray<ArraySet<String>> newPackageNamesByUser =
++                copyPackageNamesByUser(oldPackageNamesByUser);
++
++        if (newPackageNames == null || newPackageNames.isEmpty()) {
++            newPackageNamesByUser.remove(userId);
++        } else {
++            newPackageNamesByUser.put(userId, newPackageNames);
++        }
++
++        mHideMicrogPackagesForCallerByUser = newPackageNamesByUser;
++
++        if (mCacheReady && hasUser(snapshot.getUserInfos(), userId)) {
++            updateEntireShouldFilterCache(snapshot, userId);
++        }
++
++        onChanged();
++    }
++
+     /**
+      * Adds a package that should be considered when filtering visibility between apps.
+      *
+@@ -1306,4 +1363,30 @@ public final class AppsFilterImpl extends AppsFilterLocked implements Watchable,
+         FrameworkStatsLog.write(PACKAGE_MANAGER_APPS_FILTER_CACHE_UPDATE_REPORTED,
+                 eventId, appId, latency, userCount, packageCount, mShouldFilterCache.size());
+     }
++
++    private static boolean samePackageNamesByUser(
++            @NonNull SparseArray<ArraySet<String>> oldPackageNamesByUser,
++            @NonNull SparseArray<ArraySet<String>> newPackageNamesByUser) {
++        if (oldPackageNamesByUser.size() != newPackageNamesByUser.size()) {
++            return false;
++        }
++
++        for (int i = 0; i < oldPackageNamesByUser.size(); i++) {
++            final int userId = oldPackageNamesByUser.keyAt(i);
++            if (!Objects.equals(oldPackageNamesByUser.valueAt(i),
++                    newPackageNamesByUser.get(userId))) {
++                return false;
++            }
++        }
++        return true;
++    }
++
++    private static boolean hasUser(@NonNull UserInfo[] users, @UserIdInt int userId) {
++        for (UserInfo user : users) {
++            if (user.id == userId) {
++                return true;
++            }
++        }
++        return false;
++    }
+ }
+diff --git a/services/core/java/com/android/server/pm/AppsFilterSnapshotImpl.java b/services/core/java/com/android/server/pm/AppsFilterSnapshotImpl.java
+index 9bfcabb11fba..dd30d2dd1179 100644
+--- a/services/core/java/com/android/server/pm/AppsFilterSnapshotImpl.java
++++ b/services/core/java/com/android/server/pm/AppsFilterSnapshotImpl.java
+@@ -57,9 +57,13 @@ public final class AppsFilterSnapshotImpl extends AppsFilterBase {
+         }
+         mProtectedBroadcastsSnapshot = new SnapshotCache.Sealed<>();
+         mQueriesViaComponentRequireRecompute = orig.mQueriesViaComponentRequireRecompute;
++        mHideMicrogPackagesForCallerByUser =
++                copyPackageNamesByUser(orig.mHideMicrogPackagesForCallerByUser);
++
+         mForceQueryableByDevicePackageNames =
+                 Arrays.copyOf(orig.mForceQueryableByDevicePackageNames,
+                         orig.mForceQueryableByDevicePackageNames.length);
++
+         mSystemAppsQueryable = orig.mSystemAppsQueryable;
+         mFeatureConfig = orig.mFeatureConfig.snapshot();
+         mOverlayReferenceMapper = orig.mOverlayReferenceMapper;
+diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
+index 737aeecae0d9..0118a203ac8c 100644
+--- a/services/core/java/com/android/server/pm/PackageManagerService.java
++++ b/services/core/java/com/android/server/pm/PackageManagerService.java
+@@ -43,6 +43,9 @@ import static android.os.storage.StorageManager.FLAG_STORAGE_CE;
+ import static android.os.storage.StorageManager.FLAG_STORAGE_DE;
+ import static android.os.storage.StorageManager.FLAG_STORAGE_EXTERNAL;
+ import static android.provider.DeviceConfig.NAMESPACE_PACKAGE_MANAGER_SERVICE;
++import static android.provider.Settings.System.HIDE_MICROG_PACKAGES_FOR_PACKAGE;
++import static android.provider.Settings.System.getStringForUser;
++import static android.provider.Settings.System.getUriFor;
+ 
+ import static com.android.internal.annotations.VisibleForTesting.Visibility;
+ import static com.android.internal.util.FrameworkStatsLog.BOOT_TIME_EVENT_DURATION__EVENT__OTA_PACKAGE_MANAGER_INIT_TIME;
+@@ -4537,6 +4540,40 @@ public class PackageManagerService implements PackageSender, TestUtilityService
+                 .getUriFor(Secure.INSTANT_APPS_ENABLED), false, co, USER_ALL);
+         co.onChange(true);
+ 
++        final ContentObserver hideMicrogPackagesObserver = new ContentObserver(mHandler) {
++            @Override
++            public void onChange(boolean selfChange) {
++                onChange(selfChange, (Uri) null, UserHandle.USER_ALL);
++            }
++
++            @Override
++            public void onChange(boolean selfChange, @Nullable Uri uri, int userId) {
++                final Computer snapshot = snapshotComputer();
++                if (userId != UserHandle.USER_ALL) {
++                    mAppsFilter.updateHiddenMicrogPackagesConfig(snapshot, userId,
++                            getHiddenMicrogPackagesForCaller(resolver, userId));
++
++                    return;
++                }
++
++                final SparseArray<ArraySet<String>> packageNamesByUser = new SparseArray<>();
++                for (UserInfo userInfo : snapshot.getUserInfos()) {
++                    final ArraySet<String> packageNames =
++                            getHiddenMicrogPackagesForCaller(resolver, userInfo.id);
++
++                    if (packageNames != null) {
++                        packageNamesByUser.put(userInfo.id, packageNames);
++                    }
++                }
++                mAppsFilter.updateHiddenMicrogPackagesConfig(snapshot, packageNamesByUser);
++            }
++        };
++        mContext.getContentResolver().registerContentObserver(
++                getUriFor(
++                        HIDE_MICROG_PACKAGES_FOR_PACKAGE),
++                false, hideMicrogPackagesObserver, UserHandle.USER_ALL);
++        hideMicrogPackagesObserver.onChange(true);
++
+         mAppsFilter.onSystemReady(LocalServices.getService(PackageManagerInternal.class));
+ 
+         // Disable any carrier apps. We do this very early in boot to prevent the apps from being
+@@ -4682,6 +4719,28 @@ public class PackageManagerService implements PackageSender, TestUtilityService
+         PackageMetrics.logInvalidationMetrics();
+     }
+ 
++    @Nullable
++    private static ArraySet<String> getHiddenMicrogPackagesForCaller(
++            @NonNull ContentResolver resolver, @UserIdInt int userId) {
++        final String packageList = getStringForUser(
++                resolver,
++                HIDE_MICROG_PACKAGES_FOR_PACKAGE,
++                userId);
++
++        if (TextUtils.isEmpty(packageList)) {
++            return null;
++        }
++
++        final ArraySet<String> packageNames = new ArraySet<>();
++        for (String packageName : packageList.split(",")) {
++            final String trimmedPackageName = packageName.trim();
++            if (!trimmedPackageName.isEmpty()) {
++                packageNames.add(trimmedPackageName);
++            }
++        }
++        return packageNames.isEmpty() ? null : packageNames;
++    }
++
+     public PackageFreezer freezePackage(String packageName, @CanBeALL @UserIdInt int userId,
+             String killReason, int exitInfoReason, InstallRequest request) {
+         return freezePackage(packageName, userId, killReason, exitInfoReason, request,
