@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Optional: use /e/OS's SetupWizard bring-up branch instead of e/os SetupWizard `a17`.
+
+  `a17` SetupWizard is still plain LineageOS 24.0 (no /e/ account, parental control, Find my
+  device, MDM-by-QR or restore pages). /e/OS ported those pages on `epic265-a17-bringup`
+  (last commit 2026-09-14), but on a SetupWizard base from 2026-09-15, before LineageOS rewrote
+  SUW (Glif layouts, ToggleGroups, ATV) at the end of September. Rebasing it is UI development, so
+  until /e/OS merges it this pins the bring-up branch as-is.
+
+  Enable with OPTIONAL_MANIFESTS="setupwizard-bringup" in build.sh.
+-->
+<manifest>
+  <remove-project path="packages/apps/SetupWizard" />
+  <project path="packages/apps/SetupWizard" name="e/os/android_packages_apps_SetupWizard"
+           remote="e" revision="epic265-a17-bringup" />
+</manifest>

@@ -21,6 +21,11 @@ tmp_lm="$(mktemp -d)"
 git clone --depth 1 -b "${LMANIFEST_BRANCH}" "${LMANIFEST_URL}" "$tmp_lm"
 mkdir -p .repo/local_manifests
 cp "$tmp_lm/local_manifests/${EOS_BRANCH}/"*.xml .repo/local_manifests/
+for opt in ${OPTIONAL_MANIFESTS:-}; do
+  f="$tmp_lm/local_manifests/${EOS_BRANCH}/optional/${opt}.xml"
+  [ -f "$f" ] || { echo ">> optional manifest '${opt}' not found for ${EOS_BRANCH}"; exit 1; }
+  echo ">> + optional manifest ${opt}"; cp "$f" ".repo/local_manifests/zz-${opt}.xml"
+done
 # Patch series this project carries (patches/<target>/<project path>/*.patch) + its applier
 rm -rf .eos-patches && mkdir -p .eos-patches
 if [ -f "$tmp_lm/apply-patches.sh" ]; then cp "$tmp_lm/apply-patches.sh" .eos-apply-patches.sh
