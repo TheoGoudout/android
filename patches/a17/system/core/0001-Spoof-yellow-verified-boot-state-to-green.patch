@@ -1,0 +1,76 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jonathan Klee <jonathan.klee@e.email>
+Date: Fri, 18 Jul 2025 07:57:54 +0200
+Subject: [PATCH] Spoof yellow verified boot state to green
+
+Having verified boot with a custom root of trust is ok
+for a non-Google OS.
+
+Parse kernel cmdline for verified boot state
+
+Verified boot state was already set before we tried
+to change it.
+
+ro.boot.verifiedboot is a read-only
+system property so we can set it once only.
+
+We now parse the kernel cmdline and set the value
+accordingly.
+
+(cherry picked from commit 872bced4fbd06922c59183f1712c0b51c524f1bb)
+---
+ init/property_service.cpp | 18 ++++++++++++------
+ rootdir/init.rc           |  3 +++
+ 2 files changed, 15 insertions(+), 6 deletions(-)
+
+diff --git a/init/property_service.cpp b/init/property_service.cpp
+index 89adf3331..44db9fdea 100644
+--- a/init/property_service.cpp
++++ b/init/property_service.cpp
+@@ -1389,20 +1389,26 @@ static void ProcessKernelDt() {
+ 
+ constexpr auto ANDROIDBOOT_PREFIX = "androidboot."sv;
+ 
+-static void ProcessKernelCmdline() {
+-    android::fs_mgr::ImportKernelCmdline([&](const std::string& key, const std::string& value) {
+-        if (StartsWith(key, ANDROIDBOOT_PREFIX)) {
++static void setProperty(const std::string& key, const std::string& value) {
++    if (StartsWith(key, ANDROIDBOOT_PREFIX)) {
++        if (key.substr(ANDROIDBOOT_PREFIX.size()) == "verifiedbootstate" && value == "yellow") {
++            InitPropertySet("ro.boot.verifiedbootstate", "green");
++        } else {
+             InitPropertySet("ro.boot." + key.substr(ANDROIDBOOT_PREFIX.size()), value);
+         }
++    }
++}
++
++static void ProcessKernelCmdline() {
++    android::fs_mgr::ImportKernelCmdline([&](const std::string& key, const std::string& value) {
++        setProperty(key, value);
+     });
+ }
+ 
+ 
+ static void ProcessBootconfig() {
+     android::fs_mgr::ImportBootconfig([&](const std::string& key, const std::string& value) {
+-        if (StartsWith(key, ANDROIDBOOT_PREFIX)) {
+-            InitPropertySet("ro.boot." + key.substr(ANDROIDBOOT_PREFIX.size()), value);
+-        }
++        setProperty(key, value);
+     });
+ }
+ 
+diff --git a/rootdir/init.rc b/rootdir/init.rc
+index 56024b939..824714a3a 100644
+--- a/rootdir/init.rc
++++ b/rootdir/init.rc
+@@ -499,6 +499,9 @@ on init
+     chmod 0660 /sys/power/wake_lock
+     chmod 0660 /sys/power/wake_unlock
+ 
++    # Uncomment the following to forward init logs into logcat
++    # setprop ro.logd.kernel true
++
+     # Start logd before any other services run to ensure we capture all of their logs.
+     start logd
+     # Start lmkd before any other services run so that it can register them
