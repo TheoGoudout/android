@@ -6,13 +6,15 @@
 set -eo pipefail
 
 # ---- edit these -------------------------------------------------------------
-LMANIFEST_URL="https://github.com/CHANGE_ME/eos_fp4_local_manifests"
+LMANIFEST_URL="https://github.com/TheoGoudout/android"
 # Pick ONE target:
 #   a16 = real /e/OS 4.x on LineageOS 23.0 (Android 16) - what /e/OS ships for FP4 today
 #   a17 = /e/OS on LineageOS 24.0 (Android 17) - /e/OS's work-in-progress port
 # (a16.2 also exists but most of its forks are plain LineageOS 23.2 without /e/OS changes)
 EOS_BRANCH="a16"
-LMANIFEST_BRANCH="$EOS_BRANCH"  # branch of your local_manifests repo holding local_manifests/<branch>/eos_fp4.xml
+# Branch of LMANIFEST_URL to clone. One branch holds both targets
+# (local_manifests/a16/ and local_manifests/a17/); the remote picks the folder by EOS_BRANCH.
+LMANIFEST_BRANCH="ccr-0f2cae73-f14zrb"
 DEVICE="FP4"
 BUILD_TYPE="userdebug"
 INCLUDE_IH8SN="true"        # /e/OS's prop-masking helper; only auto-enabled for community/official builds
@@ -24,7 +26,14 @@ PROJECT_ID="99"
 WORKSPACE="/crave-devspaces/Lineage23"
 # -----------------------------------------------------------------------------
 
+LOS23_PROJECT_ID="99"  # Android 16 base: valid for a16 only
+
 HERE="$(cd "$(dirname "$0")" && pwd)"
+if [ "$EOS_BRANCH" = "a17" ] && [ "$PROJECT_ID" = "$LOS23_PROJECT_ID" ]; then
+  echo "a17 is Android 17: set PROJECT_ID/WORKSPACE to crave's LineageOS 24 base project first" >&2
+  echo "(crave rule: sync a ROM only on a base project of the same Android version)." >&2
+  exit 1
+fi
 command -v crave >/dev/null || { echo "Install crave first: curl -s https://raw.githubusercontent.com/accupara/crave/master/get_crave.sh | bash -s --"; exit 1; }
 
 case "${1:-}" in

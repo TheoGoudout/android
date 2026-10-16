@@ -1,0 +1,18 @@
+# Public repo: never commit credentials, keys, proprietary binaries or build output.
+*.conf
+*.keystore
+*.jks
+*.pem
+*.pk8
+*.x509.pem
+keys/
+*.apk
+*.img
+*.zip
+SHA256SUMS
+# raw device logs (redact before sharing excerpts in STATUS.md / KNOWN_ISSUES.md)
+*.logcat
+logcat*.txt
+dmesg*.txt
+# port-audit scratch space (GBs of partial clones)
+port-audit/audit-work/
