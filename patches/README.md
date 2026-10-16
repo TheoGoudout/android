@@ -77,8 +77,8 @@ What a17 changed and how it was handled:
 
 Static checks (no compiler available here): every changed XML parses, every resource and
 `com.android.settings.*` class referenced by added lines resolves, no conflict markers. Expect
-the first a17 build to be the real test. If Settings fails to compile, set this series aside
-(move the folder out of `patches/a17/`) to keep the other variables isolated.
+the first a17 build to be the real test. To build without it, set `PATCH_EXCLUDE="packages/apps/Settings"`
+in `build.sh` (works for any project path).
 
 ### Security fixes /e/OS self-carried on a16 that LineageOS 24.0 still lacks
 Checked 2026-10-16 against lineage-24.0 (frameworks/av tip 2026-10-04): the vulnerable code is
