@@ -1,0 +1,149 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishithkhanna@e.email>
+Date: Mon, 2 Mar 2026 17:16:09 +0530
+Subject: [PATCH 29/32] Replace cloudfare with quadnine as dns provider
+
+(cherry picked from commit 2bf25777fd40ade24fe2a9c9ce550f7892bb4e36)
+---
+ res/layout/private_dns_mode_dialog.xml        |  2 +-
+ res/values/e_strings.xml                      |  4 +++
+ .../PrivateDnsModeDialogPreference.java       | 30 +++++++++----------
+ .../PrivateDnsPreferenceController.java       | 12 ++++----
+ 4 files changed, 26 insertions(+), 22 deletions(-)
+
+diff --git a/res/layout/private_dns_mode_dialog.xml b/res/layout/private_dns_mode_dialog.xml
+index 3fc45dbbb8..0132113420 100644
+--- a/res/layout/private_dns_mode_dialog.xml
++++ b/res/layout/private_dns_mode_dialog.xml
+@@ -38,7 +38,7 @@
+                 layout="@layout/preference_widget_dialog_radiobutton"/>
+ 
+             <include
+-                android:id="@+id/private_dns_mode_cloudflare"
++                android:id="@+id/private_dns_mode_quadnine"
+                 layout="@layout/preference_widget_dialog_radiobutton"/>
+ 
+             <include
+diff --git a/res/values/e_strings.xml b/res/values/e_strings.xml
+index 3fe3af4c80..391fdbc353 100644
+--- a/res/values/e_strings.xml
++++ b/res/values/e_strings.xml
+@@ -75,4 +75,8 @@
+     <!-- /e/ Find my device -->
+     <string name="find_my_device_dashboard_title" translatable="false">Find my Device</string>
+     <string name="find_my_device_dashboard_summary">Locate this device</string>
++
++    <!-- Quad nine dns -->
++    <string name="private_dns_mode_quadnine" translatable="false">Quad9 DNS</string>
++    <string name="private_dns_hostname_quadnine" translatable="false">dns.quad9.net</string>
+ </resources>
+diff --git a/src/com/android/settings/network/PrivateDnsModeDialogPreference.java b/src/com/android/settings/network/PrivateDnsModeDialogPreference.java
+index 1c5258d935..0f03886257 100644
+--- a/src/com/android/settings/network/PrivateDnsModeDialogPreference.java
++++ b/src/com/android/settings/network/PrivateDnsModeDialogPreference.java
+@@ -73,12 +73,12 @@ public class PrivateDnsModeDialogPreference extends CustomDialogPreferenceCompat
+     private static final Map<Integer, Integer> PRIVATE_DNS_MAP;
+ 
+     // Only used in Settings, update on additions to ConnectivitySettingsUtils
+-    private static final int PRIVATE_DNS_MODE_CLOUDFLARE = 4;
++    private static final int PRIVATE_DNS_MODE_QUADNINE = 4;
+ 
+     static {
+         PRIVATE_DNS_MAP = new HashMap<>();
+         PRIVATE_DNS_MAP.put(PRIVATE_DNS_MODE_OFF, R.id.private_dns_mode_off);
+-        PRIVATE_DNS_MAP.put(PRIVATE_DNS_MODE_CLOUDFLARE, R.id.private_dns_mode_cloudflare);
++        PRIVATE_DNS_MAP.put(PRIVATE_DNS_MODE_QUADNINE, R.id.private_dns_mode_quadnine);
+         PRIVATE_DNS_MAP.put(PRIVATE_DNS_MODE_OPPORTUNISTIC, R.id.private_dns_mode_opportunistic);
+         PRIVATE_DNS_MAP.put(PRIVATE_DNS_MODE_PROVIDER_HOSTNAME, R.id.private_dns_mode_provider);
+     }
+@@ -144,10 +144,10 @@ public class PrivateDnsModeDialogPreference extends CustomDialogPreferenceCompat
+         if (mMode == PRIVATE_DNS_MODE_PROVIDER_HOSTNAME) {
+             final String privateDnsHostname =
+                     ConnectivitySettingsManager.getPrivateDnsHostname(context);
+-            final String cloudflareHostname =
+-                    context.getString(R.string.private_dns_hostname_cloudflare);
+-            if (privateDnsHostname.equals(cloudflareHostname)) {
+-                mMode = PRIVATE_DNS_MODE_CLOUDFLARE;
++            final String quadnineHostname =
++                    context.getString(R.string.private_dns_hostname_quadnine);
++            if (privateDnsHostname.equals(quadnineHostname)) {
++                mMode = PRIVATE_DNS_MODE_QUADNINE;
+             }
+         }
+         mRadioGroup = view.findViewById(R.id.private_dns_radio_group);
+@@ -157,9 +157,9 @@ public class PrivateDnsModeDialogPreference extends CustomDialogPreferenceCompat
+         // Initial radio button text
+         final RadioButton offRadioButton = view.findViewById(R.id.private_dns_mode_off);
+         offRadioButton.setText(com.android.settingslib.R.string.private_dns_mode_off);
+-        final RadioButton cloudflareRadioButton =
+-                view.findViewById(R.id.private_dns_mode_cloudflare);
+-        cloudflareRadioButton.setText(R.string.private_dns_mode_cloudflare);
++        final RadioButton quadnineRadioButton =
++                view.findViewById(R.id.private_dns_mode_quadnine);
++        quadnineRadioButton.setText(R.string.private_dns_mode_quadnine);
+         final RadioButton opportunisticRadioButton =
+                 view.findViewById(R.id.private_dns_mode_opportunistic);
+         opportunisticRadioButton.setText(
+@@ -195,8 +195,8 @@ public class PrivateDnsModeDialogPreference extends CustomDialogPreferenceCompat
+     public void onCheckedChanged(RadioGroup group, int checkedId) {
+         if (checkedId == R.id.private_dns_mode_off) {
+             mMode = PRIVATE_DNS_MODE_OFF;
+-        } else if (checkedId == R.id.private_dns_mode_cloudflare) {
+-            mMode = PRIVATE_DNS_MODE_CLOUDFLARE;
++        } else if (checkedId == R.id.private_dns_mode_quadnine) {
++            mMode = PRIVATE_DNS_MODE_QUADNINE;
+         } else if (checkedId == R.id.private_dns_mode_opportunistic) {
+             mMode = PRIVATE_DNS_MODE_OPPORTUNISTIC;
+         } else if (checkedId == R.id.private_dns_mode_provider) {
+@@ -287,10 +287,10 @@ public class PrivateDnsModeDialogPreference extends CustomDialogPreferenceCompat
+ 
+             ConnectivitySettingsManager.setPrivateDnsHostname(context,
+                     mHostnameText.getText().toString());
+-        } else if (mMode == PRIVATE_DNS_MODE_CLOUDFLARE) {
+-            final String cloudflareHostname =
+-                    context.getString(R.string.private_dns_hostname_cloudflare);
+-            ConnectivitySettingsManager.setPrivateDnsHostname(context, cloudflareHostname);
++        } else if (mMode == PRIVATE_DNS_MODE_QUADNINE) {
++            final String quadnineHostname =
++                    context.getString(R.string.private_dns_hostname_quadnine);
++            ConnectivitySettingsManager.setPrivateDnsHostname(context, quadnineHostname);
+             modeToSet = PRIVATE_DNS_MODE_PROVIDER_HOSTNAME;
+         }
+ 
+diff --git a/src/com/android/settings/network/PrivateDnsPreferenceController.java b/src/com/android/settings/network/PrivateDnsPreferenceController.java
+index 9a80d0d0b6..072d4aa2d1 100644
+--- a/src/com/android/settings/network/PrivateDnsPreferenceController.java
++++ b/src/com/android/settings/network/PrivateDnsPreferenceController.java
+@@ -66,7 +66,7 @@ public class PrivateDnsPreferenceController extends BasePreferenceController
+     };
+ 
+     // Only used in Settings, update on additions to ConnectivitySettingsUtils
+-    private static final int PRIVATE_DNS_MODE_CLOUDFLARE = 4;
++    private static final int PRIVATE_DNS_MODE_QUADNINE = 4;
+ 
+     private final Handler mHandler;
+     private final ContentObserver mSettingsObserver;
+@@ -132,7 +132,7 @@ public class PrivateDnsPreferenceController extends BasePreferenceController
+         switch (mode) {
+             case PRIVATE_DNS_MODE_OFF:
+                 return res.getString(com.android.settingslib.R.string.private_dns_mode_off);
+-            case PRIVATE_DNS_MODE_CLOUDFLARE:
++            case PRIVATE_DNS_MODE_QUADNINE:
+             case PRIVATE_DNS_MODE_OPPORTUNISTIC:
+                 return dnsesResolved ? res.getString(R.string.private_dns_mode_on)
+                         : res.getString(
+@@ -144,10 +144,10 @@ public class PrivateDnsPreferenceController extends BasePreferenceController
+                 }
+                 final String privateDnsHostname =
+                         ConnectivitySettingsManager.getPrivateDnsHostname(mContext);
+-                final String cloudflareHostname =
+-                        res.getString(R.string.private_dns_hostname_cloudflare);
+-                if (privateDnsHostname.equals(cloudflareHostname)) {
+-                    return res.getString(R.string.private_dns_mode_cloudflare);
++                final String quadnineHostname =
++                        res.getString(R.string.private_dns_hostname_quadnine);
++                if (privateDnsHostname.equals(quadnineHostname)) {
++                    return res.getString(R.string.private_dns_mode_quadnine);
+                 }
+                 return privateDnsHostname;
+         }

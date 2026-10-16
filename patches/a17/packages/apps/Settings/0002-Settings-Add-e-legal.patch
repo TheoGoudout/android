@@ -1,0 +1,156 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: TheScarastic <warabhishek@e.email>
+Date: Mon, 22 Aug 2022 13:43:49 +0000
+Subject: [PATCH 02/32] Settings: Add /e/ legal
+
+[a17: LineageOS moved the legal screen to a Kotlin catalyst screen; the XML
+ keeps only the /e/ entry, and LegalSettingsScreen gets an "elicense" entry by
+ generalising LineageLegalPreference over the URL property (ro.elegal.url)]
+
+(cherry picked from commit f5e006c20a4a2d9d2cba93e2df0529468de3a635)
+---
+ res/values/e_strings.xml                      |  3 +
+ res/xml/about_legal.xml                       |  6 ++
+ .../legal/ELicensePreferenceController.java   | 63 +++++++++++++++++++
+ .../deviceinfo/legal/LegalSettingsScreen.kt   |  6 ++
+ .../legal/LineageLegalPreference.kt           |  6 +-
+ 5 files changed, 82 insertions(+), 2 deletions(-)
+ create mode 100644 src/com/android/settings/deviceinfo/legal/ELicensePreferenceController.java
+
+diff --git a/res/values/e_strings.xml b/res/values/e_strings.xml
+index 237a43c11b..8ec164fb58 100644
+--- a/res/values/e_strings.xml
++++ b/res/values/e_strings.xml
+@@ -17,4 +17,7 @@
+ <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+     <!-- /e/ version -->
+     <string name="e_version">/e/ OS version</string>
++
++    <!-- /e/ legal. -->
++    <string name="elicense_title">/e/ legal</string>
+ </resources>
+diff --git a/res/xml/about_legal.xml b/res/xml/about_legal.xml
+index d30ceaa280..681d16d124 100644
+--- a/res/xml/about_legal.xml
++++ b/res/xml/about_legal.xml
+@@ -35,6 +35,12 @@
+         android:title="@string/license_title"
+         settings:controller="com.android.settings.deviceinfo.legal.LicensePreferenceController" />
+ 
++    <!-- e Foundation License information -->
++    <Preference
++        android:key="elicense"
++        android:title="@string/elicense_title"
++        settings:controller="com.android.settings.deviceinfo.legal.ELicensePreferenceController" />
++
+     <!-- Terms and conditions -->
+     <Preference
+         android:key="terms"
+diff --git a/src/com/android/settings/deviceinfo/legal/ELicensePreferenceController.java b/src/com/android/settings/deviceinfo/legal/ELicensePreferenceController.java
+new file mode 100644
+index 0000000000..67d1812ddc
+--- /dev/null
++++ b/src/com/android/settings/deviceinfo/legal/ELicensePreferenceController.java
+@@ -0,0 +1,63 @@
++/*
++ * Copyright (C) 2022 E FOUNDATION
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.settings.deviceinfo.legal;
++
++import android.content.Context;
++import android.content.Intent;
++import android.net.Uri;
++import android.os.SystemProperties;
++
++import androidx.preference.Preference;
++import androidx.preference.PreferenceScreen;
++
++import com.android.settings.core.BasePreferenceController;
++
++public class ELicensePreferenceController extends BasePreferenceController {
++
++    private static final String PROPERTY_E_LICENSE_URL = "ro.elegal.url";
++
++    public ELicensePreferenceController(Context context, String key) {
++        super(context, key);
++    }
++
++    @Override
++    public void displayPreference(PreferenceScreen screen) {
++        super.displayPreference(screen);
++
++        Preference preference = screen.findPreference(getPreferenceKey());
++        if (preference != null) {
++            preference.setOnPreferenceClickListener(pref -> {
++                mContext.startActivity(getIntent());
++                return true;
++            });
++        }
++    }
++
++    @Override
++    public int getAvailabilityStatus() {
++        if (getIntent().resolveActivity(mContext.getPackageManager()) != null) {
++            return AVAILABLE;
++        } else {
++            return UNSUPPORTED_ON_DEVICE;
++        }
++    }
++
++    private Intent getIntent() {
++        return new Intent(Intent.ACTION_VIEW,
++                Uri.parse(SystemProperties.get(PROPERTY_E_LICENSE_URL)));
++    }
++}
+diff --git a/src/com/android/settings/deviceinfo/legal/LegalSettingsScreen.kt b/src/com/android/settings/deviceinfo/legal/LegalSettingsScreen.kt
+index c7cb1a23c0..e8e59b92b3 100644
+--- a/src/com/android/settings/deviceinfo/legal/LegalSettingsScreen.kt
++++ b/src/com/android/settings/deviceinfo/legal/LegalSettingsScreen.kt
+@@ -66,6 +66,12 @@ open class LegalSettingsScreen : PreferenceScreenMixin {
+                 R.string.terms_purpose,
+                 R.string.lineagelicense_title,
+             )
++            +LineageLegalPreference(
++                "elicense",
++                R.string.terms_purpose,
++                R.string.elicense_title,
++                LineageLegalPreference.PROPERTY_E_LICENSE_URL,
++            )
+             +LegalPreference(
+                 "terms",
+                 R.string.terms_purpose,
+diff --git a/src/com/android/settings/deviceinfo/legal/LineageLegalPreference.kt b/src/com/android/settings/deviceinfo/legal/LineageLegalPreference.kt
+index 9044cf8797..ef7ca9dbc3 100644
+--- a/src/com/android/settings/deviceinfo/legal/LineageLegalPreference.kt
++++ b/src/com/android/settings/deviceinfo/legal/LineageLegalPreference.kt
+@@ -30,13 +30,15 @@ class LineageLegalPreference(
+     override val key: String,
+     @StringRes override val purpose: Int,
+     @StringRes val defaultTitle: Int = 0,
++    private val urlProperty: String = PROPERTY_LINEAGE_LICENSE_URL,
+ ) : PreferenceMetadata, PreferenceTitleProvider, PreferenceAvailabilityProvider {
+ 
+-    private companion object {
++    companion object {
+         const val PROPERTY_LINEAGE_LICENSE_URL = "ro.lineagelegal.url"
++        const val PROPERTY_E_LICENSE_URL = "ro.elegal.url"
+     }
+ 
+-    private fun getLicenseUrl(): String = SystemProperties.get(PROPERTY_LINEAGE_LICENSE_URL)
++    private fun getLicenseUrl(): String = SystemProperties.get(urlProperty)
+ 
+     override fun getTitle(context: Context): CharSequence? = context.getText(defaultTitle)
+ 

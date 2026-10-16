@@ -1,0 +1,258 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: althafvly <althafvly@gmail.com>
+Date: Wed, 12 Aug 2026 22:17:19 +0530
+Subject: [PATCH 32/32] Move backup entry to top level settings
+
+[a17: the home page is grouped now; the injected backup tile gets
+ group_key=top_level_security_privacy_category and order -25 (after Privacy,
+ before Location) instead of re-ordering Location]
+
+(cherry picked from commit 15aecf87f7501bbf505c9fa99e8d729d61d6044a)
+---
+ AndroidManifest.xml                           | 13 +++++--
+ res/drawable/ic_e_settings_backup.xml         | 36 +++++++++++++++++++
+ res/values-de/e_strings.xml                   |  1 +
+ res/values-es/e_strings.xml                   |  1 +
+ res/values-fr/e_strings.xml                   |  1 +
+ res/values-is/e_strings.xml                   |  1 +
+ res/values-it/e_strings.xml                   |  1 +
+ res/values-nl/e_strings.xml                   |  1 +
+ res/values-ru/e_strings.xml                   |  1 +
+ res/values-sv/e_strings.xml                   |  1 +
+ res/values-uk/e_strings.xml                   |  1 +
+ res/values/e_strings.xml                      |  3 ++
+ .../search/CustomSiteMapRegistry.java         |  4 +--
+ .../search/CustomSiteMapRegistryTest.java     |  4 +--
+ 14 files changed, 62 insertions(+), 7 deletions(-)
+ create mode 100644 res/drawable/ic_e_settings_backup.xml
+
+diff --git a/AndroidManifest.xml b/AndroidManifest.xml
+index a8926776ed..c0f22f2e7e 100644
+--- a/AndroidManifest.xml
++++ b/AndroidManifest.xml
+@@ -5146,10 +5146,17 @@
+             </intent-filter>
+             <!-- Tell Settings app which category it belongs to -->
+             <meta-data android:name="com.android.settings.category"
+-                       android:value="com.android.settings.category.ia.system" />
++                       android:value="com.android.settings.category.ia.homepage" />
+             <meta-data android:name="com.android.settings.icon"
+-                       android:resource="@drawable/ic_settings_backup" />
+-            <meta-data android:name="com.android.settings.order" android:value="-60"/>
++                       android:resource="@drawable/ic_e_settings_backup" />
++            <meta-data android:name="com.android.settings.icon_tintable"
++                       android:value="false" />
++            <meta-data android:name="com.android.settings.summary"
++                       android:resource="@string/backup_settings_summary" />
++            <meta-data android:name="com.android.settings.group_key"
++                       android:value="top_level_security_privacy_category" />
++            <meta-data android:name="com.android.settings.order"
++                       android:value="-25" />
+         </activity>
+ 
+         <activity
+diff --git a/res/drawable/ic_e_settings_backup.xml b/res/drawable/ic_e_settings_backup.xml
+new file mode 100644
+index 0000000000..ef8906bd59
+--- /dev/null
++++ b/res/drawable/ic_e_settings_backup.xml
+@@ -0,0 +1,36 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  Copyright (c) 2026 Murena SAS
++
++  This program is free software: you can redistribute it and/or modify
++  it under the terms of the GNU General Public License as published by
++  the Free Software Foundation, either version 3 of the License, or
++  (at your option) any later version.
++
++  This program is distributed in the hope that it will be useful,
++  but WITHOUT ANY WARRANTY; without even the implied warranty of
++  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  GNU General Public License for more details.
++
++  You should have received a copy of the GNU General Public License
++  along with this program.  If not, see <https://www.gnu.org/licenses/>.
++  -->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="32dp"
++    android:height="32dp"
++    android:viewportWidth="32"
++    android:viewportHeight="32">
++  <path
++      android:pathData="M7,0L25,0A7,7 0,0 1,32 7L32,25A7,7 0,0 1,25 32L7,32A7,7 0,0 1,0 25L0,7A7,7 0,0 1,7 0z"
++      android:fillColor="#0088ED"/>
++  <group>
++    <clip-path
++        android:pathData="M4,4h24v24h-24z"/>
++    <path
++        android:pathData="M16,8C19.64,8 22.67,10.59 23.35,14.04C25.95,14.22 28,16.36 28,19C28,21.76 25.76,24 23,24H20V22H23C24.65,22 26,20.65 26,19C26,17.45 24.78,16.14 23.22,16.04L21.69,15.929L21.39,14.429C20.879,11.86 18.62,10 16,10C13.94,10 12.08,11.14 11.13,12.969L10.63,13.92L9.56,14.03C7.53,14.24 6,15.95 6,18C6,20.21 7.79,22 10,22H12V24H10C6.69,24 4,21.31 4,18C4,14.91 6.34,12.36 9.35,12.04C10.6,9.64 13.11,8 16,8Z"
++        android:fillColor="#ffffff"/>
++    <path
++        android:pathData="M12,17H14.55V24H17.45V17H20L16,13L12,17Z"
++        android:fillColor="#ffffff"/>
++  </group>
++</vector>
+diff --git a/res/values-de/e_strings.xml b/res/values-de/e_strings.xml
+index a639976fdf..b8b4ed128f 100644
+--- a/res/values-de/e_strings.xml
++++ b/res/values-de/e_strings.xml
+@@ -46,4 +46,5 @@
+     <string name="e_developer_options">/e/OS Entwickleroptionen</string>
+     <string name="e_disabled_by_policy_title">Diese Einstellung ist gesperrt</string>
+     <string name="find_my_device_dashboard_summary">Dieses Gerät orten</string>
++    <string name="backup_settings_summary">Sichere deine Apps und ihre Daten</string>
+ </resources>
+\ No newline at end of file
+diff --git a/res/values-es/e_strings.xml b/res/values-es/e_strings.xml
+index 1e8191bcfb..c226c050b9 100644
+--- a/res/values-es/e_strings.xml
++++ b/res/values-es/e_strings.xml
+@@ -34,4 +34,5 @@
+     <string name="parental_control_dashboard_title">Control paterno</string>
+     <string name="parental_control_dashboard_summary">Ayuda a los padres a controlar el dispositivo de sus hijos</string>
+     <string name="find_my_device_dashboard_summary">Localizar este dispositivo</string>
++    <string name="backup_settings_summary">Haz una copia de seguridad de tus aplicaciones y sus datos</string>
+ </resources>
+\ No newline at end of file
+diff --git a/res/values-fr/e_strings.xml b/res/values-fr/e_strings.xml
+index d3628f6ac3..37aa08f9b7 100644
+--- a/res/values-fr/e_strings.xml
++++ b/res/values-fr/e_strings.xml
+@@ -41,4 +41,5 @@
+     <string name="parental_control_dashboard_title">Contrôle Parental</string>
+     <string name="parental_control_dashboard_summary">Aide les parents à protéger l\'appareil de leur enfant</string>
+     <string name="find_my_device_dashboard_summary">Localiser cet appareil</string>
++    <string name="backup_settings_summary">Sauvegardez vos applications et leurs données</string>
+ </resources>
+diff --git a/res/values-is/e_strings.xml b/res/values-is/e_strings.xml
+index 40c917c6c4..b10eca8e5f 100644
+--- a/res/values-is/e_strings.xml
++++ b/res/values-is/e_strings.xml
+@@ -45,4 +45,5 @@
+     <string name="parental_control_dashboard_summary">Hjálpar foreldrum að stjórna tækjum barna</string>
+     <string name="e_disabled_by_policy_title">Lokað er á þessa stillingu</string>
+     <string name="e_peak_refresh_rate_summary">Kveiktu á þessu til að hækka uppfærslutíðnina úr 60 upp í %1$d Hz</string>
++    <string name="backup_settings_summary">Taktu öryggisafrit af forritunum þínum og gögnum þeirra</string>
+ </resources>
+\ No newline at end of file
+diff --git a/res/values-it/e_strings.xml b/res/values-it/e_strings.xml
+index aae838e1fe..39dbe79d4f 100644
+--- a/res/values-it/e_strings.xml
++++ b/res/values-it/e_strings.xml
+@@ -41,4 +41,5 @@
+     <string name="e_auto_sync_account_title">Aggiorna automaticamente i contenuti</string>
+     <string name="e_auto_sync_account_summary">Permetti alle applicazioni di aggiornare automaticamente i contenuti in background</string>
+     <string name="find_my_device_dashboard_summary">Localizza questo dispositivo</string>
++    <string name="backup_settings_summary">Esegui il backup delle tue app e dei loro dati</string>
+ </resources>
+diff --git a/res/values-nl/e_strings.xml b/res/values-nl/e_strings.xml
+index a2807b6f70..f4a0370bbb 100644
+--- a/res/values-nl/e_strings.xml
++++ b/res/values-nl/e_strings.xml
+@@ -45,4 +45,5 @@
+     <string name="e_disabled_by_policy_title">Deze instelling is geblokkeerd</string>
+     <string name="parental_control_dashboard_summary">Helpt ouders toezicht te houden op apparaten van kinderen</string>
+     <string name="e_peak_refresh_rate_summary">Activeer deze optie om de vernieuwingsfrequentie te verhogen van 60 naar %1$d Hz</string>
++    <string name="backup_settings_summary">Maak een back-up van je apps en hun gegevens</string>
+ </resources>
+\ No newline at end of file
+diff --git a/res/values-ru/e_strings.xml b/res/values-ru/e_strings.xml
+index e02b1f064f..d83985514d 100644
+--- a/res/values-ru/e_strings.xml
++++ b/res/values-ru/e_strings.xml
+@@ -37,4 +37,5 @@
+     <string name="system_update_summary">Обновления, настройки, примечания к выпуску</string>
+     <string name="elicense_title">Юридическая информация /e/</string>
+     <string name="e_version">Версия /e/ OS</string>
++    <string name="backup_settings_summary">Резервное копирование приложений и их данных</string>
+ </resources>
+\ No newline at end of file
+diff --git a/res/values-sv/e_strings.xml b/res/values-sv/e_strings.xml
+index 3b5dcb8ac8..5b102f280c 100644
+--- a/res/values-sv/e_strings.xml
++++ b/res/values-sv/e_strings.xml
+@@ -45,4 +45,5 @@
+     <string name="parental_control_dashboard_summary">Hjälper föräldrar att kontrollera barns enheter</string>
+     <string name="e_disabled_by_policy_title">Denna inställning är blockerad</string>
+     <string name="e_peak_refresh_rate_summary">Aktivera detta alternativ för att höja uppdateringsfrekvensen från 60 till %1$d Hz</string>
++    <string name="backup_settings_summary">Säkerhetskopiera dina appar och deras data</string>
+ </resources>
+\ No newline at end of file
+diff --git a/res/values-uk/e_strings.xml b/res/values-uk/e_strings.xml
+index 2a5532be9f..50b46f6832 100644
+--- a/res/values-uk/e_strings.xml
++++ b/res/values-uk/e_strings.xml
+@@ -26,4 +26,5 @@
+     <string name="e_version_pending_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - доступне оновлення</string>
+     <string name="telemetry_details">Увімкнути автоматичні повідомлення про помилки</string>
+     <string name="telemetry_dialog_title">Ви збираєтеся увімкнути телеметрію /e/OS</string>
++    <string name="backup_settings_summary">Резервне копіювання додатків та їхніх даних</string>
+ </resources>
+\ No newline at end of file
+diff --git a/res/values/e_strings.xml b/res/values/e_strings.xml
+index 391fdbc353..a070c79023 100644
+--- a/res/values/e_strings.xml
++++ b/res/values/e_strings.xml
+@@ -27,6 +27,9 @@
+     <!-- /e/ updater -->
+     <string name="system_update_summary">Updates, preferences, release notes</string>
+ 
++    <!-- Backup settings summary -->
++    <string name="backup_settings_summary">Backup your apps and their data</string>
++
+     <!-- /e/ OTA server change -->
+     <string name="title_ota_server">Connect to /e/ OS test channel</string>
+     <string name="use_ota_summary">Access test releases of /e/ OS</string>
+diff --git a/src/com/android/settings/search/CustomSiteMapRegistry.java b/src/com/android/settings/search/CustomSiteMapRegistry.java
+index 193a5ea0e5..b2dd653272 100644
+--- a/src/com/android/settings/search/CustomSiteMapRegistry.java
++++ b/src/com/android/settings/search/CustomSiteMapRegistry.java
+@@ -25,11 +25,11 @@ import com.android.settings.fuelgauge.batteryusage.PowerUsageAdvanced;
+ import com.android.settings.fuelgauge.batteryusage.PowerUsageSummary;
+ import com.android.settings.gestures.GestureNavigationSettingsFragment;
+ import com.android.settings.gestures.SystemNavigationGestureSettings;
++import com.android.settings.homepage.TopLevelSettings;
+ import com.android.settings.location.LocationSettings;
+ import com.android.settings.location.RecentLocationAccessSeeAllFragment;
+ import com.android.settings.security.SecuritySettings;
+ import com.android.settings.security.screenlock.ScreenLockSettings;
+-import com.android.settings.system.SystemDashboardFragment;
+ 
+ import java.util.Map;
+ 
+@@ -52,7 +52,7 @@ public class CustomSiteMapRegistry {
+         CUSTOM_SITE_MAP.put(UsbDetailsFragment.class.getName(),
+                 ConnectedDeviceDashboardFragment.class.getName());
+         CUSTOM_SITE_MAP.put(UserBackupSettingsActivity.class.getName(),
+-                SystemDashboardFragment.class.getName());
++                TopLevelSettings.class.getName());
+         CUSTOM_SITE_MAP.put(GestureNavigationSettingsFragment.class.getName(),
+                 SystemNavigationGestureSettings.class.getName());
+     }
+diff --git a/tests/unit/src/com/android/settings/search/CustomSiteMapRegistryTest.java b/tests/unit/src/com/android/settings/search/CustomSiteMapRegistryTest.java
+index def1ae9e02..541abcbe86 100644
+--- a/tests/unit/src/com/android/settings/search/CustomSiteMapRegistryTest.java
++++ b/tests/unit/src/com/android/settings/search/CustomSiteMapRegistryTest.java
+@@ -30,11 +30,11 @@ import com.android.settings.fuelgauge.batteryusage.PowerUsageAdvanced;
+ import com.android.settings.fuelgauge.batteryusage.PowerUsageSummary;
+ import com.android.settings.gestures.GestureNavigationSettingsFragment;
+ import com.android.settings.gestures.SystemNavigationGestureSettings;
++import com.android.settings.homepage.TopLevelSettings;
+ import com.android.settings.location.LocationSettings;
+ import com.android.settings.location.RecentLocationAccessSeeAllFragment;
+ import com.android.settings.security.SecuritySettings;
+ import com.android.settings.security.screenlock.ScreenLockSettings;
+-import com.android.settings.system.SystemDashboardFragment;
+ 
+ import org.junit.Rule;
+ import org.junit.Test;
+@@ -76,7 +76,7 @@ public class CustomSiteMapRegistryTest {
+     public void shouldContainUserBackupSettingsActivityPairs() {
+         assertThat(CustomSiteMapRegistry.CUSTOM_SITE_MAP.get(
+                 UserBackupSettingsActivity.class.getName())).isEqualTo(
+-                SystemDashboardFragment.class.getName());
++                TopLevelSettings.class.getName());
+     }
+ 
+     @Test

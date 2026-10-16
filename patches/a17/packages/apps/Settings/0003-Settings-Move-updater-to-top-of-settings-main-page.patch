@@ -1,0 +1,77 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Mohit Mali <futuretechnoworld.mohit@gmail.com>
+Date: Tue, 27 Oct 2020 16:33:04 +0000
+Subject: [PATCH 03/32] Settings: Move updater to top of settings main page
+
+Signed-off-by: Aayush Gupta <theimpulson@e.email>
+[a17: the home page is grouped into PreferenceCategory blocks now; the update
+ entry gets its own category above the account one, and is removed from the new
+ software_update_category in System]
+
+(cherry picked from commit 1a6796be90d78763c1d0deaeeb46838fd8588342)
+---
+ res/values/e_strings.xml              |  3 +++
+ res/xml/system_dashboard_fragment.xml |  9 ---------
+ res/xml/top_level_settings.xml        | 17 +++++++++++++++++
+ 3 files changed, 20 insertions(+), 9 deletions(-)
+
+diff --git a/res/values/e_strings.xml b/res/values/e_strings.xml
+index 8ec164fb58..7d469d145a 100644
+--- a/res/values/e_strings.xml
++++ b/res/values/e_strings.xml
+@@ -20,4 +20,7 @@
+ 
+     <!-- /e/ legal. -->
+     <string name="elicense_title">/e/ legal</string>
++
++    <!-- /e/ updater -->
++    <string name="system_update_summary">Updates, preferences, release notes</string>
+ </resources>
+diff --git a/res/xml/system_dashboard_fragment.xml b/res/xml/system_dashboard_fragment.xml
+index 3dae93a4d8..d1ec31b357 100644
+--- a/res/xml/system_dashboard_fragment.xml
++++ b/res/xml/system_dashboard_fragment.xml
+@@ -35,15 +35,6 @@
+                 android:targetClass="@string/additional_system_update_menu"/>
+         </Preference>
+ 
+-        <Preference
+-            android:key="system_update_settings"
+-            android:title="@string/system_update_settings_list_item_title"
+-            android:summary="@string/summary_placeholder"
+-            android:icon="@drawable/ic_system_update"
+-            settings:keywords="@string/keywords_system_update_settings"
+-            settings:controller="com.android.settings.system.SystemUpdatePreferenceController">
+-            <intent android:action="android.settings.SYSTEM_UPDATE_SETTINGS"/>
+-        </Preference>
+     </PreferenceCategory>
+ 
+     <PreferenceCategory
+diff --git a/res/xml/top_level_settings.xml b/res/xml/top_level_settings.xml
+index 93f4c9fa96..373b8fd371 100644
+--- a/res/xml/top_level_settings.xml
++++ b/res/xml/top_level_settings.xml
+@@ -20,6 +20,23 @@
+     xmlns:settings="http://schemas.android.com/apk/res-auto"
+     android:key="top_level_settings">
+ 
++    <!-- /e/OS: system updates on the main page -->
++    <PreferenceCategory
++        android:order="-150"
++        android:key="top_level_update_category"
++        android:layout="@layout/settingslib_expressive_untitled_preference_category">
++        <com.android.settings.widget.HomepagePreference
++            android:key="top_level_update"
++            android:title="@string/system_update_settings_list_item_title"
++            android:summary="@string/system_update_summary"
++            android:icon="@drawable/ic_system_update"
++            android:order="-10"
++            settings:controller="com.android.settings.system.SystemUpdatePreferenceController"
++            settings:keywords="@string/keywords_system_update_settings">
++            <intent android:action="android.settings.SYSTEM_UPDATE_SETTINGS" />
++        </com.android.settings.widget.HomepagePreference>
++    </PreferenceCategory>
++
+     <PreferenceCategory
+         android:order="-140"
+         android:key="top_level_account_category"

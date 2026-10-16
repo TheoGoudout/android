@@ -1,0 +1,1222 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: althafvly <althafvly@gmail.com>
+Date: Fri, 27 Sep 2024 19:31:33 +0530
+Subject: [PATCH 20/32] Settings: Change ping to quad9 dns
+
+(cherry picked from commit bc1f0fbc5b9e37a2d4ff1389c6628b2e39a3d50d)
+---
+ res/values-af/strings.xml                                     | 2 +-
+ res/values-am/strings.xml                                     | 2 +-
+ res/values-ar/strings.xml                                     | 2 +-
+ res/values-as/strings.xml                                     | 2 +-
+ res/values-az/strings.xml                                     | 2 +-
+ res/values-b+sr+Latn/strings.xml                              | 2 +-
+ res/values-be/strings.xml                                     | 2 +-
+ res/values-bg/strings.xml                                     | 2 +-
+ res/values-bn/strings.xml                                     | 2 +-
+ res/values-bs/strings.xml                                     | 2 +-
+ res/values-ca/strings.xml                                     | 2 +-
+ res/values-cs/strings.xml                                     | 2 +-
+ res/values-da/strings.xml                                     | 2 +-
+ res/values-de/strings.xml                                     | 2 +-
+ res/values-el/strings.xml                                     | 2 +-
+ res/values-en-rAU/strings.xml                                 | 2 +-
+ res/values-en-rCA/strings.xml                                 | 2 +-
+ res/values-en-rGB/strings.xml                                 | 2 +-
+ res/values-en-rIN/strings.xml                                 | 2 +-
+ res/values-en-rXC/strings.xml                                 | 2 +-
+ res/values-es-rUS/strings.xml                                 | 2 +-
+ res/values-es/strings.xml                                     | 2 +-
+ res/values-et/strings.xml                                     | 2 +-
+ res/values-eu/strings.xml                                     | 2 +-
+ res/values-fa/strings.xml                                     | 2 +-
+ res/values-fi/strings.xml                                     | 2 +-
+ res/values-fr-rCA/strings.xml                                 | 2 +-
+ res/values-fr/strings.xml                                     | 2 +-
+ res/values-gl/strings.xml                                     | 2 +-
+ res/values-gu/strings.xml                                     | 2 +-
+ res/values-hi/strings.xml                                     | 2 +-
+ res/values-hr/strings.xml                                     | 2 +-
+ res/values-hu/strings.xml                                     | 2 +-
+ res/values-hy/strings.xml                                     | 2 +-
+ res/values-in/strings.xml                                     | 2 +-
+ res/values-is/strings.xml                                     | 2 +-
+ res/values-it/strings.xml                                     | 2 +-
+ res/values-iw/strings.xml                                     | 2 +-
+ res/values-ja/strings.xml                                     | 2 +-
+ res/values-ka/strings.xml                                     | 2 +-
+ res/values-kk/strings.xml                                     | 2 +-
+ res/values-km/strings.xml                                     | 2 +-
+ res/values-kn/strings.xml                                     | 2 +-
+ res/values-ko/strings.xml                                     | 2 +-
+ res/values-ky/strings.xml                                     | 2 +-
+ res/values-lo/strings.xml                                     | 2 +-
+ res/values-lt/strings.xml                                     | 2 +-
+ res/values-lv/strings.xml                                     | 2 +-
+ res/values-mk/strings.xml                                     | 2 +-
+ res/values-ml/strings.xml                                     | 2 +-
+ res/values-mn/strings.xml                                     | 2 +-
+ res/values-mr/strings.xml                                     | 2 +-
+ res/values-ms/strings.xml                                     | 2 +-
+ res/values-my/strings.xml                                     | 2 +-
+ res/values-ne/strings.xml                                     | 2 +-
+ res/values-nl/strings.xml                                     | 2 +-
+ res/values-or/strings.xml                                     | 2 +-
+ res/values-pa/strings.xml                                     | 2 +-
+ res/values-pt-rBR/strings.xml                                 | 2 +-
+ res/values-pt-rPT/strings.xml                                 | 2 +-
+ res/values-pt/strings.xml                                     | 2 +-
+ res/values-ro/strings.xml                                     | 2 +-
+ res/values-ru/strings.xml                                     | 2 +-
+ res/values-si/strings.xml                                     | 2 +-
+ res/values-sk/strings.xml                                     | 2 +-
+ res/values-sl/strings.xml                                     | 2 +-
+ res/values-sq/strings.xml                                     | 2 +-
+ res/values-sr/strings.xml                                     | 2 +-
+ res/values-sv/strings.xml                                     | 2 +-
+ res/values-sw/strings.xml                                     | 2 +-
+ res/values-ta/strings.xml                                     | 2 +-
+ res/values-te/strings.xml                                     | 2 +-
+ res/values-th/strings.xml                                     | 2 +-
+ res/values-tl/strings.xml                                     | 2 +-
+ res/values-tr/strings.xml                                     | 2 +-
+ res/values-uk/strings.xml                                     | 2 +-
+ res/values-ur/strings.xml                                     | 2 +-
+ res/values-uz/strings.xml                                     | 2 +-
+ res/values-vi/strings.xml                                     | 2 +-
+ res/values-zh-rCN/strings.xml                                 | 2 +-
+ res/values-zh-rHK/strings.xml                                 | 2 +-
+ res/values-zh-rTW/strings.xml                                 | 2 +-
+ res/values-zu/strings.xml                                     | 2 +-
+ res/values/strings.xml                                        | 2 +-
+ src/com/android/settings/wifi/WifiStatusTest.java             | 4 ++--
+ .../src/com/android/settings/vpn2/VpnInfoPreferenceTest.java  | 2 +-
+ 86 files changed, 87 insertions(+), 87 deletions(-)
+
+diff --git a/res/values-af/strings.xml b/res/values-af/strings.xml
+index 69b6b760a8..a8a2f068aa 100644
+--- a/res/values-af/strings.xml
++++ b/res/values-af/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Die poort wat jy ingevoer het, is nie geldig nie."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Die HTTP-instaanbediener word deur die blaaier gebruik, maar kan nie deur die ander apps gebruik word nie."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC-URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Pieng gasheernaam(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Pieng gasheernaam(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP-kliënttoets:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Doen piengtoets"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Slaan oor"</string>
+diff --git a/res/values-am/strings.xml b/res/values-am/strings.xml
+index d86392ab7d..fd7f306293 100644
+--- a/res/values-am/strings.xml
++++ b/res/values-am/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"የተየብከው ወደብ ትክክል አይደለም።"</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"አሳሹ የHTTP ተተኪ ተጠቅሟል ሆኖም በሌሎች መተግበሪያዎች ላይጠቀም ይችላል።"</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"የፒኤሲ ዩአርኤል፦ "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ፒንግ ስመ ከዳም(www.google.com) IPv4፦"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ፒንግ ስመ ከዳም(dns.quad9.net) IPv4፦"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"የኤችቲቲፒ ደንበኛ ፍተሻ፦"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"የፒንግ ሙከራን አስሂድ"</string>
+     <string name="skip_label" msgid="6380034601349015895">"ዝለል"</string>
+diff --git a/res/values-ar/strings.xml b/res/values-ar/strings.xml
+index 0d917fdbac..896556c217 100644
+--- a/res/values-ar/strings.xml
++++ b/res/values-ar/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"المنفذ الذي كتبته غير صالح."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"‏يتم استخدام الخادم الوكيل HTTP على المتصفّح، ولكن قد لا تستخدمه التطبيقات الأخرى."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"‏عنوان URL لإعداد PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"‏فحص اتصال اسم المضيف (www.google.com) عبر IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"‏فحص اتصال اسم المضيف (dns.quad9.net) عبر IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"‏اختبار عميل HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"‏تشغيل اختبار Ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"التخطي"</string>
+diff --git a/res/values-as/strings.xml b/res/values-as/strings.xml
+index ef496a626a..4c5aa0fff2 100644
+--- a/res/values-as/strings.xml
++++ b/res/values-as/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"আপুনি টাইপ কৰা প\'ৰ্টটো মান্য নহয়।"</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP প্ৰক্সিটো ব্ৰাউজাৰে ব্যৱহাৰ কৰি আছে, কিন্তু তাক অইন এপে ব্যৱহাৰ নকৰিবও পাৰে।"</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"পিএচি ইউআৰএল: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"হ\'ষ্টনাম (www.google.com) IPv4 পিং কৰক:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"হ\'ষ্টনাম (dns.quad9.net) IPv4 পিং কৰক:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP ক্লায়েণ্ট পৰীক্ষা:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"পিং টেষ্ট চলাওক"</string>
+     <string name="skip_label" msgid="6380034601349015895">"এৰি যাওক"</string>
+diff --git a/res/values-az/strings.xml b/res/values-az/strings.xml
+index ee7592eb2e..578fae7155 100644
+--- a/res/values-az/strings.xml
++++ b/res/values-az/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Daxil etdiyiniz port etibarlı deyil."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP proksi brauzer tərəfindən istifadə olunur və digər tətbiqlər tərəfindən istifadə edilə bilməz."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Hostname(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Hostname(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP Müştəri Testi:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Ping Testi Çalışdırın"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Ötürün"</string>
+diff --git a/res/values-b+sr+Latn/strings.xml b/res/values-b+sr+Latn/strings.xml
+index 47f4a5d03a..ee80a74517 100644
+--- a/res/values-b+sr+Latn/strings.xml
++++ b/res/values-b+sr+Latn/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Uneli ste nevažeći port."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Pregledač koristi HTTP proksi, ali druge aplikacije ne mogu da ga koriste."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"IPv4 imena hosta za pingovanje (www.google.com):"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"IPv4 imena hosta za pingovanje (dns.quad9.net):"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Test za HTTP klijenta:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Pokreni test pingovanja"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Preskoči"</string>
+diff --git a/res/values-be/strings.xml b/res/values-be/strings.xml
+index 5face2ccf5..3f2fcb5c8e 100644
+--- a/res/values-be/strings.xml
++++ b/res/values-be/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Вы ўвялі несапраўднае імя порта."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Проксі HTTP выкарыстоўваецца браўзерам, але не можа выкарыстоўвацца іншымі праграмамі."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL аўтаканфіг. проксі: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Каманда ping для вузла(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Каманда ping для вузла(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Тэст HTTP-кліента:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Выканаць праверку ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Прапусціць"</string>
+diff --git a/res/values-bg/strings.xml b/res/values-bg/strings.xml
+index 4a67cc0e36..2171948f26 100644
+--- a/res/values-bg/strings.xml
++++ b/res/values-bg/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Въведеният от вас порт е невалиден."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP прокси сървърът се използва от браузъра, но не и от други приложения."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL адрес на PAC файла: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Име на хост за позив (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Име на хост за позив (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP тест на клиентската програма:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Изпълняване на тест „ping“"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Пропускане"</string>
+diff --git a/res/values-bn/strings.xml b/res/values-bn/strings.xml
+index 9386cbb745..e8c0ae7480 100644
+--- a/res/values-bn/strings.xml
++++ b/res/values-bn/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"আপনার টাইপ করা পোর্টটি বৈধ নয।"</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"ব্রাউজার দ্বারা ব্যবহৃত HTTP প্রক্সি অন্য অ্যাপ্লিকেশনগুলির দ্বারা ব্যবহৃত নাও হতে পারে৷"</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"হোস্টনামে(www.google.com) IPv4 পিং করুন:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"হোস্টনামে(dns.quad9.net) IPv4 পিং করুন:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP ক্লায়েন্ট পরীক্ষা:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"পিং পরীক্ষা চালান"</string>
+     <string name="skip_label" msgid="6380034601349015895">"এড়িয়ে যান"</string>
+diff --git a/res/values-bs/strings.xml b/res/values-bs/strings.xml
+index feebc73c9e..1b28c5679c 100644
+--- a/res/values-bs/strings.xml
++++ b/res/values-bs/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Uneseni port nije važeći."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Preglednik koristi HTTP proksi, ali ga druge aplikacije ne mogu koristiti."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL za PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Pinguj ime računara (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Pinguj ime računara (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Test HTTP klijenta:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Pokreni ping test"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Preskoči"</string>
+diff --git a/res/values-ca/strings.xml b/res/values-ca/strings.xml
+index fff74335fd..88af227c4b 100644
+--- a/res/values-ca/strings.xml
++++ b/res/values-ca/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"El port que has escrit no és vàlid."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"El navegador utilitza un servidor intermediari HTTP, però pot ser que la resta d\'aplicacions no."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL de PAC "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Fer ping a IPv4 de nom d\'amfitrió (www.google.com):"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Fer ping a IPv4 de nom d\'amfitrió (dns.quad9.net):"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Prova de client HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Executa la prova de ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Omet"</string>
+diff --git a/res/values-cs/strings.xml b/res/values-cs/strings.xml
+index 465fb49402..0cbd255dae 100644
+--- a/res/values-cs/strings.xml
++++ b/res/values-cs/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Zadaný port není platný."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Proxy server protokolu HTTP může používat prohlížeč, ale nesmí jej používat další aplikace."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"Adresa URL souboru PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping názvu hostitele (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping názvu hostitele (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Test klienta HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Spustit test Ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Přeskočit"</string>
+diff --git a/res/values-da/strings.xml b/res/values-da/strings.xml
+index d79f572f24..99bc47c0af 100644
+--- a/res/values-da/strings.xml
++++ b/res/values-da/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Den indtastede port er ikke gyldig."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP-proxyen anvendes af browseren, men må ikke bruges af andre apps."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"Webadresse til PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping værtsnavn (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping værtsnavn (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP-klienttest:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Kør ping-test"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Spring over"</string>
+diff --git a/res/values-de/strings.xml b/res/values-de/strings.xml
+index 22f4fb09d5..52de3ba593 100644
+--- a/res/values-de/strings.xml
++++ b/res/values-de/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Der eingegebene Port ist ungültig."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Der HTTP-Proxy wird vom Browser verwendet, eventuell aber nicht von anderen Apps."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC-URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Hostnamen (www.google.com) IPv4 pingen:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Hostnamen (dns.quad9.net) IPv4 pingen:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP-Client-Test:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Pingtest ausführen"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Überspringen"</string>
+diff --git a/res/values-el/strings.xml b/res/values-el/strings.xml
+index 1a1ef1bb44..62a5cfa3ed 100644
+--- a/res/values-el/strings.xml
++++ b/res/values-el/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Η θύρα που πληκτρολογήσατε δεν είναι έγκυρη."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Ο διακ/στής μεσ/σης ΗΤΤΡ χρησιμοποιείται απο το πρόγραμμα περιήγησης, αλλά όχι από άλλες εφαρμογές."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Όνομα κεντρικού υπολογιστή Ping (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Όνομα κεντρικού υπολογιστή Ping (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Δοκιμή πελάτη HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Εκτέλεση δοκιμής ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Παραβλέψη"</string>
+diff --git a/res/values-en-rAU/strings.xml b/res/values-en-rAU/strings.xml
+index c181c5bc2b..7294175949 100644
+--- a/res/values-en-rAU/strings.xml
++++ b/res/values-en-rAU/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"The port that you typed is not valid."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"The HTTP proxy is used by the browser but may not be used by other apps."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Hostname(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Hostname(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP Client test:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Run ping test"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Skip"</string>
+diff --git a/res/values-en-rCA/strings.xml b/res/values-en-rCA/strings.xml
+index 22b6f74c23..2235d5db30 100644
+--- a/res/values-en-rCA/strings.xml
++++ b/res/values-en-rCA/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"The port you typed isn’t valid."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"The HTTP proxy is used by the browser but may not be used by the other apps."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Hostname(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Hostname(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP Client Test:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Run Ping Test"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Skip"</string>
+diff --git a/res/values-en-rGB/strings.xml b/res/values-en-rGB/strings.xml
+index ffe06a45ad..b3a5bab4a2 100644
+--- a/res/values-en-rGB/strings.xml
++++ b/res/values-en-rGB/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"The port that you typed is not valid."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"The HTTP proxy is used by the browser but may not be used by other apps."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Hostname(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Hostname(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP Client test:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Run ping test"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Skip"</string>
+diff --git a/res/values-en-rIN/strings.xml b/res/values-en-rIN/strings.xml
+index 28a57a30e8..129106f607 100644
+--- a/res/values-en-rIN/strings.xml
++++ b/res/values-en-rIN/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"The port that you typed is not valid."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"The HTTP proxy is used by the browser but may not be used by other apps."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Hostname(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Hostname(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP Client test:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Run ping test"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Skip"</string>
+diff --git a/res/values-en-rXC/strings.xml b/res/values-en-rXC/strings.xml
+index 4cf25f61d4..5cf1eb70e1 100644
+--- a/res/values-en-rXC/strings.xml
++++ b/res/values-en-rXC/strings.xml
+@@ -156,7 +156,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‏‎‏‏‏‏‏‎‏‎‎‏‏‏‎‏‎‎‎‏‏‎‎‏‎‏‏‏‏‏‏‎‏‏‏‏‏‏‎‏‏‏‎‏‎‏‏‏‏‎‎‏‎‎‎‎‎‏‎‎‏‏‏‎‎‎‏‏‏‎‎The port you typed isn’t valid.‎‏‎‎‏‎"</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‏‎‏‏‏‏‏‎‏‎‏‏‎‏‎‏‏‏‏‎‏‎‏‎‎‏‏‏‎‎‏‏‎‏‏‏‏‏‎‎‎‏‎‏‎‎‎‏‎‎‎‏‏‏‏‏‏‎‎‎‎‎‎‎‎‎‎‏‏‎‎The HTTP proxy is used by the browser but may not be used by the other apps.‎‏‎‎‏‎"</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‏‎‏‏‏‏‏‎‏‏‎‎‎‎‏‎‎‏‏‎‏‏‏‏‎‏‎‎‏‏‏‎‎‏‎‎‏‏‏‎‎‏‎‏‎‏‏‎‏‏‏‎‏‎‏‏‏‏‎‏‏‏‎‏‏‎‏‎‎‏‎PAC URL: ‎‏‎‎‏‎ "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‏‎‏‏‏‏‏‏‏‎‎‎‎‏‎‎‏‏‏‏‎‏‏‏‎‎‎‏‏‎‏‎‎‎‏‎‏‏‏‏‎‎‎‏‎‏‎‎‏‏‏‎‎‎‏‏‎‏‏‎‏‏‏‏‎‏‏‎‎‎‎‎Ping Hostname(www.google.com) IPv4:‎‏‎‎‏‎"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‏‎‏‏‏‏‏‏‏‎‎‎‎‏‎‎‏‏‏‏‎‏‏‏‎‎‎‏‏‎‏‎‎‎‏‎‏‏‏‏‎‎‎‏‎‏‎‎‏‏‏‎‎‎‏‏‎‏‏‎‏‏‏‏‎‏‏‎‎‎‎‎Ping Hostname(dns.quad9.net) IPv4:‎‏‎‎‏‎"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‏‎‏‏‏‏‏‏‏‎‎‏‏‏‎‏‎‏‏‏‏‏‎‎‎‎‎‎‎‏‎‏‏‎‏‎‎‎‏‎‎‎‎‎‎‏‏‏‏‏‏‏‎‏‎‎‎‎‏‎‎‎‏‎‎‎‏‎‏‎‏‎HTTP Client Test:‎‏‎‎‏‎"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‏‎‏‏‏‎‏‎‏‏‏‎‏‎‏‏‏‎‏‏‏‏‏‏‎‎‎‏‏‏‏‎‏‏‎‎‎‎‎‎‎‏‎‎‎‎‏‏‏‏‎‏‎‎‎‎‎‏‎‎‏‎‎‏‎‏‎Run Ping Test‎‏‎‎‏‎"</string>
+     <string name="skip_label" msgid="6380034601349015895">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‏‎‏‏‏‏‏‏‏‎‏‏‎‎‎‏‎‎‎‏‎‏‎‎‏‏‎‏‏‏‏‏‎‏‎‏‎‏‎‏‏‎‎‎‏‎‎‎‎‎‏‏‎‏‏‏‏‏‎‏‎‎‏‎‏‎‏‎‏‏‏‎Skip‎‏‎‎‏‎"</string>
+diff --git a/res/values-es-rUS/strings.xml b/res/values-es-rUS/strings.xml
+index 8f7a041640..c0b804e95b 100644
+--- a/res/values-es-rUS/strings.xml
++++ b/res/values-es-rUS/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"El puerto que has escrito no es válido."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"El navegador usa el proxy HTTP, pero tal vez las demás aplicaciones no lo usen."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL de archivo PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Hacer ping a IPv4 de nombre de host (www.google.com):"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Hacer ping a IPv4 de nombre de host (dns.quad9.net):"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Prueba de cliente HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Ejecutar prueba de ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Omitir"</string>
+diff --git a/res/values-es/strings.xml b/res/values-es/strings.xml
+index 8de4fa5dd1..1b5c183fde 100644
+--- a/res/values-es/strings.xml
++++ b/res/values-es/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"El puerto que has introducido no es válido."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"El navegador utiliza el proxy HTTP, pero puede que otras aplicaciones no lo usen."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL de archivo PAC "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Hacer ping a IPv4 de nombre de host (www.google.com):"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Hacer ping a IPv4 de nombre de host (dns.quad9.net):"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Prueba de cliente HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Ejecutar prueba de ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Saltar"</string>
+diff --git a/res/values-et/strings.xml b/res/values-et/strings.xml
+index 601d2fe5e1..dfa59f7d6a 100644
+--- a/res/values-et/strings.xml
++++ b/res/values-et/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Sisestatud port on kehtetu."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Brauser kasutab HTTP-puhverserverit, kuid muud rakendused ei pruugi seda kasutada."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Pingi hosti nimi (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Pingi hosti nimi (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP-kliendi test:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Pingimistesti käitamine"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Jäta vahele"</string>
+diff --git a/res/values-eu/strings.xml b/res/values-eu/strings.xml
+index d1359ffeaf..f64c3dae75 100644
+--- a/res/values-eu/strings.xml
++++ b/res/values-eu/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Idatzi duzun ataka ez da baliozkoa."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Arakatzaileak HTTP proxya erabiltzen du; beste aplikazioek, ordea, agian ez dute erabiliko."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"Proxya auto. konfiguratzeko URLa: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping egiteko ostalari-izena (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping egiteko ostalari-izena (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP bezeroaren proba:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Egin ping-proba"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Saltatu"</string>
+diff --git a/res/values-fa/strings.xml b/res/values-fa/strings.xml
+index 62ace11afd..d5ca2e446d 100644
+--- a/res/values-fa/strings.xml
++++ b/res/values-fa/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"درگاهی که وارد کردید معتبر نیست."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"‏این مرورگر از پروکسی HTTP استفاده می‌کند اما ممکن است برنامه‌های دیگر از آن استفاده نکنند."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"‏نشانی وب PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"‏پینگ کردن نام میزبان (www.google.com)‏ IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"‏پینگ کردن نام میزبان (dns.quad9.net)‏ IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"‏آزمایش کارخواه HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"اجرای آزمایش پینگ"</string>
+     <string name="skip_label" msgid="6380034601349015895">"رد شدن"</string>
+diff --git a/res/values-fi/strings.xml b/res/values-fi/strings.xml
+index b3f0bd0ef4..5a97d63f50 100644
+--- a/res/values-fi/strings.xml
++++ b/res/values-fi/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Antamasi portti on virheellinen."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Selain käyttää HTTP-välityspalvelinta, mutta muut sovellukset mahdollisesti eivät."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"Välitysp. aut. määr. URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping isäntänimelle (www.google.com), IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping isäntänimelle (dns.quad9.net), IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP-asiakastesti:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Suorita ping-testi"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Ohita"</string>
+diff --git a/res/values-fr-rCA/strings.xml b/res/values-fr-rCA/strings.xml
+index 0334d65e64..2bca88223c 100644
+--- a/res/values-fr-rCA/strings.xml
++++ b/res/values-fr-rCA/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Le port indiqué n\'est pas valide."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Le serveur mandataire HTTP est utilisé par le navigateur, mais ne peut pas l\'être par les autres applis."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL config. auto mand. : "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Faire un ping de l\'IPv4 du nom d\'hôte (www.google.com) :"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Faire un ping de l\'IPv4 du nom d\'hôte (dns.quad9.net) :"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Test du client HTTP :"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Effectuer le test de ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Ignorer"</string>
+diff --git a/res/values-fr/strings.xml b/res/values-fr/strings.xml
+index 2915f9d47a..ba9b6a6a7c 100644
+--- a/res/values-fr/strings.xml
++++ b/res/values-fr/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Le port indiqué n\'est pas valide."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Le proxy HTTP est utilisé par le navigateur, mais ne peut pas l\'être par les autres applications."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL config. auto proxy : "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Pinguer l\'IPv4 du nom d\'hôte (www.google.com) :"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Pinguer l\'IPv4 du nom d\'hôte (dns.quad9.net) :"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Test du client HTTP :"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Effectuer un test de ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Ignorer"</string>
+diff --git a/res/values-gl/strings.xml b/res/values-gl/strings.xml
+index 652521d94c..188bbccf70 100644
+--- a/res/values-gl/strings.xml
++++ b/res/values-gl/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"O porto que inseriches non é válido."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"O navegador utiliza o proxy HTTP, pero non o poden utilizar as demais aplicacións."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL de PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Facer ping ao IPv4 do nome do servidor (www.google.com):"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Facer ping ao IPv4 do nome do servidor (dns.quad9.net):"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Proba de cliente HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Executar proba de ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Omitir"</string>
+diff --git a/res/values-gu/strings.xml b/res/values-gu/strings.xml
+index 00a9e3db65..33ccb94512 100644
+--- a/res/values-gu/strings.xml
++++ b/res/values-gu/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"તમે ટાઇપ કરેલ પોર્ટ માન્ય નથી."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP પ્રૉક્સીનો ઉપયોગ બ્રાઉઝર દ્વારા કરવામાં આવે છે પરંતુ અન્ય ઍપ દ્વારા કરી શકાતો નથી."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"હોસ્ટનું નામ પિંગ કરો(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"હોસ્ટનું નામ પિંગ કરો(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP ક્લાઇન્ટ પરીક્ષણ:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"પિંગ પરીક્ષણ શરૂ કરો"</string>
+     <string name="skip_label" msgid="6380034601349015895">"છોડો"</string>
+diff --git a/res/values-hi/strings.xml b/res/values-hi/strings.xml
+index 0153f8f5b1..5a7e2d7806 100644
+--- a/res/values-hi/strings.xml
++++ b/res/values-hi/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"लिखा गया पोर्ट मान्‍य नहीं है."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"एचटीटीपी प्रॉक्सी का इस्तेमाल ब्राउज़र करता है, लेकिन हो सकता है कि अन्य ऐप्लिकेशन इसका इस्तेमाल न करे."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"पीएसी यूआरएल: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"होस्‍टनाम(www.google.com) IPv4 पिंग करें:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"होस्‍टनाम(dns.quad9.net) IPv4 पिंग करें:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP क्लाइंट परीक्षण:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"पिंग परीक्षण चलाएं"</string>
+     <string name="skip_label" msgid="6380034601349015895">"अभी नहीं"</string>
+diff --git a/res/values-hr/strings.xml b/res/values-hr/strings.xml
+index 2715289384..55cf74fd09 100644
+--- a/res/values-hr/strings.xml
++++ b/res/values-hr/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Upisani priključak nije valjan."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Preglednik upotrebljava HTTP proxy poslužitelj, ali druge aplikacije ne mogu ga upotrebljavati."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL za PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Pinganje naziva hosta (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Pinganje naziva hosta (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Test HTTP klijenta:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Pokreni ping test"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Preskoči"</string>
+diff --git a/res/values-hu/strings.xml b/res/values-hu/strings.xml
+index 7b12bdc98b..d5181c5d3d 100644
+--- a/res/values-hu/strings.xml
++++ b/res/values-hu/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"A megadott port nem érvényes."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"A HTTP proxyt a böngésző használja, de más alkalmazások nem használhatják."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Pingelt gazdagépnév(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Pingelt gazdagépnév(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP-kliens tesztje:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Pingteszt futtatása"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Kihagyás"</string>
+diff --git a/res/values-hy/strings.xml b/res/values-hy/strings.xml
+index aab58e2812..e7bf422993 100644
+--- a/res/values-hy/strings.xml
++++ b/res/values-hy/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Ձեր մուտքագրած միացքը վավեր չէ:"</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP պրոքսին օգտագործվում է միայն դիտարկիչի կողմից:"</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL` "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Փինգ հանգույցի անուն(www.google.com) IPv4՝"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Փինգ հանգույցի անուն(dns.quad9.net) IPv4՝"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP սպասառուի թեստ՝"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Գործարկել փինգ թեստը"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Բաց թողնել"</string>
+diff --git a/res/values-in/strings.xml b/res/values-in/strings.xml
+index 31225aefc2..3d042bad1e 100644
+--- a/res/values-in/strings.xml
++++ b/res/values-in/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Port yang Anda ketik tidak valid."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Proxy HTTP digunakan oleh browser, tetapi tidak boleh digunakan oleh aplikasi lain."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Hostname(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Hostname(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Uji Klien HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Jalankan Uji Ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Lewati"</string>
+diff --git a/res/values-is/strings.xml b/res/values-is/strings.xml
+index 4fc635f744..fee1acc8c9 100644
+--- a/res/values-is/strings.xml
++++ b/res/values-is/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Gáttin sem þú gafst upp er ekki gild."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP-staðgengilsþjónn er notaður af vafranum en ekki endilega öðrum forritum."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC-slóð: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Hostname(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Hostname(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Prófun HTTP-biðlara:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Keyra ping-próf"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Sleppa"</string>
+diff --git a/res/values-it/strings.xml b/res/values-it/strings.xml
+index c3e09c72ec..b4ece8c396 100644
+--- a/res/values-it/strings.xml
++++ b/res/values-it/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"La porta specificata non è valida."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Il proxy HTTP viene utilizzato dal browser, ma potrebbe non essere usato dalle altre app."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL config. autom. proxy: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping nome host (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping nome host (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Test client HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Invia ping di test"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Salta"</string>
+diff --git a/res/values-iw/strings.xml b/res/values-iw/strings.xml
+index 136b7a8ddc..33447d4d12 100644
+--- a/res/values-iw/strings.xml
++++ b/res/values-iw/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"היציאה שהקלדת אינה חוקית."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"‏הדפדפן משתמש בשרת ה-Proxy ל-HTTP, אבל אפליקציות אחרות לא יכולות להשתמש בו."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"‏כתובת ה-URL של PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"‏שליחת פינג לשם המארח (www.google.com) מסוג IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"‏שליחת פינג לשם המארח (dns.quad9.net) מסוג IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"‏בדיקת לקוח HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"הפעלת בדיקת פינג"</string>
+     <string name="skip_label" msgid="6380034601349015895">"דילוג"</string>
+diff --git a/res/values-ja/strings.xml b/res/values-ja/strings.xml
+index a8afbf5308..f92d46bda2 100644
+--- a/res/values-ja/strings.xml
++++ b/res/values-ja/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"入力したポートは無効です。"</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP プロキシはブラウザで使用されますが、他のアプリでの対応は限定的です。"</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ホスト名（www.google.com）の ping（IPv4）:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ホスト名（dns.quad9.net）の ping（IPv4）:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP クライアント テスト:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"ping テストの実行"</string>
+     <string name="skip_label" msgid="6380034601349015895">"スキップ"</string>
+diff --git a/res/values-ka/strings.xml b/res/values-ka/strings.xml
+index 4e2229c956..a3ff97569e 100644
+--- a/res/values-ka/strings.xml
++++ b/res/values-ka/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"თქვენს მიერ შეყვანილი პორტი არასწორია."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP პროქსი სერვერს იყენებს ბრაუზერი, თუმცა მისი გამოყენება სხვა აპლიკაციების მიერ დაუშვებელია."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping-ის მოთხოვნა (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping-ის მოთხოვნა (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP კლიენტის ტესტი:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Ping ტესტის გაშვება"</string>
+     <string name="skip_label" msgid="6380034601349015895">"გამოტოვება"</string>
+diff --git a/res/values-kk/strings.xml b/res/values-kk/strings.xml
+index aa38ea1bef..45e33d3fa9 100644
+--- a/res/values-kk/strings.xml
++++ b/res/values-kk/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Сіз терген порт жарамсыз."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP прокси-серверін браузер пайдаланады, бірақ басқа қолданбалар пайдалана алмайды."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL мекенжайы: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Пингке арналған хост атауы (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Пингке арналған хост атауы (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP клиент тесті:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Экран тестін қосу"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Өткізіп жіберу"</string>
+diff --git a/res/values-km/strings.xml b/res/values-km/strings.xml
+index 5c5e294797..9e51e58e60 100644
+--- a/res/values-km/strings.xml
++++ b/res/values-km/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"ច្រក​ដែល​អ្នក​បាន​បញ្ចូល​មិន​ត្រឹមត្រូវ។"</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"ប្រូកស៊ី HTTP ​ប្រើ​ដោយ​​កម្មវិធីរុករកតាម​អ៊ីនធឺណិត ប៉ុន្តែ​ប្រហែលជាមិនប្រើដោយ​កម្មវិធី​ផ្សេងទេ។"</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL៖ "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Hostname(www.google.com) IPv4៖"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Hostname(dns.quad9.net) IPv4៖"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"ការសាកល្បងម៉ាស៊ីនកូន HTTP៖"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"ដំណើរការការសាកល្បង Ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"រំលង"</string>
+diff --git a/res/values-kn/strings.xml b/res/values-kn/strings.xml
+index 969ff2f0e5..c07caf5001 100644
+--- a/res/values-kn/strings.xml
++++ b/res/values-kn/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"ನೀವು ಟೈಪ್‌ ಮಾಡಿದ ಪೋರ್ಟ್ ಮಾನ್ಯವಾಗಿಲ್ಲ."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP ಪ್ರಾಕ್ಸಿಯನ್ನು ಬ್ರೌಸರ್ ಬಳಸುತ್ತದೆ, ಇತರೆ ಆ್ಯಪ್‌ಗಳು ಬಳಸದಿರಬಹುದು."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ಹೋಸ್ಟ್‌ಹೆಸರನ್ನು ಪಿಂಗ್ ಮಾಡಿ(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ಹೋಸ್ಟ್‌ಹೆಸರನ್ನು ಪಿಂಗ್ ಮಾಡಿ(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP ಕ್ಲೈಂಟ್ ಪರೀಕ್ಷೆ:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"ಪಿಂಗ್ ಪರೀಕ್ಷೆ ರನ್ ಮಾಡಿ"</string>
+     <string name="skip_label" msgid="6380034601349015895">"ಸ್ಕಿಪ್‌"</string>
+diff --git a/res/values-ko/strings.xml b/res/values-ko/strings.xml
+index 83059d7156..1f84e4a631 100644
+--- a/res/values-ko/strings.xml
++++ b/res/values-ko/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"입력한 포트가 올바르지 않습니다."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP 프록시는 브라우저에서 사용되며 다른 앱에서는 사용되지 않을 수 있습니다."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"핑 호스트 이름(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"핑 호스트 이름(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP 클라이언트 테스트:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"핑 테스트 실행"</string>
+     <string name="skip_label" msgid="6380034601349015895">"건너뛰기"</string>
+diff --git a/res/values-ky/strings.xml b/res/values-ky/strings.xml
+index 436107a0e3..8f18602a0f 100644
+--- a/res/values-ky/strings.xml
++++ b/res/values-ky/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Сиз терген порт жараксыз."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP прокси серверин серепчи гана колдонот."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"www.google.com, IPv4 үчүн ping сурамы:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"dns.quad9.net, IPv4 үчүн ping сурамы:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP кардарын сыноо:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Түйүн байланышын текшерүү каражатын иштетүү"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Өткөрүп жиберүү"</string>
+diff --git a/res/values-lo/strings.xml b/res/values-lo/strings.xml
+index 2667bb00e2..6bcce3ffd9 100644
+--- a/res/values-lo/strings.xml
++++ b/res/values-lo/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"ພອດທີ່ທ່ານລະບຸນັ້ນບໍ່ຖືກຕ້ອງ."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP proxy ນີ້ຖືກໃຊ້ໂດຍໂປຣແກຣມທ່ອງເວັບແລ້ວ ແລະ ບໍ່ອາດໃຊ້ກັບແອັບອື່ນໄດ້."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Hostname(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Hostname(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"ທົດສອບ HTTP Client:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"ເລີ່ມທົດສອບ ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"ຂ້າມ"</string>
+diff --git a/res/values-lt/strings.xml b/res/values-lt/strings.xml
+index d78aeca401..7b0e553954 100644
+--- a/res/values-lt/strings.xml
++++ b/res/values-lt/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Prievadas, kurį įvedėte, netinkamas."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP įgaliotąjį serverį naudoja naršyklė, bet jo negali naudoti kitos programos."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ryšio patikros prieglobos serverio pavadinimas (www.google.com) „IPv4“:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ryšio patikros prieglobos serverio pavadinimas (dns.quad9.net) „IPv4“:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP kliento bandymas:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Paleisti ryšio patikros bandymą"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Praleisti"</string>
+diff --git a/res/values-lv/strings.xml b/res/values-lv/strings.xml
+index 8c7c3eb0be..53181426bb 100644
+--- a/res/values-lv/strings.xml
++++ b/res/values-lv/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Ierakstītais porta numurs nav derīgs."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP starpniekserveris tiek izmantots pārlūkprogrammā, taču, iespējams, netiek izmantots citās lietotnēs."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ehotestēšanas saimniekdatora nosaukuma (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ehotestēšanas saimniekdatora nosaukuma (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP klienta tests:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Veikt ehotestēšanu"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Izlaist"</string>
+diff --git a/res/values-mk/strings.xml b/res/values-mk/strings.xml
+index d45a92cdba..c9de5937b0 100644
+--- a/res/values-mk/strings.xml
++++ b/res/values-mk/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Внесениот порт не е исправен."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Прелистувачот користи HTTP-прокси, но не може да го користат и другите апликации."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Пингај го хостот (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Пингај го хостот (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Тестирање HTTP клиент:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Изврши пинг тест"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Прескокни"</string>
+diff --git a/res/values-ml/strings.xml b/res/values-ml/strings.xml
+index 04d7b2bb78..da4a514777 100644
+--- a/res/values-ml/strings.xml
++++ b/res/values-ml/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"നിങ്ങൾ ടൈപ്പുചെയ്‌ത പോർട്ട് സാധുവായതല്ല."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"ബ്രൗസർ HTTP പ്രോക്‌സി ഉപയോഗിക്കുന്നുവെങ്കിലും മറ്റ് ആപ്പുകൾ ഉപയോഗിക്കാനിടയില്ല."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ഹോസ്റ്റുനാമം(www.google.com) IPv4 പിംഗുചെയ്യുക:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ഹോസ്റ്റുനാമം(dns.quad9.net) IPv4 പിംഗുചെയ്യുക:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP ക്ലയന്റ് പരിശോധന:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"പിംഗ് പരിശോധന റൺ ചെയ്യുക"</string>
+     <string name="skip_label" msgid="6380034601349015895">"ഒഴിവാക്കുക"</string>
+diff --git a/res/values-mn/strings.xml b/res/values-mn/strings.xml
+index 1e199891ed..05669672fb 100644
+--- a/res/values-mn/strings.xml
++++ b/res/values-mn/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Таны оруулсан порт буруу байна."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP проксиг хөтөч ашиглаж байгаа боловч бусад апп ашиглахгүй байж магадгүй."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Пинг Хостын нэр(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Пинг Хостын нэр(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP Үйлчлүүлэгчийн тест:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Пинг тест явуулах"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Алгасах"</string>
+diff --git a/res/values-mr/strings.xml b/res/values-mr/strings.xml
+index 8489864253..4d79edd210 100644
+--- a/res/values-mr/strings.xml
++++ b/res/values-mr/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"तुम्ही टाइप केलेला पोर्ट वैध नाही."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"ब्राउझरद्वारे HTTP प्रॉक्सी वापरले जाते परंतु अन्य ॲप्सद्वारे कदाचित वापरले जाणार नाही."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"पिंग होस्ट नाव(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"पिंग होस्ट नाव(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP क्लायंट चाचणी:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"पिंग चाचणी चालवा"</string>
+     <string name="skip_label" msgid="6380034601349015895">"वगळा"</string>
+diff --git a/res/values-ms/strings.xml b/res/values-ms/strings.xml
+index 2eab14cc40..04fe7b846c 100644
+--- a/res/values-ms/strings.xml
++++ b/res/values-ms/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Port yang anda taipkan tidak sah."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Proksi HTTP digunakan oleh penyemak imbas tetapi tidak boleh digunakan oleh aplikasi lain."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Nama Hos(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Nama Hos(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Ujian Pelanggan HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Jalankan Ujian Ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Langkau"</string>
+diff --git a/res/values-my/strings.xml b/res/values-my/strings.xml
+index d1521e55b7..3cb420e92b 100644
+--- a/res/values-my/strings.xml
++++ b/res/values-my/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"သင်ရိုက်ထည့်သော ပို့ နံပါတ် မှာ မဆီလျော်ပါ"</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP ပရောက်စီကို ဘရောင်ဇာက အသုံးပြုသော်လည်း တခြားအက်ပ်များက အသုံးပြု၍မရနိုင်ပါ။"</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ပင်ကို လက်ခံဝန်ဆောင်ပေးသူအမည်(www.google.com) မှာ IPv4-"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ပင်ကို လက်ခံဝန်ဆောင်ပေးသူအမည်(dns.quad9.net) မှာ IPv4-"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP ကလိုင်းယင့် စမ်းသပ်မှု −"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Ping စမ်းသပ်ခြင်း လုပ်ဆောင်ပါ"</string>
+     <string name="skip_label" msgid="6380034601349015895">"ကျော်ရန်"</string>
+diff --git a/res/values-ne/strings.xml b/res/values-ne/strings.xml
+index 30519c15e5..a721ac111f 100644
+--- a/res/values-ne/strings.xml
++++ b/res/values-ne/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"तपाईंले टाइप गर्नुभएको पोर्ट मान्य छैन।"</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"ब्राउजरले HTTP प्रोक्सी प्रयोग गर्छ तर अन्य एपले यसको प्रयोग नगर्न पनि सक्छन्।"</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"पिङ् होस्टनाम (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"पिङ् होस्टनाम (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP क्लाइन्टको परीक्षण:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"पिङ सम्बन्धी परीक्षण सञ्चालन गर्नुहोस्"</string>
+     <string name="skip_label" msgid="6380034601349015895">"स्किप गर्नुहोस्"</string>
+diff --git a/res/values-nl/strings.xml b/res/values-nl/strings.xml
+index 58d7f150e0..ae9559e580 100644
+--- a/res/values-nl/strings.xml
++++ b/res/values-nl/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"De poort die je hebt ingevoerd, is ongeldig."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"De HTTP-proxy wordt gebruikt door de browser, maar mogelijk niet door de andere apps."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC-URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"IPv4 van hostnaam (www.google.com) pingen:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"IPv4 van hostnaam (dns.quad9.net) pingen:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP-client testen:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Pingtest uitvoeren"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Overslaan"</string>
+diff --git a/res/values-or/strings.xml b/res/values-or/strings.xml
+index 744c1af255..7bc82374cc 100644
+--- a/res/values-or/strings.xml
++++ b/res/values-or/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"ଆପଣ ଟାଇପ୍‌ କରିଥିବା ପୋର୍ଟ ସଠିକ ନୁହେଁ।"</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP ପ୍ରକ୍ସି ବ୍ରାଉଜର୍‌ ଦ୍ୱାରା ବ୍ୟବହୃତ ହୋଇଛି କିନ୍ତୁ ଅନ୍ୟ ଆପ୍‌ ଦ୍ୱାରା ବ୍ୟବହୃତ ହୋଇନପାରେ।"</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ହୋଷ୍ଟନାମ (www.google.com) IPv4 ପିଙ୍ଗ କରନ୍ତୁ:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ହୋଷ୍ଟନାମ (dns.quad9.net) IPv4 ପିଙ୍ଗ କରନ୍ତୁ:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP କ୍ଲାଏଣ୍ଟ ଟେଷ୍ଟ:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"ପିଙ୍ଗ ଟେଷ୍ଟ ଚଲାନ୍ତୁ"</string>
+     <string name="skip_label" msgid="6380034601349015895">"ବାଦ ଦିଅନ୍ତୁ"</string>
+diff --git a/res/values-pa/strings.xml b/res/values-pa/strings.xml
+index 5071338dc2..7528c557dd 100644
+--- a/res/values-pa/strings.xml
++++ b/res/values-pa/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"ਤੁਹਾਡੇ ਵੱਲੋਂ ਟਾਈਪ ਕੀਤਾ ਪੋਰਟ ਵੈਧ ਨਹੀਂ ਹੈ।"</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP ਪ੍ਰੌਕਸੀ ਬ੍ਰਾਊਜ਼ਰ ਵੱਲੋਂ ਵਰਤੀ ਜਾਂਦੀ ਹੈ, ਪਰ ਹੋ ਸਕਦਾ ਹੈ ਕਿ ਹੋਰ ਐਪਾਂ ਇਸ ਦੀ ਵਰਤੋਂ ਨਾ ਕਰਨ।"</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ਹੋਸਟਨੇਮ(www.google.com) IPv4 ਪਿੰਗ ਕਰੋ:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ਹੋਸਟਨੇਮ(dns.quad9.net) IPv4 ਪਿੰਗ ਕਰੋ:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP ਕਲਾਇੰਟ ਜਾਂਚ:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"ਪਿੰਗ ਟੈਸਟ ਚਲਾਓ"</string>
+     <string name="skip_label" msgid="6380034601349015895">"ਛੱਡੋ"</string>
+diff --git a/res/values-pt-rBR/strings.xml b/res/values-pt-rBR/strings.xml
+index af98c9b8d2..182dc0d9e2 100644
+--- a/res/values-pt-rBR/strings.xml
++++ b/res/values-pt-rBR/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"A porta digitada não é válida."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"O proxy HTTP é usado pelo navegador, mas não pode ser usado por outros apps."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL do PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Aplicar ping no nome do host (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Aplicar ping no nome do host (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Teste do cliente HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Executar teste de ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Pular"</string>
+diff --git a/res/values-pt-rPT/strings.xml b/res/values-pt-rPT/strings.xml
+index bddbda8fc0..b39b0dd714 100644
+--- a/res/values-pt-rPT/strings.xml
++++ b/res/values-pt-rPT/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"A porta introduzida não é válida."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"O proxy HTTP é utilizado pelo navegador, mas não pode ser utilizado por outras apps."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL do PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Nome do anfitrião de ping (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Nome do anfitrião de ping (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Teste de Cliente HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Executar teste de ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Ignorar"</string>
+diff --git a/res/values-pt/strings.xml b/res/values-pt/strings.xml
+index af98c9b8d2..182dc0d9e2 100644
+--- a/res/values-pt/strings.xml
++++ b/res/values-pt/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"A porta digitada não é válida."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"O proxy HTTP é usado pelo navegador, mas não pode ser usado por outros apps."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL do PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Aplicar ping no nome do host (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Aplicar ping no nome do host (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Teste do cliente HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Executar teste de ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Pular"</string>
+diff --git a/res/values-ro/strings.xml b/res/values-ro/strings.xml
+index 4a8fdf438f..a9c17f19d5 100644
+--- a/res/values-ro/strings.xml
++++ b/res/values-ro/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Portul introdus nu este valid."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Proxy-ul HTTP este utilizat de browser, dar nu poate fi utilizat de alte aplicații."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"Adresă URL fișier PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Dă ping adresei IPv4 a numelui de gazdă (www.google.com):"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Dă ping adresei IPv4 a numelui de gazdă (dns.quad9.net):"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Test client HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Fă testul de ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Omite"</string>
+diff --git a/res/values-ru/strings.xml b/res/values-ru/strings.xml
+index 8c931ccd7f..af23decaac 100644
+--- a/res/values-ru/strings.xml
++++ b/res/values-ru/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Указанный порт недействителен."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Прокси-сервер HTTP используется браузером, но не другими приложениями."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL автоконфигурации прокси: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Запрос ping для www.google.com, IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Запрос ping для dns.quad9.net, IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Проверка клиента HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Выполнить проверку ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Пропустить"</string>
+diff --git a/res/values-si/strings.xml b/res/values-si/strings.xml
+index 018c9293c9..c829614482 100644
+--- a/res/values-si/strings.xml
++++ b/res/values-si/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"ඔබ සඳහන් කළ තොට වලංගු නැත."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP නියුතුව බ්‍රව්සරය විසින් භාවිත කරන අතර වෙනත් යෙදුම් වලින් භාවිත නොකළ හැක."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"සත්කාරක නම පින්ග් කරන්න(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"සත්කාරක නම පින්ග් කරන්න(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP සේවාලාභී පරික්ෂාව:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"පින්ග් පරික්ෂාව ධාවනය කරන්න"</string>
+     <string name="skip_label" msgid="6380034601349015895">"මඟ හරින්න"</string>
+diff --git a/res/values-sk/strings.xml b/res/values-sk/strings.xml
+index 14dca350df..89cd748a72 100644
+--- a/res/values-sk/strings.xml
++++ b/res/values-sk/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Zadaný port nie je platný."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Prehliadač používa proxy server protokolu HTTP, ale ostatné aplikácie ho používať nemusia."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"Webová adresa PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Testovať dostupnosť domény (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Testovať dostupnosť domény (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Test klienta HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Spustiť testovanie dostupnosti (ping)"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Preskočiť"</string>
+diff --git a/res/values-sl/strings.xml b/res/values-sl/strings.xml
+index 1fa259b468..e8cd042f69 100644
+--- a/res/values-sl/strings.xml
++++ b/res/values-sl/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Vtipkana številka vrat je neveljavna."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Proxy za HTTP lahko uporablja brskalnik, druge aplikacije pa ne."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL datoteke PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Preverjanje imena gostitelja (www.google.com) za IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Preverjanje imena gostitelja (dns.quad9.net) za IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Preskus odjemalca HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Izvedba preskusa ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Preskoči"</string>
+diff --git a/res/values-sq/strings.xml b/res/values-sq/strings.xml
+index bf6f199f05..d66007a275 100644
+--- a/res/values-sq/strings.xml
++++ b/res/values-sq/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Porta që shkrove nuk është e vlefshme."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Proxy i HTTP-së përdoret zakonisht nga shfletuesi. Ai mund të mos përdoret nga aplikacionet e tjera."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL-ja për PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Verifiko emrin e pritësit (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Verifiko emrin e pritësit (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Testi i klientit HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Ekzekuto testin e verifikimit \"ping\""</string>
+     <string name="skip_label" msgid="6380034601349015895">"Anashkalo"</string>
+diff --git a/res/values-sr/strings.xml b/res/values-sr/strings.xml
+index e2813221d0..2f16f8fb2a 100644
+--- a/res/values-sr/strings.xml
++++ b/res/values-sr/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Унели сте неважећи порт."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Прегледач користи HTTP прокси, али друге апликације не могу да га користе."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"IPv4 имена хоста за пинговање (www.google.com):"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"IPv4 имена хоста за пинговање (dns.quad9.net):"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Тест за HTTP клијента:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Покрени тест пинговања"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Прескочи"</string>
+diff --git a/res/values-sv/strings.xml b/res/values-sv/strings.xml
+index 817ef4dfe2..eca48662b0 100644
+--- a/res/values-sv/strings.xml
++++ b/res/values-sv/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Porten som du har angett är inte giltig."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP-proxyn används av webbläsaren men får inte användas av de andra apparna."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC-webbadress: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Pinga värdnamn(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Pinga värdnamn(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Test av HTTP-klient:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Köra pingtest"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Hoppa över"</string>
+diff --git a/res/values-sw/strings.xml b/res/values-sw/strings.xml
+index 9b9abd4ed8..d187f933a2 100644
+--- a/res/values-sw/strings.xml
++++ b/res/values-sw/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Lango uliloandika si halali."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Seva mbadala ya HTTP inayotumiwa na kivinjari lakini haiwezi kutumika na programu zingine."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL ya PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ita Jina la mpangishaji(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ita Jina la mpangishaji(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Jaribio la Mteja la HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Tekeleza Jaribio la Mwito"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Ruka"</string>
+diff --git a/res/values-ta/strings.xml b/res/values-ta/strings.xml
+index 4eb203feb6..2a81f892e4 100644
+--- a/res/values-ta/strings.xml
++++ b/res/values-ta/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"நீங்கள் உள்ளிட்ட போர்ட் தவறானது."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP ப்ராக்ஸியை பிரவுசர் பயன்படுத்தும் ஆனால் பிற ஆப்ஸ் பயன்படுத்தாமல் போகலாம்."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ஹோஸ்ட்பெயர்(www.google.com) IPv4ஐப் பிங் செய்:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ஹோஸ்ட்பெயர்(dns.quad9.net) IPv4ஐப் பிங் செய்:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP க்ளையன்ட் சோதனை:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"பிங் சோதனையை இயக்கு"</string>
+     <string name="skip_label" msgid="6380034601349015895">"தவிர்"</string>
+diff --git a/res/values-te/strings.xml b/res/values-te/strings.xml
+index e78a1736dd..13cfde7994 100644
+--- a/res/values-te/strings.xml
++++ b/res/values-te/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"మీరు టైప్ చేసిన పోర్ట్ చెల్లదు."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"బ్రౌజ‌ర్, HTTP ప్రాక్సీని ఉపయోగిస్తుంది కానీ ఇతర యాప్‌లు ఉపయోగించకపోవచ్చు."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"పింగ్ హోస్ట్ పేరు(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"పింగ్ హోస్ట్ పేరు(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP క్లయింట్ పరీక్ష:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"పింగ్ పరీక్షను అమలు చేయండి"</string>
+     <string name="skip_label" msgid="6380034601349015895">"స్కిప్ చేయండి"</string>
+diff --git a/res/values-th/strings.xml b/res/values-th/strings.xml
+index 14c669434e..d919b40b60 100644
+--- a/res/values-th/strings.xml
++++ b/res/values-th/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"พอร์ตที่คุณพิมพ์ไม่ถูกต้อง"</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"พร็อกซี HTTP มีการใช้งานโดยเบราว์เซอร์ แต่อาจไม่มีการใช้งานโดยแอปพลิเคชันอื่น"</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ใช้คำสั่ง ping ชื่อโฮสต์ (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ใช้คำสั่ง ping ชื่อโฮสต์ (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"การทดสอบไคลเอ็นต์ HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"ใช้การทดสอบคำสั่ง ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"ข้าม"</string>
+diff --git a/res/values-tl/strings.xml b/res/values-tl/strings.xml
+index a6144165d7..41a84a517c 100644
+--- a/res/values-tl/strings.xml
++++ b/res/values-tl/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Hindi wasto ang port na iyong na-type."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Ang HTTP proxy ay ginagamit ng browser pero hindi puwedeng gamitin ng iba pang app."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"I-ping ang Hostname(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"I-ping ang Hostname(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Test ng HTTP Client:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Patakbuhin ang Ping Test"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Laktawan"</string>
+diff --git a/res/values-tr/strings.xml b/res/values-tr/strings.xml
+index 5f4b42cf2b..1d85730a5d 100644
+--- a/res/values-tr/strings.xml
++++ b/res/values-tr/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Yazdığınız bağlantı noktası geçerli değil."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP proxy, tarayıcı tarafından kullanılır, ancak diğer uygulamalar tarafından kullanılmayabilir."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL\'si: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Ana Makine Adı (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Ping Ana Makine Adı (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP İstemcisi Testi:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Ping Testini Çalıştır"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Atla"</string>
+diff --git a/res/values-uk/strings.xml b/res/values-uk/strings.xml
+index fa68825882..f5ddc6bd21 100644
+--- a/res/values-uk/strings.xml
++++ b/res/values-uk/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Введений порт не дійсний."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Проксі-сервер HTTP використовується вебпереглядачем і не може використовуватися іншими додатками."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL-адреса PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Надіслати запит ping на ім’я хосту (www.google.com) через IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Надіслати запит ping на ім’я хосту (dns.quad9.net) через IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Тест клієнта HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Тестувати з’єднання"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Пропустити"</string>
+diff --git a/res/values-ur/strings.xml b/res/values-ur/strings.xml
+index b9fb8cd2a4..e248e9b4ce 100644
+--- a/res/values-ur/strings.xml
++++ b/res/values-ur/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"آپ کے ذریعے ٹائپ کردہ پورٹ درست نہیں ہے۔"</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"‏براؤزر HTTP پراکسی کا استعمال کرتا ہے لیکن ممکن ہے دوسری ایپس اسے استعمال نہ کریں۔"</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC URL:‎ "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"‏میزبان کا نام پنگ کریں‏‎(www.google.com)‎ ‏IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"‏میزبان کا نام پنگ کریں‏‎(dns.quad9.net)‎ ‏IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"‏HTTP کلائنٹ ٹیسٹ:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"پنگ ٹیسٹ چلائیں"</string>
+     <string name="skip_label" msgid="6380034601349015895">"نظر انداز کریں"</string>
+diff --git a/res/values-uz/strings.xml b/res/values-uz/strings.xml
+index dba88afd91..ee14b45704 100644
+--- a/res/values-uz/strings.xml
++++ b/res/values-uz/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Siz noto‘g‘ri port raqamini kiritdingiz."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"HTTP proksi-serveri faqat brauzer tomonidan foydalaniladi."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"Proksi avto-sozlamalari URL "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"www.google.com uchun ping so‘rovi, IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"dns.quad9.net uchun ping so‘rovi, IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP mijozini tekshirish:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Ping tekshiruvini boshlash"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Tashlab ketish"</string>
+diff --git a/res/values-vi/strings.xml b/res/values-vi/strings.xml
+index ef869cef87..282956b0ca 100644
+--- a/res/values-vi/strings.xml
++++ b/res/values-vi/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Cổng bạn đã nhập không hợp lệ."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Trình duyệt sẽ sử dụng proxy HTTP, nhưng các ứng dụng khác có thể không."</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"URL PAC: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Tên máy chủ Ping (www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Tên máy chủ Ping (dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Kiểm tra máy khách HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Chạy kiểm tra ping"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Bỏ qua"</string>
+diff --git a/res/values-zh-rCN/strings.xml b/res/values-zh-rCN/strings.xml
+index 2f9b8a6c34..38d7b403a6 100644
+--- a/res/values-zh-rCN/strings.xml
++++ b/res/values-zh-rCN/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"您键入的端口无效。"</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"浏览器会使用 HTTP 代理，但其他应用可能不会使用。"</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC 网址： "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ping 主机名(www.google.com) IPv4："</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"ping 主机名(dns.quad9.net) IPv4："</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP 客户端测试："</string>
+     <string name="ping_test_label" msgid="265427033290391845">"运行 ping 测试"</string>
+     <string name="skip_label" msgid="6380034601349015895">"跳过"</string>
+diff --git a/res/values-zh-rHK/strings.xml b/res/values-zh-rHK/strings.xml
+index 8de7c7ad6d..18d7529938 100644
+--- a/res/values-zh-rHK/strings.xml
++++ b/res/values-zh-rHK/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"你所輸入的通訊埠無效。"</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"瀏覽器會使用 HTTP Proxy，但其他應用程式未必會採用。"</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC 網址： "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"連線偵測主機名稱 (www.google.com) IPv4："</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"連線偵測主機名稱 (dns.quad9.net) IPv4："</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP 用戶端測試："</string>
+     <string name="ping_test_label" msgid="265427033290391845">"執行連線偵測測試"</string>
+     <string name="skip_label" msgid="6380034601349015895">"略過"</string>
+diff --git a/res/values-zh-rTW/strings.xml b/res/values-zh-rTW/strings.xml
+index 39c4c1bed7..b565a53113 100644
+--- a/res/values-zh-rTW/strings.xml
++++ b/res/values-zh-rTW/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"你所輸入的通訊埠無效。"</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"瀏覽器會使用 HTTP Proxy，但其他應用程式不一定會採用這項設定。"</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"PAC 網址： "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"連線偵測 (ping) 主機名稱 (www.google.com) IPv4："</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"連線偵測 (ping) 主機名稱 (dns.quad9.net) IPv4："</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"HTTP 用戶端測試："</string>
+     <string name="ping_test_label" msgid="265427033290391845">"執行連線偵測 (ping) 測試"</string>
+     <string name="skip_label" msgid="6380034601349015895">"略過"</string>
+diff --git a/res/values-zu/strings.xml b/res/values-zu/strings.xml
+index d8f9ce5b14..1245ee705c 100644
+--- a/res/values-zu/strings.xml
++++ b/res/values-zu/strings.xml
+@@ -180,7 +180,7 @@
+     <string name="proxy_error_invalid_port" msgid="2830054691770209166">"Imbobo oyithayiphile ayilungile."</string>
+     <string name="proxy_warning_limited_support" msgid="3277104160797351942">"Iphrokzi ye-HTTP isetshenziswa isiphequluli kodwa kungenzeka ingasetshenziswa ezinye izinhlelo zokusebenza"</string>
+     <string name="proxy_url_title" msgid="3502625766036404073">"I-PAC URL: "</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Qhweba i-Hostname(www.google.com) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="4790577760885127088">"Qhweba i-Hostname(dns.quad9.net) IPv4:"</string>
+     <string name="radio_info_http_client_test" msgid="5673975677271544085">"Ukuhlola ikhasimende ye-HTTP:"</string>
+     <string name="ping_test_label" msgid="265427033290391845">"Yenza ukuhlola kokuntwiza"</string>
+     <string name="skip_label" msgid="6380034601349015895">"Yeqa"</string>
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index a84186b96b..b3fcf9406a 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -391,7 +391,7 @@
+     <string name="proxy_url_title">"PAC URL: "</string>
+ 
+     <!-- Radio Info screen. Label for a status item.  Used for diagnostic info screens, precise translation isn't needed -->
+-    <string name="radio_info_ping_hostname_v4">Ping Hostname(www.google.com) IPv4:</string>
++    <string name="radio_info_ping_hostname_v4">Ping Hostname(dns.quad9.net) IPv4:</string>
+     <!-- Radio Info screen. Label for a status item.  Used for diagnostic info screens, precise translation isn't needed -->
+     <string name="radio_info_http_client_test">HTTP Client Test:</string>
+     <!-- Radio Info screen. Label for a status item.  Used for diagnostic info screens, precise translation isn't needed -->
+diff --git a/src/com/android/settings/wifi/WifiStatusTest.java b/src/com/android/settings/wifi/WifiStatusTest.java
+index b9b1d70373..c62cec43a8 100644
+--- a/src/com/android/settings/wifi/WifiStatusTest.java
++++ b/src/com/android/settings/wifi/WifiStatusTest.java
+@@ -345,7 +345,7 @@ public class WifiStatusTest extends Activity {
+     private final void pingHostname() {
+         try {
+             // TODO: Hardcoded for now, make it UI configurable
+-            Process p = Runtime.getRuntime().exec("ping -c 1 -w 100 www.google.com");
++            Process p = Runtime.getRuntime().exec("ping -c 1 -w 100 dns.quad9.net");
+             int status = p.waitFor();
+             if (status == 0) {
+                 mPingHostnameResult = "Pass";
+@@ -365,7 +365,7 @@ public class WifiStatusTest extends Activity {
+         HttpURLConnection urlConnection = null;
+         try {
+             // TODO: Hardcoded for now, make it UI configurable
+-            URL url = new URL("https://www.google.com");
++            URL url = new URL("https://quad9.net");
+             urlConnection = (HttpURLConnection) url.openConnection();
+             if (urlConnection.getResponseCode() == 200) {
+                 mHttpClientTestResult = "Pass";
+diff --git a/tests/unit/src/com/android/settings/vpn2/VpnInfoPreferenceTest.java b/tests/unit/src/com/android/settings/vpn2/VpnInfoPreferenceTest.java
+index e0683cad8d..f50bace991 100644
+--- a/tests/unit/src/com/android/settings/vpn2/VpnInfoPreferenceTest.java
++++ b/tests/unit/src/com/android/settings/vpn2/VpnInfoPreferenceTest.java
+@@ -55,7 +55,7 @@ public class VpnInfoPreferenceTest {
+ 
+         final int helpUrlId = ResourcesUtils.getResourcesId(
+                 mContext, "string", "help_url_insecure_vpn");
+-        when(mResources.getString(helpUrlId)).thenReturn("https://www.google.com/");
++        when(mResources.getString(helpUrlId)).thenReturn("https://quad9.net/");
+ 
+         mVpnInfoPreference = new VpnInfoPreference(mContext, mAttrs);
+         LayoutInflater inflater = mContext.getSystemService(LayoutInflater.class);

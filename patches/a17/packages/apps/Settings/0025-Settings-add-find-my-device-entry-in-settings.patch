@@ -1,0 +1,347 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Frank PREEL <frank.preel@espridigital.fr>
+Date: Mon, 24 Mar 2025 18:29:21 +0100
+Subject: [PATCH 25/32] Settings: add find my device entry in settings
+
+(cherry picked from commit 5e09c067f232bdf014c25704cef239e61ab1da4f)
+---
+ res/drawable/ic_e_settings_find_my_device.xml | 29 ++++++++
+ res/values-de/e_strings.xml                   |  1 +
+ res/values-es/e_strings.xml                   |  1 +
+ res/values-fr/e_strings.xml                   |  1 +
+ res/values-it/e_strings.xml                   |  1 +
+ res/values/e_strings.xml                      |  4 +
+ res/xml/find_my_device_dashboard_settings.xml | 28 +++++++
+ res/xml/top_level_settings.xml                | 10 +++
+ .../core/gateway/SettingsGateway.java         |  2 +
+ .../dashboard/DashboardFragmentRegistry.java  |  3 +
+ .../FindMyDeviceDashboardFragment.java        | 74 +++++++++++++++++++
+ ...FindMyDeviceEntryPreferenceController.java | 49 ++++++++++++
+ 12 files changed, 203 insertions(+)
+ create mode 100644 res/drawable/ic_e_settings_find_my_device.xml
+ create mode 100644 res/xml/find_my_device_dashboard_settings.xml
+ create mode 100644 src/com/android/settings/findmydevice/FindMyDeviceDashboardFragment.java
+ create mode 100644 src/com/android/settings/findmydevice/TopLevelFindMyDeviceEntryPreferenceController.java
+
+diff --git a/res/drawable/ic_e_settings_find_my_device.xml b/res/drawable/ic_e_settings_find_my_device.xml
+new file mode 100644
+index 0000000000..351d1171f4
+--- /dev/null
++++ b/res/drawable/ic_e_settings_find_my_device.xml
+@@ -0,0 +1,29 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright Murena SAS 2025
++  ~ This program is free software: you can redistribute it and/or modify
++  ~ it under the terms of the GNU General Public License as published by
++  ~ the Free Software Foundation, either version 3 of the License, or
++  ~ (at your option) any later version.
++  ~
++  ~ This program is distributed in the hope that it will be useful,
++  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
++  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  ~ GNU General Public License for more details.
++  ~
++  ~ You should have received a copy of the GNU General Public License
++  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
++  -->
++<vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt" android:viewportWidth="32" android:viewportHeight="32" android:width="32dp" android:height="32dp">
++<group>
++<clip-path android:pathData="M0 0H32V32H0V0Z"/>
++<path android:pathData="M7 0H25A7 7 0 0 1 32 7V25A7 7 0 0 1 25 32H7A7 7 0 0 1 0 25V7A7 7 0 0 1 7 0Z" android:fillColor="#0088ED"/>
++<path android:pathData="M22.2808 4.54504H11.6445C10.744 4.54504 10.0072 5.28182 10.0072 6.18232V8.45287H11.6445V7.00096H22.2808V24.999H11.6445V23.5471H10.0072L10.0072 25.8176C10.0072 26.7181 10.744 27.4549 11.6445 27.4549H22.2808C23.1813 27.4549 23.918 26.7181 23.918 25.8176V6.18232C23.918 5.28182 23.1813 4.54504 22.2808 4.54504Z" android:fillColor="#FFFFFF"/>
++<path android:pathData="M11.2351 12.6733C12.7868 12.8444 14.0184 14.0761 14.1896 15.6278H14.9561V16.372H14.1896C14.0184 17.9237 12.7868 19.1554 11.2351 19.3266V20.0931H10.4909V19.3266C8.93916 19.1554 7.70749 17.9237 7.53632 16.372H6.76978V15.6278H7.53632C7.70749 14.0761 8.93916 12.8444 10.4909 12.6733V11.9067H11.2351V12.6733ZM8.81661 15.9999C8.81661 14.8692 9.73246 13.9534 10.8632 13.9534C11.9939 13.9534 12.9098 14.8692 12.9098 15.9999C12.9098 17.1307 11.9939 18.0465 10.8632 18.0465C9.73246 18.0465 8.81661 17.1307 8.81661 15.9999Z" android:fillType="evenOdd" android:fillColor="#FFFFFF"/>
++<path android:pathData="M10.8632 15.1813C10.4109 15.1813 10.0446 15.5476 10.0446 15.9999C10.0446 16.4522 10.4109 16.8186 10.8632 16.8186C11.3155 16.8186 11.6818 16.4522 11.6818 15.9999C11.6818 15.5476 11.3155 15.1813 10.8632 15.1813Z" android:fillColor="#FFFFFF"/>
++<path android:pathData="M13.3193 15.1813H15.75166V16.81858H13.3193V15.1813Z" android:fillColor="#FFFFFF"/>
++<path android:pathData="M10.0446 11.0813H11.68188V13.54398H10.0446V11.0813Z" android:fillColor="#FFFFFF"/>
++<path android:pathData="M5.95544 15.1813H8.40746V16.81858H5.95544V15.1813Z" android:fillColor="#FFFFFF"/>
++<path android:pathData="M10.0446 18.4561H11.68188V20.88328H10.0446V18.4561Z" android:fillColor="#FFFFFF"/>
++</group>
++</vector>
+\ No newline at end of file
+diff --git a/res/values-de/e_strings.xml b/res/values-de/e_strings.xml
+index 5e94e042ee..a639976fdf 100644
+--- a/res/values-de/e_strings.xml
++++ b/res/values-de/e_strings.xml
+@@ -45,4 +45,5 @@
+     <string name="parental_control_dashboard_summary">Hilft Eltern, die Geräte ihrer Kinder zu beaufsichtigen</string>
+     <string name="e_developer_options">/e/OS Entwickleroptionen</string>
+     <string name="e_disabled_by_policy_title">Diese Einstellung ist gesperrt</string>
++    <string name="find_my_device_dashboard_summary">Dieses Gerät orten</string>
+ </resources>
+\ No newline at end of file
+diff --git a/res/values-es/e_strings.xml b/res/values-es/e_strings.xml
+index 33f737bf5e..1e8191bcfb 100644
+--- a/res/values-es/e_strings.xml
++++ b/res/values-es/e_strings.xml
+@@ -33,4 +33,5 @@
+     <string name="use_ota_staging_popup_message">Te permitirá descargar e instalar versiones de prueba de /e/ OS. Estas versiones pueden ser inestables y sólo deben utilizarse con fines de prueba. Por favor, acepta sólo si sabes lo que estás haciendo.</string>
+     <string name="parental_control_dashboard_title">Control paterno</string>
+     <string name="parental_control_dashboard_summary">Ayuda a los padres a controlar el dispositivo de sus hijos</string>
++    <string name="find_my_device_dashboard_summary">Localizar este dispositivo</string>
+ </resources>
+\ No newline at end of file
+diff --git a/res/values-fr/e_strings.xml b/res/values-fr/e_strings.xml
+index c150b7d5ae..d3628f6ac3 100644
+--- a/res/values-fr/e_strings.xml
++++ b/res/values-fr/e_strings.xml
+@@ -40,4 +40,5 @@
+     <string name="e_developer_options">Options /e/OS pour les développeurs</string>
+     <string name="parental_control_dashboard_title">Contrôle Parental</string>
+     <string name="parental_control_dashboard_summary">Aide les parents à protéger l\'appareil de leur enfant</string>
++    <string name="find_my_device_dashboard_summary">Localiser cet appareil</string>
+ </resources>
+diff --git a/res/values-it/e_strings.xml b/res/values-it/e_strings.xml
+index f7cd7e05b5..aae838e1fe 100644
+--- a/res/values-it/e_strings.xml
++++ b/res/values-it/e_strings.xml
+@@ -40,4 +40,5 @@
+     <string name="parental_control_dashboard_summary">Aiuta i genitori a controllare il dispositivo del bambino</string>
+     <string name="e_auto_sync_account_title">Aggiorna automaticamente i contenuti</string>
+     <string name="e_auto_sync_account_summary">Permetti alle applicazioni di aggiornare automaticamente i contenuti in background</string>
++    <string name="find_my_device_dashboard_summary">Localizza questo dispositivo</string>
+ </resources>
+diff --git a/res/values/e_strings.xml b/res/values/e_strings.xml
+index e3da7ac138..3fe3af4c80 100644
+--- a/res/values/e_strings.xml
++++ b/res/values/e_strings.xml
+@@ -71,4 +71,8 @@
+ 
+     <!-- Refresh rate -->
+     <string name="e_peak_refresh_rate_summary">Turn on this option to raise the refresh rate from 60 to %1$d Hz</string>
++
++    <!-- /e/ Find my device -->
++    <string name="find_my_device_dashboard_title" translatable="false">Find my Device</string>
++    <string name="find_my_device_dashboard_summary">Locate this device</string>
+ </resources>
+diff --git a/res/xml/find_my_device_dashboard_settings.xml b/res/xml/find_my_device_dashboard_settings.xml
+new file mode 100644
+index 0000000000..9e7f498fab
+--- /dev/null
++++ b/res/xml/find_my_device_dashboard_settings.xml
+@@ -0,0 +1,28 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  Copyright (C) 2019-2025 ECORP SAS
++
++  Licensed under the Apache License, Version 2.0 (the "License");
++  you may not use this file except in compliance with the License.
++  You may obtain a copy of the License at
++
++       http://www.apache.org/licenses/LICENSE-2.0
++
++  Unless required by applicable law or agreed to in writing, software
++  distributed under the License is distributed on an "AS IS" BASIS,
++  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  See the License for the specific language governing permissions and
++  limitations under the License.
++  -->
++
++<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:settings="http://schemas.android.com/apk/res-auto"
++    android:key="find_my_device"
++    android:title="@string/find_my_device_dashboard_title">
++
++    <Preference>
++        <intent android:action="android.intent.action.MAIN"
++            android:targetPackage="foundation.e.findmydevice"
++            android:targetClass="foundation.e.findmydevice.activity.FindMyDeviceActivity" />
++    </Preference>
++</PreferenceScreen>
+diff --git a/res/xml/top_level_settings.xml b/res/xml/top_level_settings.xml
+index d0dd3fca99..7bd73d1b5a 100644
+--- a/res/xml/top_level_settings.xml
++++ b/res/xml/top_level_settings.xml
+@@ -233,6 +233,16 @@
+             android:order="-32"
+             android:fragment="com.android.settings.privacy.ParentalControlDashboardFragment"/>
+ 
++        <!-- /e/OS Find my device -->
++        <com.android.settings.widget.HomepagePreference
++            android:key="top_level_find_my_device"
++            android:title="@string/find_my_device_dashboard_title"
++            android:summary="@string/find_my_device_dashboard_summary"
++            android:icon="@drawable/ic_e_settings_find_my_device"
++            android:order="-31"
++            android:fragment="com.android.settings.findmydevice.FindMyDeviceDashboardFragment"
++            settings:controller="com.android.settings.findmydevice.TopLevelFindMyDeviceEntryPreferenceController"/>
++
+         <com.android.settings.widget.HomepagePreference
+             android:fragment="com.android.settings.privacy.PrivacyDashboardFragment"
+             android:icon="@drawable/ic_settings_privacy_filled"
+diff --git a/src/com/android/settings/core/gateway/SettingsGateway.java b/src/com/android/settings/core/gateway/SettingsGateway.java
+index 032e0803fa..e310cb8851 100644
+--- a/src/com/android/settings/core/gateway/SettingsGateway.java
++++ b/src/com/android/settings/core/gateway/SettingsGateway.java
+@@ -114,6 +114,7 @@ import com.android.settings.display.SmartAutoRotatePreferenceFragment;
+ import com.android.settings.display.darkmode.DarkModeSettingsFragment;
+ import com.android.settings.dream.DreamSettings;
+ import com.android.settings.enterprise.EnterprisePrivacySettings;
++import com.android.settings.findmydevice.FindMyDeviceDashboardFragment;
+ import com.android.settings.fuelgauge.AdvancedPowerUsageDetail;
+ import com.android.settings.fuelgauge.batterysaver.BatterySaverScheduleSettings;
+ import com.android.settings.fuelgauge.batterysaver.BatterySaverSettings;
+@@ -436,6 +437,7 @@ public class SettingsGateway {
+             SafetyCenterQsFragment.class.getName(),
+             AdvancedPrivacyDashboardFragment.class.getName(),
+             ParentalControlDashboardFragment.class.getName(),
++            FindMyDeviceDashboardFragment.class.getName(),
+     };
+ 
+     public static final String[] SETTINGS_FOR_RESTRICTED = {
+diff --git a/src/com/android/settings/dashboard/DashboardFragmentRegistry.java b/src/com/android/settings/dashboard/DashboardFragmentRegistry.java
+index bf80ef2d13..73ffd80a6d 100644
+--- a/src/com/android/settings/dashboard/DashboardFragmentRegistry.java
++++ b/src/com/android/settings/dashboard/DashboardFragmentRegistry.java
+@@ -34,6 +34,7 @@ import com.android.settings.deviceinfo.aboutphone.MyDeviceInfoFragment;
+ import com.android.settings.display.NightDisplaySettings;
+ import com.android.settings.emergency.EmergencyDashboardFragment;
+ import com.android.settings.enterprise.EnterprisePrivacySettings;
++import com.android.settings.findmydevice.FindMyDeviceDashboardFragment;
+ import com.android.settings.fuelgauge.SmartBatterySettings;
+ import com.android.settings.fuelgauge.batterysaver.BatterySaverSettings;
+ import com.android.settings.fuelgauge.batteryusage.PowerUsageSummary;
+@@ -130,6 +131,8 @@ public class DashboardFragmentRegistry {
+                 CategoryKey.CATEGORY_PRIVACY);
+         PARENT_TO_CATEGORY_KEY_MAP.put(ParentalControlDashboardFragment.class.getName(),
+                 CategoryKey.CATEGORY_PRIVACY);
++        PARENT_TO_CATEGORY_KEY_MAP.put(FindMyDeviceDashboardFragment.class.getName(),
++                CategoryKey.CATEGORY_PRIVACY);
+         PARENT_TO_CATEGORY_KEY_MAP.put(EnterprisePrivacySettings.class.getName(),
+                 CategoryKey.CATEGORY_ENTERPRISE_PRIVACY);
+         PARENT_TO_CATEGORY_KEY_MAP.put(LegalSettings.class.getName(),
+diff --git a/src/com/android/settings/findmydevice/FindMyDeviceDashboardFragment.java b/src/com/android/settings/findmydevice/FindMyDeviceDashboardFragment.java
+new file mode 100644
+index 0000000000..55a965a9c7
+--- /dev/null
++++ b/src/com/android/settings/findmydevice/FindMyDeviceDashboardFragment.java
+@@ -0,0 +1,74 @@
++/*
++ * Copyright (C) 2019-2025 ECORP SAS
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.settings.findmydevice;
++
++import android.app.Activity;
++import android.content.Context;
++import android.content.pm.PackageManager;
++import android.content.ComponentName;
++import android.content.Intent;
++import android.os.Bundle;
++
++import androidx.fragment.app.Fragment;
++
++import com.android.settings.R;
++import com.android.settings.search.BaseSearchIndexProvider;
++import com.android.settingslib.search.SearchIndexable;
++import com.android.settingslib.search.SearchIndexableRaw;
++
++import java.util.List;
++
++@SearchIndexable
++public class FindMyDeviceDashboardFragment extends Fragment {
++
++    private static final String TAG = "FindMyDeviceDashboardFragment";
++    private static final String findMyDevicePackageName = "foundation.e.findmydevice";
++    private static final String findMyDeviceActivityName = "foundation.e.findmydevice.activity.FindMyDeviceActivity";
++    private static final String KEY_TOP_LEVEL_FIND_MY_DEVICE = "top_level_find_my_device";
++    private static final String KEY_FIND_MY_DEVICE = "find_my_device";
++
++    @Override
++    public void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++
++        Intent intent = new Intent().setComponent(new ComponentName(findMyDevicePackageName,
++                findMyDeviceActivityName));
++        startActivity(intent);
++
++        Activity activity = getActivity();
++        if (activity != null) {
++            activity.finish();
++        }
++    }
++
++    public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
++            new BaseSearchIndexProvider(R.xml.find_my_device_dashboard_settings) {
++
++        @Override
++        public List<String> getNonIndexableKeys(Context context) {
++            List<String> keys = super.getNonIndexableKeys(context);
++
++            // Check telephony support
++            PackageManager pm = context.getPackageManager();
++            if (!pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)) {
++                keys.add(KEY_FIND_MY_DEVICE);
++                keys.add(KEY_TOP_LEVEL_FIND_MY_DEVICE);
++            }
++            return keys;
++        }
++    };
++}
+diff --git a/src/com/android/settings/findmydevice/TopLevelFindMyDeviceEntryPreferenceController.java b/src/com/android/settings/findmydevice/TopLevelFindMyDeviceEntryPreferenceController.java
+new file mode 100644
+index 0000000000..721982a073
+--- /dev/null
++++ b/src/com/android/settings/findmydevice/TopLevelFindMyDeviceEntryPreferenceController.java
+@@ -0,0 +1,49 @@
++/*
++ * Copyright (C) 2019-2025 ECORP SAS
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.settings.findmydevice;
++
++import android.content.Context;
++
++import androidx.annotation.NonNull;
++
++import com.android.settings.core.BasePreferenceController;
++
++import android.content.pm.PackageManager;
++
++/** The preference controller for the top level Find my device tile. */
++public class TopLevelFindMyDeviceEntryPreferenceController extends BasePreferenceController {
++
++    private Context _context;
++
++    public TopLevelFindMyDeviceEntryPreferenceController(@NonNull Context context, @NonNull String key) {
++        super(context, key);
++        _context = context;
++    }
++
++    private boolean isTelephony() {
++        PackageManager pm = _context.getPackageManager();
++        return pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
++    }
++
++    @Override
++    public int getAvailabilityStatus() {
++        if (isTelephony()) {
++            return AVAILABLE;
++        }
++        return CONDITIONALLY_UNAVAILABLE;
++    }
++}

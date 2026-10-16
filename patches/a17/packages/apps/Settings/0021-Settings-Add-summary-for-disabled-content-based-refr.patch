@@ -1,0 +1,104 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: SahilSonar <sss.sonar2003@gmail.com>
+Date: Mon, 21 Oct 2024 05:35:11 +0200
+Subject: [PATCH 21/32] Settings: Add summary for disabled content-based
+ refresh rate
+
+(cherry picked from commit 3e689d35993ccbfe3733fd043452e0f9366e41a2)
+---
+ res/values-de/e_strings.xml                          |  1 +
+ res/values-es/e_strings.xml                          |  1 +
+ res/values-fr/e_strings.xml                          |  3 ++-
+ res/values-it/e_strings.xml                          |  3 ++-
+ res/values/e_strings.xml                             |  3 +++
+ .../display/PeakRefreshRatePreferenceController.java | 12 ++++++++++--
+ 6 files changed, 19 insertions(+), 4 deletions(-)
+
+diff --git a/res/values-de/e_strings.xml b/res/values-de/e_strings.xml
+index 1a99117385..4a05b8a4d8 100644
+--- a/res/values-de/e_strings.xml
++++ b/res/values-de/e_strings.xml
+@@ -16,4 +16,5 @@
+   -->
+ <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+     <string name="e_really_remove_account_message">Wenn Sie dieses Konto entfernen, werden Sie weder Ihre Daten noch Ihre E-Mails von diesem Gerät aus abrufen können. Sie können dies zu einem beliebigen Zeitpunkt aber wieder aktivieren.</string>
++    <string name="e_peak_refresh_rate_summary">Aktivieren Sie diese Option, um die Aktualisierungsrate von 60 auf %1$d Hz zu erhöhen</string>
+ </resources>
+\ No newline at end of file
+diff --git a/res/values-es/e_strings.xml b/res/values-es/e_strings.xml
+index ca87096989..554ba98f86 100644
+--- a/res/values-es/e_strings.xml
++++ b/res/values-es/e_strings.xml
+@@ -16,4 +16,5 @@
+   -->
+ <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+     <string name="e_really_remove_account_message">Si eliminas esta cuenta, ya no podrás acceder tus datos (incluidos tus correos electrónicos) desde este dispositivo. Puedes volver a añadirla cuando quieras.</string>
++    <string name="e_peak_refresh_rate_summary">Active esta opción para aumentar la frecuencia de actualización de 60 a %1$d Hz</string>
+ </resources>
+\ No newline at end of file
+diff --git a/res/values-fr/e_strings.xml b/res/values-fr/e_strings.xml
+index 45c8abe3a6..64a3427f79 100644
+--- a/res/values-fr/e_strings.xml
++++ b/res/values-fr/e_strings.xml
+@@ -16,4 +16,5 @@
+   -->
+ <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+     <string name="e_really_remove_account_message">En supprimant ce compte, vous n\'aurez plus accès à ses données depuis cet appareil, e-mails inclus. Vous pouvez le réajouter à tout moment.</string>
+-</resources>
+\ No newline at end of file
++    <string name="e_peak_refresh_rate_summary">Activez cette option pour augmenter la fréquence de rafraîchissement de 60 à %1$d Hz</string>
++</resources>
+diff --git a/res/values-it/e_strings.xml b/res/values-it/e_strings.xml
+index 9a3a2fffae..ee6416ccd9 100644
+--- a/res/values-it/e_strings.xml
++++ b/res/values-it/e_strings.xml
+@@ -16,4 +16,5 @@
+   -->
+ <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+     <string name="e_really_remove_account_message">Rimuovendo l\'account, i relativi dati ed e-mail diverranno indisponibili sul dispositivo. Potrai comunque aggiungere nuovamente l\'account in qualsiasi momento ed essi torneranno disponibili.</string>
+-</resources>
+\ No newline at end of file
++    <string name="e_peak_refresh_rate_summary">Attiva questa opzione per aumentare la frequenza di aggiornamento da 60 a %1$d Hz</string>
++</resources>
+diff --git a/res/values/e_strings.xml b/res/values/e_strings.xml
+index 6b16df4d77..e3da7ac138 100644
+--- a/res/values/e_strings.xml
++++ b/res/values/e_strings.xml
+@@ -68,4 +68,7 @@
+     <string name="parental_control_dashboard_title">Parental Control</string>
+     <string name="parental_control_dashboard_summary">Helps parent to control child device</string>
+     <string name="e_disabled_by_policy_title">"This setting is blocked"</string>
++
++    <!-- Refresh rate -->
++    <string name="e_peak_refresh_rate_summary">Turn on this option to raise the refresh rate from 60 to %1$d Hz</string>
+ </resources>
+diff --git a/src/com/android/settings/display/PeakRefreshRatePreferenceController.java b/src/com/android/settings/display/PeakRefreshRatePreferenceController.java
+index f3c55916a5..70e676df9e 100644
+--- a/src/com/android/settings/display/PeakRefreshRatePreferenceController.java
++++ b/src/com/android/settings/display/PeakRefreshRatePreferenceController.java
+@@ -22,6 +22,7 @@ import static com.android.internal.display.RefreshRateSettingsUtils.findHighestR
+ import android.content.Context;
+ import android.hardware.display.DisplayManager;
+ import android.os.Handler;
++import android.os.SystemProperties;
+ import android.provider.DeviceConfig;
+ import android.provider.Settings;
+ import android.util.Log;
+@@ -82,8 +83,15 @@ public class PeakRefreshRatePreferenceController extends TogglePreferenceControl
+         int defaultPeakRefreshRate = Math.round(mPeakRefreshRate);
+ 
+         mPreference = screen.findPreference(getPreferenceKey());
+-        mPreference.setSummary(mContext.getString(
+-                R.string.peak_refresh_rate_summary, defaultPeakRefreshRate));
++
++        boolean usesContentDetection = SystemProperties.getBoolean(
++            "ro.surface_flinger.use_content_detection_for_refresh_rate", false);
++
++        final String summary = usesContentDetection
++            ? mContext.getString(R.string.peak_refresh_rate_summary, defaultPeakRefreshRate)
++            : mContext.getString(R.string.e_peak_refresh_rate_summary, defaultPeakRefreshRate);
++
++        mPreference.setSummary(summary);
+     }
+ 
+     @Override

@@ -1,0 +1,36 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishithkhanna@e.email>
+Date: Mon, 26 May 2025 11:37:18 +0530
+Subject: [PATCH 26/32] Change default highlight key which makes top entries
+ visible in tablet
+
+(cherry picked from commit 47240259c450c14c993dc215a468d69f6adb4904)
+---
+ res/values/menu_keys.xml                                        | 1 +
+ src/com/android/settings/homepage/SettingsHomepageActivity.java | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/res/values/menu_keys.xml b/res/values/menu_keys.xml
+index 0bec725f6c..bb1cf2197b 100644
+--- a/res/values/menu_keys.xml
++++ b/res/values/menu_keys.xml
+@@ -40,5 +40,6 @@
+     <string name="menu_key_about_device" translatable="false">top_level_about_device</string>
+     <string name="menu_key_support" translatable="false">top_level_support</string>
+     <string name="menu_key_supervision" translatable="false">top_level_supervision</string>
++    <string name="menu_key_updater" translatable="false">top_level_update</string>
+ 
+ </resources>
+diff --git a/src/com/android/settings/homepage/SettingsHomepageActivity.java b/src/com/android/settings/homepage/SettingsHomepageActivity.java
+index 2da5db5f50..0b2122352c 100644
+--- a/src/com/android/settings/homepage/SettingsHomepageActivity.java
++++ b/src/com/android/settings/homepage/SettingsHomepageActivity.java
+@@ -105,7 +105,7 @@ public class SettingsHomepageActivity extends FragmentActivity implements
+     @VisibleForTesting
+     static final String EXTRA_INITIAL_REFERRER = "initial_referrer";
+ 
+-    static final int DEFAULT_HIGHLIGHT_MENU_KEY = R.string.menu_key_network;
++    static final int DEFAULT_HIGHLIGHT_MENU_KEY = R.string.menu_key_updater;
+     private static final long HOMEPAGE_LOADING_TIMEOUT_MS = 300;
+ 
+     private TopLevelSettings mMainFragment;

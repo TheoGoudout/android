@@ -56,6 +56,30 @@ Not carried, with reason:
 - overlays/Lineage icon-pack/shape overlays: LineageOS 24.0 dropped icon packs and shapes; nothing on
   a17 references them.
 
+### packages/apps/Settings (32 patches, hand-ported)
+/e/OS's `a17` Settings branch has no /e/OS changes yet. All 42 a16 commits were walked in order on
+top of /e/OS `a17`: 32 carried (13 needed manual resolution, each noted in its commit message
+under `[a17: …]`), 3 security fixes already in a17, 7 skipped:
+- DNS churn (add Quad9 / revert / reapply Cloudflare / revert…). Its net effect is carried as
+  "Replace cloudfare with quadnine as dns provider".
+- "Add license", "Theme app components according to our palette" (theming left to /e/OS)
+- "fix security screen in setup wizard being cut in potrait mode of tablet" (tablet-only; code rewritten)
+
+What a17 changed and how it was handled:
+- The home page is now grouped in `PreferenceCategory` blocks. Updater gets its own top category;
+  Accounts moves into the top `top_level_account_category`; Advanced Privacy, Parental control and
+  Find my device sit in `top_level_security_privacy_category` next to Security/Privacy; the
+  injected Backup tile gets `group_key` + order there.
+- Some screens are Kotlin "catalyst" screens now (version, legal). /e/ titles/entries are added
+  in both the XML and the Kotlin screen.
+- "Remove google animations": the four navigation-mode lottie files are kept because a17 code
+  still loads them.
+
+Static checks (no compiler available here): every changed XML parses, every resource and
+`com.android.settings.*` class referenced by added lines resolves, no conflict markers. Expect
+the first a17 build to be the real test. If Settings fails to compile, set this series aside
+(move the folder out of `patches/a17/`) to keep the other variables isolated.
+
 ### Security fixes /e/OS self-carried on a16 that LineageOS 24.0 still lacks
 Checked 2026-10-16 against lineage-24.0 (frameworks/av tip 2026-10-04): the vulnerable code is
 still there, and /e/OS does not fork these repos on a17.

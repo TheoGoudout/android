@@ -1,0 +1,89 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: TheScarastic <warabhishek@e.email>
+Date: Wed, 14 Sep 2022 12:09:39 +0000
+Subject: [PATCH 08/32] Settings: Change updater summary for /e/OS version
+
+(cherry picked from commit 28fca6befb102f5c08cb5ce90bc6a47287a4f804)
+---
+ res/values/e_strings.xml                      |  6 ++++
+ .../SystemUpdatePreferenceController.kt       | 32 +++++++++----------
+ 2 files changed, 21 insertions(+), 17 deletions(-)
+
+diff --git a/res/values/e_strings.xml b/res/values/e_strings.xml
+index b89aed081e..f3a1099904 100644
+--- a/res/values/e_strings.xml
++++ b/res/values/e_strings.xml
+@@ -37,4 +37,10 @@
+     <!-- Factory Reset -->
+     <string name="main_clear_desc_e" product="tablet">This will erase all data from your tablet\u2019s <b>internal storage</b>, including:\n\n<li>All your account</li>\n<li>System and app data and settings</li>\n<li>Downloaded apps</li></string>
+     <string name="main_clear_desc_e" product="default">This will erase all data from your phone\u2019s <b>internal storage</b>, including:\n\n<li>All your account</li>\n<li>System and app data and settings</li>\n<li>Downloaded apps</li></string>
++
++    <!-- Summary of /e/ version info [CHAR LIMIT=NONE] -->
++    <string name="e_version_summary">Updated to /e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g></string>
++    <string name="e_version_pending_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - update available</string>
++    <string name="e_version_in_progress_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - update in progress</string>
++    <string name="e_version_reboot_pending_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - installed reboot required</string>
+ </resources>
+diff --git a/src/com/android/settings/system/SystemUpdatePreferenceController.kt b/src/com/android/settings/system/SystemUpdatePreferenceController.kt
+index 482c39b7f0..a368820183 100644
+--- a/src/com/android/settings/system/SystemUpdatePreferenceController.kt
++++ b/src/com/android/settings/system/SystemUpdatePreferenceController.kt
+@@ -18,6 +18,7 @@ package com.android.settings.system
+ 
+ import android.content.Context
+ import android.os.Build
++import android.os.SystemProperties
+ import android.os.SystemUpdateManager
+ import android.os.UserManager
+ import android.util.Log
+@@ -74,36 +75,33 @@ open class SystemUpdatePreferenceController(context: Context, preferenceKey: Str
+     }
+ 
+     private suspend fun calculateSummary(): String {
+-        val updateInfo = mContext.getSystemUpdateInfo() ?: return getReleaseVersionSummary()
++        val currentVersion = mContext.getString(R.string.e_version_summary,
++            SystemProperties.get("ro.lineage.build.version"))
++        val updateInfo = mContext.getSystemUpdateInfo() ?: return currentVersion
+ 
+         val status = updateInfo.getInt(SystemUpdateManager.KEY_STATUS)
++        val version = updateInfo.getString(SystemUpdateManager.KEY_TITLE)
+         if (status == SystemUpdateManager.STATUS_UNKNOWN) {
+             Log.d(TAG, "Update status unknown")
+         }
+         when (status) {
+-            SystemUpdateManager.STATUS_WAITING_DOWNLOAD,
+-            SystemUpdateManager.STATUS_IN_PROGRESS,
+-            SystemUpdateManager.STATUS_WAITING_INSTALL,
++            SystemUpdateManager.STATUS_WAITING_DOWNLOAD -> {
++                return mContext.getString(R.string.e_version_pending_update_summary, version)
++            }
++            SystemUpdateManager.STATUS_IN_PROGRESS -> {
++                return mContext.getString(R.string.e_version_in_progress_update_summary, version)
++            }
+             SystemUpdateManager.STATUS_WAITING_REBOOT -> {
+-                return mContext.getString(R.string.android_version_pending_update_summary)
++                return mContext.getString(R.string.e_version_reboot_pending_summary, version)
+             }
+ 
+-            SystemUpdateManager.STATUS_IDLE,
+-            SystemUpdateManager.STATUS_UNKNOWN -> {
+-                val version = updateInfo.getString(SystemUpdateManager.KEY_TITLE)
+-                if (!version.isNullOrEmpty()) {
+-                    return mContext.getString(R.string.android_version_summary, version)
+-                }
++            else -> {
++                return currentVersion
+             }
+         }
+-        return getReleaseVersionSummary()
++        return currentVersion
+     }
+ 
+-    private fun getReleaseVersionSummary(): String = mContext.getString(
+-        R.string.android_version_summary,
+-        Build.VERSION.RELEASE_OR_PREVIEW_DISPLAY,
+-    )
+-
+     companion object {
+         private const val TAG = "SysUpdatePrefContr"
+     }

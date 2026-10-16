@@ -1,0 +1,52 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: TheScarastic <warabhishek@e.email>
+Date: Fri, 15 Jul 2022 05:02:01 +0000
+Subject: [PATCH 07/32] Settings: Notify users all their accounts will be
+ removed and not just google
+
+(cherry picked from commit 45e5d4ddbd35f910182930e215ef4de45ae5ec35)
+---
+ res/layout/main_clear.xml                 | 2 +-
+ res/values/e_strings.xml                  | 4 ++++
+ tests/robotests/res/layout/main_clear.xml | 2 +-
+ 3 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/res/layout/main_clear.xml b/res/layout/main_clear.xml
+index 6617a45e54..384f647286 100644
+--- a/res/layout/main_clear.xml
++++ b/res/layout/main_clear.xml
+@@ -39,7 +39,7 @@
+             android:id="@+id/sud_layout_subtitle"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+-            android:text="@string/main_clear_desc"/>
++            android:text="@string/main_clear_desc_e"/>
+         <TextView
+             android:id="@+id/also_erases_external"
+             style="@style/TextAppearance.PreferenceTitle.SettingsLib"
+diff --git a/res/values/e_strings.xml b/res/values/e_strings.xml
+index 3d7f4791fa..b89aed081e 100644
+--- a/res/values/e_strings.xml
++++ b/res/values/e_strings.xml
+@@ -33,4 +33,8 @@
+     <!-- /e/ Advanced Privacy -->
+     <string name="advanced_privacy_dashboard_title" translatable="false">Advanced Privacy</string>
+     <string name="advanced_privacy_dashboard_summary">Manage trackers, fake location, hide IP address</string>
++
++    <!-- Factory Reset -->
++    <string name="main_clear_desc_e" product="tablet">This will erase all data from your tablet\u2019s <b>internal storage</b>, including:\n\n<li>All your account</li>\n<li>System and app data and settings</li>\n<li>Downloaded apps</li></string>
++    <string name="main_clear_desc_e" product="default">This will erase all data from your phone\u2019s <b>internal storage</b>, including:\n\n<li>All your account</li>\n<li>System and app data and settings</li>\n<li>Downloaded apps</li></string>
+ </resources>
+diff --git a/tests/robotests/res/layout/main_clear.xml b/tests/robotests/res/layout/main_clear.xml
+index b9a126d423..81fa94353f 100644
+--- a/tests/robotests/res/layout/main_clear.xml
++++ b/tests/robotests/res/layout/main_clear.xml
+@@ -42,7 +42,7 @@
+                 android:id="@+id/sud_layout_description"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+-                android:text="@string/main_clear_desc"/>
++                android:text="@string/main_clear_desc_e"/>
+             <TextView
+                 android:id="@+id/also_erases_external"
+                 style="@style/TextAppearance.SudGlifItemSummary"

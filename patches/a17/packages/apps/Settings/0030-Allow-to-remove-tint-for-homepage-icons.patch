@@ -1,0 +1,37 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: althafvly <althafvly@gmail.com>
+Date: Wed, 18 Mar 2026 23:56:21 +0530
+Subject: [PATCH 30/32] Allow to remove tint for homepage icons
+
+[a17: tinting now happens in the async icon callback; same condition applied
+ there. Like a16, tiles without metadata are not tinted]
+
+(cherry picked from commit 0d901b24b7b1f9892e0872e61338a154f997207b)
+---
+ .../settings/dashboard/DashboardFeatureProviderImpl.java    | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/src/com/android/settings/dashboard/DashboardFeatureProviderImpl.java b/src/com/android/settings/dashboard/DashboardFeatureProviderImpl.java
+index 0b24bcb2c8..9cc5c24dd7 100644
+--- a/src/com/android/settings/dashboard/DashboardFeatureProviderImpl.java
++++ b/src/com/android/settings/dashboard/DashboardFeatureProviderImpl.java
+@@ -29,6 +29,7 @@ import static com.android.settingslib.drawer.SwitchesProvider.METHOD_GET_PROVIDE
+ import static com.android.settingslib.drawer.SwitchesProvider.METHOD_IS_CHECKED;
+ import static com.android.settingslib.drawer.SwitchesProvider.METHOD_ON_CHECKED_CHANGED;
+ import static com.android.settingslib.drawer.TileUtils.META_DATA_PREFERENCE_ALERT_URI;
++import static com.android.settingslib.drawer.TileUtils.META_DATA_PREFERENCE_ICON_TINTABLE;
+ import static com.android.settingslib.drawer.TileUtils.META_DATA_PREFERENCE_ICON_URI;
+ import static com.android.settingslib.drawer.TileUtils.META_DATA_PREFERENCE_SUMMARY;
+ import static com.android.settingslib.drawer.TileUtils.META_DATA_PREFERENCE_SUMMARY_URI;
+@@ -539,7 +540,10 @@ public class DashboardFeatureProviderImpl implements DashboardFeatureProvider {
+                     preference.setIcon(iconDrawable);
+                     return;
+                 }
+-                iconDrawable.setTint(Utils.getHomepageIconColor(preference.getContext()));
++                if (tile.getMetaData() != null
++                        && tile.getMetaData().getBoolean(META_DATA_PREFERENCE_ICON_TINTABLE, true)) {
++                    iconDrawable.setTint(Utils.getHomepageIconColor(preference.getContext()));
++                }
+             }
+ 
+             if (forceRoundedIcon && !TextUtils.equals(mContext.getPackageName(), iconPackage)) {

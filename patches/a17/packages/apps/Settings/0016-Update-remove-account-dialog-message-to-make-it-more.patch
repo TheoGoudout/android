@@ -1,0 +1,149 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishithkhanna@e.email>
+Date: Mon, 11 Sep 2023 13:03:28 +0530
+Subject: [PATCH 16/32] Update remove account dialog message to make it more
+ clear
+
+(cherry picked from commit e2b02673588558ac0a2515e0a2221748b89c3c81)
+---
+ res/values-de/e_strings.xml                   | 19 +++++++++++++++++++
+ res/values-es/e_strings.xml                   | 19 +++++++++++++++++++
+ res/values-fr/e_strings.xml                   | 19 +++++++++++++++++++
+ res/values-it/e_strings.xml                   | 19 +++++++++++++++++++
+ res/values/e_strings.xml                      |  3 +++
+ .../RemoveAccountPreferenceController.java    |  2 +-
+ 6 files changed, 80 insertions(+), 1 deletion(-)
+ create mode 100644 res/values-de/e_strings.xml
+ create mode 100644 res/values-es/e_strings.xml
+ create mode 100644 res/values-fr/e_strings.xml
+ create mode 100644 res/values-it/e_strings.xml
+
+diff --git a/res/values-de/e_strings.xml b/res/values-de/e_strings.xml
+new file mode 100644
+index 0000000000..1a99117385
+--- /dev/null
++++ b/res/values-de/e_strings.xml
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright Murena SAS 2023
++  ~ This program is free software: you can redistribute it and/or modify
++  ~ it under the terms of the GNU General Public License as published by
++  ~ the Free Software Foundation, either version 3 of the License, or
++  ~ (at your option) any later version.
++  ~
++  ~ This program is distributed in the hope that it will be useful,
++  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
++  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  ~ GNU General Public License for more details.
++  ~
++  ~ You should have received a copy of the GNU General Public License
++  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
++  -->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="e_really_remove_account_message">Wenn Sie dieses Konto entfernen, werden Sie weder Ihre Daten noch Ihre E-Mails von diesem Gerät aus abrufen können. Sie können dies zu einem beliebigen Zeitpunkt aber wieder aktivieren.</string>
++</resources>
+\ No newline at end of file
+diff --git a/res/values-es/e_strings.xml b/res/values-es/e_strings.xml
+new file mode 100644
+index 0000000000..ca87096989
+--- /dev/null
++++ b/res/values-es/e_strings.xml
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright Murena SAS 2023
++  ~ This program is free software: you can redistribute it and/or modify
++  ~ it under the terms of the GNU General Public License as published by
++  ~ the Free Software Foundation, either version 3 of the License, or
++  ~ (at your option) any later version.
++  ~
++  ~ This program is distributed in the hope that it will be useful,
++  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
++  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  ~ GNU General Public License for more details.
++  ~
++  ~ You should have received a copy of the GNU General Public License
++  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
++  -->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="e_really_remove_account_message">Si eliminas esta cuenta, ya no podrás acceder tus datos (incluidos tus correos electrónicos) desde este dispositivo. Puedes volver a añadirla cuando quieras.</string>
++</resources>
+\ No newline at end of file
+diff --git a/res/values-fr/e_strings.xml b/res/values-fr/e_strings.xml
+new file mode 100644
+index 0000000000..45c8abe3a6
+--- /dev/null
++++ b/res/values-fr/e_strings.xml
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright Murena SAS 2023
++  ~ This program is free software: you can redistribute it and/or modify
++  ~ it under the terms of the GNU General Public License as published by
++  ~ the Free Software Foundation, either version 3 of the License, or
++  ~ (at your option) any later version.
++  ~
++  ~ This program is distributed in the hope that it will be useful,
++  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
++  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  ~ GNU General Public License for more details.
++  ~
++  ~ You should have received a copy of the GNU General Public License
++  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
++  -->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="e_really_remove_account_message">En supprimant ce compte, vous n\'aurez plus accès à ses données depuis cet appareil, e-mails inclus. Vous pouvez le réajouter à tout moment.</string>
++</resources>
+\ No newline at end of file
+diff --git a/res/values-it/e_strings.xml b/res/values-it/e_strings.xml
+new file mode 100644
+index 0000000000..9a3a2fffae
+--- /dev/null
++++ b/res/values-it/e_strings.xml
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright Murena SAS 2023
++  ~ This program is free software: you can redistribute it and/or modify
++  ~ it under the terms of the GNU General Public License as published by
++  ~ the Free Software Foundation, either version 3 of the License, or
++  ~ (at your option) any later version.
++  ~
++  ~ This program is distributed in the hope that it will be useful,
++  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
++  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  ~ GNU General Public License for more details.
++  ~
++  ~ You should have received a copy of the GNU General Public License
++  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
++  -->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="e_really_remove_account_message">Rimuovendo l\'account, i relativi dati ed e-mail diverranno indisponibili sul dispositivo. Potrai comunque aggiungere nuovamente l\'account in qualsiasi momento ed essi torneranno disponibili.</string>
++</resources>
+\ No newline at end of file
+diff --git a/res/values/e_strings.xml b/res/values/e_strings.xml
+index c999305e44..88d5635e4f 100644
+--- a/res/values/e_strings.xml
++++ b/res/values/e_strings.xml
+@@ -55,4 +55,7 @@
+     <string name="e_version_pending_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - update available</string>
+     <string name="e_version_in_progress_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - update in progress</string>
+     <string name="e_version_reboot_pending_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - installed reboot required</string>
++
++    <!-- Accounts -->
++    <string name="e_really_remove_account_message">If you remove this account you will not be able to access its data from this device anymore including its emails. You can add it back whenever you want.</string>
+ </resources>
+diff --git a/src/com/android/settings/accounts/RemoveAccountPreferenceController.java b/src/com/android/settings/accounts/RemoveAccountPreferenceController.java
+index cdb35b42d2..46d889aa02 100644
+--- a/src/com/android/settings/accounts/RemoveAccountPreferenceController.java
++++ b/src/com/android/settings/accounts/RemoveAccountPreferenceController.java
+@@ -145,7 +145,7 @@ public class RemoveAccountPreferenceController extends AbstractPreferenceControl
+             final Context context = getActivity();
+             return new AlertDialog.Builder(context)
+                     .setTitle(R.string.really_remove_account_title)
+-                    .setMessage(R.string.really_remove_account_message)
++                    .setMessage(R.string.e_really_remove_account_message)
+                     .setNegativeButton(android.R.string.cancel, null)
+                     .setPositiveButton(R.string.remove_account_label, this)
+                     .create();
