@@ -48,6 +48,26 @@ kept between builds → incremental rebuilds ~15–30 min).
 
 Your customisations = forks of the relevant repos, referenced from the local manifest.
 
+## What a build applies on top of /e/OS
+
+1. `local_manifests/<target>/*.xml`: FP4 device tree, kernel and blobs (LineageOS + TheMuppets).
+2. `patches/<target>/<project path>/*.patch`: port work this project carries (see
+   `patches/README.md`). `apply-patches.sh` applies them after sync, skips any patch the project
+   already has, and undoes them before the next sync.
+3. Optional, per build, set in `build.sh`:
+   - `OPTIONAL_MANIFESTS="setupwizard-bringup"` adds `local_manifests/<target>/optional/<name>.xml`
+   - `PATCH_EXCLUDE="packages/apps/Settings"` leaves that project's series out
+   Change one of these per build iteration so a failure points at one cause.
+
+## Tools (run anywhere with git + python3; no Android checkout needed)
+
+- `port-audit/port_audit.py`: how much of an /e/OS branch's patch set moves to a new LineageOS.
+- `tools/check_manifest.py --eos-branch a17 [--optional NAME] [--device-tree DIR]`: resolves the
+  /e/OS manifest plus local manifests offline (duplicates, dangling removes, missing FP4 paths).
+- `tools/port_series.py`: cherry-picks a downstream series onto a new base and exports what applies.
+
+`UPSTREAM.md` lists where each patch should be merged so the series can shrink.
+
 ## Rules that will get you banned if ignored
 
 - One queued build at a time, one device per build, one account.

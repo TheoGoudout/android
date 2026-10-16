@@ -101,10 +101,14 @@ bulletins before relying on it. frameworks/native: only MediaTek-specific (irrel
 frameworks/av `libcameraservice: Customize camera stack based on active app` (2021): **check** whether
 LineageOS 24.0 dropped it on purpose. It may matter for FP4 camera apps.
 
-**Reading:** an a17 build today = LineageOS 24.0 + /e/OS branding, prebuilt apps (vendor/eos), microG
-signature spoofing, App Lounge/Advanced Privacy hooks in frameworks/base, but **stock LineageOS
-Settings/SetupWizard/SystemUI theming** (those /e/OS forks are still unported). Expect a bootable
-but visibly less "/e/" system; most UI gaps are /e/OS's in-progress work, not FP4 work.
+**Reading (updated after the port work):** plain /e/OS a17 = LineageOS 24.0 + /e/OS branding,
+prebuilt apps, microG signature spoofing, fake location, parental-control hooks, BlissLauncher3,
+but stock LineageOS Settings/SetupWizard and no /e/ theming. With `patches/a17/` (58 patches,
+15 projects) the build also gets: /e/ Settings (Advanced Privacy, Parental control, Find my device,
+Updater/Accounts on top, /e/ legal + version, /e/ dev options, Quad9), Hide-from-microG, Quad9 DNS
+defaults, private space disabled, FP4 audio/VoIP/CarrierConfig fixes, 3 security fixes 24.0 lacks.
+SetupWizard /e/ pages via `OPTIONAL_MANIFESTS="setupwizard-bringup"`. Remaining known gaps:
+KNOWN_ISSUES.md (Android Auto, theming). None of this has been compiled yet.
 
 ## a17 work items (no build needed)
 
