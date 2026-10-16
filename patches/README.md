@@ -56,5 +56,19 @@ Not carried, with reason:
 - overlays/Lineage icon-pack/shape overlays: LineageOS 24.0 dropped icon packs and shapes; nothing on
   a17 references them.
 
+### Security fixes /e/OS self-carried on a16 that LineageOS 24.0 still lacks
+Checked 2026-10-16 against lineage-24.0 (frameworks/av tip 2026-10-04): the vulnerable code is
+still there, and /e/OS does not fork these repos on a17.
+
+| project | patch |
+|---|---|
+| frameworks/av | [media] Fix heap out-of-bounds write in MatroskaSource::read |
+| packages/services/Telecomm | Check caller in CSW#queryRemoteConnectionServices |
+
+The other a16 self-carries are already in 24.0: AudioAttributes unmarshalling, A2DP Opus, both
+Nfc fixes (identical code), SDP server overflow, adb TLS use-after-free, MediaProvider ignorable
+codepoints (equivalent fix present). "SDP record creation concurrency" was rewritten upstream and
+counts as likely covered (not proven).
+
 **Upstream:** each of these is a candidate merge request against the matching `e/os/<repo>` `a17`
 branch (they apply cleanly there). See STATUS.md.

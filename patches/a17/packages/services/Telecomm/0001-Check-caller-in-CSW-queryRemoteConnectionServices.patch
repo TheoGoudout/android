@@ -1,0 +1,58 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Pranav Madapurmath <pmadapurmath@google.com>
+Date: Thu, 7 May 2026 13:05:49 -0700
+Subject: [PATCH] Check caller in CSW#queryRemoteConnectionServices
+
+Verify that the calling package belongs to the caller in
+CSW#queryRemoteConnectionServices. This can be exploited by allowing
+calls to be made without requiring the necessary app permissions.
+
+Bug: 504612754
+Flag: EXEMPT BUGFIX
+Test: verify with POC
+(cherry picked from commit f93b1e37858cc84d29e9daa57fca0d5ff8fd718d)
+Cherrypick-From: https://googleplex-android-review.googlesource.com/q/commit:260368fb70638d1f23fe1668264d6b8ffec2f1c1
+Merged-In: I43c2b815a039deb6588ba687310ef52310f7e4c5
+Change-Id: I43c2b815a039deb6588ba687310ef52310f7e4c5
+(cherry picked from commit 125c1454cbea68b8154f72d10f27e096fcd65fa1)
+---
+ .../telecom/ConnectionServiceWrapper.java     | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
+
+diff --git a/src/com/android/server/telecom/ConnectionServiceWrapper.java b/src/com/android/server/telecom/ConnectionServiceWrapper.java
+index d58000601..8f8162736 100644
+--- a/src/com/android/server/telecom/ConnectionServiceWrapper.java
++++ b/src/com/android/server/telecom/ConnectionServiceWrapper.java
+@@ -908,20 +908,25 @@ public class ConnectionServiceWrapper extends ServiceBinder implements
+         public void queryRemoteConnectionServices(RemoteServiceCallback callback,
+                 String callingPackage, Session.Info sessionInfo) {
+             final UserHandle callingUserHandle = Binder.getCallingUserHandle();
++            final int callingUid = Binder.getCallingUid();
+             Log.startSession(sessionInfo, "CSW.qRCS", mPackageAbbreviation);
+-            long token = Binder.clearCallingIdentity();
+             try {
+-                synchronized (mLock) {
+-                    logIncoming("queryRemoteConnectionServices callingPackage=" + callingPackage);
+-                    ConnectionServiceWrapper.this
+-                            .queryRemoteConnectionServices(callingUserHandle, callingPackage,
+-                                    callback);
++                mAppOpsManager.checkPackage(callingUid, callingPackage);
++                long token = Binder.clearCallingIdentity();
++                try {
++                    synchronized (mLock) {
++                        logIncoming("queryRemoteConnectionServices callingPackage="
++                                + callingPackage);
++                        ConnectionServiceWrapper.this.queryRemoteConnectionServices(
++                                callingUserHandle, callingPackage, callback);
++                    }
++                } finally {
++                    Binder.restoreCallingIdentity(token);
+                 }
+             } catch (Throwable t) {
+                 Log.e(ConnectionServiceWrapper.this, t, "");
+                 throw t;
+             } finally {
+-                Binder.restoreCallingIdentity(token);
+                 Log.endSession();
+             }
+         }
