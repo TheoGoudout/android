@@ -119,8 +119,9 @@ but visibly less "/e/" system; most UI gaps are /e/OS's in-progress work, not FP
       - Settings, frameworks/base, frameworks/libs/systemui: bring-up branch = a17 (no hidden work).
 - [x] Settings: 42 a16 commits walked on a17 → 32 patches (13 hand-resolved), 3 already in
       a17, 7 skipped with reason (`patches/README.md`). Static checks clean; not compiled.
-- [ ] frameworks/base: triage the 57 missing a16 commits by feature (the 11 that apply are SystemUI
-      tweaks, so hold them until the a17 SystemUI boots)
+- [x] frameworks/base: 57 missing a16 commits triaged. Carried Hide-from-microG + USB lockdown
+      security fix + SNHooks; 4 security fixes already in a17; Android Auto needs re-implementation
+      (KNOWN_ISSUES #1); SystemUI theming left to /e/OS.
 - [ ] Permission "deviceKeyHandler" role: needs frameworks/base `config_deviceKeyHandler` first
 - [x] Verify the 11 a16 security self-carries: 8 present in lineage-24.0, 1 likely (rewritten), 2 still
       vulnerable (Matroska heap write, Telecomm caller check), now carried in `patches/a17/`.

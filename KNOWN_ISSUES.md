@@ -5,7 +5,9 @@ Never paste raw device logs here (public repo): quote only the relevant, redacte
 
 | # | Symptom | Build / date | Suspected repo | Status |
 |---|---|---|---|---|
-| – | (none yet: no a17 build has run) | | | |
+| 1 | Android Auto cannot run as a user app (a16 feature) | port, no build yet | frameworks/base (+ Permission 2/2) | Open: Android 17 removed PermissionManagerServiceImpl; the grant must be re-implemented in the Kotlin permission service. Not ported. |
+| 2 | SetupWizard has no /e/ pages on plain a17 | port | SetupWizard | Workaround: `OPTIONAL_MANIFESTS="setupwizard-bringup"` (/e/OS WIP branch) |
+| 3 | /e/ palette theming missing in Settings/SystemUI/SettingsLib/apps | port | many | Left to /e/OS (Material 3 Expressive rewrite); cosmetic |
 
 ## a16 → a17 feature-parity checklist (fill in after first a17 boot)
 

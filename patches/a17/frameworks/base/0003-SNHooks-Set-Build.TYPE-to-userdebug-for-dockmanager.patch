@@ -1,0 +1,35 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kshitij Gupta <kshitijgm@gmail.com>
+Date: Wed, 20 Nov 2024 10:23:09 +0100
+Subject: [PATCH 3/3] SNHooks: Set Build.TYPE to userdebug for dockmanager
+
+(cherry picked from commit 505760817f8f4efe21f4f348210a9ecd98be54d0)
+---
+ core/java/com/android/internal/safetynet/SafetyNetHooks.java | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/core/java/com/android/internal/safetynet/SafetyNetHooks.java b/core/java/com/android/internal/safetynet/SafetyNetHooks.java
+index 8acd1fdc5fd8..f287727805a9 100644
+--- a/core/java/com/android/internal/safetynet/SafetyNetHooks.java
++++ b/core/java/com/android/internal/safetynet/SafetyNetHooks.java
+@@ -27,9 +27,11 @@ public final class SafetyNetHooks {
+ 
+     private static final String TAG = "SafetyNetHooks";
+     private static final String GMS_PACKAGE_NAME = "com.google.android.gms";
++    private static final String DOCKMANAGER_PACKAGE_NAME = "com.google.android.apps.nest.dockmanager.app";
+     private static final String SPOOFED_MODEL = "Pixel 2";
+     private static final String SPOOFED_DEVICE_PRODUCT = "walleye";
+     private static final String SPOOFED_FINGERPRINT = "google/walleye/walleye:8.1.0/OPM1.171019.011/4448085:user/release-keys";
++    private static final String SPOOFED_TYPE_DOCKMANAGER = "userdebug";
+ 
+     private static volatile boolean sIsGms = false;
+ 
+@@ -51,6 +53,8 @@ public final class SafetyNetHooks {
+             setBuildField("DEVICE", SPOOFED_DEVICE_PRODUCT);
+             setBuildField("PRODUCT", SPOOFED_DEVICE_PRODUCT);
+             setBuildField("FINGERPRINT", SPOOFED_FINGERPRINT);
++        } else if (DOCKMANAGER_PACKAGE_NAME.equals(app.getPackageName())) {
++            setBuildField("TYPE", SPOOFED_TYPE_DOCKMANAGER);
+         }
+     }
+ 

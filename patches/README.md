@@ -80,6 +80,23 @@ Static checks (no compiler available here): every changed XML parses, every reso
 the first a17 build to be the real test. To build without it, set `PATCH_EXCLUDE="packages/apps/Settings"`
 in `build.sh` (works for any project path).
 
+### frameworks/base (3 patches, on top of /e/OS a17)
+/e/OS already carries 36 commits on a17 (signature spoofing, fake location, parental control
+hooks, e colors…). Of the 57 a16 commits missing there:
+- carried: **Hide From microG** (AppsFilter + `HIDE_MICROG_PACKAGES_FOR_PACKAGE` system setting;
+  validator conflict resolved), the **USB lockdown** security fix (hand-ported; a17 still
+  re-enables USB data for any user), SafetyNetHooks dockmanager Build.TYPE.
+- already in a17: BAL bypass via CDM, LocalImageResolver, suspend restrictions, clipboard per-user.
+- **not carried, needs a re-implementation:** Android Auto as user app (1/2) and "Allow to install
+  Google signed Android Auto APK". Android 17 deleted `PermissionManagerServiceImpl` (pre-UPS
+  permission code), so the privileged-permission grant has to move to the Kotlin permission service
+  (`services/permission/.../AppIdPermissionPolicy.kt` / `PermissionService.kt`). Tracked in
+  KNOWN_ISSUES.md.
+- left to /e/OS: ~25 SystemUI light/dark/QS theming commits (Android 17 SystemUI redesign),
+  UDFPS/Richtap/dock-width tweaks (not FP4 hardware), autofill UI tweaks, build-fix noise.
+
+Tested with a sparse worktree of e/os frameworks/base a17: applies with `git am`.
+
 ### Security fixes /e/OS self-carried on a16 that LineageOS 24.0 still lacks
 Checked 2026-10-16 against lineage-24.0 (frameworks/av tip 2026-10-04): the vulnerable code is
 still there, and /e/OS does not fork these repos on a17.
