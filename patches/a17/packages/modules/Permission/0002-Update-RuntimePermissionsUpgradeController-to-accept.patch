@@ -1,0 +1,57 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nate Myren <ntmyren@google.com>
+Date: Fri, 5 Dec 2025 14:38:26 -0800
+Subject: [PATCH 2/2] Update RuntimePermissionsUpgradeController to accept null
+ PermGroups
+
+Now that PermStateLiveData can return invalid, the upgrade controller
+needs to handle that.
+
+Test: atest RuntimePermissionsUpgradeControllerTest
+Bug: 435737668
+Relnote: N/A
+Flag: EXEMPT CVE_FIX
+Low-Coverage-Reason: security fix
+Cherrypick-From: https://googleplex-android-review.googlesource.com/q/commit:3fd5cf1a1b5daa3a2187616fa44f6662018d72da
+Merged-In: I4e85931d1c8c865694339528265c735cef93dc01
+Change-Id: I4e85931d1c8c865694339528265c735cef93dc01
+(cherry picked from commit 9bcd460fc3fd43abfd65ce57d8b62dc0a76c7bf0)
+---
+ .../permission/service/RuntimePermissionsUpgradeController.kt  | 2 +-
+ .../service/RuntimePermissionsUpgradeControllerTest.kt         | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/PermissionController/src/com/android/permissioncontroller/permission/service/RuntimePermissionsUpgradeController.kt b/PermissionController/src/com/android/permissioncontroller/permission/service/RuntimePermissionsUpgradeController.kt
+index 37d58a002e..571eb1092c 100644
+--- a/PermissionController/src/com/android/permissioncontroller/permission/service/RuntimePermissionsUpgradeController.kt
++++ b/PermissionController/src/com/android/permissioncontroller/permission/service/RuntimePermissionsUpgradeController.kt
+@@ -315,7 +315,7 @@ object RuntimePermissionsUpgradeController {
+                         // Wait until groups are loaded and then trigger third step
+                         for (permGroupProvider in permGroupProviders!!) {
+                             addSource(permGroupProvider) { group ->
+-                                if (group != null) {
++                                if (group != null || !permGroupProvider.isStale) {
+                                     permGroupProvidersDone.add(permGroupProvider)
+                                     removeSource(permGroupProvider)
+ 
+diff --git a/PermissionController/tests/mocking/src/com/android/permissioncontroller/tests/mocking/permission/service/RuntimePermissionsUpgradeControllerTest.kt b/PermissionController/tests/mocking/src/com/android/permissioncontroller/tests/mocking/permission/service/RuntimePermissionsUpgradeControllerTest.kt
+index 3515b6c9f7..aa939224af 100644
+--- a/PermissionController/tests/mocking/src/com/android/permissioncontroller/tests/mocking/permission/service/RuntimePermissionsUpgradeControllerTest.kt
++++ b/PermissionController/tests/mocking/src/com/android/permissioncontroller/tests/mocking/permission/service/RuntimePermissionsUpgradeControllerTest.kt
+@@ -79,6 +79,7 @@ import org.mockito.Mockito.`when` as whenever
+ import org.mockito.MockitoAnnotations.initMocks
+ import org.mockito.MockitoSession
+ import org.mockito.quality.Strictness.LENIENT
++import java.util.concurrent.TimeUnit
+ 
+ @RunWith(AndroidJUnit4::class)
+ class RuntimePermissionsUpgradeControllerTest {
+@@ -277,7 +278,7 @@ class RuntimePermissionsUpgradeControllerTest {
+                 application,
+                 Runnable { completionCallback.complete(Unit) },
+             )
+-            completionCallback.join()
++            completionCallback.get(30L, TimeUnit.SECONDS)
+         }
+     }
+ 

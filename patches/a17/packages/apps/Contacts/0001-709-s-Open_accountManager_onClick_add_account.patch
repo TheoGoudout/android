@@ -1,0 +1,26 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Fahim Salam Chowdhury <fahim@e.email>
+Date: Mon, 3 Oct 2022 12:14:37 +0000
+Subject: [PATCH] 709-s-Open_accountManager_onClick_add_account
+
+[ported to a17: ContactEditorAccountsChangedActivity no longer exists
+ (replaced by CP2 default-account APIs); only the ContactsUnavailableFragment
+ hunk is kept]
+(cherry picked from commit 949626cffa922768e080b1ef1ff06cbf2c04ca60)
+---
+ src/com/android/contacts/list/ContactsUnavailableFragment.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/com/android/contacts/list/ContactsUnavailableFragment.java b/src/com/android/contacts/list/ContactsUnavailableFragment.java
+index 048ce62e3..299a18455 100644
+--- a/src/com/android/contacts/list/ContactsUnavailableFragment.java
++++ b/src/com/android/contacts/list/ContactsUnavailableFragment.java
+@@ -131,7 +131,7 @@ public class ContactsUnavailableFragment extends Fragment implements OnClickList
+     public void onClick(View v) {
+         final int id = v.getId();
+         if (id == R.id.add_account_button) {
+-            final Intent intent = ImplicitIntentsUtil.getIntentForAddingGoogleAccount();
++            final Intent intent = ImplicitIntentsUtil.getIntentForAddingAccount();
+             ImplicitIntentsUtil.startActivityOutsideApp(getActivity(), intent);
+ 
+         } else if (id == R.id.import_contacts_button) {

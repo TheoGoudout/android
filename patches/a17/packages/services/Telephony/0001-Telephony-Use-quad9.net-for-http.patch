@@ -1,0 +1,1379 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: althafvly <althafvly@gmail.com>
+Date: Wed, 5 Jul 2023 12:31:30 +0530
+Subject: [PATCH] Telephony: Use quad9.net for http
+
+(cherry picked from commit d03f3a10be04a2c445a2ac46b130ab226d6efeea)
+---
+ res/values-af/strings.xml                     | 4 ++--
+ res/values-am/strings.xml                     | 4 ++--
+ res/values-ar/strings.xml                     | 4 ++--
+ res/values-as/strings.xml                     | 4 ++--
+ res/values-az/strings.xml                     | 4 ++--
+ res/values-b+sr+Latn/strings.xml              | 4 ++--
+ res/values-be/strings.xml                     | 4 ++--
+ res/values-bg/strings.xml                     | 4 ++--
+ res/values-bn/strings.xml                     | 4 ++--
+ res/values-bs/strings.xml                     | 4 ++--
+ res/values-ca/strings.xml                     | 4 ++--
+ res/values-cs/strings.xml                     | 4 ++--
+ res/values-da/strings.xml                     | 4 ++--
+ res/values-de/strings.xml                     | 4 ++--
+ res/values-el/strings.xml                     | 4 ++--
+ res/values-en-rAU/strings.xml                 | 4 ++--
+ res/values-en-rCA/strings.xml                 | 4 ++--
+ res/values-en-rGB/strings.xml                 | 4 ++--
+ res/values-en-rIN/strings.xml                 | 4 ++--
+ res/values-en-rXC/strings.xml                 | 4 ++--
+ res/values-es-rUS/strings.xml                 | 4 ++--
+ res/values-es/strings.xml                     | 4 ++--
+ res/values-et/strings.xml                     | 4 ++--
+ res/values-eu/strings.xml                     | 4 ++--
+ res/values-fa/strings.xml                     | 4 ++--
+ res/values-fi/strings.xml                     | 4 ++--
+ res/values-fr-rCA/strings.xml                 | 4 ++--
+ res/values-fr/strings.xml                     | 4 ++--
+ res/values-gl/strings.xml                     | 4 ++--
+ res/values-gu/strings.xml                     | 4 ++--
+ res/values-hi/strings.xml                     | 4 ++--
+ res/values-hr/strings.xml                     | 4 ++--
+ res/values-hu/strings.xml                     | 4 ++--
+ res/values-hy/strings.xml                     | 4 ++--
+ res/values-in/strings.xml                     | 4 ++--
+ res/values-is/strings.xml                     | 4 ++--
+ res/values-it/strings.xml                     | 4 ++--
+ res/values-iw/strings.xml                     | 4 ++--
+ res/values-ja/strings.xml                     | 4 ++--
+ res/values-ka/strings.xml                     | 4 ++--
+ res/values-kk/strings.xml                     | 4 ++--
+ res/values-km/strings.xml                     | 4 ++--
+ res/values-kn/strings.xml                     | 4 ++--
+ res/values-ko/strings.xml                     | 4 ++--
+ res/values-ky/strings.xml                     | 4 ++--
+ res/values-lo/strings.xml                     | 4 ++--
+ res/values-lt/strings.xml                     | 4 ++--
+ res/values-lv/strings.xml                     | 4 ++--
+ res/values-mk/strings.xml                     | 4 ++--
+ res/values-ml/strings.xml                     | 4 ++--
+ res/values-mn/strings.xml                     | 4 ++--
+ res/values-mr/strings.xml                     | 4 ++--
+ res/values-ms/strings.xml                     | 4 ++--
+ res/values-my/strings.xml                     | 4 ++--
+ res/values-ne/strings.xml                     | 4 ++--
+ res/values-nl/strings.xml                     | 4 ++--
+ res/values-or/strings.xml                     | 4 ++--
+ res/values-pa/strings.xml                     | 4 ++--
+ res/values-pt-rPT/strings.xml                 | 4 ++--
+ res/values-pt/strings.xml                     | 4 ++--
+ res/values-ro/strings.xml                     | 4 ++--
+ res/values-ru/strings.xml                     | 4 ++--
+ res/values-si/strings.xml                     | 4 ++--
+ res/values-sk/strings.xml                     | 4 ++--
+ res/values-sl/strings.xml                     | 4 ++--
+ res/values-sq/strings.xml                     | 4 ++--
+ res/values-sr/strings.xml                     | 4 ++--
+ res/values-sv/strings.xml                     | 4 ++--
+ res/values-sw/strings.xml                     | 4 ++--
+ res/values-ta/strings.xml                     | 4 ++--
+ res/values-te/strings.xml                     | 4 ++--
+ res/values-th/strings.xml                     | 4 ++--
+ res/values-tl/strings.xml                     | 4 ++--
+ res/values-tr/strings.xml                     | 4 ++--
+ res/values-uk/strings.xml                     | 4 ++--
+ res/values-ur/strings.xml                     | 4 ++--
+ res/values-uz/strings.xml                     | 4 ++--
+ res/values-vi/strings.xml                     | 4 ++--
+ res/values-zh-rCN/strings.xml                 | 4 ++--
+ res/values-zh-rHK/strings.xml                 | 4 ++--
+ res/values-zh-rTW/strings.xml                 | 4 ++--
+ res/values-zu/strings.xml                     | 4 ++--
+ res/values/strings.xml                        | 6 +++---
+ src/com/android/phone/settings/RadioInfo.java | 6 +++---
+ 84 files changed, 170 insertions(+), 170 deletions(-)
+
+diff --git a/res/values-af/strings.xml b/res/values-af/strings.xml
+index 7cb0ad77e..5239fff5a 100644
+--- a/res/values-af/strings.xml
++++ b/res/values-af/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Onverwerkte WLAN-data se registrasiestatus:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Kies foonindeks"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Stel voorkeurnetwerktipe:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Pieng gasheernaam(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Pieng gasheernaam(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Pieng gasheernaam(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Pieng gasheernaam(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP-kliënttoets:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Doen piengtoets"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-am/strings.xml b/res/values-am/strings.xml
+index a3c069e1b..ec8b5c3fd 100644
+--- a/res/values-am/strings.xml
++++ b/res/values-am/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"የWLAN ጥሬ ውሂብ ምዝገባ ሁነታ፦"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"የስልክ መረጃ ጠቋሚ ይምረጡ"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"ተመራጭ የአውታረ መረብ ዓይነት ያዋቅሩ፡"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ፒንግ ስመ ከዳም(www.google.com) IPv4፦"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ፒንግ ስመ ካዳም(www.google.com) IPv6፡"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ፒንግ ስመ ከዳም(dns.quad9.net) IPv4፦"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ፒንግ ስመ ካዳም(dns.quad9.net) IPv6፡"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"የኤችቲቲፒ ደንበኛ ሙከራ:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"የፒንግ ሙከራን አስሂድ"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-ar/strings.xml b/res/values-ar/strings.xml
+index 20469b6e7..9f4c82ff7 100644
+--- a/res/values-ar/strings.xml
++++ b/res/values-ar/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"‏حالة التسجيل الأولية لبيانات WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"اختيار فهرس الهاتف"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"تحديد نوع الشبكة المفضّل:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"‏فحص اتصال اسم المضيف (www.google.com) عبر IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"‏فحص اتصال اسم المضيف (www.google.com) عبر IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"‏فحص اتصال اسم المضيف (dns.quad9.net) عبر IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"‏فحص اتصال اسم المضيف (dns.quad9.net) عبر IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"‏اختبار عميل HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"تشغيل اختبار فحص الاتصال"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-as/strings.xml b/res/values-as/strings.xml
+index 589f2285a..09f4dc7c7 100644
+--- a/res/values-as/strings.xml
++++ b/res/values-as/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN ডেটাৰ অসম্পাদিত পঞ্জীয়নৰ স্থিতি:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"ফ’নৰ ইনডেক্স বাছনি কৰক"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"পচন্দৰ নেটৱৰ্কৰ প্ৰকাৰ ছেট কৰক:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"হ\'ষ্টনাম(www.google.com) IPv4 পিং কৰক:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"হ\'ষ্টনাম(www.google.com) IPv6 পিং কৰক:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"হ\'ষ্টনাম(dns.quad9.net) IPv4 পিং কৰক:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"হ\'ষ্টনাম(dns.quad9.net) IPv6 পিং কৰক:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP ক্লায়েণ্ট পৰীক্ষা:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"পিং পৰীক্ষা কৰক"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-az/strings.xml b/res/values-az/strings.xml
+index d78f06d10..c1411adc8 100644
+--- a/res/values-az/strings.xml
++++ b/res/values-az/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"İşlənməmiş WLAN Datası üzrə Qeydiyyat Statusu:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Telefon indeksini seçin"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Tərcih Olunmuş Şəbəkə Növü Seçin:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping Hostname(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping Hostname(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping Hostname(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping Hostname(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP Müştəri Testi:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Ping Testi Çalışdırın"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-b+sr+Latn/strings.xml b/res/values-b+sr+Latn/strings.xml
+index b6050ff3d..5ce54056f 100644
+--- a/res/values-b+sr+Latn/strings.xml
++++ b/res/values-b+sr+Latn/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Stanje registracije neobrađenih WLAN podataka:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Izaberite indeks telefona"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Podesite željeni tip mreže:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"IPv4 imena hosta za pingovanje (www.google.com):"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"IPv6 imena hosta za pingovanje (www.google.com):"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"IPv4 imena hosta za pingovanje (dns.quad9.net):"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"IPv6 imena hosta za pingovanje (dns.quad9.net):"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Test za HTTP klijenta:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Pokreni test pingovanja"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-be/strings.xml b/res/values-be/strings.xml
+index 903b8318a..3996d5c0d 100644
+--- a/res/values-be/strings.xml
++++ b/res/values-be/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Стан пачатковай рэгістрацыі даных WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Выбраць тэлефонны код"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Задаць прыярытэтны тып сеткі:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Каманда ping для хоста www.google.com (IPv4):"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Каманда ping для хоста www.google.com (IPv6):"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Каманда ping для хоста dns.quad9.net (IPv4):"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Каманда ping для хоста dns.quad9.net (IPv6):"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Тэст HTTP-кліента:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Выканаць праверку ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-bg/strings.xml b/res/values-bg/strings.xml
+index 35111c0a7..3d6b84baf 100644
+--- a/res/values-bg/strings.xml
++++ b/res/values-bg/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Необработено състояние на регистрация за данни за WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Избиране на индекс за телефон"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Задаване на предпочитан тип мрежа:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Име на хост за позив (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Име на хост за позив (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Име на хост за позив (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Име на хост за позив (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Тест на HTTP клиента:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Изпълняване на тест „ping“"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMS център:"</string>
+diff --git a/res/values-bn/strings.xml b/res/values-bn/strings.xml
+index 276702072..529fd2b2b 100644
+--- a/res/values-bn/strings.xml
++++ b/res/values-bn/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN ডেটা Raw রেজিস্ট্রেশনের স্ট্যাটাস:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"ফোনের ইন্ডেক্স বেছে নিন"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"পছন্দের নেটওয়ার্ক সেট করুন:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"হোস্টনামে(www.google.com) IPv4 পিং করুন:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"হোস্টনামে(www.google.com) IPv6 পিং করুন:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"হোস্টনামে(dns.quad9.net) IPv4 পিং করুন:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"হোস্টনামে(dns.quad9.net) IPv6 পিং করুন:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP ক্লায়েন্ট পরীক্ষা:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"পিং পরীক্ষা চালান"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-bs/strings.xml b/res/values-bs/strings.xml
+index 0bfaa9eec..1e4a3dec9 100644
+--- a/res/values-bs/strings.xml
++++ b/res/values-bs/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Stanje registracije sirovih podataka WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Odaberi indeks telefona"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Postavi preferiranu vrstu mreže:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Pinguj ime računara (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Pinguj ime računara (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Pinguj ime računara (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Pinguj ime računara (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Test HTTP klijenta:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Pokreni ping test"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-ca/strings.xml b/res/values-ca/strings.xml
+index 0c1003d59..996346d3b 100644
+--- a/res/values-ca/strings.xml
++++ b/res/values-ca/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Estat de registre de les dades sense tractar de la WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Selecciona la guia telefònica"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Defineix el tipus de xarxa preferit:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Fer ping a IPv4 de nom d\'amfitrió (www.google.com):"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Fer ping a IPv6 de nom d\'amfitrió (www.google.com):"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Fer ping a IPv4 de nom d\'amfitrió (dns.quad9.net):"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Fer ping a IPv6 de nom d\'amfitrió (dns.quad9.net):"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Prova de client HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Executa la prova de ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-cs/strings.xml b/res/values-cs/strings.xml
+index 83c3d7fcf..eec5e6c8b 100644
+--- a/res/values-cs/strings.xml
++++ b/res/values-cs/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN – stav registrace nezpracovaných dat:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Vybrat telefonní seznam"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Nastavit upřednostňovaný typ sítě:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping názvu hostitele (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping názvu hostitele (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping názvu hostitele (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping názvu hostitele (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Test klienta HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Spustit test Ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-da/strings.xml b/res/values-da/strings.xml
+index 3f5cdcff4..594715104 100644
+--- a/res/values-da/strings.xml
++++ b/res/values-da/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"RAW-registreringsstatus for WLAN-data:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Vælg telefonindeks"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Angiv den foretrukne netværkstype:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping værtsnavn (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping værtsnavn (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping værtsnavn (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping værtsnavn (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP-klienttest:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Test ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-de/strings.xml b/res/values-de/strings.xml
+index 539f8636e..27ac68ecb 100644
+--- a/res/values-de/strings.xml
++++ b/res/values-de/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Registrierungsstatus der WLAN-Daten:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Smartphone-Index auswählen"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Bevorzugten Netzwerktyp festlegen:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Hostname (www.google.com) pingen, IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Hostname (www.google.com) pingen, IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Hostname (dns.quad9.net) pingen, IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Hostname (dns.quad9.net) pingen, IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP-Clienttest:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Pingtest ausführen"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-el/strings.xml b/res/values-el/strings.xml
+index 143f85512..da5f9b948 100644
+--- a/res/values-el/strings.xml
++++ b/res/values-el/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Κατάσταση μη επεξεργασμένης εγγραφής δεδομένων WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Επιλογή ευρετηρίου τηλεφώνου"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Ορισμός προτιμώμενου τύπου δικτύου:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Όνομα κεντρικού υπολογιστή Ping (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Όνομα κεντρικού υπολογιστή Ping (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Όνομα κεντρικού υπολογιστή Ping (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Όνομα κεντρικού υπολογιστή Ping (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Δοκιμή πελάτη HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Εκτέλεση δοκιμής ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-en-rAU/strings.xml b/res/values-en-rAU/strings.xml
+index bcead8196..ec621f3d2 100644
+--- a/res/values-en-rAU/strings.xml
++++ b/res/values-en-rAU/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN data raw registration state:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Select phone index"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Set preferred network type:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping hostname(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping hostname(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping hostname(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping hostname(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP client test:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Run ping test"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-en-rCA/strings.xml b/res/values-en-rCA/strings.xml
+index 5bdcd410b..c1996b646 100644
+--- a/res/values-en-rCA/strings.xml
++++ b/res/values-en-rCA/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN Data Raw Registration State:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Select phone index"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Set Preferred Network Type:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping Hostname(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping Hostname(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping Hostname(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping Hostname(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP Client Test:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Run Ping Test"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-en-rGB/strings.xml b/res/values-en-rGB/strings.xml
+index bcead8196..ec621f3d2 100644
+--- a/res/values-en-rGB/strings.xml
++++ b/res/values-en-rGB/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN data raw registration state:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Select phone index"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Set preferred network type:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping hostname(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping hostname(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping hostname(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping hostname(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP client test:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Run ping test"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-en-rIN/strings.xml b/res/values-en-rIN/strings.xml
+index bcead8196..ec621f3d2 100644
+--- a/res/values-en-rIN/strings.xml
++++ b/res/values-en-rIN/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN data raw registration state:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Select phone index"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Set preferred network type:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping hostname(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping hostname(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping hostname(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping hostname(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP client test:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Run ping test"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-en-rXC/strings.xml b/res/values-en-rXC/strings.xml
+index 624727b7d..8445c26af 100644
+--- a/res/values-en-rXC/strings.xml
++++ b/res/values-en-rXC/strings.xml
+@@ -909,8 +909,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‎‏‏‏‏‏‏‏‎‏‏‎‎‎‏‏‎‎‎‏‏‎‎‏‎‏‎‏‎‏‏‏‏‏‎‏‎‏‏‏‏‏‏‏‏‎‏‏‎‏‏‎‎‎‎‎‏‎‏‎‏‏‏‏‏‎‎‏‎‎‎WLAN Data Raw Registration State:‎‏‎‎‏‎"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‎‏‏‏‏‏‏‏‎‏‎‏‏‎‎‏‎‏‏‎‏‎‎‏‏‎‏‏‎‏‏‏‎‎‎‎‎‏‎‏‏‏‎‎‎‏‏‎‏‎‏‎‏‏‏‏‎‏‎‏‏‎‏‎‏‎‏‏‎‎‎Select phone index‎‏‎‎‏‎"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‎‏‏‏‏‏‏‏‏‎‎‏‏‎‏‏‎‎‏‏‏‎‏‏‏‏‏‎‎‎‎‎‏‏‏‏‏‏‏‎‏‎‏‎‎‎‎‏‏‎‏‎‎‏‎‎‏‎‎‏‏‎‏‏‎‏‎‎‏‎‎Set Preferred Network Type:‎‏‎‎‏‎"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‎‏‏‏‏‏‏‏‏‎‎‎‎‎‎‏‏‏‎‏‏‏‏‏‎‎‎‎‏‎‎‎‎‎‎‏‏‏‎‎‎‎‏‎‏‏‎‏‏‎‎‎‏‏‏‎‎‏‎‎‏‏‏‎‏‏‎‏‏‎‎Ping Hostname(www.google.com) IPv4:‎‏‎‎‏‎"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‎‏‏‏‏‏‎‏‎‎‏‏‎‎‎‏‎‎‏‎‏‎‎‎‏‏‏‏‏‏‎‎‏‏‎‎‎‏‏‏‏‏‎‏‏‎‎‎‎‎‏‏‎‏‎‎‎‎‏‎‏‏‏‏‎‏‎‏‏‎Ping Hostname(www.google.com) IPv6:‎‏‎‎‏‎"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‎‏‏‏‏‏‏‏‏‎‎‎‎‎‎‏‏‏‎‏‏‏‏‏‎‎‎‎‏‎‎‎‎‎‎‏‏‏‎‎‎‎‏‎‏‏‎‏‏‎‎‎‏‏‏‎‎‏‎‎‏‏‏‎‏‏‎‏‏‎‎Ping Hostname(dns.quad9.net) IPv4:‎‏‎‎‏‎"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‎‏‏‏‏‏‎‏‎‎‏‏‎‎‎‏‎‎‏‎‏‎‎‎‏‏‏‏‏‏‎‎‏‏‎‎‎‏‏‏‏‏‎‏‏‎‎‎‎‎‏‏‎‏‎‎‎‎‏‎‏‏‏‏‎‏‎‏‏‎Ping Hostname(dns.quad9.net) IPv6:‎‏‎‎‏‎"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‎‏‏‏‏‎‏‏‎‎‏‎‎‏‏‏‎‎‏‏‏‎‏‎‎‎‎‏‎‏‎‏‏‎‎‏‏‎‎‏‎‎‏‎‏‎‎‏‏‏‏‎‎‎‏‎‏‎‎‎‏‏‎‎‏‏‏‎‎HTTP Client Test:‎‏‎‎‏‎"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‎‏‏‏‎‏‏‏‏‎‎‎‏‏‏‎‎‏‏‏‎‎‏‏‏‏‎‎‏‏‏‏‎‏‏‏‏‏‎‏‏‎‏‎‎‎‎‎‎‏‏‎‎‏‏‏‏‏‎‎‎‎‏‏‏‎‎Run Ping Test‎‏‎‎‏‎"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‎‏‏‏‏‏‎‏‏‎‏‎‎‎‎‎‎‏‎‏‎‎‏‏‎‏‎‏‎‏‏‎‎‏‏‎‏‏‏‏‏‏‏‏‏‎‏‏‏‎‏‎‎‏‎‏‎‎‏‎‏‎‏‏‎‎‎‏‏‎SMSC:‎‏‎‎‏‎"</string>
+diff --git a/res/values-es-rUS/strings.xml b/res/values-es-rUS/strings.xml
+index 76be99f61..bc76ea48a 100644
+--- a/res/values-es-rUS/strings.xml
++++ b/res/values-es-rUS/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Estado del registro de los datos de WLAN sin procesar:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Seleccionar guía telefónica"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Establecer el tipo de red preferida:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Hacer ping a IPv4 de nombre de host (www.google.com):"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Hacer ping a IPv6 de nombre de host (www.google.com):"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Hacer ping a IPv4 de nombre de host (dns.quad9.net):"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Hacer ping a IPv6 de nombre de host (dns.quad9.net):"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Prueba de cliente HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Ejecutar prueba de ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-es/strings.xml b/res/values-es/strings.xml
+index 2e13da57f..07e1aa00a 100644
+--- a/res/values-es/strings.xml
++++ b/res/values-es/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Estado de registro sin procesar de los datos de WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Seleccionar guía telefónica"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Establecer tipo de red preferido:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Hacer ping a IPv4 de nombre de host (www.google.com):"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Hacer ping a IPv6 de nombre de host (www.google.com):"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Hacer ping a IPv4 de nombre de host (dns.quad9.net):"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Hacer ping a IPv6 de nombre de host (dns.quad9.net):"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Prueba de cliente HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Ejecutar prueba de ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-et/strings.xml b/res/values-et/strings.xml
+index 6eba7485d..d7f607558 100644
+--- a/res/values-et/strings.xml
++++ b/res/values-et/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN-i toorandmete registreerimise olek:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Telefoni registri valimine"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Eelistatud võrgutüübi määramine:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Pingi hosti nimi (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Pingi hosti nimi (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Pingi hosti nimi (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Pingi hosti nimi (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP-kliendi test:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Pingimistesti käitamine"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-eu/strings.xml b/res/values-eu/strings.xml
+index 74f83aa5b..58d5d4535 100644
+--- a/res/values-eu/strings.xml
++++ b/res/values-eu/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN bidezko deien prozesatu gabeko datuen erregistroaren egoera:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Hautatu telefonoaren indizea"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Ezarri sare mota hobetsia:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping egiteko ostalari-izena (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping egiteko ostalari-izena (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping egiteko ostalari-izena (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping egiteko ostalari-izena (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP bezeroaren proba:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Egin ping-proba"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-fa/strings.xml b/res/values-fa/strings.xml
+index b8e4565b1..0113726e3 100644
+--- a/res/values-fa/strings.xml
++++ b/res/values-fa/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"‏وضعیت ثبت خام داده WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"انتخاب نمایه تلفن"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"تنظیم نوع شبکه ترجیحی:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"‏پینگ کردن نام میزبان (www.google.com)‏ IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"‏پینگ کردن نام میزبان (www.google.com)‏ IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"‏پینگ کردن نام میزبان (dns.quad9.net)‏ IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"‏پینگ کردن نام میزبان (dns.quad9.net)‏ IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"‏آزمایش کارخواه HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"اجرای آزمایش پینگ"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-fi/strings.xml b/res/values-fi/strings.xml
+index ef6133fc4..f62e7ece6 100644
+--- a/res/values-fi/strings.xml
++++ b/res/values-fi/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN-raakadatan rekisteröinnin tila:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Valitse puhelimen hakemisto"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Aseta ensisijainen verkon tyyppi:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping isäntänimelle (www.google.com), IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping isäntänimelle (www.google.com), IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping isäntänimelle (dns.quad9.net), IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping isäntänimelle (dns.quad9.net), IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP-asiakastesti:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Suorita ping-testi"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-fr-rCA/strings.xml b/res/values-fr-rCA/strings.xml
+index 0827227bb..466ababd2 100644
+--- a/res/values-fr-rCA/strings.xml
++++ b/res/values-fr-rCA/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"État d\'inscription brut des données WLAN :"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Sélectionner l\'indice du téléphone"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Définir le type de réseau préféré :"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Faire un ping de l\'IPv4 du nom d\'hôte (www.google.com) :"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Faire un ping de l\'IPv6 du nom d\'hôte (www.google.com) :"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Faire un ping de l\'IPv4 du nom d\'hôte (dns.quad9.net) :"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Faire un ping de l\'IPv6 du nom d\'hôte (dns.quad9.net) :"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Test du client HTTP :"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Effectuer le test de ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC :"</string>
+diff --git a/res/values-fr/strings.xml b/res/values-fr/strings.xml
+index 37e182193..12021fa80 100644
+--- a/res/values-fr/strings.xml
++++ b/res/values-fr/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"État d\'enregistrement brut des données WLAN :"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Sélectionner l\'identifiant du téléphone"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Définir le type de réseau préféré :"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Pinguer l\'IPv4 du nom d\'hôte (www.google.com) :"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Pinguer l\'IPv6 du nom d\'hôte (www.google.com) :"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Pinguer l\'IPv4 du nom d\'hôte (dns.quad9.net) :"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Pinguer l\'IPv6 du nom d\'hôte (dns.quad9.net) :"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Test du client HTTP :"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Effectuer un test de ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC :"</string>
+diff --git a/res/values-gl/strings.xml b/res/values-gl/strings.xml
+index 493aea6c9..08ab34018 100644
+--- a/res/values-gl/strings.xml
++++ b/res/values-gl/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Estado do rexistro básico dos datos de WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Seleccionar unha guía telefónica"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Definir o tipo de rede preferido:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Facer ping ao IPv4 do nome do servidor (www.google.com):"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Facer ping ao IPv6 do nome do servidor (www.google.com):"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Facer ping ao IPv4 do nome do servidor (dns.quad9.net):"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Facer ping ao IPv6 do nome do servidor (dns.quad9.net):"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Proba de cliente HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Executar proba de ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-gu/strings.xml b/res/values-gu/strings.xml
+index fa3d20d40..6a3a35d63 100644
+--- a/res/values-gu/strings.xml
++++ b/res/values-gu/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN ડેટાનું મૂળભૂત રજિસ્ટ્રેશન સ્ટેટસ:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"ફોનની અનુક્રમણિકા પસંદ કરો"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"પસંદગીનો નેટવર્ક પ્રકાર સેટ કરો:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"હોસ્ટનું નામ પિંગ કરો(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"હોસ્ટનું નામ પિંગ કરો(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"હોસ્ટનું નામ પિંગ કરો(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"હોસ્ટનું નામ પિંગ કરો(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP ક્લાઇન્ટ પરીક્ષણ:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"પિંગ પરીક્ષણ શરૂ કરો"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-hi/strings.xml b/res/values-hi/strings.xml
+index 6e5414270..f2cb20dde 100644
+--- a/res/values-hi/strings.xml
++++ b/res/values-hi/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN के रॉ डेटा के रजिस्ट्रेशन का स्टेटस:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"फ़ोन इंडेक्स चुनें"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"पसंदीदा नेटवर्क प्रकार सेट करें:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"होस्टनाम(www.google.com) IPv4 पिंग करें:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"होस्टनाम(www.google.com) IPv6 पिंग करें:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"होस्टनाम(dns.quad9.net) IPv4 पिंग करें:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"होस्टनाम(dns.quad9.net) IPv6 पिंग करें:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"एचटीटीपी क्लाइंट जांच:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"पिंग जांच चलाएं"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"एसएमएससी:"</string>
+diff --git a/res/values-hr/strings.xml b/res/values-hr/strings.xml
+index 813a59edc..95832bfac 100644
+--- a/res/values-hr/strings.xml
++++ b/res/values-hr/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Stanje registracije neobrađenih podataka WLAN-a:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Odaberite telefonski indeks"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Postavite željenu vrstu mreže:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Pinganje naziva hosta (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Pinganje naziva hosta (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Pinganje naziva hosta (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Pinganje naziva hosta (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Test HTTP klijenta:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Pokreni ping test"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-hu/strings.xml b/res/values-hu/strings.xml
+index be83c8655..95c514383 100644
+--- a/res/values-hu/strings.xml
++++ b/res/values-hu/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN-adatok nyers regisztrációs állapota:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Telefonkönyv kiválasztása"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Preferált hálózattípus beállítása:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Pingelt gazdagépnév (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Pingelt gazdagépnév (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Pingelt gazdagépnév (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Pingelt gazdagépnév (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP-kliens tesztje:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Pingteszt futtatása"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-hy/strings.xml b/res/values-hy/strings.xml
+index 6d5b6de6e..72a78197e 100644
+--- a/res/values-hy/strings.xml
++++ b/res/values-hy/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN-ի չմշակված տվյալների գրանցման կարգավիճակը՝"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Ընտրեք հեռախոսային կոդ"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Կարգավորեք ցանկալի ցանցի տեսակը՝"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Փինգ հանգույցի անուն(www.google.com) IPv4՝"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Փինգ հանգույցի անուն(www.google.com) IPv6՝"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Փինգ հանգույցի անուն(dns.quad9.net) IPv4՝"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Փինգ հանգույցի անուն(dns.quad9.net) IPv6՝"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP սպասառուի թեստ՝"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Գործարկել փինգ թեստը"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC`"</string>
+diff --git a/res/values-in/strings.xml b/res/values-in/strings.xml
+index 0b12da9d6..043b17389 100644
+--- a/res/values-in/strings.xml
++++ b/res/values-in/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Status Pendaftaran Mentah Data WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Pilih indeks ponsel"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Setel Preferensi Jenis Jaringan:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping Hostname(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping Hostname(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping Hostname(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping Hostname(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Uji Klien HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Jalankan Uji Ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-is/strings.xml b/res/values-is/strings.xml
+index 931134f9c..5853f539d 100644
+--- a/res/values-is/strings.xml
++++ b/res/values-is/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Skráningarstaða óunninna WLAN-gagna:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Velja atriðaskrá síma"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Veldu kjörsímkerfi:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping Hostname(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping Hostname(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping Hostname(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping Hostname(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Prófun HTTP-biðlara:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Keyra ping-próf"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-it/strings.xml b/res/values-it/strings.xml
+index 1e97d5700..c24e8f1b0 100644
+--- a/res/values-it/strings.xml
++++ b/res/values-it/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Stato della registrazione dei dati WLAN non elaborati:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Seleziona indice telefonico"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Imposta tipo di rete preferito:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping nome host (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping nome host (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping nome host (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping nome host (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Test client HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Invia ping di test"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-iw/strings.xml b/res/values-iw/strings.xml
+index 7edfc1b96..31870edfa 100644
+--- a/res/values-iw/strings.xml
++++ b/res/values-iw/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"‏מצב הרישום הגולמי של נתוני WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"בחירת אינדקס טלפון"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"הגדרת סוג רשת מועדף:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"‏נדנוד לשם המארח (www.google.com) מסוג IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"‏נדנוד לשם המארח (www.google.com) מסוג IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"‏נדנוד לשם המארח (dns.quad9.net) מסוג IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"‏נדנוד לשם המארח (dns.quad9.net) מסוג IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"‏בדיקת לקוח HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"הפעלת בדיקת פינג"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-ja/strings.xml b/res/values-ja/strings.xml
+index bbebb6973..ef9ccdb02 100644
+--- a/res/values-ja/strings.xml
++++ b/res/values-ja/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN データの未加工登録の状態:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"スマートフォンのインデックスを選択"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"優先ネットワークの種類を設定:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ホスト名（www.google.com）の ping（IPv4）:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ホスト名（www.google.com）の ping（IPv6）:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ホスト名（dns.quad9.net）の ping（IPv4）:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ホスト名（dns.quad9.net）の ping（IPv6）:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP クライアント テスト:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"ping テストの実行"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-ka/strings.xml b/res/values-ka/strings.xml
+index eb5b8d734..90ee8dcdc 100644
+--- a/res/values-ka/strings.xml
++++ b/res/values-ka/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN მონაცემთა ნედლეულის რეგისტრაციის სახელწიფო უწყება:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"სატელეფონო ინდექსის არჩევა"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"მიუთითეთ ქსელის სასურველი ტიპი:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping-ის მოთხოვნა ჰოსტის სახელისთვის(www.google.com), IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping-ის მოთხოვნა ჰოსტის სახელისთვის(www.google.com), IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping-ის მოთხოვნა ჰოსტის სახელისთვის(dns.quad9.net), IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping-ის მოთხოვნა ჰოსტის სახელისთვის(dns.quad9.net), IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP კლიენტის ტესტი:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Ping ტესტის გაშვება"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-kk/strings.xml b/res/values-kk/strings.xml
+index f26d204f4..5134c7417 100644
+--- a/res/values-kk/strings.xml
++++ b/res/values-kk/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Өңделмеген WLAN деректерін тіркеу күйі:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Телефон индексін таңдау"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Қалаулы желі түрін реттеу:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping хост атауы (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping хоста атауы (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping хост атауы (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping хоста атауы (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP клиентін тексеру:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Ping тексеруін іске қосу"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-km/strings.xml b/res/values-km/strings.xml
+index 72f9473ee..713f2f67d 100644
+--- a/res/values-km/strings.xml
++++ b/res/values-km/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"ស្ថានភាព​ចុះបញ្ជី​ទិន្នន័យ WLAN ដែលមិន​ទាន់​វិភាគ៖"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"ជ្រើសរើស​សន្ទស្សន៍​ទូរសព្ទ"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"កំណត់ប្រភេទបណ្ដាញដែលពេញចិត្ត៖"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ភីង​ឈ្មោះ​ម៉ាស៊ីន (www.google.com) IPv4 ៖"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ភីង​ឈ្មោះ​ម៉ាស៊ីន (www.google.com) IPv6 ៖"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ភីង​ឈ្មោះ​ម៉ាស៊ីន (dns.quad9.net) IPv4 ៖"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ភីង​ឈ្មោះ​ម៉ាស៊ីន (dns.quad9.net) IPv6 ៖"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"តេស្ត​កម្មវិធី​ភ្ញៀវ HTTP ៖"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"ដំណើរការ​តេស្ត​ភីង"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC ៖"</string>
+diff --git a/res/values-kn/strings.xml b/res/values-kn/strings.xml
+index 486a0e83b..02a0e6a61 100644
+--- a/res/values-kn/strings.xml
++++ b/res/values-kn/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN ಡೇಟಾ ರಾ ರಿಜಿಸ್ಟ್ರೇಷನ್‌ ಸ್ಟೇಟ್‌:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"ಫೋನ್ ಸೂಚಿಕೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"ಆದ್ಯತೆಯ ನೆಟ್‌ವರ್ಕ್‌ ಪ್ರಕಾರವನ್ನು ಸೆಟ್ ಮಾಡಿ:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ಹೋಸ್ಟ್‌ ಹೆಸರನ್ನು ಪಿಂಗ್ ಮಾಡಿ(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ಹೋಸ್ಟ್‌ ಹೆಸರನ್ನು ಪಿಂಗ್ ಮಾಡಿ(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ಹೋಸ್ಟ್‌ ಹೆಸರನ್ನು ಪಿಂಗ್ ಮಾಡಿ(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ಹೋಸ್ಟ್‌ ಹೆಸರನ್ನು ಪಿಂಗ್ ಮಾಡಿ(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP ಕ್ಲೈಂಟ್ ಪರೀಕ್ಷೆ:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"ಪಿಂಗ್ ಪರೀಕ್ಷೆಯನ್ನು ರನ್ ಮಾಡಿ"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-ko/strings.xml b/res/values-ko/strings.xml
+index d621811ce..ddb4eebc9 100644
+--- a/res/values-ko/strings.xml
++++ b/res/values-ko/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN 데이터 Raw 등록 상태:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"휴대전화 색인 선택"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"기본 네트워크 유형 설정:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"핑 호스트 이름(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"핑 호스트 이름(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"핑 호스트 이름(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"핑 호스트 이름(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP 클라이언트 테스트:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"핑 테스트 실행"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-ky/strings.xml b/res/values-ky/strings.xml
+index b439b217e..14ac07bbb 100644
+--- a/res/values-ky/strings.xml
++++ b/res/values-ky/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN маалыматын баштапкы каттоо статусу:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Телефондун индексин тандоо"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Тандалган тармак түрүн коюу:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"www.google.com, IPv4 үчүн ping сурамы:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"www.google.com, IPv6 үчүн ping сурамы:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"dns.quad9.net, IPv4 үчүн ping сурамы:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"dns.quad9.net, IPv6 үчүн ping сурамы:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP кардарын сыноо:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Түйүн байланышын текшерүү каражатын иштетүү"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-lo/strings.xml b/res/values-lo/strings.xml
+index 15acf09e5..1bdfc02cb 100644
+--- a/res/values-lo/strings.xml
++++ b/res/values-lo/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"ສະຖານະການລົງທະບຽນຂໍ້ມູນດິບຂອງ WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"ເລືອກດັດຊະນີໂທລະສັບ"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"ເລືອກປະເພດເຄືອຂ່າຍທີ່ຕ້ອງການໃຊ້:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping Hostname(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping Hostname(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping Hostname(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping Hostname(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"ທົດສອບລູກຂ່າຍ HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"ເລີ່ມທົດສອບ ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-lt/strings.xml b/res/values-lt/strings.xml
+index e6f60abcb..eadae771e 100644
+--- a/res/values-lt/strings.xml
++++ b/res/values-lt/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Neapdorotų WLAN duomenų registracijos būsena:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Pasirinkti telefono indeksą"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Nustatyti pageidaujamą tinklo tipą:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ryšio patikros prieglobos serverio pavadinimas (www.google.com) „IPv4“:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ryšio patikros prieglobos serverio pavadinimas (www.google.com) „IPv6“:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ryšio patikros prieglobos serverio pavadinimas (dns.quad9.net) „IPv4“:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ryšio patikros prieglobos serverio pavadinimas (dns.quad9.net) „IPv6“:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP kliento bandymas:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Paleisti ryšio patikros bandymą"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-lv/strings.xml b/res/values-lv/strings.xml
+index 703d6e7bd..98650b834 100644
+--- a/res/values-lv/strings.xml
++++ b/res/values-lv/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Neapstrādātu WLAN datu reģistrācijas statuss:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Atlasīt tālruņa kodu"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Iestatiet ieteicamo tīkla veidu:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ehotestēšanas saimniekdatora nosaukuma (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ehotestēšanas saimniekdatora nosaukuma (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ehotestēšanas saimniekdatora nosaukuma (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ehotestēšanas saimniekdatora nosaukuma (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP klienta tests:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Veikt ehotestēšanu"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-mk/strings.xml b/res/values-mk/strings.xml
+index 37c0f2e42..16615dad8 100644
+--- a/res/values-mk/strings.xml
++++ b/res/values-mk/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Необработена состојба на регистрација на податоци за WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Изберете индекс на телефонот"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Поставете претпочитан тип мрежа:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Пингај го хостот (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Пингај го хостот (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Пингај го хостот (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Пингај го хостот (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Тестирање HTTP-клиент:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Изврши тест со пингање"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-ml/strings.xml b/res/values-ml/strings.xml
+index ae08ecfd6..94bfb2019 100644
+--- a/res/values-ml/strings.xml
++++ b/res/values-ml/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN റോ ഡാറ്റാ രജിസ്‌ട്രേഷന്റെ നില:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"ഫോൺ സൂചിക തിരഞ്ഞെടുക്കുക"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"തിരഞ്ഞെടുത്ത നെറ്റ്‌വർക്ക് തരം സജ്ജീകരിക്കുക:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ഹോസ്റ്റുനാമം(www.google.com) IPv4 പിംഗ് ചെയ്യുക:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ഹോസ്റ്റുനാമം(www.google.com) IPv6 പിംഗ് ചെയ്യുക:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ഹോസ്റ്റുനാമം(dns.quad9.net) IPv4 പിംഗ് ചെയ്യുക:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ഹോസ്റ്റുനാമം(dns.quad9.net) IPv6 പിംഗ് ചെയ്യുക:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP ക്ലയന്റ് പരിശോധന:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"പിംഗ് പരിശോധന റൺ ചെയ്യുക"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-mn/strings.xml b/res/values-mn/strings.xml
+index 9da3a6d75..dad42b0e7 100644
+--- a/res/values-mn/strings.xml
++++ b/res/values-mn/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN-н өгөгдлийн түүхий бүртгэлийн төлөв:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Утасны индекс сонгох"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Сонгосон сүлжээний төрлийг тохируулна уу:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Пинг хостны нэр(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Пинг хостны нэр(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Пинг хостны нэр(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Пинг хостны нэр(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP Үйлчлүүлэгчийн тест:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Пинг тестийг ажиллуулах"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-mr/strings.xml b/res/values-mr/strings.xml
+index ca1eb2f2b..86d806083 100644
+--- a/res/values-mr/strings.xml
++++ b/res/values-mr/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN डेटा रॉ नोंदणी स्थिती:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"फोनची अनुक्रमणिका निवडा"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"प्राधान्य दिलेला नेटवर्कचा प्रकार सेट करा:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"पिंग होस्ट नाव(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"पिंग होस्ट नाव(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"पिंग होस्ट नाव(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"पिंग होस्ट नाव(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP क्लायंट चाचणी:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"पिंग चाचणी रन करा"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-ms/strings.xml b/res/values-ms/strings.xml
+index 752746e4b..a18fe6a02 100644
+--- a/res/values-ms/strings.xml
++++ b/res/values-ms/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Keadaan Pendaftaran Awal Data WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Pilih indeks telefon"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Tetapkan Jenis Rangkaian Pilihan:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping Nama Hos(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping Nama Hos(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping Nama Hos(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping Nama Hos(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Ujian Klien HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Jalankan Ujian Ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-my/strings.xml b/res/values-my/strings.xml
+index a2cd2c8b5..0a6ec73da 100644
+--- a/res/values-my/strings.xml
++++ b/res/values-my/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"ပကတိ WLAN ဒေတာ မှတ်ပုံတင်ခြင်းအခြေအနေ-"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"ဖုန်းအညွှန်း ရွေးရန်"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"ပိုနှစ်သက်သည့် ကွန်ရက်အမျိုးအစားကို သတ်မှတ်ပါ −"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ပင်ကို လက်ခံဝန်ဆောင်ပေးသူအမည်(www.google.com) မှာ IPv4 -"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ပင်ကို လက်ခံဝန်ဆောင်ပေးသူအမည် (www.google.com) IPv6 -"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ပင်ကို လက်ခံဝန်ဆောင်ပေးသူအမည်(dns.quad9.net) မှာ IPv4 -"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ပင်ကို လက်ခံဝန်ဆောင်ပေးသူအမည် (dns.quad9.net) IPv6 -"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP ကလိုင်းယင့် စမ်းသပ်မှု −"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"ပင်စမ်းသပ်ချက် လုပ်ဆောင်ပါ"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC -"</string>
+diff --git a/res/values-ne/strings.xml b/res/values-ne/strings.xml
+index 78116b750..1122e57b9 100644
+--- a/res/values-ne/strings.xml
++++ b/res/values-ne/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"अप्रशोधित WLAN डेटाको दर्ताको स्थिति:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"फोनको सूचक चयन गर्नुहोस्"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"रुचाइएको नेटवर्कको प्रकार सेट गर्नुहोस्:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"होस्टनाम (www.google.com) IPv4 मा पिङ गर्नुहोस्:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"होस्टनाम (www.google.com) IPv6 पिङ गर्नुहोस्:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"होस्टनाम (dns.quad9.net) IPv4 मा पिङ गर्नुहोस्:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"होस्टनाम (dns.quad9.net) IPv6 पिङ गर्नुहोस्:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP क्लाइन्टको परीक्षण:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"पिङसम्बन्धी परीक्षण सञ्चालन गर्नुहोस्"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-nl/strings.xml b/res/values-nl/strings.xml
+index 6dcefe5ed..0057bd2ef 100644
+--- a/res/values-nl/strings.xml
++++ b/res/values-nl/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Registratiestatus van onbewerkte WLAN-gegevens:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Telefoonindex selecteren"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Voorkeursnetwerktype instellen:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"IPv4 van hostnaam (www.google.com) pingen:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"IPv6 van hostnaam (www.google.com) pingen:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"IPv4 van hostnaam (dns.quad9.net) pingen:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"IPv6 van hostnaam (dns.quad9.net) pingen:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP-client testen:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Pingtest uitvoeren"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-or/strings.xml b/res/values-or/strings.xml
+index 07dc5b639..fb0e08fc1 100644
+--- a/res/values-or/strings.xml
++++ b/res/values-or/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN Data Raw ପଞ୍ଜିକରଣ ସ୍ଥିତି:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"ଫୋନ୍ ଇଣ୍ଡେକ୍ସ ବାଛନ୍ତୁ"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"ନିଜ ପସନ୍ଦର ନେଟ୍‌ୱାର୍କ ପ୍ରକାର ସେଟ୍‌ କରନ୍ତୁ:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ହୋଷ୍ଟନାମ (www.google.com) IPv4 ପିଙ୍ଗ କରନ୍ତୁ:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ହୋଷ୍ଟନାମ (www.google.com) IP6 ପିଙ୍ଗ କରନ୍ତୁ:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ହୋଷ୍ଟନାମ (dns.quad9.net) IPv4 ପିଙ୍ଗ କରନ୍ତୁ:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ହୋଷ୍ଟନାମ (dns.quad9.net) IP6 ପିଙ୍ଗ କରନ୍ତୁ:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP କ୍ଲାଏଣ୍ଟ ଟେଷ୍ଟ:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"ପିଂ ଟେଷ୍ଟ ଚଲାନ୍ତୁ"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-pa/strings.xml b/res/values-pa/strings.xml
+index ee41e3fa7..ab14117c7 100644
+--- a/res/values-pa/strings.xml
++++ b/res/values-pa/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"ਗੈਰ-ਸੰਪਾਦਿਤ WLAN ਡਾਟੇ ਦੇ ਰੂਪ ਵਿੱਚ ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਦੀ ਸਥਿਤੀ:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"ਫ਼ੋਨ ਕ੍ਰਮ-ਸੂਚੀ ਚੁਣੋ"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"ਤਰਜੀਹੀ ਨੈੱਟਵਰਕ ਕਿਸਮ ਸੈੱਟ ਕਰੋ:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ਹੋਸਟਨੇਮ (www.google.com) IPv4 ਪਿੰਗ ਕਰੋ:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ਹੋਸਟਨਾਮ (www.google.com) IPv6 ਪਿੰਗ ਕਰੋ:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ਹੋਸਟਨੇਮ (dns.quad9.net) IPv4 ਪਿੰਗ ਕਰੋ:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ਹੋਸਟਨਾਮ (dns.quad9.net) IPv6 ਪਿੰਗ ਕਰੋ:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP ਕਲਾਇੰਟ ਜਾਂਚ:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"ਪਿੰਗ ਟੈਸਟ ਚਲਾਓ"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-pt-rPT/strings.xml b/res/values-pt-rPT/strings.xml
+index 08ba46f41..b47467d67 100644
+--- a/res/values-pt-rPT/strings.xml
++++ b/res/values-pt-rPT/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Estado do registo de dados WLAN não processados:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Selecionar lista telefónica"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Definir tipo de rede preferido:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Nome do anfitrião de ping (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Nome do anfitrião de ping (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Nome do anfitrião de ping (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Nome do anfitrião de ping (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Teste de Cliente HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Executar teste de ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-pt/strings.xml b/res/values-pt/strings.xml
+index 2be1b0fa5..8589e6702 100644
+--- a/res/values-pt/strings.xml
++++ b/res/values-pt/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Estado do registro bruto de dados WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Selecionar lista telefônica"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Definir tipo de rede preferido:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Dar um ping no nome do host (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Dar um ping no nome do host (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Dar um ping no nome do host (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Dar um ping no nome do host (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Teste do cliente HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Executar teste de ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-ro/strings.xml b/res/values-ro/strings.xml
+index 69d2d4e5b..2f6ea6fa2 100644
+--- a/res/values-ro/strings.xml
++++ b/res/values-ro/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Starea brută a înregistrării datelor WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Selectează indexul telefonului"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Setați tipul preferat de rețea:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Dă ping adresei IPv4 a numelui de gazdă (www.google.com):"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Dă ping adresei IPv6 a numelui de gazdă (www.google.com):"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Dă ping adresei IPv4 a numelui de gazdă (dns.quad9.net):"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Dă ping adresei IPv6 a numelui de gazdă (dns.quad9.net):"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Test client HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Efectuează testul de ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-ru/strings.xml b/res/values-ru/strings.xml
+index 145d091b9..146496ac3 100644
+--- a/res/values-ru/strings.xml
++++ b/res/values-ru/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Статус начальной регистрации данных WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Выберите телефонный код"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Настроить предпочтительный тип сети:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Имя хоста запроса ping для www.google.com, IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Имя хоста запроса ping для www.google.com, IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Имя хоста запроса ping для dns.quad9.net, IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Имя хоста запроса ping для dns.quad9.net, IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Проверка клиента HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Выполнить проверку ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-si/strings.xml b/res/values-si/strings.xml
+index adc160a53..3bcef49cd 100644
+--- a/res/values-si/strings.xml
++++ b/res/values-si/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN Data Raw ලියාපදිංචි තත්ත්වය:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"දුරකථන දර්ශකය තෝරන්න"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"වඩා කැමති ජාල වර්ගය සකසන්න:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"සත්කාරක නම පිං කරන්න(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"සත්කාරක නම පිං කරන්න(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"සත්කාරක නම පිං කරන්න(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"සත්කාරක නම පිං කරන්න(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP සේවාලාභි පරික්ෂාව:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"පිං පරික්ෂාව ධාවනය කරන්න"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-sk/strings.xml b/res/values-sk/strings.xml
+index 45a9d2470..b90453b5b 100644
+--- a/res/values-sk/strings.xml
++++ b/res/values-sk/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Stav registrácie nespracovaných údajov v sieti WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Vybrať index telefónu"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Nastaviť preferovaný typ siete:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Testovať dostupnosť (ping) názvu hostiteľa (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Testovať dostupnosť (ping) názvu hostiteľa (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Testovať dostupnosť (ping) názvu hostiteľa (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Testovať dostupnosť (ping) názvu hostiteľa (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Test klienta HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Spustiť testovanie dostupnosti (ping)"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-sl/strings.xml b/res/values-sl/strings.xml
+index 8892351cc..477feb6ea 100644
+--- a/res/values-sl/strings.xml
++++ b/res/values-sl/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Stanje registracije neobdelanih podatkov WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Izberite indeks telefona"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Nastavitev vrste prednostnega omrežja:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Preverjanje imena gostitelja (www.google.com) za IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Preverjanje imena gostitelja (www.google.com) za IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Preverjanje imena gostitelja (dns.quad9.net) za IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Preverjanje imena gostitelja (dns.quad9.net) za IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Preskus odjemalca HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Izvedba preskusa ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-sq/strings.xml b/res/values-sq/strings.xml
+index 11f9c7361..6c8b3698b 100644
+--- a/res/values-sq/strings.xml
++++ b/res/values-sq/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Gjendja e regjistrimit e të dhënave të papërpunuara të WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Zgjidh indeksin e telefonit"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Cakto llojin e preferuar të rrjetit:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Verifiko emrin e pritësit (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Verifiko emrin e pritësit (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Verifiko emrin e pritësit (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Verifiko emrin e pritësit (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Testi i klientit HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Ekzekuto testin e verifikimit \"ping\""</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-sr/strings.xml b/res/values-sr/strings.xml
+index dfbbfbaa3..c2072cc6a 100644
+--- a/res/values-sr/strings.xml
++++ b/res/values-sr/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Стање регистрације необрађених WLAN података:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Изаберите индекс телефона"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Подесите жељени тип мреже:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"IPv4 имена хоста за пинговање (www.google.com):"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"IPv6 имена хоста за пинговање (www.google.com):"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"IPv4 имена хоста за пинговање (dns.quad9.net):"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"IPv6 имена хоста за пинговање (dns.quad9.net):"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Тест за HTTP клијента:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Покрени тест пинговања"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-sv/strings.xml b/res/values-sv/strings.xml
+index fd90a335a..46b8ae4b3 100644
+--- a/res/values-sv/strings.xml
++++ b/res/values-sv/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Rå registreringsstatus för WLAN-data:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Välj telefonindex"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Ställ in önskad nätverkstyp:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Pinga värdnamn(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Pinga värdnamn(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Pinga värdnamn(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Pinga värdnamn(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Test av HTTP-klient:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Köra pingtest"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-sw/strings.xml b/res/values-sw/strings.xml
+index 979804dd2..43ef8f250 100644
+--- a/res/values-sw/strings.xml
++++ b/res/values-sw/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Hali ya Usajili wa Data Ghafi ya WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Chagua faharasa ya simu"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Weka Aina ya Mtandao Unayoiopendelea:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ita Jina la Mpangishaji(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ita Jina la mpangishaji(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ita Jina la Mpangishaji(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ita Jina la mpangishaji(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Jaribio la Teja ya HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Tekeleza Jaribio la Mwito"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-ta/strings.xml b/res/values-ta/strings.xml
+index 3b506655d..246223924 100644
+--- a/res/values-ta/strings.xml
++++ b/res/values-ta/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN தரவின் அசல் பதிவு நிலை:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"ஃபோன் அட்டவணையைத் தேர்ந்தெடுக்கவும்"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"விரும்பப்படும் நெட்வொர்க் வகையை அமைக்கவும்:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ஹோஸ்ட்பெயர்(www.google.com) IPv4ஐப் பிங் செய்:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ஹோஸ்ட்பெயர்(www.google.com) IPv6ஐப் பிங் செய்:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ஹோஸ்ட்பெயர்(dns.quad9.net) IPv4ஐப் பிங் செய்:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ஹோஸ்ட்பெயர்(dns.quad9.net) IPv6ஐப் பிங் செய்:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP கிளையண்ட் சோதனை:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"பிங் சோதனையை இயக்கு"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-te/strings.xml b/res/values-te/strings.xml
+index e1316f6b4..80eae8c3b 100644
+--- a/res/values-te/strings.xml
++++ b/res/values-te/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN డేటా ప్రాసెస్ చేయని నమోదు స్టేటస్:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"ఫోన్ సూచికను ఎంచుకోండి"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"సెట్ చేసిన ప్రాధాన్య నెట్‌వర్క్ రకం:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"పింగ్ హోస్ట్ పేరు(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"పింగ్ హోస్ట్ పేరు(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"పింగ్ హోస్ట్ పేరు(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"పింగ్ హోస్ట్ పేరు(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP క్లయింట్ పరీక్ష:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"పింగ్ పరీక్షను అమలు చేయండి"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-th/strings.xml b/res/values-th/strings.xml
+index 91c5477da..239fa56a7 100644
+--- a/res/values-th/strings.xml
++++ b/res/values-th/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"สถานะการจดทะเบียนข้อมูลดิบของ WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"เลือกดัชนีโทรศัพท์"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"ตั้งค่าประเภทเครือข่ายที่ต้องการ:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ใช้คำสั่ง ping ชื่อโฮสต์ (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ใช้คำสั่ง ping ชื่อโฮสต์ (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ใช้คำสั่ง ping ชื่อโฮสต์ (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ใช้คำสั่ง ping ชื่อโฮสต์ (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"การทดสอบไคลเอ็นต์ HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"ใช้การทดสอบคำสั่ง ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-tl/strings.xml b/res/values-tl/strings.xml
+index 813d9408e..ceac71eab 100644
+--- a/res/values-tl/strings.xml
++++ b/res/values-tl/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Status ng Pagpaparehistro ng WLAN Data Raw:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Pumili ng index ng telepono"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Itakda ang Uri ng Gustong Network:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"I-ping ang Hostname(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"I-ping ang Hostname(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"I-ping ang Hostname(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"I-ping ang Hostname(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Test ng HTTP Client:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Patakbuhin ang Ping Test"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-tr/strings.xml b/res/values-tr/strings.xml
+index d07d1df02..801c9002a 100644
+--- a/res/values-tr/strings.xml
++++ b/res/values-tr/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN Verileri Ham Kayıt Durumu:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Telefon dizinini seç"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Tercih Edilen Ağ Türünü Ayarla:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping Ana Makine Adı (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping Ana Makine Adı (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Ping Ana Makine Adı (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Ping Ana Makine Adı (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP İstemcisi Testi:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Ping Testini Çalıştır"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-uk/strings.xml b/res/values-uk/strings.xml
+index d8effa23a..5ab34355e 100644
+--- a/res/values-uk/strings.xml
++++ b/res/values-uk/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Статус реєстрації необроблених даних WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Виберіть телефонний код"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Установити потрібний тип мережі:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Надіслати запит ping на ім\'я хосту (www.google.com) через IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Надіслати запит ping на ім\'я хосту (www.google.com) через IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Надіслати запит ping на ім\'я хосту (dns.quad9.net) через IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Надіслати запит ping на ім\'я хосту (dns.quad9.net) через IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Тест клієнта HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Надіслати запит ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-ur/strings.xml b/res/values-ur/strings.xml
+index f9f52bdc7..4e44a7b79 100644
+--- a/res/values-ur/strings.xml
++++ b/res/values-ur/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"‏WLAN ڈیٹا کی خام رجسٹریشن کی حیثیت:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"فون انڈیکس منتخب کریں"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"ترجیحی نیٹ ورک کی قسم سیٹ کریں:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"‏میزبان کا نام پنگ کریں‏‎(www.google.com)‎ ‏IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"‏میزبان کا نام پنگ کریں(www.google.com) ‏IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"‏میزبان کا نام پنگ کریں‏‎(dns.quad9.net)‎ ‏IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"‏میزبان کا نام پنگ کریں(dns.quad9.net) ‏IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"‏HTTP کلائنٹ ٹیسٹ:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"پنگ ٹیسٹ چلائیں"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-uz/strings.xml b/res/values-uz/strings.xml
+index 5e8a598b7..284eb75a9 100644
+--- a/res/values-uz/strings.xml
++++ b/res/values-uz/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN maʼlumotlarini dastlabki roʻyxatdan oʻtkazish holati:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Telefon kodini tanlang"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Afzal tarmoq turini tanlash:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"www.google.com uchun ping, IPv4 so‘rovining host nomi:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"www.google.com uchun ping, IPv6 so‘rovining host nomi:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"dns.quad9.net uchun ping, IPv4 so‘rovining host nomi:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"dns.quad9.net uchun ping, IPv6 so‘rovining host nomi:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP mijozini tekshirish:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Ping tekshiruvini boshlash"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-vi/strings.xml b/res/values-vi/strings.xml
+index 04e8b894a..a9bf796c5 100644
+--- a/res/values-vi/strings.xml
++++ b/res/values-vi/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Trạng thái đăng ký thô dữ liệu WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Chọn chỉ mục điện thoại"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Đặt loại mạng ưu tiên:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Tên máy chủ Ping (www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Tên máy chủ Ping (www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Tên máy chủ Ping (dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Tên máy chủ Ping (dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Kiểm tra máy khách HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Chạy kiểm tra ping"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values-zh-rCN/strings.xml b/res/values-zh-rCN/strings.xml
+index 98efb3e47..f9cc7c019 100644
+--- a/res/values-zh-rCN/strings.xml
++++ b/res/values-zh-rCN/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN 数据原始注册状态："</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"选择电话号码索引"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"设置首选网络类型："</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ping 主机名(www.google.com) IPv4："</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ping 主机名(www.google.com) IPv6："</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"ping 主机名(dns.quad9.net) IPv4："</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"ping 主机名(dns.quad9.net) IPv6："</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP 客户端测试："</string>
+     <string name="ping_test_label" msgid="448617502935719694">"运行 ping 测试"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC："</string>
+diff --git a/res/values-zh-rHK/strings.xml b/res/values-zh-rHK/strings.xml
+index d959d1455..466c67f4b 100644
+--- a/res/values-zh-rHK/strings.xml
++++ b/res/values-zh-rHK/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN 資料原始註冊狀態："</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"選取手機索引"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"設定偏好的網絡類型："</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"連線偵測主機名稱 (www.google.com) IPv4："</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"連線偵測主機名稱 (www.google.com) IPv6："</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"連線偵測主機名稱 (dns.quad9.net) IPv4："</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"連線偵測主機名稱 (dns.quad9.net) IPv6："</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP 用戶端測試："</string>
+     <string name="ping_test_label" msgid="448617502935719694">"執行連線偵測測試"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC："</string>
+diff --git a/res/values-zh-rTW/strings.xml b/res/values-zh-rTW/strings.xml
+index 6076c7bcd..c0238a51b 100644
+--- a/res/values-zh-rTW/strings.xml
++++ b/res/values-zh-rTW/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"WLAN 資料原始註冊狀態："</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"選取電話索引"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"設定偏好的網路類型："</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"連線偵測 (ping) 主機名稱 (www.google.com) IPv4："</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"連線偵測 (ping) 主機名稱 (www.google.com) IPv6："</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"連線偵測 (ping) 主機名稱 (dns.quad9.net) IPv4："</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"連線偵測 (ping) 主機名稱 (dns.quad9.net) IPv6："</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"HTTP 用戶端測試："</string>
+     <string name="ping_test_label" msgid="448617502935719694">"執行連線偵測 (ping) 測試"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC："</string>
+diff --git a/res/values-zu/strings.xml b/res/values-zu/strings.xml
+index ea9ec421c..7be2916ee 100644
+--- a/res/values-zu/strings.xml
++++ b/res/values-zu/strings.xml
+@@ -941,8 +941,8 @@
+     <string name="radio_info_wlan_data_raw_registration_state_label" msgid="6396894835757296612">"Isimo Sokubhaliswa Kwedatha Ye-WLAN:"</string>
+     <string name="phone_index_label" msgid="6222406512768964268">"Khetha inkomba yefoni"</string>
+     <string name="radio_info_set_perferred_label" msgid="7408131389363136210">"Setha uhlobo lwenethiwekhi olufisekayo:"</string>
+-    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Qhweba i-Hostname(www.google.com) IPv4:"</string>
+-    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Qhweba i-Hostname(www.google.com) IPv6:"</string>
++    <string name="radio_info_ping_hostname_v4" msgid="6951237885381284790">"Qhweba i-Hostname(dns.quad9.net) IPv4:"</string>
++    <string name="radio_info_ping_hostname_v6" msgid="2748637889486554603">"Qhweba i-Hostname(dns.quad9.net) IPv6:"</string>
+     <string name="radio_info_http_client_test" msgid="1329583721088428238">"Ukuhlola ikhasimende ye-HTTP:"</string>
+     <string name="ping_test_label" msgid="448617502935719694">"Yenza ukuhlola kokuntwiza"</string>
+     <string name="radio_info_smsc_label" msgid="3749927072726033763">"SMSC:"</string>
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index 5ff09f599..a34b0b13b 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -1363,7 +1363,7 @@
+     <string name="rtt_mode_more_information">
+        RTT assists callers who are deaf, hard of hearing, have a speech disability,
+        or need more than voice alone.&lt;br>
+-       &lt;a href="<xliff:g example="http://www.google.com" id="url">http://support.google.com/mobile?p=telephony_rtt</xliff:g>">Learn more&lt;/a>
++       &lt;a href="<xliff:g example="http://dns.quad9.net" id="url">http://support.google.com/mobile?p=telephony_rtt</xliff:g>">Learn more&lt;/a>
+        &lt;br>&lt;br> - RTT calls are saved as a message transcript
+        &lt;br> - RTT is not available for video calls</string>
+ 
+@@ -2221,9 +2221,9 @@
+     <!-- Radio Info screen. Label for a status item.  Used for diagnostic info screens, precise translation isn't needed -->
+     <string name="radio_info_set_perferred_label">Set Preferred Network Type:</string>
+     <!-- Radio Info screen. Label for a status item.  Used for diagnostic info screens, precise translation isn't needed -->
+-    <string name="radio_info_ping_hostname_v4">Ping Hostname(www.google.com) IPv4:</string>
++    <string name="radio_info_ping_hostname_v4">Ping Hostname(dns.quad9.net) IPv4:</string>
+     <!-- Radio Info screen. Label for a status item.  Used for diagnostic info screens, precise translation isn't needed -->
+-    <string name="radio_info_ping_hostname_v6">Ping Hostname(www.google.com) IPv6:</string>
++    <string name="radio_info_ping_hostname_v6">Ping Hostname(dns.quad9.net) IPv6:</string>
+     <!-- Radio Info screen. Label for a status item.  Used for diagnostic info screens, precise translation isn't needed -->
+     <string name="radio_info_http_client_test">HTTP Client Test:</string>
+     <!-- Radio Info screen. Label for a status item.  Used for diagnostic info screens, precise translation isn't needed -->
+diff --git a/src/com/android/phone/settings/RadioInfo.java b/src/com/android/phone/settings/RadioInfo.java
+index 93fa85ac0..0a2fd9de4 100644
+--- a/src/com/android/phone/settings/RadioInfo.java
++++ b/src/com/android/phone/settings/RadioInfo.java
+@@ -1460,7 +1460,7 @@ public class RadioInfo extends CollapsingToolbarBaseActivity {
+     private void pingHostname() {
+         try {
+             try {
+-                Process p4 = Runtime.getRuntime().exec("ping -c 1 www.google.com");
++                Process p4 = Runtime.getRuntime().exec("ping -c 1 9.9.9.9");
+                 int status4 = p4.waitFor();
+                 if (status4 == 0) {
+                     mPingHostnameResultV4 = "Pass";
+@@ -1471,7 +1471,7 @@ public class RadioInfo extends CollapsingToolbarBaseActivity {
+                 mPingHostnameResultV4 = "Fail: IOException";
+             }
+             try {
+-                Process p6 = Runtime.getRuntime().exec("ping6 -c 1 www.google.com");
++                Process p6 = Runtime.getRuntime().exec("ping6 -c 1 2620:fe::fe");
+                 int status6 = p6.waitFor();
+                 if (status6 == 0) {
+                     mPingHostnameResultV6 = "Pass";
+@@ -1491,7 +1491,7 @@ public class RadioInfo extends CollapsingToolbarBaseActivity {
+         HttpURLConnection urlConnection = null;
+         try {
+             // TODO: Hardcoded for now, make it UI configurable
+-            URL url = new URL("https://www.google.com");
++            URL url = new URL("https://www.quad9.net");
+             urlConnection = (HttpURLConnection) url.openConnection();
+             if (urlConnection.getResponseCode() == 200) {
+                 mHttpClientTestResult = "Pass";
