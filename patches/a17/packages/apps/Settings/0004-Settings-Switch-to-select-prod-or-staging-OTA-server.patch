@@ -1,0 +1,393 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Mohit Mali <futuretechnoworld.mohit@gmail.com>
+Date: Fri, 2 Apr 2021 18:49:03 +0000
+Subject: [PATCH 04/32] Settings: Switch to select prod or staging OTA server
+
+Settings: display alert dialog when switch ota server
+(cherry picked from commit 8c9f973cea687a60702403f2cd2015262a2a433c)
+---
+ AndroidManifest.xml                           |   6 +
+ res/values/e_strings.xml                      |   6 +
+ res/xml/development_settings.xml              |   5 +
+ .../ChangeSourcePreferenceController.java     | 138 +++++++++++++++
+ .../DevelopmentSettingsDashboardFragment.java |   2 +
+ .../settings/development/OTAProvider.java     | 158 ++++++++++++++++++
+ 6 files changed, 315 insertions(+)
+ create mode 100644 src/com/android/settings/development/ChangeSourcePreferenceController.java
+ create mode 100644 src/com/android/settings/development/OTAProvider.java
+
+diff --git a/AndroidManifest.xml b/AndroidManifest.xml
+index 2523082b31..253365a199 100644
+--- a/AndroidManifest.xml
++++ b/AndroidManifest.xml
+@@ -6148,6 +6148,12 @@
+             <meta-data android:name="com.android.settings.HIGHLIGHT_MENU_KEY"
+                 android:value="@string/menu_key_system"/>
+         </activity>
++        
++        <provider
++            android:name="com.android.settings.development.OTAProvider"
++            android:authorities="custom.setting.Provider.OTA_SERVER"
++            android:exported="true"
++            android:multiprocess="true" />
+ 
+         <activity
+             android:name="Settings$AdaptiveConnectivitySettingsActivity"
+diff --git a/res/values/e_strings.xml b/res/values/e_strings.xml
+index 7d469d145a..a0f3799c7f 100644
+--- a/res/values/e_strings.xml
++++ b/res/values/e_strings.xml
+@@ -23,4 +23,10 @@
+ 
+     <!-- /e/ updater -->
+     <string name="system_update_summary">Updates, preferences, release notes</string>
++
++    <!-- /e/ OTA server change -->
++    <string name="title_ota_server">Connect to /e/ OS test channel</string>
++    <string name="use_ota_summary">Access test releases of /e/ OS</string>
++    <string name="use_ota_staging_popup_title">You are about to connect to /e/ OS test channel</string>
++    <string name="use_ota_staging_popup_message">It will allow you to download and install test versions of /e/ OS. Those builds may be unstable, and should be used only for test purposes. Please accept only if you know what you are doing.</string>
+ </resources>
+diff --git a/res/xml/development_settings.xml b/res/xml/development_settings.xml
+index a04c5c779d..527b367e9f 100644
+--- a/res/xml/development_settings.xml
++++ b/res/xml/development_settings.xml
+@@ -650,6 +650,11 @@
+             android:title="@string/enable_webapp_minter_title"
+             android:summary="@string/enable_webapp_minter_summary" />
+ 
++        <SwitchPreference
++            android:key="change_update_source"
++            android:title="@string/title_ota_server"
++            android:summary="@string/use_ota_summary" />
++
+     </PreferenceCategory>
+ 
+     <PreferenceCategory
+diff --git a/src/com/android/settings/development/ChangeSourcePreferenceController.java b/src/com/android/settings/development/ChangeSourcePreferenceController.java
+new file mode 100644
+index 0000000000..d7ad8b1497
+--- /dev/null
++++ b/src/com/android/settings/development/ChangeSourcePreferenceController.java
+@@ -0,0 +1,138 @@
++/*
++ * Copyright (C) 2021 ECORP SAS
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
++ * use this file except in compliance with the License. You may obtain a copy
++ * of the License at
++ *
++ * http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
++ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
++ * License for the specific language governing permissions and limitations
++ * under the License.
++ */
++
++package com.android.settings.development;
++
++import android.app.AlertDialog;
++import android.content.ContentValues;
++import android.content.Context;
++import android.content.DialogInterface;
++import android.database.Cursor;
++import android.net.Uri;
++
++import androidx.annotation.VisibleForTesting;
++import androidx.preference.Preference;
++import androidx.preference.SwitchPreference;
++
++import com.android.settings.R;
++import com.android.settings.core.PreferenceControllerMixin;
++import com.android.settingslib.development.DeveloperOptionsPreferenceController;
++
++
++public class ChangeSourcePreferenceController extends DeveloperOptionsPreferenceController implements
++        Preference.OnPreferenceChangeListener, PreferenceControllerMixin {
++
++    @VisibleForTesting
++    static final int SETTING_VALUE_ON = 1;
++    @VisibleForTesting
++    static final int SETTING_VALUE_OFF = 0;
++    private static final String CHANGE_URL_KEY = "change_update_source";
++    private final String UPDATE_URI = "content://custom.setting.Provider.OTA_SERVER/cte";
++    private String status;
++
++    public ChangeSourcePreferenceController(Context context) {
++        super(context);
++    }
++
++    @Override
++    public String getPreferenceKey() {
++        return CHANGE_URL_KEY;
++    }
++
++    public void updateOtaServer() {
++        if (count(OTAProvider.CONTENT_URI)) {
++            ContentValues values = new ContentValues();
++
++            if (retrieveStatus().equals("true")) {
++                values.put(OTAProvider.Status, "false");
++                mContext.getContentResolver().update(OTAProvider.CONTENT_URI, values, OTAProvider.id + "=?", new String[]{"1"});
++            } else {
++                values.put(OTAProvider.Status, "true");
++                mContext.getContentResolver().update(OTAProvider.CONTENT_URI, values, OTAProvider.id + "=?", new String[]{"1"});
++            }
++        } else {
++            ContentValues values = new ContentValues();
++            values.put(OTAProvider.Status, "true");
++            mContext.getContentResolver().insert(OTAProvider.CONTENT_URI, values);
++        }
++    }
++
++    @Override
++    public boolean onPreferenceChange(Preference preference, Object newValue) {
++        final boolean isEnabled = (Boolean) newValue;
++        ((SwitchPreference) mPreference).setChecked(isEnabled);
++        if (retrieveStatus().equals("true")) {
++            updateOtaServer();
++            return true;
++        }
++        new AlertDialog.Builder(mContext).
++                setTitle(R.string.use_ota_staging_popup_title)
++                .setMessage(mContext.getResources().getString(R.string.use_ota_staging_popup_message))
++                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
++                    public void onClick(DialogInterface dialog, int which) {
++                        ((SwitchPreference) mPreference).setChecked(true);
++                        updateOtaServer();
++                    }
++                }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
++                    public void onClick(DialogInterface dialog, int which) {
++                        ((SwitchPreference) mPreference).setChecked(false);
++                    }
++                }).show();
++        return false;
++    }
++
++    @Override
++    public void updateState(Preference preference) {
++        if (retrieveStatus().equals("true")) {
++            ((SwitchPreference) mPreference).setChecked(true);
++        } else {
++            ((SwitchPreference) mPreference).setChecked(false);
++        }
++    }
++
++    @Override
++    protected void onDeveloperOptionsSwitchDisabled() {
++        super.onDeveloperOptionsSwitchDisabled();
++        ((SwitchPreference) mPreference).setChecked(false);
++    }
++
++    @Override
++    protected void onDeveloperOptionsSwitchEnabled() {
++        super.onDeveloperOptionsSwitchEnabled();
++        if (!count(OTAProvider.CONTENT_URI)) {
++            ContentValues values = new ContentValues();
++            values.put(OTAProvider.Status, "false");
++            mContext.getContentResolver().insert(OTAProvider.CONTENT_URI, values);
++        }
++
++    }
++
++    public boolean count(Uri uri) {
++        Cursor cursor = mContext.getContentResolver().query(uri, new String[]{"id"},
++                null, null, null);
++        return cursor.getCount() > 0;
++    }
++
++    private String retrieveStatus() {
++        Cursor cursor = mContext.getContentResolver().query(Uri.parse(UPDATE_URI), null, OTAProvider.id + "=?", new String[]{"1"}, OTAProvider.Status);
++        if (cursor.moveToFirst()) {
++            do {
++                status = cursor.getString(cursor.getColumnIndex(OTAProvider.Status));
++            } while (cursor.moveToNext());
++        }
++        return status;
++    }
++}
+diff --git a/src/com/android/settings/development/DevelopmentSettingsDashboardFragment.java b/src/com/android/settings/development/DevelopmentSettingsDashboardFragment.java
+index 0d6ff75450..c7a23acfcf 100644
+--- a/src/com/android/settings/development/DevelopmentSettingsDashboardFragment.java
++++ b/src/com/android/settings/development/DevelopmentSettingsDashboardFragment.java
+@@ -1,5 +1,6 @@
+ /*
+  * Copyright (C) 2017 The Android Open Source Project
++ * Copyright (C) 2021 ECORP SAS
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -563,6 +564,7 @@ public class DevelopmentSettingsDashboardFragment extends RestrictedDashboardFra
+         controllers.add(new NfcSnoopLogPreferenceController(context, fragment));
+         controllers.add(new NfcVerboseVendorLogPreferenceController(context, fragment));
+         controllers.add(new ShowTapsPreferenceController(context));
++        controllers.add(new ChangeSourcePreferenceController(context));
+         controllers.add(new PointerLocationPreferenceController(context));
+         controllers.add(new ShowKeyPressesPreferenceController(context));
+         controllers.add(new TouchpadVisualizerPreferenceController(context));
+diff --git a/src/com/android/settings/development/OTAProvider.java b/src/com/android/settings/development/OTAProvider.java
+new file mode 100644
+index 0000000000..58ec5a7829
+--- /dev/null
++++ b/src/com/android/settings/development/OTAProvider.java
+@@ -0,0 +1,158 @@
++/*
++ * Copyright (C) 2021 ECORP SAS
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
++ * use this file except in compliance with the License. You may obtain a copy
++ * of the License at
++ *
++ * http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
++ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
++ * License for the specific language governing permissions and limitations
++ * under the License.
++ */
++
++package com.android.settings.development;
++
++import android.content.ContentProvider;
++import android.content.ContentUris;
++import android.content.ContentValues;
++import android.content.Context;
++import android.content.UriMatcher;
++import android.database.Cursor;
++import android.database.SQLException;
++import android.database.sqlite.SQLiteDatabase;
++import android.database.sqlite.SQLiteOpenHelper;
++import android.database.sqlite.SQLiteQueryBuilder;
++import android.net.Uri;
++
++import java.util.HashMap;
++
++public class OTAProvider extends ContentProvider {
++
++    static final String PROVIDER_NAME = "custom.setting.Provider.OTA_SERVER";
++    static final String URL = "content://" + PROVIDER_NAME + "/cte";
++    static final Uri CONTENT_URI = Uri.parse(URL);
++
++    static final String id = "id";
++    static final String Status = "Status";
++    static final int uriCode = 1;
++    static final UriMatcher uriMatcher;
++    static final String DATABASE_NAME = "mydb";
++    static final String TABLE_NAME = "ota";
++    static final int DATABASE_VERSION = 1;
++    static final String CREATE_DB_TABLE = " CREATE TABLE " + TABLE_NAME
++            + " (id INTEGER PRIMARY KEY AUTOINCREMENT, "
++            + " Status TEXT NOT NULL);";
++    private static HashMap<String, String> values;
++
++    static {
++        uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
++        uriMatcher.addURI(PROVIDER_NAME, "cte", uriCode);
++        uriMatcher.addURI(PROVIDER_NAME, "cte/*", uriCode);
++    }
++
++    private SQLiteDatabase db;
++
++    @Override
++    public boolean onCreate() {
++        Context context = getContext();
++        DatabaseHelper dbHelper = new DatabaseHelper(context);
++        db = dbHelper.getWritableDatabase();
++        return db != null;
++    }
++
++    @Override
++    public Cursor query(Uri uri, String[] projection, String selection,
++                        String[] selectionArgs, String sortOrder) {
++        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
++        qb.setTables(TABLE_NAME);
++
++        switch (uriMatcher.match(uri)) {
++            case uriCode:
++                qb.setProjectionMap(values);
++                break;
++            default:
++                throw new IllegalArgumentException("Unknown URI " + uri);
++        }
++        if (sortOrder == null || sortOrder == "") {
++            sortOrder = Status;
++        }
++        Cursor c = qb.query(db, projection, selection, selectionArgs, null,
++                null, sortOrder);
++        c.setNotificationUri(getContext().getContentResolver(), uri);
++        return c;
++    }
++
++
++    @Override
++    public String getType(Uri uri) {
++        switch (uriMatcher.match(uri)) {
++            case uriCode:
++                return "vnd.android.cursor.dir/cte";
++
++            default:
++                throw new IllegalArgumentException("Unsupported URI: " + uri);
++        }
++    }
++
++    @Override
++    public Uri insert(Uri uri, ContentValues values) {
++        long rowID = db.insert(TABLE_NAME, "", values);
++        if (rowID > 0) {
++            Uri _uri = ContentUris.withAppendedId(CONTENT_URI, rowID);
++            getContext().getContentResolver().notifyChange(_uri, null);
++            return _uri;
++        }
++        throw new SQLException("Failed to add a record into " + uri);
++    }
++
++    @Override
++    public int delete(Uri uri, String selection, String[] selectionArgs) {
++        int count = 0;
++        switch (uriMatcher.match(uri)) {
++            case uriCode:
++                count = db.delete(TABLE_NAME, selection, selectionArgs);
++                break;
++            default:
++                throw new IllegalArgumentException("Unknown URI " + uri);
++        }
++        getContext().getContentResolver().notifyChange(uri, null);
++        return count;
++    }
++
++    @Override
++    public int update(Uri uri, ContentValues values, String selection,
++                      String[] selectionArgs) {
++        int count = 0;
++        switch (uriMatcher.match(uri)) {
++            case uriCode:
++                count = db.update(TABLE_NAME, values, selection, selectionArgs);
++                break;
++            default:
++                throw new IllegalArgumentException("Unknown URI " + uri);
++        }
++        getContext().getContentResolver().notifyChange(uri, null);
++        return count;
++    }
++
++
++    private static class DatabaseHelper extends SQLiteOpenHelper {
++        DatabaseHelper(Context context) {
++            super(context, DATABASE_NAME, null, DATABASE_VERSION);
++        }
++
++        @Override
++        public void onCreate(SQLiteDatabase db) {
++            db.execSQL(CREATE_DB_TABLE);
++        }
++
++        @Override
++        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
++            db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
++            onCreate(db);
++        }
++    }
++}

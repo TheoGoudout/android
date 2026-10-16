@@ -1,0 +1,69 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishithkhanna@e.email>
+Date: Mon, 18 Sep 2023 19:25:54 +0530
+Subject: [PATCH 17/32] Improve wordings for automatic sync
+
+(cherry picked from commit f416c7be7441090139b66661b5cd5f687b8a7633)
+---
+ res/values/e_strings.xml                         | 2 ++
+ res/xml/accounts_dashboard_settings.xml          | 4 ++--
+ res/xml/accounts_personal_dashboard_settings.xml | 4 ++--
+ res/xml/accounts_work_dashboard_settings.xml     | 4 ++--
+ 4 files changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/res/values/e_strings.xml b/res/values/e_strings.xml
+index 88d5635e4f..265948b42d 100644
+--- a/res/values/e_strings.xml
++++ b/res/values/e_strings.xml
+@@ -58,4 +58,6 @@
+ 
+     <!-- Accounts -->
+     <string name="e_really_remove_account_message">If you remove this account you will not be able to access its data from this device anymore including its emails. You can add it back whenever you want.</string>
++    <string name="e_auto_sync_account_title">Auto-refresh contents</string>
++    <string name="e_auto_sync_account_summary">Allow apps to automatically refresh contents in the background</string>
+ </resources>
+diff --git a/res/xml/accounts_dashboard_settings.xml b/res/xml/accounts_dashboard_settings.xml
+index 751b671626..29b0461f31 100644
+--- a/res/xml/accounts_dashboard_settings.xml
++++ b/res/xml/accounts_dashboard_settings.xml
+@@ -52,8 +52,8 @@
+     <com.android.settingslib.widget.UntitledPreferenceCategory>
+       <SwitchPreferenceCompat
+           android:key="auto_sync_account_data"
+-          android:title="@string/auto_sync_account_title"
+-          android:summary="@string/auto_sync_account_summary"
++          android:title="@string/e_auto_sync_account_title"
++          android:summary="@string/e_auto_sync_account_summary"
+           android:order="202"
+           settings:allowDividerAbove="true"/>
+ 
+diff --git a/res/xml/accounts_personal_dashboard_settings.xml b/res/xml/accounts_personal_dashboard_settings.xml
+index a38df01e83..16c839e27a 100644
+--- a/res/xml/accounts_personal_dashboard_settings.xml
++++ b/res/xml/accounts_personal_dashboard_settings.xml
+@@ -52,8 +52,8 @@
+ 
+     <SwitchPreferenceCompat
+         android:key="auto_sync_account_data"
+-        android:title="@string/auto_sync_account_title"
+-        android:summary="@string/auto_sync_account_summary"
++        android:title="@string/e_auto_sync_account_title"
++        android:summary="@string/e_auto_sync_account_summary"
+         android:order="200"
+         settings:allowDividerAbove="true"/>
+ 
+diff --git a/res/xml/accounts_work_dashboard_settings.xml b/res/xml/accounts_work_dashboard_settings.xml
+index eb7084b4e4..b5cf4146e6 100644
+--- a/res/xml/accounts_work_dashboard_settings.xml
++++ b/res/xml/accounts_work_dashboard_settings.xml
+@@ -53,8 +53,8 @@
+ 
+     <SwitchPreferenceCompat
+         android:key="auto_sync_account_data"
+-        android:title="@string/auto_sync_account_title"
+-        android:summary="@string/auto_sync_account_summary"
++        android:title="@string/e_auto_sync_account_title"
++        android:summary="@string/e_auto_sync_account_summary"
+         android:order="200"
+         settings:allowDividerAbove="true"/>
+ 

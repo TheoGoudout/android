@@ -1,0 +1,141 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Fahim Salam Chowdhury <fahim@e.email>
+Date: Tue, 1 Nov 2022 05:06:15 +0000
+Subject: [PATCH 09/32] 697-s-Recalculate_accountType_sorting
+
+(cherry picked from commit a2e1c96ddae056763139af3cadb6b7a68612d60f)
+---
+ .../accounts/AccountPreferenceController.java | 32 ++++++++++++++++---
+ .../accounts/MurenaAccountHelper.java         | 27 ++++++++++++++++
+ .../settings/accounts/ProviderEntry.java      | 15 +++++++++
+ 3 files changed, 69 insertions(+), 5 deletions(-)
+ create mode 100644 src/com/android/settings/accounts/MurenaAccountHelper.java
+
+diff --git a/src/com/android/settings/accounts/AccountPreferenceController.java b/src/com/android/settings/accounts/AccountPreferenceController.java
+index ee8825c6a4..987332ac9f 100644
+--- a/src/com/android/settings/accounts/AccountPreferenceController.java
++++ b/src/com/android/settings/accounts/AccountPreferenceController.java
+@@ -579,6 +579,8 @@ public class AccountPreferenceController extends AbstractPreferenceController
+         final ArrayList<AccountTypePreference> accountTypePreferences =
+                 new ArrayList<>(accountTypes.length);
+ 
++        final ArrayList<AccountTypePreference> murenaAccountPreferences = new ArrayList<>();
++
+         for (int i = 0; i < accountTypes.length; i++) {
+             final String accountType = accountTypes[i];
+             // Skip showing any account that does not have any of the requested authorities
+@@ -602,6 +604,11 @@ public class AccountPreferenceController extends AbstractPreferenceController
+                 final AccountTypePreference preference =
+                         preferenceToRemove.remove(AccountTypePreference.buildKey(account));
+                 if (preference != null) {
++                    if (MurenaAccountHelper.isMurenaAccount(accountType)) {
++                        murenaAccountPreferences.add(preference);
++                        continue;
++                    }
++
+                     accountTypePreferences.add(preference);
+                     continue;
+                 }
+@@ -622,23 +629,38 @@ public class AccountPreferenceController extends AbstractPreferenceController
+                 fragmentArguments.putInt(AccountDetailDashboardFragment.KEY_ACCOUNT_TITLE_RES,
+                         titleResId);
+                 fragmentArguments.putParcelable(EXTRA_USER, userHandle);
+-                accountTypePreferences.add(new AccountTypePreference(
++                AccountTypePreference accountTypePreference = new AccountTypePreference(
+                         prefContext, mMetricsFeatureProvider.getMetricsCategory(mFragment),
+                         account, titleResPackageName, titleResId, label,
+-                        AccountDetailDashboardFragment.class.getName(), fragmentArguments, icon));
++                        AccountDetailDashboardFragment.class.getName(), fragmentArguments, icon);
++
++                if (MurenaAccountHelper.isMurenaAccount(accountType)) {
++                    murenaAccountPreferences.add(accountTypePreference);
++                    continue;
++                }
++
++                accountTypePreferences.add(accountTypePreference);
+             }
+             helper.preloadDrawableForType(mContext, accountType);
+         }
+         // Sort by label
+-        Collections.sort(accountTypePreferences, new Comparator<AccountTypePreference>() {
++        Collections.sort(accountTypePreferences, getAccountTypePreferenceComparator());
++        Collections.sort(murenaAccountPreferences, getAccountTypePreferenceComparator());
++
++        accountTypePreferences.addAll(0, murenaAccountPreferences);
++
++        return accountTypePreferences;
++    }
++
++    private Comparator<AccountTypePreference> getAccountTypePreferenceComparator() {
++        return new Comparator<AccountTypePreference>() {
+             @Override
+             public int compare(AccountTypePreference t1, AccountTypePreference t2) {
+                 int result = t1.getSummary().toString().compareTo(t2.getSummary().toString());
+                 return result != 0
+                         ? result : t1.getTitle().toString().compareTo(t2.getTitle().toString());
+             }
+-        });
+-        return accountTypePreferences;
++        };
+     }
+ 
+     private boolean accountTypeHasAnyRequestedAuthorities(AuthenticatorHelper helper,
+diff --git a/src/com/android/settings/accounts/MurenaAccountHelper.java b/src/com/android/settings/accounts/MurenaAccountHelper.java
+new file mode 100644
+index 0000000000..df449d2b0b
+--- /dev/null
++++ b/src/com/android/settings/accounts/MurenaAccountHelper.java
+@@ -0,0 +1,27 @@
++/*
++ * Copyright MURENA SAS 2022
++ * This program is free software: you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation, either version 3 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
++ */
++
++package com.android.settings.accounts;
++
++public class MurenaAccountHelper {
++
++    public static final String MURENA_ACCOUNT_TYPE = "e.foundation.webdav.eelo";
++    public static final String MURENA_ADDRESS_BOOK_ACCOUNT_TYPE = "foundation.e.accountmanager.eelo.address_book";
++
++    public static boolean isMurenaAccount(String accountType) {
++        return accountType.equals(MURENA_ACCOUNT_TYPE) || accountType.equals(MURENA_ADDRESS_BOOK_ACCOUNT_TYPE);
++    }
++}
+diff --git a/src/com/android/settings/accounts/ProviderEntry.java b/src/com/android/settings/accounts/ProviderEntry.java
+index cf55e1423f..bbf09ab43a 100644
+--- a/src/com/android/settings/accounts/ProviderEntry.java
++++ b/src/com/android/settings/accounts/ProviderEntry.java
+@@ -34,6 +34,21 @@ public class ProviderEntry implements Comparable<ProviderEntry> {
+         if (another.name == null) {
+             return +1;
+         }
++
++        // both are murena accounts, compare them normally
++        if (MurenaAccountHelper.isMurenaAccount(type) && MurenaAccountHelper.isMurenaAccount(another.type)) {
++            return CharSequences.compareToIgnoreCase(name, another.name);
++        }
++
++        // if any one is Murena account, put it on top
++        if (MurenaAccountHelper.isMurenaAccount(type)) {
++            return -1;
++        }
++
++        if (MurenaAccountHelper.isMurenaAccount(another.type)) {
++            return 1;
++        }
++
+         return CharSequences.compareToIgnoreCase(name, another.name);
+     }
+ 

@@ -1,0 +1,305 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Mohammed Althaf Thayyil <althafvly@gmail.com>
+Date: Thu, 13 Jun 2024 16:09:41 +0000
+Subject: [PATCH 19/32] Settings: add parental control changes
+
+(cherry picked from commit 9b6b67f13ed4f1fb509b7e5c153ed18fcb3eac6f)
+---
+ .../ic_e_settings_parental_control.xml        | 42 +++++++++++++++
+ res/layout/support_details_dialog.xml         |  2 +-
+ res/values/e_strings.xml                      |  5 ++
+ .../parental_control_dashboard_settings.xml   | 28 ++++++++++
+ res/xml/top_level_settings.xml                |  9 ++++
+ .../core/gateway/SettingsGateway.java         |  2 +
+ .../dashboard/DashboardFragmentRegistry.java  |  3 ++
+ .../ScreenTimeoutPreferenceController.java    |  2 +-
+ .../ActionDisabledByAdminDialogHelper.java    |  2 +-
+ .../DeviceAdminStringProviderImpl.java        |  2 +-
+ .../ParentalControlDashboardFragment.java     | 52 +++++++++++++++++++
+ .../LockAfterTimeoutPreferenceController.java |  2 +-
+ 12 files changed, 146 insertions(+), 5 deletions(-)
+ create mode 100644 res/drawable/ic_e_settings_parental_control.xml
+ create mode 100644 res/xml/parental_control_dashboard_settings.xml
+ create mode 100644 src/com/android/settings/privacy/ParentalControlDashboardFragment.java
+
+diff --git a/res/drawable/ic_e_settings_parental_control.xml b/res/drawable/ic_e_settings_parental_control.xml
+new file mode 100644
+index 0000000000..cbc6bae716
+--- /dev/null
++++ b/res/drawable/ic_e_settings_parental_control.xml
+@@ -0,0 +1,42 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright Murena SAS 2024
++  ~ This program is free software: you can redistribute it and/or modify
++  ~ it under the terms of the GNU General Public License as published by
++  ~ the Free Software Foundation, either version 3 of the License, or
++  ~ (at your option) any later version.
++  ~
++  ~ This program is distributed in the hope that it will be useful,
++  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
++  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  ~ GNU General Public License for more details.
++  ~
++  ~ You should have received a copy of the GNU General Public License
++  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
++  -->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="32dp"
++    android:height="32dp"
++    android:viewportWidth="32"
++    android:viewportHeight="32">
++  <group>
++    <clip-path
++        android:pathData="M0,0h32v32h-32z"/>
++    <path
++        android:pathData="M7,0L25,0A7,7 0,0 1,32 7L32,25A7,7 0,0 1,25 32L7,32A7,7 0,0 1,0 25L0,7A7,7 0,0 1,7 0z"
++        android:fillColor="#953EB4"/>
++    <path
++        android:pathData="M18.5,15.75C19.19,15.75 19.75,15.19 19.75,14.5C19.75,13.81 19.19,13.25 18.5,13.25C17.81,13.25 17.25,13.81 17.25,14.5C17.25,15.19 17.81,15.75 18.5,15.75Z"
++        android:fillColor="#ffffff"/>
++    <path
++        android:pathData="M13.5,15.75C14.19,15.75 14.75,15.19 14.75,14.5C14.75,13.81 14.19,13.25 13.5,13.25C12.81,13.25 12.25,13.81 12.25,14.5C12.25,15.19 12.81,15.75 13.5,15.75Z"
++        android:fillColor="#ffffff"/>
++    <path
++        android:pathData="M16,21C18.01,21 19.74,19.77 20.5,18H11.5C12.26,19.77 13.99,21 16,21Z"
++        android:fillColor="#ffffff"/>
++    <path
++        android:pathData="M23.859,19.497C22.519,22.503 19.506,24.6 16,24.6C12.494,24.6 9.481,22.503 8.141,19.497C6.568,19.112 5.4,17.692 5.4,16C5.4,14.308 6.568,12.888 8.141,12.503C9.481,9.497 12.494,7.4 16,7.4C19.506,7.4 22.519,9.497 23.859,12.503C25.432,12.888 26.6,14.308 26.6,16C26.6,17.692 25.432,19.112 23.859,19.497ZM22.716,17.98C21.862,20.882 19.178,23 16,23C12.822,23 10.138,20.882 9.284,17.98C9.191,17.993 9.096,18 9,18C7.895,18 7,17.105 7,16C7,14.896 7.895,14 9,14C9.096,14 9.191,14.007 9.284,14.02C10.138,11.118 12.822,9 16,9C19.178,9 21.862,11.118 22.716,14.02C22.809,14.007 22.904,14 23,14C24.105,14 25,14.896 25,16C25,17.105 24.105,18 23,18C22.904,18 22.809,17.993 22.716,17.98Z"
++        android:fillColor="#ffffff"
++        android:fillType="evenOdd"/>
++  </group>
++</vector>
+diff --git a/res/layout/support_details_dialog.xml b/res/layout/support_details_dialog.xml
+index f53fad2148..902671ee6c 100644
+--- a/res/layout/support_details_dialog.xml
++++ b/res/layout/support_details_dialog.xml
+@@ -42,7 +42,7 @@
+             android:layout_height="wrap_content"
+             android:layout_marginTop="16dp"
+             android:gravity="center_horizontal"
+-            android:text="@string/disabled_by_policy_title"
++            android:text="@string/e_disabled_by_policy_title"
+             android:textAppearance="@style/TextAppearance.AdminDialogTitle"/>
+     </LinearLayout>
+ 
+diff --git a/res/values/e_strings.xml b/res/values/e_strings.xml
+index 624794675e..6b16df4d77 100644
+--- a/res/values/e_strings.xml
++++ b/res/values/e_strings.xml
+@@ -63,4 +63,9 @@
+ 
+     <!-- Developer options -->
+     <string name="e_developer_options">/e/OS developer options</string>
++
++    <!-- Parental control -->
++    <string name="parental_control_dashboard_title">Parental Control</string>
++    <string name="parental_control_dashboard_summary">Helps parent to control child device</string>
++    <string name="e_disabled_by_policy_title">"This setting is blocked"</string>
+ </resources>
+diff --git a/res/xml/parental_control_dashboard_settings.xml b/res/xml/parental_control_dashboard_settings.xml
+new file mode 100644
+index 0000000000..6565301b8f
+--- /dev/null
++++ b/res/xml/parental_control_dashboard_settings.xml
+@@ -0,0 +1,28 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  Copyright (C) 2019-2024 Murena SAS
++
++  Licensed under the Apache License, Version 2.0 (the "License");
++  you may not use this file except in compliance with the License.
++  You may obtain a copy of the License at
++
++       http://www.apache.org/licenses/LICENSE-2.0
++
++  Unless required by applicable law or agreed to in writing, software
++  distributed under the License is distributed on an "AS IS" BASIS,
++  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  See the License for the specific language governing permissions and
++  limitations under the License.
++  -->
++
++<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:settings="http://schemas.android.com/apk/res-auto"
++    android:key="parental_control"
++    android:title="@string/parental_control_dashboard_title">
++
++    <Preference>
++        <intent android:action="android.intent.action.MAIN"
++            android:targetPackage="foundation.e.parentalcontrol"
++            android:targetClass="foundation.e.parentalcontrol.MainActivity" />
++    </Preference>
++</PreferenceScreen>
+diff --git a/res/xml/top_level_settings.xml b/res/xml/top_level_settings.xml
+index 10b0c86a58..d0dd3fca99 100644
+--- a/res/xml/top_level_settings.xml
++++ b/res/xml/top_level_settings.xml
+@@ -224,6 +224,15 @@
+             android:order="-35"
+             android:fragment="com.android.settings.privacy.AdvancedPrivacyDashboardFragment"/>
+ 
++        <!-- /e/OS Parental control -->
++        <com.android.settings.widget.HomepagePreference
++            android:key="top_level_parental_control"
++            android:title="@string/parental_control_dashboard_title"
++            android:summary="@string/parental_control_dashboard_summary"
++            android:icon="@drawable/ic_e_settings_parental_control"
++            android:order="-32"
++            android:fragment="com.android.settings.privacy.ParentalControlDashboardFragment"/>
++
+         <com.android.settings.widget.HomepagePreference
+             android:fragment="com.android.settings.privacy.PrivacyDashboardFragment"
+             android:icon="@drawable/ic_settings_privacy_filled"
+diff --git a/src/com/android/settings/core/gateway/SettingsGateway.java b/src/com/android/settings/core/gateway/SettingsGateway.java
+index eda5fac6c7..032e0803fa 100644
+--- a/src/com/android/settings/core/gateway/SettingsGateway.java
++++ b/src/com/android/settings/core/gateway/SettingsGateway.java
+@@ -182,6 +182,7 @@ import com.android.settings.password.ChooseLockPattern;
+ import com.android.settings.print.PrintJobSettingsFragment;
+ import com.android.settings.print.PrintSettingsFragment;
+ import com.android.settings.privacy.AdvancedPrivacyDashboardFragment;
++import com.android.settings.privacy.ParentalControlDashboardFragment;
+ import com.android.settings.privacy.PrivacyControlsFragment;
+ import com.android.settings.privacy.PrivacyDashboardFragment;
+ import com.android.settings.privatespace.delete.PrivateSpaceDeleteFragment;
+@@ -434,6 +435,7 @@ public class SettingsGateway {
+             SafetyCenterFragment.class.getName(),
+             SafetyCenterQsFragment.class.getName(),
+             AdvancedPrivacyDashboardFragment.class.getName(),
++            ParentalControlDashboardFragment.class.getName(),
+     };
+ 
+     public static final String[] SETTINGS_FOR_RESTRICTED = {
+diff --git a/src/com/android/settings/dashboard/DashboardFragmentRegistry.java b/src/com/android/settings/dashboard/DashboardFragmentRegistry.java
+index 624e77368d..bf80ef2d13 100644
+--- a/src/com/android/settings/dashboard/DashboardFragmentRegistry.java
++++ b/src/com/android/settings/dashboard/DashboardFragmentRegistry.java
+@@ -43,6 +43,7 @@ import com.android.settings.network.NetworkDashboardFragment;
+ import com.android.settings.notification.ConfigureNotificationSettings;
+ import com.android.settings.notification.SoundSettings;
+ import com.android.settings.privacy.AdvancedPrivacyDashboardFragment;
++import com.android.settings.privacy.ParentalControlDashboardFragment;
+ import com.android.settings.privacy.PrivacyDashboardFragment;
+ import com.android.settings.safetycenter.MoreSecurityPrivacyFragment;
+ import com.android.settings.safetycenter.ui.AccountSecuritySubpageFragment;
+@@ -127,6 +128,8 @@ public class DashboardFragmentRegistry {
+                 CategoryKey.CATEGORY_PRIVACY);
+         PARENT_TO_CATEGORY_KEY_MAP.put(AdvancedPrivacyDashboardFragment.class.getName(),
+                 CategoryKey.CATEGORY_PRIVACY);
++        PARENT_TO_CATEGORY_KEY_MAP.put(ParentalControlDashboardFragment.class.getName(),
++                CategoryKey.CATEGORY_PRIVACY);
+         PARENT_TO_CATEGORY_KEY_MAP.put(EnterprisePrivacySettings.class.getName(),
+                 CategoryKey.CATEGORY_ENTERPRISE_PRIVACY);
+         PARENT_TO_CATEGORY_KEY_MAP.put(LegalSettings.class.getName(),
+diff --git a/src/com/android/settings/display/ScreenTimeoutPreferenceController.java b/src/com/android/settings/display/ScreenTimeoutPreferenceController.java
+index c26f922269..743ec61886 100644
+--- a/src/com/android/settings/display/ScreenTimeoutPreferenceController.java
++++ b/src/com/android/settings/display/ScreenTimeoutPreferenceController.java
+@@ -93,7 +93,7 @@ public class ScreenTimeoutPreferenceController extends BasePreferenceController
+                 preference.setSummary(mContext.getSystemService(DevicePolicyManager.class)
+                         .getResources()
+                         .getString(DISABLED_BY_IT_ADMIN_TITLE,
+-                                () -> mContext.getString(R.string.disabled_by_policy_title)));
++                                () -> mContext.getString(R.string.e_disabled_by_policy_title)));
+                 ((RestrictedPreference) preference).setDisabledByAdmin(admin);
+                 return;
+             }
+diff --git a/src/com/android/settings/enterprise/ActionDisabledByAdminDialogHelper.java b/src/com/android/settings/enterprise/ActionDisabledByAdminDialogHelper.java
+index 788541aafd..68bb0c97c1 100644
+--- a/src/com/android/settings/enterprise/ActionDisabledByAdminDialogHelper.java
++++ b/src/com/android/settings/enterprise/ActionDisabledByAdminDialogHelper.java
+@@ -80,7 +80,7 @@ public final class ActionDisabledByAdminDialogHelper {
+ 
+         TextView title = mDialogView.findViewById(R.id.admin_support_dialog_title);
+         title.setText(devicePolicyManager.getResources().getString(DISABLED_BY_IT_ADMIN_TITLE,
+-                () -> mActivity.getString(R.string.disabled_by_policy_title)));
++                () -> mActivity.getString(R.string.e_disabled_by_policy_title)));
+ 
+     }
+ 
+diff --git a/src/com/android/settings/enterprise/DeviceAdminStringProviderImpl.java b/src/com/android/settings/enterprise/DeviceAdminStringProviderImpl.java
+index 4ff725eef0..a2e0a6ca36 100644
+--- a/src/com/android/settings/enterprise/DeviceAdminStringProviderImpl.java
++++ b/src/com/android/settings/enterprise/DeviceAdminStringProviderImpl.java
+@@ -40,7 +40,7 @@ class DeviceAdminStringProviderImpl implements DeviceAdminStringProvider {
+     @Override
+     public String getDefaultDisabledByPolicyTitle() {
+         return mDevicePolicyManager.getResources().getString(DISABLED_BY_IT_ADMIN_TITLE,
+-                () -> mContext.getString(R.string.disabled_by_policy_title));
++                () -> mContext.getString(R.string.e_disabled_by_policy_title));
+     }
+ 
+     @Override
+diff --git a/src/com/android/settings/privacy/ParentalControlDashboardFragment.java b/src/com/android/settings/privacy/ParentalControlDashboardFragment.java
+new file mode 100644
+index 0000000000..bc85c3d65f
+--- /dev/null
++++ b/src/com/android/settings/privacy/ParentalControlDashboardFragment.java
+@@ -0,0 +1,52 @@
++/*
++ * Copyright (C) 2019-2022 ECORP SAS
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.settings.privacy;
++
++import android.app.Activity;
++import android.content.ComponentName;
++import android.content.Intent;
++import android.os.Bundle;
++
++import androidx.fragment.app.Fragment;
++
++import com.android.settings.R;
++import com.android.settings.search.BaseSearchIndexProvider;
++import com.android.settingslib.search.SearchIndexable;
++
++@SearchIndexable
++public class ParentalControlDashboardFragment extends Fragment {
++
++    private static final String parentalControlPackageName = "foundation.e.parentalcontrol";
++    private static final String parentalControlActivityName = "foundation.e.parentalcontrol.MainActivity";
++
++    @Override
++    public void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++
++        Activity activity = getActivity();
++        Intent intent = new Intent().setComponent(new ComponentName(parentalControlPackageName,
++                parentalControlActivityName));
++        startActivity(intent);
++
++        if (activity != null) {
++            activity.finish();
++        }
++    }
++
++    public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
++            new BaseSearchIndexProvider(R.xml.parental_control_dashboard_settings);
++}
+\ No newline at end of file
+diff --git a/src/com/android/settings/security/screenlock/LockAfterTimeoutPreferenceController.java b/src/com/android/settings/security/screenlock/LockAfterTimeoutPreferenceController.java
+index dd99e9f19f..5680d21350 100644
+--- a/src/com/android/settings/security/screenlock/LockAfterTimeoutPreferenceController.java
++++ b/src/com/android/settings/security/screenlock/LockAfterTimeoutPreferenceController.java
+@@ -125,7 +125,7 @@ public class LockAfterTimeoutPreferenceController extends AbstractPreferenceCont
+         final CharSequence summary;
+         if (preference.isDisabledByAdmin()) {
+             summary = mDPM.getResources().getString(DISABLED_BY_IT_ADMIN_TITLE,
+-                    () -> mContext.getString(R.string.disabled_by_policy_title));
++                    () -> mContext.getString(R.string.e_disabled_by_policy_title));
+         } else {
+             // Update summary message with current value
+             long currentTimeout = Settings.Secure.getLong(mContext.getContentResolver(),

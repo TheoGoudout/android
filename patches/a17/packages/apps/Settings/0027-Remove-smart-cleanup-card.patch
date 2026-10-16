@@ -1,0 +1,25 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishithkhanna@e.email>
+Date: Thu, 3 Jul 2025 18:58:24 +0530
+Subject: [PATCH 27/32] Remove smart cleanup card
+
+(cherry picked from commit 96aef056c27934682e68e07044f4f17f697294f6)
+---
+ .../deviceinfo/storage/ManageStoragePreferenceController.java | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/com/android/settings/deviceinfo/storage/ManageStoragePreferenceController.java b/src/com/android/settings/deviceinfo/storage/ManageStoragePreferenceController.java
+index 6aa4b548b2..95d7aaadbc 100644
+--- a/src/com/android/settings/deviceinfo/storage/ManageStoragePreferenceController.java
++++ b/src/com/android/settings/deviceinfo/storage/ManageStoragePreferenceController.java
+@@ -58,8 +58,8 @@ public class ManageStoragePreferenceController extends BasePreferenceController
+ 
+     @Override
+     public int getAvailabilityStatus() {
+-        return canHandleManageStorageIntent(mContext, mUserId)
+-                ? AVAILABLE : CONDITIONALLY_UNAVAILABLE;
++        // /e/OS: no smart cleanup card
++        return CONDITIONALLY_UNAVAILABLE;
+     }
+ 
+     @Override

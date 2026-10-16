@@ -1,0 +1,39 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: althafvly <althafvly@gmail.com>
+Date: Thu, 8 Dec 2022 12:28:25 +0530
+Subject: [PATCH 11/32] Settings: Remove find my device from security settings
+ summary
+
+(cherry picked from commit eb8451bdd2c803d36c3392f62d8113ac3668eae7)
+---
+ res/values/e_strings.xml       | 3 +++
+ res/xml/top_level_settings.xml | 2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/res/values/e_strings.xml b/res/values/e_strings.xml
+index f3a1099904..f666c096fa 100644
+--- a/res/values/e_strings.xml
++++ b/res/values/e_strings.xml
+@@ -34,6 +34,9 @@
+     <string name="advanced_privacy_dashboard_title" translatable="false">Advanced Privacy</string>
+     <string name="advanced_privacy_dashboard_summary">Manage trackers, fake location, hide IP address</string>
+ 
++    <!-- Summary for e Security settings, explaining a few important settings under it [CHAR LIMIT=NONE] -->
++    <string name="e_security_dashboard_summary">Screen lock, app security</string>
++
+     <!-- Factory Reset -->
+     <string name="main_clear_desc_e" product="tablet">This will erase all data from your tablet\u2019s <b>internal storage</b>, including:\n\n<li>All your account</li>\n<li>System and app data and settings</li>\n<li>Downloaded apps</li></string>
+     <string name="main_clear_desc_e" product="default">This will erase all data from your phone\u2019s <b>internal storage</b>, including:\n\n<li>All your account</li>\n<li>System and app data and settings</li>\n<li>Downloaded apps</li></string>
+diff --git a/res/xml/top_level_settings.xml b/res/xml/top_level_settings.xml
+index 7af6ffa8be..53037a016d 100644
+--- a/res/xml/top_level_settings.xml
++++ b/res/xml/top_level_settings.xml
+@@ -202,7 +202,7 @@
+             android:key="top_level_security"
+             android:order="-40"
+             android:title="@string/security_settings_title"
+-            android:summary="@string/security_dashboard_summary"
++            android:summary="@string/e_security_dashboard_summary"
+             settings:highlightableMenuKey="@string/menu_key_security"
+             settings:controller="com.android.settings.security.TopLevelSecurityEntryPreferenceController"/>
+ 

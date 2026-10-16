@@ -1,0 +1,83 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishithkhanna@e.email>
+Date: Fri, 2 Feb 2024 13:16:06 +0530
+Subject: [PATCH 18/32] Add a dedicated section in developer options for /e/OS
+ related settings
+
+(cherry picked from commit fa6bf9a3e7ebd59a747b327fa0f1a79b1bbd6c37)
+---
+ res/values/e_strings.xml         |  3 +++
+ res/xml/development_settings.xml | 41 +++++++++++++++++++-------------
+ 2 files changed, 27 insertions(+), 17 deletions(-)
+
+diff --git a/res/values/e_strings.xml b/res/values/e_strings.xml
+index 265948b42d..624794675e 100644
+--- a/res/values/e_strings.xml
++++ b/res/values/e_strings.xml
+@@ -60,4 +60,7 @@
+     <string name="e_really_remove_account_message">If you remove this account you will not be able to access its data from this device anymore including its emails. You can add it back whenever you want.</string>
+     <string name="e_auto_sync_account_title">Auto-refresh contents</string>
+     <string name="e_auto_sync_account_summary">Allow apps to automatically refresh contents in the background</string>
++
++    <!-- Developer options -->
++    <string name="e_developer_options">/e/OS developer options</string>
+ </resources>
+diff --git a/res/xml/development_settings.xml b/res/xml/development_settings.xml
+index c4c061714a..f94092496f 100644
+--- a/res/xml/development_settings.xml
++++ b/res/xml/development_settings.xml
+@@ -137,6 +137,30 @@
+             android:entryValues="@array/grammatical_gender_values" />
+     </PreferenceCategory>
+ 
++    <PreferenceCategory
++        android:key="e_developer_options"
++        android:title="@string/e_developer_options"
++        android:order="199">
++
++        <SwitchPreference
++            android:key="change_update_source"
++            android:title="@string/title_ota_server"
++            android:summary="@string/use_ota_summary" />
++
++        <SwitchPreference
++            android:key="enable_telemetry"
++            android:title="@string/enable_telemetry"
++            android:summary="@string/telemetry_details" />
++
++        <Preference
++            android:key="sentry_userid"
++            android:title="@string/sentry_userid_title"
++            android:summary="@string/summary_placeholder"
++            android:selectable="false"
++            settings:enableCopying="true"
++            settings:controller="com.android.settings.deviceinfo.firmwareversion.SentryDetailPreferenceController"/>
++    </PreferenceCategory>
++
+     <PreferenceCategory
+         android:key="debug_debugging_category"
+         android:title="@string/debug_debugging_category"
+@@ -650,23 +674,6 @@
+             android:title="@string/enable_webapp_minter_title"
+             android:summary="@string/enable_webapp_minter_summary" />
+ 
+-        <SwitchPreference
+-            android:key="change_update_source"
+-            android:title="@string/title_ota_server"
+-            android:summary="@string/use_ota_summary" />
+-
+-        <SwitchPreference
+-            android:key="enable_telemetry"
+-            android:title="@string/enable_telemetry"
+-            android:summary="@string/telemetry_details" />
+-
+-        <Preference
+-            android:key="sentry_userid"
+-            android:title="@string/sentry_userid_title"
+-            android:summary="@string/summary_placeholder"
+-            android:selectable="false"
+-            settings:enableCopying="true"
+-            settings:controller="com.android.settings.deviceinfo.firmwareversion.SentryDetailPreferenceController"/>
+     </PreferenceCategory>
+ 
+     <PreferenceCategory

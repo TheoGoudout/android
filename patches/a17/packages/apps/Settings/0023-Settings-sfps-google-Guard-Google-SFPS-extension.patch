@@ -1,0 +1,110 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kshitij Gupta <kshitijgm@gmail.com>
+Date: Thu, 7 Nov 2024 10:58:00 +0100
+Subject: [PATCH 23/32] Settings: sfps-google: Guard Google SFPS extension
+
+(cherry picked from commit 511ec047283212c4dd33157d09f4b5772cccf5a2)
+---
+ res/values/e_config.xml                       | 20 +++++++++++++++++++
+ .../FingerprintEnrollEnrolling.java           |  2 +-
+ .../FingerprintFeatureProvider.java           |  2 +-
+ .../FingerprintFeatureProviderImpl.java       |  4 ++--
+ .../feature/SfpsEnrollmentFeatureImpl.java    |  9 ++++++++-
+ 5 files changed, 32 insertions(+), 5 deletions(-)
+ create mode 100644 res/values/e_config.xml
+
+diff --git a/res/values/e_config.xml b/res/values/e_config.xml
+new file mode 100644
+index 0000000000..2b8dabdbbc
+--- /dev/null
++++ b/res/values/e_config.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright Murena SAS 2024
++  ~ This program is free software: you can redistribute it and/or modify
++  ~ it under the terms of the GNU General Public License as published by
++  ~ the Free Software Foundation, either version 3 of the License, or
++  ~ (at your option) any later version.
++  ~
++  ~ This program is distributed in the hope that it will be useful,
++  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
++  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  ~ GNU General Public License for more details.
++  ~
++  ~ You should have received a copy of the GNU General Public License
++  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
++  -->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- Indicates whether device uses Google's sfps implementation -->
++    <bool name="config_use_google_side_fps" translatable="false">false</bool>
++</resources>
+diff --git a/src/com/android/settings/biometrics/fingerprint/FingerprintEnrollEnrolling.java b/src/com/android/settings/biometrics/fingerprint/FingerprintEnrollEnrolling.java
+index d438484200..f990d3ca51 100644
+--- a/src/com/android/settings/biometrics/fingerprint/FingerprintEnrollEnrolling.java
++++ b/src/com/android/settings/biometrics/fingerprint/FingerprintEnrollEnrolling.java
+@@ -264,7 +264,7 @@ public class FingerprintEnrollEnrolling extends BiometricsEnrollEnrolling {
+ 
+         } else if (mCanAssumeSfps) {
+             mSfpsEnrollmentFeature = FeatureFactory.getFeatureFactory()
+-                    .getFingerprintFeatureProvider().getSfpsEnrollmentFeature();
++                    .getFingerprintFeatureProvider().getSfpsEnrollmentFeature(getApplicationContext());
+             setContentView(R.layout.sfps_enroll_enrolling);
+             setHelpAnimation();
+         } else {
+diff --git a/src/com/android/settings/biometrics/fingerprint/FingerprintFeatureProvider.java b/src/com/android/settings/biometrics/fingerprint/FingerprintFeatureProvider.java
+index b950b3913e..32ecdcb5f4 100644
+--- a/src/com/android/settings/biometrics/fingerprint/FingerprintFeatureProvider.java
++++ b/src/com/android/settings/biometrics/fingerprint/FingerprintFeatureProvider.java
+@@ -35,7 +35,7 @@ public interface FingerprintFeatureProvider {
+      * Gets the feature implementation of SFPS enrollment.
+      * @return the feature implementation
+      */
+-    SfpsEnrollmentFeature getSfpsEnrollmentFeature();
++    SfpsEnrollmentFeature getSfpsEnrollmentFeature(@NonNull Context context);
+ 
+     /**
+      * Gets calibrator for udfps pre-enroll
+diff --git a/src/com/android/settings/biometrics/fingerprint/FingerprintFeatureProviderImpl.java b/src/com/android/settings/biometrics/fingerprint/FingerprintFeatureProviderImpl.java
+index 81a65d1858..5ec4a8cd7d 100644
+--- a/src/com/android/settings/biometrics/fingerprint/FingerprintFeatureProviderImpl.java
++++ b/src/com/android/settings/biometrics/fingerprint/FingerprintFeatureProviderImpl.java
+@@ -28,9 +28,9 @@ public class FingerprintFeatureProviderImpl implements FingerprintFeatureProvide
+     private SfpsEnrollmentFeature mSfpsEnrollmentFeatureImpl = null;
+ 
+     @Override
+-    public SfpsEnrollmentFeature getSfpsEnrollmentFeature() {
++    public SfpsEnrollmentFeature getSfpsEnrollmentFeature(@NonNull Context context) {
+         if (mSfpsEnrollmentFeatureImpl == null) {
+-            mSfpsEnrollmentFeatureImpl = new SfpsEnrollmentFeatureImpl();
++            mSfpsEnrollmentFeatureImpl = new SfpsEnrollmentFeatureImpl(context);
+         }
+         return mSfpsEnrollmentFeatureImpl;
+     }
+diff --git a/src/com/android/settings/biometrics/fingerprint/feature/SfpsEnrollmentFeatureImpl.java b/src/com/android/settings/biometrics/fingerprint/feature/SfpsEnrollmentFeatureImpl.java
+index cc4048dd11..7ff23706f6 100644
+--- a/src/com/android/settings/biometrics/fingerprint/feature/SfpsEnrollmentFeatureImpl.java
++++ b/src/com/android/settings/biometrics/fingerprint/feature/SfpsEnrollmentFeatureImpl.java
+@@ -50,6 +50,11 @@ public class SfpsEnrollmentFeatureImpl implements SfpsEnrollmentFeature {
+     private FingerprintManager mFingerprintManager = null;
+ 
+     private static final int HELP_RESUME_ENROLL_MSG = 1000;
++    private Context mContext;
++
++    public SfpsEnrollmentFeatureImpl(Context context) {
++        this.mContext = context;
++    }
+ 
+     @Override
+     public int getCurrentSfpsEnrollStage(int progressSteps, Function<Integer, Integer> mapper) {
+@@ -111,7 +116,9 @@ public class SfpsEnrollmentFeatureImpl implements SfpsEnrollmentFeature {
+     }
+ 
+     private void resumeEnrollmentIfNecessary(int helpMsgId, String helpString, Supplier supplier) {
+-        if (helpMsgId == HELP_RESUME_ENROLL_MSG) {
++        final boolean useGoogleSfps = mContext.getResources().getBoolean(
++                R.bool.config_use_google_side_fps);
++        if (helpMsgId == HELP_RESUME_ENROLL_MSG && useGoogleSfps) {
+             SfpsUtils.resumeEnroll();
+         }
+     }

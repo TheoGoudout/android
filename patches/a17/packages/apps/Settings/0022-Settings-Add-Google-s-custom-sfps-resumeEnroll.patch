@@ -1,0 +1,214 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kshitij Gupta <kshitijgm@gmail.com>
+Date: Wed, 6 Nov 2024 10:13:48 +0100
+Subject: [PATCH 22/32] Settings: Add Google's custom sfps resumeEnroll()
+
+- Needed by tangorpro
+
+(cherry picked from commit 04e20512b8a0b2b5170488bb8c3db1b1ae64591d)
+---
+ .../fingerprint/feature/IFingerprintExt.java  | 70 +++++++++++++++++++
+ .../feature/SfpsEnrollmentFeatureImpl.java    | 19 +++++
+ .../fingerprint/feature/SfpsUtils.java        | 62 ++++++++++++++++
+ 3 files changed, 151 insertions(+)
+ create mode 100644 src/com/android/settings/biometrics/fingerprint/feature/IFingerprintExt.java
+ create mode 100644 src/com/android/settings/biometrics/fingerprint/feature/SfpsUtils.java
+
+diff --git a/src/com/android/settings/biometrics/fingerprint/feature/IFingerprintExt.java b/src/com/android/settings/biometrics/fingerprint/feature/IFingerprintExt.java
+new file mode 100644
+index 0000000000..9c7376cf40
+--- /dev/null
++++ b/src/com/android/settings/biometrics/fingerprint/feature/IFingerprintExt.java
+@@ -0,0 +1,70 @@
++package com.android.settings.biometrics.fingerprint.feature;
++
++import android.os.Binder;
++import android.os.IBinder;
++import android.os.IInterface;
++import android.os.Parcel;
++import android.os.RemoteException;
++
++/**
++ * Interface for fingerprint extension functionalities.
++ */
++public interface IFingerprintExt extends IInterface {
++    String DESCRIPTOR = "com.google.hardware.biometrics.sidefps.IFingerprintExt";
++
++    void resumeEnroll() throws RemoteException;
++
++    /**
++     * Binder stub class for the IFingerprintExt interface.
++     */
++    abstract class Stub extends Binder implements IFingerprintExt {
++
++        /**
++         * Returns an instance of IFingerprintExt if available from the provided IBinder.
++         *
++         * @param binder the IBinder to convert
++         * @return IFingerprintExt instance or null if not available
++         */
++        public static IFingerprintExt asInterface(IBinder binder) {
++            if (binder == null) {
++                return null;
++            }
++            IInterface query = binder.queryLocalInterface(IFingerprintExt.DESCRIPTOR);
++            if (query instanceof IFingerprintExt) {
++                return (IFingerprintExt) query;
++            }
++            return new Proxy(binder);
++        }
++
++        /**
++         * Proxy implementation for IFingerprintExt.
++         */
++        private static class Proxy implements IFingerprintExt {
++            private final IBinder remote;
++
++            Proxy(IBinder binder) {
++                this.remote = binder;
++            }
++
++            @Override
++            public IBinder asBinder() {
++                return remote;
++            }
++
++            @Override
++            public void resumeEnroll() throws RemoteException {
++                Parcel data = Parcel.obtain();
++                try {
++                    data.writeInterfaceToken(DESCRIPTOR);
++                    if (!remote.transact(TRANSACTION_RESUME_ENROLL, data, null, IBinder.FLAG_ONEWAY)) {
++                        throw new RemoteException("Method resumeEnroll is unimplemented.");
++                    }
++                } finally {
++                    data.recycle();
++                }
++            }
++
++            private static final int TRANSACTION_RESUME_ENROLL = IBinder.FIRST_CALL_TRANSACTION + 1;
++        }
++    }
++}
+diff --git a/src/com/android/settings/biometrics/fingerprint/feature/SfpsEnrollmentFeatureImpl.java b/src/com/android/settings/biometrics/fingerprint/feature/SfpsEnrollmentFeatureImpl.java
+index bf97478fee..cc4048dd11 100644
+--- a/src/com/android/settings/biometrics/fingerprint/feature/SfpsEnrollmentFeatureImpl.java
++++ b/src/com/android/settings/biometrics/fingerprint/feature/SfpsEnrollmentFeatureImpl.java
+@@ -28,6 +28,7 @@ import android.animation.ObjectAnimator;
+ import android.content.Context;
+ import android.content.res.Configuration;
+ import android.hardware.fingerprint.FingerprintManager;
++import android.text.TextUtils;
+ import android.view.View;
+ import android.view.animation.AccelerateInterpolator;
+ 
+@@ -35,9 +36,11 @@ import androidx.annotation.NonNull;
+ import androidx.annotation.Nullable;
+ 
+ import com.android.internal.annotations.VisibleForTesting;
++import com.android.settings.biometrics.fingerprint.feature.SfpsUtils;
+ import com.android.settings.R;
+ 
+ import java.util.function.Function;
++import java.util.function.Supplier;
+ 
+ public class SfpsEnrollmentFeatureImpl implements SfpsEnrollmentFeature {
+     @VisibleForTesting
+@@ -46,6 +49,8 @@ public class SfpsEnrollmentFeatureImpl implements SfpsEnrollmentFeature {
+     @Nullable
+     private FingerprintManager mFingerprintManager = null;
+ 
++    private static final int HELP_RESUME_ENROLL_MSG = 1000;
++
+     @Override
+     public int getCurrentSfpsEnrollStage(int progressSteps, Function<Integer, Integer> mapper) {
+         if (mapper == null) {
+@@ -97,6 +102,20 @@ public class SfpsEnrollmentFeatureImpl implements SfpsEnrollmentFeature {
+         return mFingerprintManager.getEnrollStageThreshold(index);
+     }
+ 
++    @Override
++    public void handleOnEnrollmentHelp(int helpMsgId, CharSequence helpString, Supplier supplier) {
++        if (supplier == null || TextUtils.isEmpty(helpString)) {
++            return;
++        }
++        resumeEnrollmentIfNecessary(helpMsgId, helpString.toString(), supplier);
++    }
++
++    private void resumeEnrollmentIfNecessary(int helpMsgId, String helpString, Supplier supplier) {
++        if (helpMsgId == HELP_RESUME_ENROLL_MSG) {
++            SfpsUtils.resumeEnroll();
++        }
++    }
++
+     @Override
+     public Animator getHelpAnimator(@NonNull View target) {
+         final float translationX = 40;
+diff --git a/src/com/android/settings/biometrics/fingerprint/feature/SfpsUtils.java b/src/com/android/settings/biometrics/fingerprint/feature/SfpsUtils.java
+new file mode 100644
+index 0000000000..a44d5fd5d4
+--- /dev/null
++++ b/src/com/android/settings/biometrics/fingerprint/feature/SfpsUtils.java
+@@ -0,0 +1,62 @@
++package com.android.settings.biometrics.fingerprint.feature;
++
++import android.os.IBinder;
++import android.os.RemoteException;
++import android.os.ServiceManager;
++import android.util.Log;
++import com.android.settings.biometrics.fingerprint.feature.IFingerprintExt;
++
++import java.util.function.Supplier;
++
++public abstract class SfpsUtils {
++
++    private static final String TAG = "BiometricUtil";
++    private static final String FINGERPRINT_SERVICE = "android.hardware.biometrics.fingerprint.IFingerprint/default";
++
++    /**
++     * Resumes fingerprint enrollment using the IFingerprintExt interface.
++     */
++    public static void resumeEnroll() {
++        IFingerprintExt fingerprintExt = getFingerprintExtSupplier().get();
++
++        if (fingerprintExt == null) {
++            Log.e(TAG, "Failed to connect to the fingerprint extension");
++            return;
++        }
++
++        try {
++            fingerprintExt.resumeEnroll();
++        } catch (RemoteException e) {
++            Log.e(TAG, "Failed to resume enrollment due to RemoteException", e);
++        }
++    }
++
++    /**
++     * Provides a supplier for the IFingerprintExt interface.
++     *
++     * @return Supplier of IFingerprintExt
++     */
++    private static Supplier<IFingerprintExt> getFingerprintExtSupplier() {
++        return () -> getFingerprintExtInstance();
++    }
++
++    /**
++     * Retrieves an instance of IFingerprintExt.
++     *
++     * @return IFingerprintExt instance or null if unavailable
++     */
++    private static IFingerprintExt getFingerprintExtInstance() {
++        try {
++            IBinder serviceBinder = ServiceManager.waitForDeclaredService(FINGERPRINT_SERVICE);
++            if (serviceBinder == null) {
++                Log.e(TAG, "Unable to get fingerprint service");
++                return null;
++            }
++
++            return IFingerprintExt.Stub.asInterface(serviceBinder.getExtension());
++        } catch (RemoteException e) {
++            Log.e(TAG, "Error accessing fingerprint extension", e);
++            return null;
++        }
++    }
++}

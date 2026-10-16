@@ -1,0 +1,423 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishithkhanna@e.email>
+Date: Wed, 21 May 2025 15:25:19 +0530
+Subject: [PATCH 24/32] Port translations from Android 14
+
+(cherry picked from commit 990e24c830b37be2a256995324441151ce8c59b4)
+---
+ res/values-de/e_strings.xml | 32 +++++++++++++++++++++++--
+ res/values-es/e_strings.xml | 20 ++++++++++++++--
+ res/values-fr/e_strings.xml | 27 +++++++++++++++++++--
+ res/values-is/e_strings.xml | 48 +++++++++++++++++++++++++++++++++++++
+ res/values-it/e_strings.xml | 27 +++++++++++++++++++--
+ res/values-nl/e_strings.xml | 48 +++++++++++++++++++++++++++++++++++++
+ res/values-ru/e_strings.xml | 40 +++++++++++++++++++++++++++++++
+ res/values-sv/e_strings.xml | 48 +++++++++++++++++++++++++++++++++++++
+ res/values-uk/e_strings.xml | 29 ++++++++++++++++++++++
+ 9 files changed, 311 insertions(+), 8 deletions(-)
+ create mode 100644 res/values-is/e_strings.xml
+ create mode 100644 res/values-nl/e_strings.xml
+ create mode 100644 res/values-ru/e_strings.xml
+ create mode 100644 res/values-sv/e_strings.xml
+ create mode 100644 res/values-uk/e_strings.xml
+
+diff --git a/res/values-de/e_strings.xml b/res/values-de/e_strings.xml
+index 4a05b8a4d8..5e94e042ee 100644
+--- a/res/values-de/e_strings.xml
++++ b/res/values-de/e_strings.xml
+@@ -13,8 +13,36 @@
+   ~
+   ~ You should have received a copy of the GNU General Public License
+   ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-  -->
+-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+     <string name="e_really_remove_account_message">Wenn Sie dieses Konto entfernen, werden Sie weder Ihre Daten noch Ihre E-Mails von diesem Gerät aus abrufen können. Sie können dies zu einem beliebigen Zeitpunkt aber wieder aktivieren.</string>
+     <string name="e_peak_refresh_rate_summary">Aktivieren Sie diese Option, um die Aktualisierungsrate von 60 auf %1$d Hz zu erhöhen</string>
++    <string name="e_security_dashboard_summary">Bildschirmsperre, App-Sicherheit</string>
++    <string name="elicense_title">/e/ Lizenz</string>
++    <string name="e_version">/e/ OS-Version</string>
++    <string name="system_update_summary">Aktualisierungen, Einstellungen, Versionshinweise</string>
++    <string name="title_ota_server">Verbinden mit /e/OS-Testkanal</string>
++    <string name="use_ota_summary">Zugang zu Testversionen von /e/OS</string>
++    <string name="use_ota_staging_popup_title">Sie sind dabei, sich mit dem /e/OS-Testkanal zu verbinden</string>
++    <string name="use_ota_staging_popup_message">Damit können Sie Testversionen von /e/OS herunterladen und installieren. Diese Versionen können instabil sein und sollten nur zu Testzwecken verwendet werden. Bitte akzeptieren Sie nur, wenn Sie wissen, was Sie tun.</string>
++    <string name="main_clear_desc_e" product="default">Dadurch werden alle Daten vom <b>internen Speicher</b> Ihres Tablets gelöscht. , einschließlich:
++\n
++\n<li>Alle Ihre Konten</li>
++\n<li>System- und Anwendungsdaten und Einstellungen</li>
++\n<li>Heruntergeladene Anwendungen</li></string>
++    <string name="advanced_privacy_dashboard_summary">Tracker verwalten, Standort fälschen, IP-Adresse verbergen</string>
++    <string name="e_version_summary">Aktualisiert auf /e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g></string>
++    <string name="e_version_pending_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - Aktualisierung verfügbar</string>
++    <string name="e_version_in_progress_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - Aktualisierung läuft</string>
++    <string name="e_version_reboot_pending_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - installiert, Neustart erforderlich</string>
++    <string name="telemetry_dialog_message">Dies erlaubt automatische Fehlermeldungen, wenn eine App abstürzt oder einfriert. Bitte starten Sie ihr Gerät nach einer Abänderung dieser Einstellung neu.</string>
++    <string name="telemetry_dialog_title">Sie sind gerade dabei, /e/OS-Telemetrie zu aktivieren</string>
++    <string name="telemetry_details">Automatische Fehlermeldungen aktivieren</string>
++    <string name="enable_telemetry">/e/OS-Telemetrie aktivieren</string>
++    <string name="e_auto_sync_account_summary">Apps erlauben, Inhalte automatisch im Hintergrund zu aktualisieren</string>
++    <string name="e_auto_sync_account_title">Inhalte automatisch aktualisieren</string>
++    <string name="sentry_userid_title">Sentry Benutzer-ID</string>
++    <string name="parental_control_dashboard_title">Elternaufsicht</string>
++    <string name="parental_control_dashboard_summary">Hilft Eltern, die Geräte ihrer Kinder zu beaufsichtigen</string>
++    <string name="e_developer_options">/e/OS Entwickleroptionen</string>
++    <string name="e_disabled_by_policy_title">Diese Einstellung ist gesperrt</string>
+ </resources>
+\ No newline at end of file
+diff --git a/res/values-es/e_strings.xml b/res/values-es/e_strings.xml
+index 554ba98f86..33f737bf5e 100644
+--- a/res/values-es/e_strings.xml
++++ b/res/values-es/e_strings.xml
+@@ -13,8 +13,24 @@
+   ~
+   ~ You should have received a copy of the GNU General Public License
+   ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-  -->
+-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+     <string name="e_really_remove_account_message">Si eliminas esta cuenta, ya no podrás acceder tus datos (incluidos tus correos electrónicos) desde este dispositivo. Puedes volver a añadirla cuando quieras.</string>
+     <string name="e_peak_refresh_rate_summary">Active esta opción para aumentar la frecuencia de actualización de 60 a %1$d Hz</string>
++    <string name="e_auto_sync_account_title">Actualizar contenidos automáticamente</string>
++    <string name="e_auto_sync_account_summary">Permitir a las aplicaciones actualizar contenidos en segundo plano automáticamente</string>
++    <string name="e_security_dashboard_summary">Bloqueo de pantalla, seguridad de aplicaciones</string>
++    <string name="e_version">Version de /e/OS</string>
++    <string name="elicense_title">/e/ legal</string>
++    <string name="sentry_userid_title">Sentry ID de usuario</string>
++    <string name="system_update_summary">Actualizaciones, preferencias, notas de versión</string>
++    <string name="title_ota_server">Conéctate al canal de prueba /e/ OS</string>
++    <string name="use_ota_summary">Acceso a versiones de prueba de /e/ OS</string>
++    <string name="use_ota_staging_popup_title">Te vas a conectar al canal de prueba /e/ OS</string>
++    <string name="enable_telemetry">Activar telemetría de /e/OS</string>
++    <string name="telemetry_details">Activar notificación automática de errores</string>
++    <string name="telemetry_dialog_title">Estás a punto de activar la telemetría de /e/OS x</string>
++    <string name="telemetry_dialog_message">Permitirá el informe automático de errores cuando una aplicación se bloquee o se cierre inesperadamente. Reinicia tu dispositivo después de cambiar esta configuración.</string>
++    <string name="use_ota_staging_popup_message">Te permitirá descargar e instalar versiones de prueba de /e/ OS. Estas versiones pueden ser inestables y sólo deben utilizarse con fines de prueba. Por favor, acepta sólo si sabes lo que estás haciendo.</string>
++    <string name="parental_control_dashboard_title">Control paterno</string>
++    <string name="parental_control_dashboard_summary">Ayuda a los padres a controlar el dispositivo de sus hijos</string>
+ </resources>
+\ No newline at end of file
+diff --git a/res/values-fr/e_strings.xml b/res/values-fr/e_strings.xml
+index 64a3427f79..c150b7d5ae 100644
+--- a/res/values-fr/e_strings.xml
++++ b/res/values-fr/e_strings.xml
+@@ -13,8 +13,31 @@
+   ~
+   ~ You should have received a copy of the GNU General Public License
+   ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-  -->
+-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+     <string name="e_really_remove_account_message">En supprimant ce compte, vous n\'aurez plus accès à ses données depuis cet appareil, e-mails inclus. Vous pouvez le réajouter à tout moment.</string>
+     <string name="e_peak_refresh_rate_summary">Activez cette option pour augmenter la fréquence de rafraîchissement de 60 à %1$d Hz</string>
++    <string name="e_security_dashboard_summary">Verrouillage de l\'écran, sécurité des applications</string>
++    <string name="e_version_reboot_pending_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - installée, redémarrage nécessaire</string>
++    <string name="e_version_in_progress_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - mise à jour en cours</string>
++    <string name="e_version_pending_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - mise à jour disponible</string>
++    <string name="e_version_summary">Mis à jour vers /e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g></string>
++    <string name="main_clear_desc_e" product="default">Cela effacera toutes les données de la <b>mémoire interne</b> de votre téléphone, y compris :\n\n<li>Tous vos comptes</li>\n<li>Les paramètres et donnée du système et des applications</li>\n<li>les applications téléchargées</li></string>
++    <string name="advanced_privacy_dashboard_summary">Gérer les trackers, falsifier la position et masquer l\'adresse IP</string>
++    <string name="telemetry_details">Activer la génération automatique de rapports de bugs</string>
++    <string name="telemetry_dialog_message">Cela permettra la génération automatique de rapports de bug quand une application plante ou quand elle termine dans un état imprévu. Merci de redémarrer votre appareil pour que la modification de ce paramètre soit prise en compte.</string>
++    <string name="telemetry_dialog_title">Vous êtes sur le point d\'activer la télémétrie pour /e/OS</string>
++    <string name="enable_telemetry">Activer la télémétrie sur /e/OS</string>
++    <string name="use_ota_staging_popup_message">Cela vous permettra de télécharger et installer les versions de test d\'/e/OS. Ces versions peuvent être instables et ne devraient être utilisés qu\'à des fins de test. Merci de n\'accepter que si vous savez ce que vous êtes en train de faire.</string>
++    <string name="use_ota_staging_popup_title">Vous êtes sur le point de vous connecter au canal de test d\'/e/OS</string>
++    <string name="system_update_summary">Mises à jour, préférences, notes de version</string>
++    <string name="use_ota_summary">Accéder aux versions de test d\'/e/OS</string>
++    <string name="title_ota_server">Se connecter au canal de test d\'/e/OS</string>
++    <string name="elicense_title">Informations légales de /e/</string>
++    <string name="e_version">Version d\'/e/OS</string>
++    <string name="e_auto_sync_account_title">Rafraîchir les contenus automatiquement</string>
++    <string name="e_auto_sync_account_summary">Autoriser les applications à rafraîchir automatiquement les contenus en arrière plan</string>
++    <string name="sentry_userid_title">Identifiant utilisateur Sentry</string>
++    <string name="e_developer_options">Options /e/OS pour les développeurs</string>
++    <string name="parental_control_dashboard_title">Contrôle Parental</string>
++    <string name="parental_control_dashboard_summary">Aide les parents à protéger l\'appareil de leur enfant</string>
+ </resources>
+diff --git a/res/values-is/e_strings.xml b/res/values-is/e_strings.xml
+new file mode 100644
+index 0000000000..40c917c6c4
+--- /dev/null
++++ b/res/values-is/e_strings.xml
+@@ -0,0 +1,48 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright Murena SAS 2023
++  ~ This program is free software: you can redistribute it and/or modify
++  ~ it under the terms of the GNU General Public License as published by
++  ~ the Free Software Foundation, either version 3 of the License, or
++  ~ (at your option) any later version.
++  ~
++  ~ This program is distributed in the hope that it will be useful,
++  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
++  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  ~ GNU General Public License for more details.
++  ~
++  ~ You should have received a copy of the GNU General Public License
++  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
++  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="e_security_dashboard_summary">Skjálæsing, öryggi forrita</string>
++    <string name="system_update_summary">Uppfærslur, kjörstillingar, útgáfuupplýsingar</string>
++    <string name="elicense_title">Lagalegir fyrirvarar /e/</string>
++    <string name="e_version">Útgáfa /e/ OS</string>
++    <string name="enable_telemetry">Virkja fjarmælingar /e/OS</string>
++    <string name="telemetry_details">Virkja sjálfvirkar tilkynningar um vandamál</string>
++    <string name="telemetry_dialog_title">Þú ert við það að virkja fjarmælingar /e/OS kerfisins</string>
++    <string name="advanced_privacy_dashboard_summary">Sýsla með rekjara, falsa staðsetningu, fela IP-vistfang</string>
++    <string name="telemetry_dialog_message">Þetta gerir kleift að senda sjálfvirkar villuskýrslur þegar forrit hrynja eða festast í óvæntu ástandi. Endurræstu tækið þitt eftir að þessari stillingu er breytt.</string>
++    <string name="e_version_summary">Uppfært í /e/OS útg.<xliff:g id="version" example="6.0">%1$s</xliff:g></string>
++    <string name="e_auto_sync_account_summary">Leyfa forritum að endurlesa efni sjálfvirkt í bakgrunni</string>
++    <string name="use_ota_staging_popup_message">Þetta gerir þér kleift að sækja og setja upp prófunarútgáfur /e/ OS. Þessar byggingarútgáfur geta verið óstöðugar og ætti einungis að nota til prófana. Ekki samþykkja þetta nema þú vitir hvað þú sért að gera.</string>
++    <string name="e_auto_sync_account_title">Sjálfvirkt endurlesa efni</string>
++    <string name="e_really_remove_account_message">Ef þú fjarlægir þennan aðgang, muntu framvegis ekki geta komist í nein gögn af tækinu, þar með talinn tölvupóst aðgangsins. Þú getur bætt honum aftur einn síðar ef þú vilt.</string>
++    <string name="sentry_userid_title">Sentry-auðkenni notanda</string>
++    <string name="title_ota_server">Tengjast /e/ OS prófunarrás</string>
++    <string name="use_ota_summary">Skoðaðu prófunarútgáfur af /e/ OS</string>
++    <string name="use_ota_staging_popup_title">Þú ert að fara að tengjast /e/ OS prófunarrás</string>
++    <string name="main_clear_desc_e" product="default">Þessi aðgerð eyðir öllum gögnum úr <b>innbyggðri geymslu</b> spjaldtölvunnar, þar á meðal:
++\n
++\n<li>Öllum reikningum þínum</li>
++\n<li>Gögnum og stillingum forrita og kerfis</li>
++\n<li>Forritum sem hafa verið sótt</li></string>
++    <string name="e_version_pending_update_summary">/e/OS útg.<xliff:g id="version" example="6.0">%1$s</xliff:g> - uppfærsla tiltæk</string>
++    <string name="e_version_in_progress_update_summary">/e/OS útg.<xliff:g id="version" example="6.0">%1$s</xliff:g> - uppfærsla í gangi</string>
++    <string name="e_version_reboot_pending_summary">/e/OS útg.<xliff:g id="version" example="6.0">%1$s</xliff:g> - Uppfært, nauðsynlegt að endurræsa</string>
++    <string name="e_developer_options">Þróunarvalkostir /e/stýrikerfisins</string>
++    <string name="parental_control_dashboard_title">Barnalæsing</string>
++    <string name="parental_control_dashboard_summary">Hjálpar foreldrum að stjórna tækjum barna</string>
++    <string name="e_disabled_by_policy_title">Lokað er á þessa stillingu</string>
++    <string name="e_peak_refresh_rate_summary">Kveiktu á þessu til að hækka uppfærslutíðnina úr 60 upp í %1$d Hz</string>
++</resources>
+\ No newline at end of file
+diff --git a/res/values-it/e_strings.xml b/res/values-it/e_strings.xml
+index ee6416ccd9..f7cd7e05b5 100644
+--- a/res/values-it/e_strings.xml
++++ b/res/values-it/e_strings.xml
+@@ -13,8 +13,31 @@
+   ~
+   ~ You should have received a copy of the GNU General Public License
+   ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-  -->
+-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+     <string name="e_really_remove_account_message">Rimuovendo l\'account, i relativi dati ed e-mail diverranno indisponibili sul dispositivo. Potrai comunque aggiungere nuovamente l\'account in qualsiasi momento ed essi torneranno disponibili.</string>
+     <string name="e_peak_refresh_rate_summary">Attiva questa opzione per aumentare la frequenza di aggiornamento da 60 a %1$d Hz</string>
++    <string name="telemetry_dialog_title">Stai abilitando la Telemetria /e/OS</string>
++    <string name="enable_telemetry">Abilita la telemetria /e/OS</string>
++    <string name="e_version">Versione di /e/OS</string>
++    <string name="system_update_summary">Aggiornamenti, preferenze, note di rilascio</string>
++    <string name="title_ota_server">Collega al canale di test di /e/OS</string>
++    <string name="use_ota_summary">Accedi ai rilasci di test di /e/OS</string>
++    <string name="use_ota_staging_popup_title">Stai per collegarti al canale di test di /e/OS</string>
++    <string name="advanced_privacy_dashboard_summary">Gestisci i tracker, falsifica la posizione, nascondi il tuo indirizzo IP</string>
++    <string name="main_clear_desc_e" product="default">Questa operazione cancellerà tutti i dati dalla <b>memoria interna</b> del tuo tablet, inclusi:
++\n
++\n<li>Tutti gli account</li>
++\n<li>Dati e impostazioni di Sistema e app</li>
++\n<li>App scaricate</li></string>
++    <string name="e_version_pending_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - aggiornamento disponibile</string>
++    <string name="e_version_in_progress_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - aggiornamento in corso</string>
++    <string name="telemetry_details">Abilita la comunicazione automatica dei bug</string>
++    <string name="telemetry_dialog_message">Consente di comunicare automaticamente i bug in caso di arresto anomalo dell\'app o quando l\'app si trova in uno stato imprevisto. Dopo aver modificato questa impostazione, dovresti riavviare il dispositivo.</string>
++    <string name="use_ota_staging_popup_message">Permette di scaricare e installare versioni di test di /e/ OS. Tali versioni possono essere instabili e devono essere usate solo a scopo di test. Accetta solo se sai cosa stai facendo.</string>
++    <string name="e_version_summary">Aggiornato a /e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g></string>
++    <string name="e_version_reboot_pending_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - installato Riavvio obbligatorio</string>
++    <string name="parental_control_dashboard_title">Controllo Parentale</string>
++    <string name="parental_control_dashboard_summary">Aiuta i genitori a controllare il dispositivo del bambino</string>
++    <string name="e_auto_sync_account_title">Aggiorna automaticamente i contenuti</string>
++    <string name="e_auto_sync_account_summary">Permetti alle applicazioni di aggiornare automaticamente i contenuti in background</string>
+ </resources>
+diff --git a/res/values-nl/e_strings.xml b/res/values-nl/e_strings.xml
+new file mode 100644
+index 0000000000..a2807b6f70
+--- /dev/null
++++ b/res/values-nl/e_strings.xml
+@@ -0,0 +1,48 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright Murena SAS 2023
++  ~ This program is free software: you can redistribute it and/or modify
++  ~ it under the terms of the GNU General Public License as published by
++  ~ the Free Software Foundation, either version 3 of the License, or
++  ~ (at your option) any later version.
++  ~
++  ~ This program is distributed in the hope that it will be useful,
++  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
++  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  ~ GNU General Public License for more details.
++  ~
++  ~ You should have received a copy of the GNU General Public License
++  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
++  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="e_security_dashboard_summary">Schermvergrendeling, app beveiliging</string>
++    <string name="telemetry_dialog_message">Dit staat automatische foutrapporten toe wanneer een applicatie crasht of bevriest. Herstart a.u.b. jouw toestel nadat je deze instelling hebt gewijzigd.</string>
++    <string name="telemetry_dialog_title">Je staat op het punt om /e/OS Telemetrie te activeren</string>
++    <string name="telemetry_details">Activeer automatische foutrapporten</string>
++    <string name="enable_telemetry">Activeer /e/OS Telemetrie</string>
++    <string name="elicense_title">/e/ juridisch</string>
++    <string name="e_version">/e/ OS versie</string>
++    <string name="system_update_summary">Updates, voorkeuren, release notes</string>
++    <string name="title_ota_server">Verbindt met /e/ OS test kanaal</string>
++    <string name="use_ota_summary">Toegang tot test releases van /e/ OS</string>
++    <string name="use_ota_staging_popup_title">Je staat op het punt te verbinden met het /e/ OS test kanaal</string>
++    <string name="use_ota_staging_popup_message">Dit maakt het mogelijk test versies van /e/ OS te downloaden en installeren. Deze versies kunnen instabiel zijn en dienen enkel gebruikt te worden voor test doeleinden. Accepteer dit enkel als je weet wat je wil doen.</string>
++    <string name="e_version_summary">Bijgewerkt naar /e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g></string>
++    <string name="e_auto_sync_account_summary">Sta apps toe om automatisch inhoud te vernieuwen op de achtergrond</string>
++    <string name="e_auto_sync_account_title">Auto-verniew inhoud</string>
++    <string name="advanced_privacy_dashboard_summary">Beheer trackers, nep locatie, verborgen IP adres</string>
++    <string name="e_really_remove_account_message">Wanneer je dit account verwijderd zal je geen toegang meer hebben tot de data en e-mails, vanop dit toestel. Je kan het op elk moment terug activeren.</string>
++    <string name="e_version_reboot_pending_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - geïnstalleerd, opnieuw opstarten vereist</string>
++    <string name="main_clear_desc_e" product="default">Dit zal alle data van jouw tablet <b>intern geheugen</b> verwijderen, inclusief:
++\n
++\n<li>Al jouw accounts</li>
++\n<li>Systeem/app data en instellingen</li>
++\n<li>Gedownloade apps</li></string>
++    <string name="e_version_in_progress_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - update in uitvoering</string>
++    <string name="sentry_userid_title">Sentry User ID</string>
++    <string name="e_version_pending_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - update beschikbaar</string>
++    <string name="e_developer_options">/e/OS ontwikkelaar opties</string>
++    <string name="parental_control_dashboard_title">Ouderlijk toezicht</string>
++    <string name="e_disabled_by_policy_title">Deze instelling is geblokkeerd</string>
++    <string name="parental_control_dashboard_summary">Helpt ouders toezicht te houden op apparaten van kinderen</string>
++    <string name="e_peak_refresh_rate_summary">Activeer deze optie om de vernieuwingsfrequentie te verhogen van 60 naar %1$d Hz</string>
++</resources>
+\ No newline at end of file
+diff --git a/res/values-ru/e_strings.xml b/res/values-ru/e_strings.xml
+new file mode 100644
+index 0000000000..e02b1f064f
+--- /dev/null
++++ b/res/values-ru/e_strings.xml
+@@ -0,0 +1,40 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright Murena SAS 2023
++  ~ This program is free software: you can redistribute it and/or modify
++  ~ it under the terms of the GNU General Public License as published by
++  ~ the Free Software Foundation, either version 3 of the License, or
++  ~ (at your option) any later version.
++  ~
++  ~ This program is distributed in the hope that it will be useful,
++  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
++  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  ~ GNU General Public License for more details.
++  ~
++  ~ You should have received a copy of the GNU General Public License
++  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
++  -->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="e_security_dashboard_summary">Блокировка экрана, безопасность приложений</string>
++    <string name="telemetry_dialog_message">Это позволит автоматически сообщать об ошибках при сбое приложения или когда приложение переходит в неожиданное состояние. Пожалуйста, перезагрузите устройство после изменения этой настройки.</string>
++    <string name="telemetry_dialog_title">Вы собираетесь включить /e/OS телеметрию</string>
++    <string name="telemetry_details">Включить автоматическое информирование об ошибках</string>
++    <string name="enable_telemetry">Включить /e/OS телеметрию</string>
++    <string name="e_version_reboot_pending_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - установлена, требуется перезагрузка</string>
++    <string name="e_version_in_progress_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - обновление в процессе</string>
++    <string name="e_version_pending_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - доступно обновление</string>
++    <string name="e_version_summary">Обновлено до /e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g></string>
++    <string name="main_clear_desc_e" product="default">Это приведет к удалению всех данных из <b>внутренней памяти</b> вашего планшета, в том числе:
++\n
++\n<li>Всей вашей учётной записи</li>
++\n<li>Системных данных и данных приложений и настроек</li>
++\n<li>Загруженных приложений</li></string>
++    <string name="advanced_privacy_dashboard_summary">правление трекерами, фиктивное определение местоположения, скрытие IP-адреса</string>
++    <string name="use_ota_staging_popup_message">Это позволит вам загрузить и установить тестовые версии /e/OS. Эти сборки могут быть нестабильными, и их следует использовать только в тестовых целях. Пожалуйста, соглашайтесь только в том случае, если вы знаете, что делаете.</string>
++    <string name="use_ota_staging_popup_title">Вы собираетесь подключиться к тестовому каналу /e/OS</string>
++    <string name="use_ota_summary">Доступ к тестовым выпускам /e/OS</string>
++    <string name="title_ota_server">Подключение к тестовому каналу /e/OS</string>
++    <string name="system_update_summary">Обновления, настройки, примечания к выпуску</string>
++    <string name="elicense_title">Юридическая информация /e/</string>
++    <string name="e_version">Версия /e/ OS</string>
++</resources>
+\ No newline at end of file
+diff --git a/res/values-sv/e_strings.xml b/res/values-sv/e_strings.xml
+new file mode 100644
+index 0000000000..3b5dcb8ac8
+--- /dev/null
++++ b/res/values-sv/e_strings.xml
+@@ -0,0 +1,48 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright Murena SAS 2023
++  ~ This program is free software: you can redistribute it and/or modify
++  ~ it under the terms of the GNU General Public License as published by
++  ~ the Free Software Foundation, either version 3 of the License, or
++  ~ (at your option) any later version.
++  ~
++  ~ This program is distributed in the hope that it will be useful,
++  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
++  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  ~ GNU General Public License for more details.
++  ~
++  ~ You should have received a copy of the GNU General Public License
++  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
++  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="e_security_dashboard_summary">Skärmlås, appsäkerhet</string>
++    <string name="main_clear_desc_e" product="default">Detta kommer radera all data från din enhets <b>interna lagring</b> inkluderat:
++\n
++\n<li>Alla dina konton</li>
++\n<li>System- och appdata och inställningar</li>
++\n<li>Hämtade appar</li></string>
++    <string name="e_version_summary">Uppdaterad till /e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g></string>
++    <string name="e_version_pending_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - uppdatering tillgänglig</string>
++    <string name="e_version_in_progress_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - uppdatering pågår</string>
++    <string name="e_version_reboot_pending_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - installerad, omstart krävs</string>
++    <string name="e_really_remove_account_message">Om du tar bort detta konto kommer du inte kunna komma åt dess data från denna enhet längre, inklusive dess e-post. Du kan när som helst lägga till det igen.</string>
++    <string name="e_auto_sync_account_title">Uppdatera innehåll automatiskt</string>
++    <string name="e_auto_sync_account_summary">Tillåt att appar automatiskt uppdaterar innehåll i bakgrunden</string>
++    <string name="e_version">/e/ OS version</string>
++    <string name="elicense_title">/e/ juridik</string>
++    <string name="sentry_userid_title">Användar-ID för vaktpost</string>
++    <string name="system_update_summary">Uppdateringar, inställningar, versionsinformation</string>
++    <string name="title_ota_server">Anslut till /e/ OS testkanal</string>
++    <string name="use_ota_summary">Få åtkomst till testversioner av /e/ OS</string>
++    <string name="use_ota_staging_popup_title">Du är på väg att ansluta till /e/ OS testkanal</string>
++    <string name="use_ota_staging_popup_message">Det tillåter dig att hämta och installera testversioner av /e/ OS. Dessa byggen kan vara ostabila och ska endast användas i testsyfte. Acceptera endast om du vet vad du håller på med.</string>
++    <string name="enable_telemetry">Aktivera telemetri i /e/OS</string>
++    <string name="telemetry_details">Aktivera automatisk felrapportering</string>
++    <string name="telemetry_dialog_title">Du är på väg att aktivera telemetri i /e/OS</string>
++    <string name="telemetry_dialog_message">Detta tillåter automatisk felrapportering när en applikation kraschar eller när applikationen hamnar i ett oväntat läge. Starta om enheten efter att ha ändrat denna inställning.</string>
++    <string name="advanced_privacy_dashboard_summary">Hantera spårare, falsk plats, göm IP-adress</string>
++    <string name="e_developer_options">/e/OS utvecklaralternativ</string>
++    <string name="parental_control_dashboard_title">Föräldrakontroll</string>
++    <string name="parental_control_dashboard_summary">Hjälper föräldrar att kontrollera barns enheter</string>
++    <string name="e_disabled_by_policy_title">Denna inställning är blockerad</string>
++    <string name="e_peak_refresh_rate_summary">Aktivera detta alternativ för att höja uppdateringsfrekvensen från 60 till %1$d Hz</string>
++</resources>
+\ No newline at end of file
+diff --git a/res/values-uk/e_strings.xml b/res/values-uk/e_strings.xml
+new file mode 100644
+index 0000000000..2a5532be9f
+--- /dev/null
++++ b/res/values-uk/e_strings.xml
+@@ -0,0 +1,29 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="system_update_summary">Оновлення, налаштування, примітки до випуску</string>
++    <string name="use_ota_staging_popup_message">За його допомогою ви зможете завантажити і встановити тестові версії /e/ OS. Ці збірки можуть бути нестабільними, і їх слід використовувати лише у тестових цілях. Будь ласка, погоджуйтеся, якщо ви знаєте, що робите.</string>
++    <string name="e_security_dashboard_summary">Блокування екрану, безпека застосунок</string>
++    <string name="use_ota_staging_popup_title">Ви збираєтеся підключитися до тестового каналу /e/ OS</string>
++    <string name="e_version_summary">Оновлено до /e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g></string>
++    <string name="e_version">Версія /e/ OS</string>
++    <string name="title_ota_server">Підключіться до тестового каналу /e/ OS</string>
++    <string name="e_auto_sync_account_summary">Дозволити застосункам автоматично оновлювати дані у фоновому режимі</string>
++    <string name="use_ota_summary">Доступ до тестових випусків /e/ OS</string>
++    <string name="e_auto_sync_account_title">Автоматичне оновлення даних</string>
++    <string name="advanced_privacy_dashboard_summary">Керування трекерами, фейкове місцезнаходження, приховування IP-адреси</string>
++    <string name="enable_telemetry">Увімкнути телеметрію /e/OS</string>
++    <string name="e_really_remove_account_message">Якщо ви видалите цей обліковий запис, ви більше не зможете отримати доступ до його даних з цього пристрою, включаючи його електронну пошту. Ви можете додати його назад у будь-який час.</string>
++    <string name="e_version_reboot_pending_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - потрібне перезавантаження після оновлення</string>
++    <string name="telemetry_dialog_message">Це дозволить автоматично повідомляти про помилки при збої програми або коли програма завершує роботу в неочікуваному стані. Будь ласка, перезавантажте пристрій після зміни цього налаштування.</string>
++    <string name="elicense_title">/e/ Правове</string>
++    <string name="main_clear_desc_e" product="default">Це призведе до видалення всіх даних з <b>внутрішньої пам\'яті</b> вашого пристрою:
++\n
++\n<li>Всі ваші облікові записи</li>
++\n<li>Дані та налаштування системи та додатків</li>
++\n<li>Завантажені застосунки</li></string>
++    <string name="e_version_in_progress_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - виконується оновлення</string>
++    <string name="sentry_userid_title">ID користувача Sentry</string>
++    <string name="e_version_pending_update_summary">/e/OS v<xliff:g id="version" example="6.0">%1$s</xliff:g> - доступне оновлення</string>
++    <string name="telemetry_details">Увімкнути автоматичні повідомлення про помилки</string>
++    <string name="telemetry_dialog_title">Ви збираєтеся увімкнути телеметрію /e/OS</string>
++</resources>
+\ No newline at end of file

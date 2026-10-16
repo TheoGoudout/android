@@ -117,9 +117,8 @@ but visibly less "/e/" system; most UI gaps are /e/OS's in-progress work, not FP
       - SetupWizard: /e/OS's `epic265-a17-bringup` has all /e/ pages, but on a pre-rewrite SUW base
         (LineageOS rewrote SUW at the end of September). Opt-in `OPTIONAL_MANIFESTS="setupwizard-bringup"`.
       - Settings, frameworks/base, frameworks/libs/systemui: bring-up branch = a17 (no hidden work).
-- [ ] Settings: hand-port /e/ entries (Advanced Privacy, parental control, accounts, /e/ legal,
-      Quad9 private DNS, dev options) on a17. Root conflict = "Set proper title for system version"
-      (creates res/values/e_strings.xml); everything after cascades from it.
+- [x] Settings: 42 a16 commits walked on a17 → 32 patches (13 hand-resolved), 3 already in
+      a17, 7 skipped with reason (`patches/README.md`). Static checks clean; not compiled.
 - [ ] frameworks/base: triage the 57 missing a16 commits by feature (the 11 that apply are SystemUI
       tweaks, so hold them until the a17 SystemUI boots)
 - [ ] Permission "deviceKeyHandler" role: needs frameworks/base `config_deviceKeyHandler` first
@@ -128,7 +127,8 @@ but visibly less "/e/" system; most UI gaps are /e/OS's in-progress work, not FP
       Worth reporting to LineageOS too.
 - [ ] Prepare /e/OS MRs (a17 branches) for the clean patches, so the series can shrink
 - [ ] Phase C build once crave LOS24 project ID is known (a16 baseline first if possible).
-      Suggested a17 order, one variable per build: (1) a17 + FP4 + patches/a17; (2) + `setupwizard-bringup`.
+      Suggested a17 order, one variable per build: (1) a17 + FP4 + patches/a17 without Settings;
+      (2) + Settings series; (3) + `setupwizard-bringup`.
 
 ## Open questions for the owner
 

@@ -1,0 +1,191 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: althafvly <althafvly@gmail.com>
+Date: Wed, 11 Jan 2023 11:09:17 +0530
+Subject: [PATCH 12/32] Settings: top_level_settings: Move accounts entry to
+ top
+
+- Use title string Accounts_settings_title instead of account_dashboard_title
+
+[a17: the home page is grouped in categories now; top_level_accounts moves into
+ the top top_level_account_category instead of a bare order change. Its title is
+ set at runtime by AccountScreen.getAccountScreenTitle() on a17]
+
+(cherry picked from commit 960445fdbb039d1443ff6013cd69ac753dba72e5)
+---
+ AndroidManifest.xml                             |  2 +-
+ res/xml/accounts_dashboard_settings.xml         |  2 +-
+ res/xml/accounts_dashboard_settings_credman.xml |  2 +-
+ res/xml/accounts_dashboard_settings_header.xml  |  2 +-
+ .../accounts_personal_dashboard_settings.xml    |  2 +-
+ ...unts_personal_dashboard_settings_credman.xml |  2 +-
+ res/xml/accounts_private_dashboard_settings.xml |  2 +-
+ ...ounts_private_dashboard_settings_credman.xml |  2 +-
+ res/xml/accounts_work_dashboard_settings.xml    |  2 +-
+ ...accounts_work_dashboard_settings_credman.xml |  2 +-
+ res/xml/top_level_settings.xml                  | 17 +++++++++--------
+ 11 files changed, 19 insertions(+), 18 deletions(-)
+
+diff --git a/AndroidManifest.xml b/AndroidManifest.xml
+index 253365a199..a8926776ed 100644
+--- a/AndroidManifest.xml
++++ b/AndroidManifest.xml
+@@ -5206,7 +5206,7 @@
+ 
+         <activity
+             android:name=".Settings$AccountDashboardActivity"
+-            android:label="@string/account_dashboard_title"
++            android:label="@string/account_settings_title"
+             android:exported="true"
+             android:icon="@drawable/ic_homepage_accounts">
+             <intent-filter
+diff --git a/res/xml/accounts_dashboard_settings.xml b/res/xml/accounts_dashboard_settings.xml
+index 65ad9314fc..751b671626 100644
+--- a/res/xml/accounts_dashboard_settings.xml
++++ b/res/xml/accounts_dashboard_settings.xml
+@@ -18,7 +18,7 @@
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:settings="http://schemas.android.com/apk/res-auto"
+     android:key="user_and_account_settings_screen"
+-    android:title="@string/account_dashboard_title"
++    android:title="@string/account_settings_title"
+     settings:keywords="@string/keywords_accounts">
+ 
+     <PreferenceCategory
+diff --git a/res/xml/accounts_dashboard_settings_credman.xml b/res/xml/accounts_dashboard_settings_credman.xml
+index 9915f70c12..c7d98cf2c3 100644
+--- a/res/xml/accounts_dashboard_settings_credman.xml
++++ b/res/xml/accounts_dashboard_settings_credman.xml
+@@ -18,7 +18,7 @@
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:settings="http://schemas.android.com/apk/res-auto"
+     android:key="user_and_account_settings_screen"
+-    android:title="@string/account_dashboard_title_with_passkeys"
++    android:title="@string/account_settings_title"
+     settings:keywords="@string/keywords_accounts">
+ 
+     <com.android.settingslib.widget.TopIntroPreference
+diff --git a/res/xml/accounts_dashboard_settings_header.xml b/res/xml/accounts_dashboard_settings_header.xml
+index 99f07360f4..ea57c897b5 100644
+--- a/res/xml/accounts_dashboard_settings_header.xml
++++ b/res/xml/accounts_dashboard_settings_header.xml
+@@ -17,6 +17,6 @@
+ <PreferenceScreen
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:settings="http://schemas.android.com/apk/res-auto"
+-    android:title="@string/account_dashboard_title"
++    android:title="@string/account_settings_title"
+     settings:searchable="false">
+ </PreferenceScreen>
+diff --git a/res/xml/accounts_personal_dashboard_settings.xml b/res/xml/accounts_personal_dashboard_settings.xml
+index 2d4d68209b..a38df01e83 100644
+--- a/res/xml/accounts_personal_dashboard_settings.xml
++++ b/res/xml/accounts_personal_dashboard_settings.xml
+@@ -19,7 +19,7 @@
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:settings="http://schemas.android.com/apk/res-auto"
+     android:key="user_and_account_settings_screen"
+-    android:title="@string/account_dashboard_title"
++    android:title="@string/account_settings_title"
+     settings:keywords="@string/keywords_accounts">
+ 
+     <PreferenceCategory
+diff --git a/res/xml/accounts_personal_dashboard_settings_credman.xml b/res/xml/accounts_personal_dashboard_settings_credman.xml
+index b5e223d9d5..6f69f0c70a 100644
+--- a/res/xml/accounts_personal_dashboard_settings_credman.xml
++++ b/res/xml/accounts_personal_dashboard_settings_credman.xml
+@@ -19,7 +19,7 @@
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:settings="http://schemas.android.com/apk/res-auto"
+     android:key="user_and_account_settings_screen"
+-    android:title="@string/account_dashboard_title_with_passkeys"
++    android:title="@string/account_settings_title"
+     settings:keywords="@string/keywords_accounts">
+ 
+     <com.android.settingslib.widget.TopIntroPreference
+diff --git a/res/xml/accounts_private_dashboard_settings.xml b/res/xml/accounts_private_dashboard_settings.xml
+index cc1a4fd828..bd23410c32 100644
+--- a/res/xml/accounts_private_dashboard_settings.xml
++++ b/res/xml/accounts_private_dashboard_settings.xml
+@@ -19,7 +19,7 @@
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:settings="http://schemas.android.com/apk/res-auto"
+     android:key="user_and_account_settings_screen"
+-    android:title="@string/account_dashboard_title"
++    android:title="@string/account_settings_title"
+     settings:keywords="@string/keywords_accounts">
+ 
+     <PreferenceCategory
+diff --git a/res/xml/accounts_private_dashboard_settings_credman.xml b/res/xml/accounts_private_dashboard_settings_credman.xml
+index 48b6706064..a2a03e3fce 100644
+--- a/res/xml/accounts_private_dashboard_settings_credman.xml
++++ b/res/xml/accounts_private_dashboard_settings_credman.xml
+@@ -19,7 +19,7 @@
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:settings="http://schemas.android.com/apk/res-auto"
+     android:key="user_and_account_settings_screen"
+-    android:title="@string/account_dashboard_title_with_passkeys"
++    android:title="@string/account_settings_title"
+     settings:keywords="@string/keywords_accounts">
+ 
+     <com.android.settingslib.widget.TopIntroPreference
+diff --git a/res/xml/accounts_work_dashboard_settings.xml b/res/xml/accounts_work_dashboard_settings.xml
+index ad5e3592d9..eb7084b4e4 100644
+--- a/res/xml/accounts_work_dashboard_settings.xml
++++ b/res/xml/accounts_work_dashboard_settings.xml
+@@ -19,7 +19,7 @@
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:settings="http://schemas.android.com/apk/res-auto"
+     android:key="user_and_account_settings_screen"
+-    android:title="@string/account_dashboard_title"
++    android:title="@string/account_settings_title"
+     settings:keywords="@string/keywords_accounts">
+ 
+     <PreferenceCategory
+diff --git a/res/xml/accounts_work_dashboard_settings_credman.xml b/res/xml/accounts_work_dashboard_settings_credman.xml
+index c275b82140..b12efa7526 100644
+--- a/res/xml/accounts_work_dashboard_settings_credman.xml
++++ b/res/xml/accounts_work_dashboard_settings_credman.xml
+@@ -19,7 +19,7 @@
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:settings="http://schemas.android.com/apk/res-auto"
+     android:key="user_and_account_settings_screen"
+-    android:title="@string/account_dashboard_title_with_passkeys"
++    android:title="@string/account_settings_title"
+     settings:keywords="@string/keywords_accounts">
+ 
+     <com.android.settingslib.widget.TopIntroPreference
+diff --git a/res/xml/top_level_settings.xml b/res/xml/top_level_settings.xml
+index 53037a016d..10b0c86a58 100644
+--- a/res/xml/top_level_settings.xml
++++ b/res/xml/top_level_settings.xml
+@@ -41,6 +41,15 @@
+         android:order="-140"
+         android:key="top_level_account_category"
+         android:layout="@layout/settingslib_untitled_preference_category">
++        <!-- /e/OS: accounts entry first -->
++        <com.android.settings.widget.HomepagePreference
++            android:fragment="com.android.settings.accounts.AccountDashboardFragment"
++            android:icon="@drawable/ic_settings_passwords_filled"
++            android:key="top_level_accounts"
++            android:order="-100"
++            android:summary="@string/summary_placeholder"
++            settings:highlightableMenuKey="@string/menu_key_accounts"
++            settings:controller="com.android.settings.accounts.TopLevelAccountEntryPreferenceController"/>
+     </PreferenceCategory>
+ 
+     <PreferenceCategory
+@@ -235,14 +244,6 @@
+             settings:highlightableMenuKey="@string/menu_key_location"
+             settings:controller="com.android.settings.location.TopLevelLocationPreferenceController"/>
+ 
+-        <com.android.settings.widget.HomepagePreference
+-            android:fragment="com.android.settings.accounts.AccountDashboardFragment"
+-            android:icon="@drawable/ic_settings_passwords_filled"
+-            android:key="top_level_accounts"
+-            android:order="-10"
+-            android:summary="@string/summary_placeholder"
+-            settings:highlightableMenuKey="@string/menu_key_accounts"
+-            settings:controller="com.android.settings.accounts.TopLevelAccountEntryPreferenceController"/>
+ 
+         <!-- TODO(b/460772532): Set highlightableMenuKey to menu_key_accounts once this screen
+                 is ready to display user's accounts instead of AccountDashboardFragment. -->

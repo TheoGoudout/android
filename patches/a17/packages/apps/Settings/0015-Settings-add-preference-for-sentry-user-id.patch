@@ -1,0 +1,119 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Mohammed Althaf Thayyil <althafvly@gmail.com>
+Date: Fri, 30 Jun 2023 05:37:39 +0000
+Subject: [PATCH 15/32] Settings: add preference for sentry user id
+
+(cherry picked from commit f98d0ecc9aebaff377e69e7d365b599c81547d4d)
+---
+ res/values/e_strings.xml                      |  3 +
+ res/xml/development_settings.xml              |  8 +++
+ .../SentryDetailPreferenceController.java     | 67 +++++++++++++++++++
+ 3 files changed, 78 insertions(+)
+ create mode 100644 src/com/android/settings/deviceinfo/firmwareversion/SentryDetailPreferenceController.java
+
+diff --git a/res/values/e_strings.xml b/res/values/e_strings.xml
+index 5ff4192789..c999305e44 100644
+--- a/res/values/e_strings.xml
++++ b/res/values/e_strings.xml
+@@ -21,6 +21,9 @@
+     <!-- /e/ legal. -->
+     <string name="elicense_title">/e/ legal</string>
+ 
++    <!-- /e/ Sentry -->
++    <string name="sentry_userid_title">Sentry User ID</string>
++
+     <!-- /e/ updater -->
+     <string name="system_update_summary">Updates, preferences, release notes</string>
+ 
+diff --git a/res/xml/development_settings.xml b/res/xml/development_settings.xml
+index c3ba0f36c0..c4c061714a 100644
+--- a/res/xml/development_settings.xml
++++ b/res/xml/development_settings.xml
+@@ -659,6 +659,14 @@
+             android:key="enable_telemetry"
+             android:title="@string/enable_telemetry"
+             android:summary="@string/telemetry_details" />
++
++        <Preference
++            android:key="sentry_userid"
++            android:title="@string/sentry_userid_title"
++            android:summary="@string/summary_placeholder"
++            android:selectable="false"
++            settings:enableCopying="true"
++            settings:controller="com.android.settings.deviceinfo.firmwareversion.SentryDetailPreferenceController"/>
+     </PreferenceCategory>
+ 
+     <PreferenceCategory
+diff --git a/src/com/android/settings/deviceinfo/firmwareversion/SentryDetailPreferenceController.java b/src/com/android/settings/deviceinfo/firmwareversion/SentryDetailPreferenceController.java
+new file mode 100644
+index 0000000000..6545cd49ee
+--- /dev/null
++++ b/src/com/android/settings/deviceinfo/firmwareversion/SentryDetailPreferenceController.java
+@@ -0,0 +1,67 @@
++/*
++ * Copyright (C) 2023 MURENA SAS
++ * This program is free software: you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation, either version 3 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
++ */
++
++package com.android.settings.deviceinfo.firmwareversion;
++
++import android.content.Context;
++import android.os.UserHandle;
++import android.text.TextUtils;
++import android.provider.Settings;
++
++import androidx.preference.Preference;
++
++import com.android.settings.R;
++import com.android.settings.core.BasePreferenceController;
++
++
++public class SentryDetailPreferenceController extends BasePreferenceController {
++
++    private static final String TAG = "SentryDetailPreferenceController";
++
++    private static final String TELEMETRY_KEY = "e_telemetry";
++    private static final String SENTRY_USERID = "sentry_userid";
++
++    public SentryDetailPreferenceController(Context context, String key) {
++        super(context, key);
++    }
++
++    @Override
++    public int getAvailabilityStatus() {
++        boolean enable = Settings.System.getInt(mContext.getContentResolver(), TELEMETRY_KEY, 0) == 1;
++        return enable ? AVAILABLE : UNSUPPORTED_ON_DEVICE;
++    }
++
++    @Override
++    public boolean useDynamicSliceSummary() {
++        return true;
++    }
++
++    @Override
++    public boolean isSliceable() {
++        return true;
++    }
++
++    @Override
++    public CharSequence getSummary() {
++        String sentryId = Settings.Secure.getStringForUser(
++                mContext.getContentResolver(), SENTRY_USERID,
++                UserHandle.USER_CURRENT);
++        if (sentryId == null) {
++            return mContext.getString(R.string.unknown);
++        }
++        return sentryId;
++    }
++}
