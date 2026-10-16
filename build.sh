@@ -12,9 +12,8 @@ LMANIFEST_URL="https://github.com/TheoGoudout/android"
 #   a17 = /e/OS on LineageOS 24.0 (Android 17) - /e/OS's work-in-progress port
 # (a16.2 also exists but most of its forks are plain LineageOS 23.2 without /e/OS changes)
 EOS_BRANCH="a16"
-# Branch of LMANIFEST_URL to clone. One branch holds both targets
-# (local_manifests/a16/ and local_manifests/a17/); the remote picks the folder by EOS_BRANCH.
-LMANIFEST_BRANCH="ccr-0f2cae73-f14zrb"
+# Branch of LMANIFEST_URL to clone: one per target, named like the /e/OS branch (a16, a17).
+LMANIFEST_BRANCH="$EOS_BRANCH"
 DEVICE="FP4"
 BUILD_TYPE="userdebug"
 INCLUDE_IH8SN="true"        # /e/OS's prop-masking helper; only auto-enabled for community/official builds
