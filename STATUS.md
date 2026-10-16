@@ -27,7 +27,7 @@ Start every session by reading this file and `KNOWN_ISSUES.md`. Agent brief: `AG
 
 ## Build log (newest first)
 
-- 2026-10-16: branches renamed to `a16`/`a17`; old GitHub Actions branch deleted (owner request).
+- 2026-10-16: branches `a16`/`a17` created (owner request). Deleting `claude/ci-android-xml-build-bWyCA` is refused from the agent sandbox: owner to delete it on GitHub.
 - 2026-10-16: no builds yet. Repo prepared; Phase A handed to owner (block below).
 
 ## Phase A: owner action needed (a16 baseline)
