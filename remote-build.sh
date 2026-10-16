@@ -21,15 +21,24 @@ tmp_lm="$(mktemp -d)"
 git clone --depth 1 -b "${LMANIFEST_BRANCH}" "${LMANIFEST_URL}" "$tmp_lm"
 mkdir -p .repo/local_manifests
 cp "$tmp_lm/local_manifests/${EOS_BRANCH}/"*.xml .repo/local_manifests/
+# Patch series this project carries (patches/<target>/<project path>/*.patch) + its applier
+rm -rf .eos-patches && mkdir -p .eos-patches
+cp "$tmp_lm/apply-patches.sh" .eos-apply-patches.sh
+if [ -d "$tmp_lm/patches/${EOS_BRANCH}" ]; then cp -r "$tmp_lm/patches/${EOS_BRANCH}/." .eos-patches/; fi
 rm -rf "$tmp_lm"
 
 # Undo the in-tree edit made below on the previous run so repo can update the project
 # (the /e/OS builder does the same for vendor/lineage before every sync)
 if [ -e vendor/lineage/.git ]; then git -C vendor/lineage reset -q --hard; fi
+# Same for the projects our patch series modified on the previous run
+bash .eos-apply-patches.sh undo
 
 echo ">> Syncing (crave's resync script handles conflicts left by the base project)"
 /opt/crave/resync.sh
 repo forall -c 'git lfs pull' >/dev/null 2>&1 || echo ">> WARNING: some git-lfs pulls failed (A16 has one known broken, non-critical LFS object)"
+
+echo ">> Applying patches/${EOS_BRANCH}/"
+bash .eos-apply-patches.sh apply .eos-patches
 
 # Same tweaks the /e/OS builder applies
 export RELEASE_TYPE="${RELEASE_TYPE,,}"

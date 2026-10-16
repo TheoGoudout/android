@@ -1,0 +1,41 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: AdarshGrewal <adarsh@aosip.dev>
+Date: Wed, 19 May 2021 23:03:32 +0530
+Subject: [PATCH 10/10] FP4: configs: Disable Stereo support for voip
+
+ * This breaks in-game voice chat and audio in some messaging apps
+   causing it to plays with a higher pitch and speed, making it sound
+   like chipmunks.
+
+(cherry picked from commit 3b46f5d2bd05abc188810c77737fca2d4b2b13f0)
+---
+ audio/audio_policy_configuration.xml                       | 2 +-
+ audio/audio_policy_configuration_a2dp_offload_disabled.xml | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/audio/audio_policy_configuration.xml b/audio/audio_policy_configuration.xml
+index 3c65a5e..07d47f0 100644
+--- a/audio/audio_policy_configuration.xml
++++ b/audio/audio_policy_configuration.xml
+@@ -142,7 +142,7 @@
+                 <mixPort name="voip_rx" role="source"
+                          flags="AUDIO_OUTPUT_FLAG_DIRECT|AUDIO_OUTPUT_FLAG_VOIP_RX">
+                     <profile name="" format="AUDIO_FORMAT_PCM_16_BIT"
+-                             samplingRates="8000,16000,32000,48000" channelMasks="AUDIO_CHANNEL_OUT_MONO,AUDIO_CHANNEL_OUT_STEREO"/>
++                             samplingRates="8000,16000,32000,48000" channelMasks="AUDIO_CHANNEL_OUT_MONO"/>
+                 </mixPort>
+                 <mixPort name="incall_music_uplink" role="source"
+                         flags="AUDIO_OUTPUT_FLAG_INCALL_MUSIC">
+diff --git a/audio/audio_policy_configuration_a2dp_offload_disabled.xml b/audio/audio_policy_configuration_a2dp_offload_disabled.xml
+index 0493c47..6b24e5c 100644
+--- a/audio/audio_policy_configuration_a2dp_offload_disabled.xml
++++ b/audio/audio_policy_configuration_a2dp_offload_disabled.xml
+@@ -142,7 +142,7 @@
+                 <mixPort name="voip_rx" role="source"
+                          flags="AUDIO_OUTPUT_FLAG_DIRECT|AUDIO_OUTPUT_FLAG_VOIP_RX">
+                     <profile name="" format="AUDIO_FORMAT_PCM_16_BIT"
+-                             samplingRates="8000,16000,32000,48000" channelMasks="AUDIO_CHANNEL_OUT_MONO,AUDIO_CHANNEL_OUT_STEREO"/>
++                             samplingRates="8000,16000,32000,48000" channelMasks="AUDIO_CHANNEL_OUT_MONO"/>
+                 </mixPort>
+                 <mixPort name="incall_music_uplink" role="source"
+                         flags="AUDIO_OUTPUT_FLAG_INCALL_MUSIC">

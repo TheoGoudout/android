@@ -1,0 +1,27 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Sooraj S <sooorajjj@gmail.com>
+Date: Fri, 16 Jul 2021 11:30:32 +0530
+Subject: [PATCH 01/10] FP4: Disable adoptable storage
+
+* It isn't known to be working reliably
+
+(cherry picked from commit d5fb1474e25ac967764fc1e849ffc5a550104fd8)
+---
+ init/fstab.default | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/init/fstab.default b/init/fstab.default
+index d1338d8..6b5fd2f 100644
+--- a/init/fstab.default
++++ b/init/fstab.default
+@@ -39,8 +39,8 @@ odm                                                     /odm                   e
+ /dev/block/bootdevice/by-name/userdata                  /data                  f2fs    noatime,nosuid,nodev,discard,reserve_root=32768,resgid=1065,fsync_mode=nobarrier,inlinecrypt  latemount,wait,check,formattable,quota,reservedsize=128M,fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized+wrappedkey_v0,metadata_encryption=aes-256-xts:wrappedkey_v0,keydirectory=/metadata/vold/metadata_encryption,sysfs_path=/sys/devices/platform/soc/1d84000.ufshc,checkpoint=fs
+ /dev/block/bootdevice/by-name/persist                   /mnt/vendor/persist    ext4    noatime,nosuid,nodev,barrier=1                       wait
+ /dev/block/bootdevice/by-name/misc                      /misc                  emmc    defaults                                             defaults
+-/devices/platform/soc/8804000.sdhci/mmc_host*           /storage/sdcard1       vfat    nosuid,nodev                                         wait,voldmanaged=sdcard1:auto,encryptable=footer
+-/devices/platform/soc/1da4000.ufshc_card/host*          /storage/sdcard1       vfat    nosuid,nodev                                         wait,voldmanaged=sdcard1:auto,encryptable=footer
++/devices/platform/soc/8804000.sdhci/mmc_host*           /storage/sdcard1       vfat    nosuid,nodev                                         wait,voldmanaged=sdcard1:auto
++/devices/platform/soc/1da4000.ufshc_card/host*          /storage/sdcard1       vfat    nosuid,nodev                                         wait,voldmanaged=sdcard1:auto
+ /devices/platform/soc/a600000.ssusb/a600000.dwc3/xhci-hcd.*.auto*    /storage/usbotg    vfat    nosuid,nodev    wait,voldmanaged=usbotg:auto
+ /dev/block/bootdevice/by-name/modem                     /vendor/firmware_mnt   vfat    ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0 wait,slotselect
+ /dev/block/bootdevice/by-name/dsp                       /vendor/dsp            ext4    ro,nosuid,nodev,barrier=1                            wait,slotselect

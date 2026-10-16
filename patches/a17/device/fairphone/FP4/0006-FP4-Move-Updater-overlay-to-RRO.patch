@@ -1,0 +1,62 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: SahilSonar <sss.sonar2003@gmail.com>
+Date: Fri, 7 Aug 2026 11:18:51 +0530
+Subject: [PATCH 06/10] FP4: Move Updater overlay to RRO
+
+(cherry picked from commit 413159b9edd482d1a3114e89e6eed3ff4463404b)
+---
+ device.mk                                                | 1 +
+ overlay/UpdaterResCommon/Android.bp                      | 9 +++++++++
+ overlay/UpdaterResCommon/AndroidManifest.xml             | 9 +++++++++
+ .../UpdaterResCommon}/res/values/config.xml              | 0
+ 4 files changed, 19 insertions(+)
+ create mode 100644 overlay/UpdaterResCommon/Android.bp
+ create mode 100644 overlay/UpdaterResCommon/AndroidManifest.xml
+ rename {overlay-lineage/packages/apps/Updater => overlay/UpdaterResCommon}/res/values/config.xml (100%)
+
+diff --git a/device.mk b/device.mk
+index e00092c..24eeb71 100644
+--- a/device.mk
++++ b/device.mk
+@@ -248,6 +248,7 @@ PRODUCT_PACKAGES += \
+     SettingsResCommon \
+     SystemUIResCommon \
+     SystemUIResTarget \
++    UpdaterResCommon \
+     TelephonyResCommon \
+     WifiResCommon
+ 
+diff --git a/overlay/UpdaterResCommon/Android.bp b/overlay/UpdaterResCommon/Android.bp
+new file mode 100644
+index 0000000..47500aa
+--- /dev/null
++++ b/overlay/UpdaterResCommon/Android.bp
+@@ -0,0 +1,9 @@
++//
++// Copyright (C) 2022 The LineageOS Project
++// SPDX-License-Identifier: Apache-2.0
++//
++
++runtime_resource_overlay {
++    name: "UpdaterResCommon",
++    product_specific: true,
++}
+diff --git a/overlay/UpdaterResCommon/AndroidManifest.xml b/overlay/UpdaterResCommon/AndroidManifest.xml
+new file mode 100644
+index 0000000..2f86d4f
+--- /dev/null
++++ b/overlay/UpdaterResCommon/AndroidManifest.xml
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="org.lineageos.updater.FP4">
++
++    <overlay
++        android:isStatic="true"
++        android:priority="800"
++        android:targetPackage="org.lineageos.updater" />
++</manifest>
+diff --git a/overlay-lineage/packages/apps/Updater/res/values/config.xml b/overlay/UpdaterResCommon/res/values/config.xml
+similarity index 100%
+rename from overlay-lineage/packages/apps/Updater/res/values/config.xml
+rename to overlay/UpdaterResCommon/res/values/config.xml

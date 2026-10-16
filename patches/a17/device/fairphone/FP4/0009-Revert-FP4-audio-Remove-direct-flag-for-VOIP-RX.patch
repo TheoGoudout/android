@@ -1,0 +1,53 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: SahilSonar <sss.sonar2003@gmail.com>
+Date: Tue, 29 Sep 2026 10:09:18 +0530
+Subject: [PATCH 09/10] Revert "FP4: audio: Remove direct flag for VOIP RX"
+
+This reverts commit 6d8c8dd26e0ceb6101a6dd229519fa0daa8dde3d.
+
+(cherry picked from commit db575a809ef9c93c6f0b013710f06d0423a223d0)
+---
+ audio/audio_io_policy.conf                                 | 2 +-
+ audio/audio_policy_configuration.xml                       | 2 +-
+ audio/audio_policy_configuration_a2dp_offload_disabled.xml | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/audio/audio_io_policy.conf b/audio/audio_io_policy.conf
+index a9ac4b3..da005c5 100644
+--- a/audio/audio_io_policy.conf
++++ b/audio/audio_io_policy.conf
+@@ -26,7 +26,7 @@ outputs {
+     app_type 69943
+   }
+   voip_rx {
+-    flags AUDIO_OUTPUT_FLAG_VOIP_RX
++    flags AUDIO_OUTPUT_FLAG_VOIP_RX|AUDIO_OUTPUT_FLAG_DIRECT
+     formats AUDIO_FORMAT_PCM_16_BIT
+     sampling_rates 8000|16000|32000|48000
+     bit_width 16
+diff --git a/audio/audio_policy_configuration.xml b/audio/audio_policy_configuration.xml
+index 489f6ff..3c65a5e 100644
+--- a/audio/audio_policy_configuration.xml
++++ b/audio/audio_policy_configuration.xml
+@@ -140,7 +140,7 @@
+                              samplingRates="8000,16000,48000" channelMasks="AUDIO_CHANNEL_OUT_MONO,AUDIO_CHANNEL_OUT_STEREO"/>
+                 </mixPort>
+                 <mixPort name="voip_rx" role="source"
+-                         flags="AUDIO_OUTPUT_FLAG_VOIP_RX">
++                         flags="AUDIO_OUTPUT_FLAG_DIRECT|AUDIO_OUTPUT_FLAG_VOIP_RX">
+                     <profile name="" format="AUDIO_FORMAT_PCM_16_BIT"
+                              samplingRates="8000,16000,32000,48000" channelMasks="AUDIO_CHANNEL_OUT_MONO,AUDIO_CHANNEL_OUT_STEREO"/>
+                 </mixPort>
+diff --git a/audio/audio_policy_configuration_a2dp_offload_disabled.xml b/audio/audio_policy_configuration_a2dp_offload_disabled.xml
+index eff0d41..0493c47 100644
+--- a/audio/audio_policy_configuration_a2dp_offload_disabled.xml
++++ b/audio/audio_policy_configuration_a2dp_offload_disabled.xml
+@@ -140,7 +140,7 @@
+                              samplingRates="8000,16000,48000" channelMasks="AUDIO_CHANNEL_OUT_MONO,AUDIO_CHANNEL_OUT_STEREO"/>
+                 </mixPort>
+                 <mixPort name="voip_rx" role="source"
+-                         flags="AUDIO_OUTPUT_FLAG_VOIP_RX">
++                         flags="AUDIO_OUTPUT_FLAG_DIRECT|AUDIO_OUTPUT_FLAG_VOIP_RX">
+                     <profile name="" format="AUDIO_FORMAT_PCM_16_BIT"
+                              samplingRates="8000,16000,32000,48000" channelMasks="AUDIO_CHANNEL_OUT_MONO,AUDIO_CHANNEL_OUT_STEREO"/>
+                 </mixPort>
