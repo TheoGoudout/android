@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Local manifest for an /e/OS a16 (lineage-23.0) build for the Fairphone 4.
+  Put this file in a PUBLIC git repo (crave.io forbids private repos) — e.g.
+  github.com/<you>/eos_fp4_local_manifests, branch a16.
+
+  To customise the ROM, fork the repo you want to change, then either:
+    - <remove-project path="..."/> + <project .../> pointing at your fork, or
+    - change the revision/remote of the projects below.
+-->
+<manifest>
+  <remote name="lineage-gh" fetch="https://github.com" />
+
+  <!-- Device tree + kernel (what `breakfast FP4` would otherwise fetch via roomservice) -->
+  <project path="device/fairphone/FP4"
+           name="LineageOS/android_device_fairphone_FP4"
+           remote="lineage-gh" revision="lineage-23.0" />
+  <project path="kernel/fairphone/sm7225"
+           name="LineageOS/android_kernel_fairphone_sm7225"
+           remote="lineage-gh" revision="lineage-23.0" clone-depth="1" />
+
+  <!-- Proprietary blobs (same repo the /e/OS docker builder pulls from TheMuppets) -->
+  <project path="vendor/fairphone/FP4"
+           name="TheMuppets/proprietary_vendor_fairphone_FP4"
+           remote="lineage-gh" revision="lineage-23.0" clone-depth="1" />
+
+  <!-- Example customisation (uncomment and adapt):
+  (remove by path: /e/OS forks many repos under its own GitLab names, so the
+   name in .repo/manifests/default.xml may not be the LineageOS one)
+  <remove-project path="packages/apps/Settings" />
+  <project path="packages/apps/Settings" name="<you>/android_packages_apps_Settings"
+           remote="lineage-gh" revision="my-a16" />
+  -->
+</manifest>

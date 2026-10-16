@@ -1,0 +1,7 @@
+# Copied to <workspace>/.repo/manifests/crave.yaml by `./build.sh setup`.
+# The top-level key MUST match the base project name exactly as `crave clone list`
+# shows it for project ID 99 (LineageOS 23.2). Check it once and fix this key if needed.
+LOS 23.2:
+  # Keeps the same persistent workspace (synced source + out/ = your build cache)
+  # no matter which machine triggers the build.
+  ignoreClientHostname: true
