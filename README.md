@@ -66,6 +66,7 @@ Your customisations = forks of the relevant repos, referenced from the local man
   /e/OS manifest plus local manifests offline (duplicates, dangling removes, missing FP4 paths).
 - `tools/port_series.py`: cherry-picks a downstream series onto a new base and exports what applies.
 
+`PLAY_INTEGRITY.md`: what the build carries for Play Integrity BASIC and how to test it.
 `UPSTREAM.md` lists where each patch should be merged so the series can shrink.
 
 ## Rules that will get you banned if ignored

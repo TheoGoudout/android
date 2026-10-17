@@ -35,6 +35,7 @@ Start every session by reading this file and `KNOWN_ISSUES.md`. Agent brief: `AG
 
 ## Build log (newest first)
 
+- 2026-10-17: Play Integrity source audit: nothing missing vs a16; build log now prints `>> integrity:` checks; owner test in `PLAY_INTEGRITY.md`.
 - 2026-10-17: rest of the a17 port (owner: "implement everything"). 99 patches over 23 projects,
   all apply to fresh checkouts (`apply-patches.sh` on /e/OS a17 + lineage-24.0 FP4). Not compiled.
 - 2026-10-16: a17 prep without a build (owner request). Added the patch mechanism
@@ -164,5 +165,6 @@ SetupWizard, the Android Auto permission hook).
 
 - Confirm crave project 99 = LineageOS 23.2 and its exact name in `crave clone list` (for `crave.yaml`).
 - Ask crave (Discord) for the LineageOS 24 base project ID and workspace path; give them to me for `build.sh`.
-- Phase 2 note: a17 `frameworks/base` carries `keystore: Block key attestation for SafetyNet`. Its
+- Phase 2 (Play Integrity BASIC): source side checked 2026-10-17, a17 is at parity with a16
+  (`PLAY_INTEGRITY.md`, which also has the device test). Earlier note: a17 `frameworks/base` carries `keystore: Block key attestation for SafetyNet`. Its
   interaction with BASIC on Android 17 needs testing once we get there.
