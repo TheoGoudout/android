@@ -1,0 +1,36 @@
+From 9a845ff790a34d49ee8f79a034053d95b1400d48 Mon Sep 17 00:00:00 2001
+From: merothh <git@merothh.com>
+Date: Thu, 19 May 2022 15:09:05 +0530
+Subject: [PATCH 4/4] shouldBlockRequest: Don't block if socket connect fails
+
+* On (re)boot:
+
+  05-19 13:27:49.303   605   987 I netd    : DnsResolverService::setResolverConfiguration(100, [192.168.1.1], [], 1800, 25, 8, 64, 0, 0, [], []) -> (-22) (0.6ms)
+  05-19 13:27:49.303   605   987 I netd    : setResolverConfiguration() -> ServiceSpecificException(22, "Invalid argument") <1.35ms>
+  05-19 13:27:49.304  1574  1698 E DnsManager: Error setting DNS configuration: android.os.ServiceSpecificException: Invalid argument (code 22)
+
+  ..which subsequently leads to connectivity check probes failing.
+
+* Thanks to Alexandre for the hint
+
+(cherry picked from commit 8985fc2b893e7e5ca72c52a306caf837cc49ee34)
+---
+ getaddrinfo.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/getaddrinfo.cpp b/getaddrinfo.cpp
+index 0f882ab..6f92055 100644
+--- a/getaddrinfo.cpp
++++ b/getaddrinfo.cpp
+@@ -358,7 +358,7 @@ int shouldBlockRequest(const char* hostname, int uid){
+ 	if (connect(sock, (struct sockaddr *)&server, len) < 0) {
+ 		LOG(DEBUG) << "Socket: connect failed. Error";
+                 close(sock);
+-		return -1;
++		return 0;
+ 	}
+ 
+ 	LOG(DEBUG) << "Socket: Connected";
+-- 
+2.43.0
+

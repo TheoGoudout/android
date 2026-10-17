@@ -1,0 +1,40 @@
+From c09781adbb2c7f534f571e199dd81673ecefc0ee Mon Sep 17 00:00:00 2001
+From: Sayantan Roychowdhury <sayantan.rc@e.email>
+Date: Sat, 17 Oct 2026 05:17:36 +0000
+Subject: [PATCH] Issue 1776: Default to phone-only if no account
+
+[a17: ContactEditorAccountsChangedActivity was removed; the editor now opens
+Settings' "set default account" screen. Re-implemented in
+ContactEditorFragment.selectAccountAndCreateContact(): when the only
+writable account is the device one, create a phone-only contact directly.]
+
+(cherry picked from commit 948becd76bd250fe3dfcb948fc4fd75fde954e26)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_0127aPbuxQvhzD8TVw5auGLR
+---
+ .../android/contacts/editor/ContactEditorFragment.java    | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/src/com/android/contacts/editor/ContactEditorFragment.java b/src/com/android/contacts/editor/ContactEditorFragment.java
+index d7d164f0a..ad4d1b0e8 100755
+--- a/src/com/android/contacts/editor/ContactEditorFragment.java
++++ b/src/com/android/contacts/editor/ContactEditorFragment.java
+@@ -1071,6 +1071,14 @@ public class ContactEditorFragment extends Fragment
+         // If there is no default account or the accounts have changed such that we need to
+         // prompt the user again, then launch the account prompt.
+         if (mEditorUtils.shouldShowAccountChangedNotification(accounts)) {
++            // If the only writable account is the device one, default to a phone-only contact
++            // instead of asking the user to pick a default account.
++            final AccountWithDataSet localAccount = AccountWithDataSet.getLocalAccount(mContext);
++            if (accounts.isEmpty()
++                    || (accounts.size() == 1 && accounts.get(0).equals(localAccount))) {
++                createContact(localAccount);
++                return;
++            }
+             Intent intent = new Intent(Settings.ACTION_SET_DEFAULT_ACCOUNT);
+             // Prevent a second instance from being started on rotates
+             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+-- 
+2.43.0
+

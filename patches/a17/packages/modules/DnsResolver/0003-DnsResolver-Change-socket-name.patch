@@ -1,0 +1,26 @@
+From 2f33fa48bba226d4d179edd2b944d32d779d5fc2 Mon Sep 17 00:00:00 2001
+From: TheScarastic <warabhishek@e.email>
+Date: Wed, 27 Apr 2022 13:35:11 +0530
+Subject: [PATCH 3/4] DnsResolver: Change socket name
+
+(cherry picked from commit c50988d1929ac07d584997f3f04e60b11f08e114)
+---
+ getaddrinfo.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/getaddrinfo.cpp b/getaddrinfo.cpp
+index 081a7ce..0f882ab 100644
+--- a/getaddrinfo.cpp
++++ b/getaddrinfo.cpp
+@@ -347,7 +347,7 @@ int shouldBlockRequest(const char* hostname, int uid){
+ 	}
+ 	LOG(DEBUG) << "Socket: created";
+ 
+-        char const* name = "foundation.e.privacy";
++        char const* name = "foundation.e.advancedprivacy";
+         int nameLen = strlen(name);
+         server.sun_path[0] = '\0'; /* abstract namespace */
+         strncpy(server.sun_path + 1, name, nameLen);
+-- 
+2.43.0
+

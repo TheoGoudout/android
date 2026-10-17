@@ -1,0 +1,89 @@
+From 96209f87737d73035a553b09e802b3debc734996 Mon Sep 17 00:00:00 2001
+From: TheScarastic <warabhishek@gmail.com>
+Date: Tue, 4 Apr 2023 19:32:07 +0530
+Subject: [PATCH] feat(icons): Add month icon support for calendar
+
+Signed-off-by: Saalim Quadri <danascape@gmail.com>
+(cherry picked from commit a015a67d4bb3327a5ec01bb074db55b218c40d48)
+---
+ .../android/launcher3/icons/IconProvider.java | 36 ++++++++++++++++++-
+ 1 file changed, 35 insertions(+), 1 deletion(-)
+
+diff --git a/iconloaderlib/src/com/android/launcher3/icons/IconProvider.java b/iconloaderlib/src/com/android/launcher3/icons/IconProvider.java
+index c79bedd..0333e5f 100644
+--- a/iconloaderlib/src/com/android/launcher3/icons/IconProvider.java
++++ b/iconloaderlib/src/com/android/launcher3/icons/IconProvider.java
+@@ -57,6 +57,8 @@ public class IconProvider {
+     public static final boolean ATLEAST_T = BuildCompat.isAtLeastT();
+ 
+     private static final String ICON_METADATA_KEY_PREFIX = ".dynamic_icons";
++    private static final String MONTH_BG_ICON_METADATA_KEY_PREFIX = ".month_dynamic_icons";
++    private static final String DAY_FG_ICON_METADATA_KEY_PREFIX = ".day_dynamic_icons";
+ 
+     protected final Context mContext;
+     private final ComponentName mCalendar;
+@@ -199,7 +201,9 @@ public class IconProvider {
+                     .metaData;
+             final Resources resources = pm.getResourcesForApplication(mCalendar.getPackageName());
+             final int id = getDynamicIconId(metadata, resources);
+-            if (id != ID_NULL) {
++            final int[] monthDayIds = getDynamicBackgroundIconId(metadata, resources);
++            if (id != ID_NULL && (monthDayIds == null ||
++                    monthDayIds[0] == ID_NULL || monthDayIds[1] == ID_NULL )) {
+                 if (DEBUG) Log.d(TAG, "Got icon #" + id);
+                 Drawable drawable = resources.getDrawableForDensity(id, iconDpi, null /* theme */);
+                 if (ATLEAST_T && drawable instanceof AdaptiveIconDrawable && td != null) {
+@@ -217,6 +221,10 @@ public class IconProvider {
+                     }
+                 }
+                 return drawable;
++            } else if (monthDayIds != null) {
++                Drawable background = resources.getDrawableForDensity(monthDayIds[0], iconDpi, null /* theme */);
++                Drawable foreground = resources.getDrawableForDensity(monthDayIds[1], iconDpi, null /* theme */);
++                return new AdaptiveIconDrawable(background, foreground);
+             }
+         } catch (PackageManager.NameNotFoundException e) {
+             if (DEBUG) {
+@@ -260,6 +268,28 @@ public class IconProvider {
+         }
+     }
+ 
++    private int[] getDynamicBackgroundIconId(Bundle metadata, Resources resources) {
++        if (metadata == null) {
++            return null;
++        }
++        String bgKey = mCalendar.getPackageName() + MONTH_BG_ICON_METADATA_KEY_PREFIX;
++        String fgKey = mCalendar.getPackageName() + DAY_FG_ICON_METADATA_KEY_PREFIX;
++        final int bgArrayId = metadata.getInt(bgKey, ID_NULL);
++        final int fgArrayId = metadata.getInt(fgKey, ID_NULL);
++        if (bgArrayId == ID_NULL || fgArrayId == ID_NULL) {
++            return null;
++        }
++        try {
++            return new int[] {resources.obtainTypedArray(bgArrayId).getResourceId(getMonth(), ID_NULL),
++                    resources.obtainTypedArray(fgArrayId).getResourceId(getDay(), ID_NULL)};
++        } catch (Resources.NotFoundException e) {
++            if (DEBUG) {
++                Log.d(TAG, "package defines '" + bgKey + " and " + fgKey + "' but corresponding array not found");
++            }
++            return null;
++        }
++    }
++
+     /**
+      * Refreshes the system state definition used to check the validity of an app icon. It
+      * incorporates all the properties that can affect the app icon like the list of enabled locale
+@@ -278,6 +308,10 @@ public class IconProvider {
+         return Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1;
+     }
+ 
++    private static int getMonth() {
++        return Calendar.getInstance().get(Calendar.MONTH);
++    }
++
+     private static ComponentName parseComponentOrNull(Context context, int resId) {
+         String cn = context.getString(resId);
+         return TextUtils.isEmpty(cn) ? null : ComponentName.unflattenFromString(cn);
+-- 
+2.43.0
+

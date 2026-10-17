@@ -1,0 +1,52 @@
+From 78d9ef6ec203cc59db03eff44cc212b983fd65f2 Mon Sep 17 00:00:00 2001
+From: TheScarastic <warabhishek@e.email>
+Date: Fri, 4 Mar 2022 06:59:24 +0000
+Subject: [PATCH 2/4] dnsresolver: Adapt for Unix socket
+
+(cherry picked from commit f6218e61410e7761f0922d7ab7bf4f9dc2df7d04)
+---
+ getaddrinfo.cpp | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
+
+diff --git a/getaddrinfo.cpp b/getaddrinfo.cpp
+index d646a19..081a7ce 100644
+--- a/getaddrinfo.cpp
++++ b/getaddrinfo.cpp
+@@ -336,23 +336,26 @@ void fill_sin6_scope_id_if_needed(const res_target& query, addrinfo* addr_info)
+ }  // namespace
+ 
+ int shouldBlockRequest(const char* hostname, int uid){
+-        int sock;
+-	struct sockaddr_in server;
++        int sock, len;
++	struct sockaddr_un server;
+ 	char message[1000], server_reply[2000];
+ 
+ 	//Create socket
+-	sock = socket(AF_INET, SOCK_STREAM | SOCK_CLOEXEC, IPPROTO_TCP);
+-	if (sock == -1) {
++	sock = socket(AF_UNIX, SOCK_STREAM | SOCK_CLOEXEC, 0);
++	if (sock == -1)	{
+ 		LOG(DEBUG) << "Socket: Could not create socket";
+ 	}
+ 	LOG(DEBUG) << "Socket: created";
+ 
+-	server.sin_addr.s_addr = inet_addr("127.0.0.1");
+-	server.sin_family = AF_INET;
+-	server.sin_port = htons( 8888 );
++        char const* name = "foundation.e.privacy";
++        int nameLen = strlen(name);
++        server.sun_path[0] = '\0'; /* abstract namespace */
++        strncpy(server.sun_path + 1, name, nameLen);
++        server.sun_family = AF_UNIX;
++        len = 1 + nameLen + offsetof(struct sockaddr_un, sun_path);
+ 
+ 	//Connect to remote server
+-	if (connect(sock, (struct sockaddr *)&server, sizeof(server)) < 0) {
++	if (connect(sock, (struct sockaddr *)&server, len) < 0) {
+ 		LOG(DEBUG) << "Socket: connect failed. Error";
+                 close(sock);
+ 		return -1;
+-- 
+2.43.0
+
