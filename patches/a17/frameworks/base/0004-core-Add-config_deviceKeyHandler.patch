@@ -1,0 +1,29 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sat, 17 Oct 2026 04:37:27 +0000
+Subject: [PATCH 4/4] core: Add config_deviceKeyHandler
+
+Default holder resource for the android.app.role.DeviceKeyHandler role that
+/e/OS defines in PermissionController (MANAGE/OBSERVE_SENSOR_PRIVACY for a
+device key handler, e.g. hardware privacy switches). Empty by default;
+device overlays name their key handler package. On a16 the role pointed at
+this name without the framework declaring it, so it never resolved.
+---
+ core/res/res/values/config.xml | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/core/res/res/values/config.xml b/core/res/res/values/config.xml
+index a19202ff1683..e29b0855b45c 100644
+--- a/core/res/res/values/config.xml
++++ b/core/res/res/values/config.xml
+@@ -2538,6 +2538,10 @@
+     <string name="config_systemGallery" translatable="false">com.android.gallery3d</string>
+     <!-- The names of the packages that will hold the automotive projection role. -->
+     <string name="config_systemAutomotiveProjection" translatable="false"></string>
++
++    <!-- /e/OS: package that holds the android.app.role.DeviceKeyHandler role (granted sensor
++         privacy permissions, for devices with hardware privacy switches). Empty: no holder. -->
++    <string name="config_deviceKeyHandler" translatable="false"></string>
+     <!-- The name of the package that will hold the system cluster service role. -->
+     <string name="config_systemAutomotiveCluster" translatable="false"></string>
+     <!-- The name of the package that will hold the system shell role. -->

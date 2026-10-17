@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jonathan Klee <jonathan.klee@e.email>
 Date: Wed, 25 Mar 2026 15:11:33 +0100
-Subject: [PATCH 2/3] feat: Introduce Hide From Microg feature
+Subject: [PATCH 2/4] feat: Introduce Hide From Microg feature
 
 [a17: kept upstream's new System validators and added HIDE_MICROG_PACKAGES_FOR_PACKAGE after them]
 (cherry picked from commit a40cb241c791ab4a754c3890ed7a0123e83fa0c4)
