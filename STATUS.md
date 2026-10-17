@@ -138,7 +138,7 @@ SetupWizard, the Android Auto permission hook).
       a17, 7 skipped with reason (`patches/README.md`). Static checks clean; not compiled.
 - [x] frameworks/base: 57 missing a16 commits triaged. Carried Hide-from-microG + USB lockdown
       security fix + SNHooks; 4 security fixes already in a17; Android Auto needs re-implementation
-      (KNOWN_ISSUES #1); SystemUI theming left to /e/OS.
+      (KNOWN_ISSUES #1, since done); SystemUI theming (since carried).
 - [x] vendor/lineage: 33 missing a16 commits triaged; only "Disable private space" still matters,
       re-implemented for Android 17 (vendor/eos overlay + vendor/lineage cp2a launcher flag).
 - [x] 2026-10-17, "implement everything" (owner request): /e/ theming everywhere, SetupWizard pages,
