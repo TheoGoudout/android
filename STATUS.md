@@ -1,7 +1,7 @@
 # STATUS
 
 Target: a17 (LineageOS 24.0, Android 17), device FP4
-Last verified base facts: 2026-10-16 (from the agent sandbox: `git ls-remote`, manifest clones, hudson)
+Last verified base facts: 2026-10-16 (patch series re-checked 2026-10-17) (from the agent sandbox: `git ls-remote`, manifest clones, hudson)
 Baseline a16 boots: **not yet built**. Waiting on the owner (Phase A)
 crave LOS24 project ID: pending from owner (ask on crave Discord)
 Project repo: `github.com/TheoGoudout/android`, branches `a16` (baseline) and `a17` (main work, this file's home)
@@ -35,6 +35,8 @@ Start every session by reading this file and `KNOWN_ISSUES.md`. Agent brief: `AG
 
 ## Build log (newest first)
 
+- 2026-10-17: rest of the a17 port (owner: "implement everything"). 99 patches over 23 projects,
+  all apply to fresh checkouts (`apply-patches.sh` on /e/OS a17 + lineage-24.0 FP4). Not compiled.
 - 2026-10-16: a17 prep without a build (owner request). Added the patch mechanism
   (`apply-patches.sh`, called by `remote-build.sh`) and the first a17 series: 10 FP4 device
   patches + 9 patches on /e/OS forks whose a17 branch is still empty. All apply to fresh
@@ -101,14 +103,24 @@ bulletins before relying on it. frameworks/native: only MediaTek-specific (irrel
 frameworks/av `libcameraservice: Customize camera stack based on active app` (2021): **check** whether
 LineageOS 24.0 dropped it on purpose. It may matter for FP4 camera apps.
 
-**Reading (updated after the port work):** plain /e/OS a17 = LineageOS 24.0 + /e/OS branding,
-prebuilt apps, microG signature spoofing, fake location, parental-control hooks, BlissLauncher3,
-but stock LineageOS Settings/SetupWizard and no /e/ theming. With `patches/a17/` (58 patches,
-15 projects) the build also gets: /e/ Settings (Advanced Privacy, Parental control, Find my device,
-Updater/Accounts on top, /e/ legal + version, /e/ dev options, Quad9), Hide-from-microG, Quad9 DNS
-defaults, private space disabled, FP4 audio/VoIP/CarrierConfig fixes, 3 security fixes 24.0 lacks.
-SetupWizard /e/ pages via `OPTIONAL_MANIFESTS="setupwizard-bringup"`. Remaining known gaps:
-KNOWN_ISSUES.md (Android Auto, theming). None of this has been compiled yet.
+**Reading (updated 2026-10-17):** plain /e/OS a17 = LineageOS 24.0 + /e/OS branding, prebuilt
+apps, microG signature spoofing, fake location, parental-control hooks, BlissLauncher3, but stock
+LineageOS Settings/SetupWizard and no /e/ theming. With `patches/a17/` (99 patches, 23 projects)
+the build also gets:
+- /e/ Settings (Advanced Privacy, Parental control, Find my device, Updater/Accounts on top, /e/
+  legal + version, /e/ dev options, Quad9)
+- /e/ SetupWizard (/e/ account, restore, parental control, Find my device, MDM QR)
+- /e/ palette across the system (Settings, SystemUI incl. light/dark QS, SettingsLib, framework, 6
+  apps; Monet disabled)
+- Advanced Privacy DNS tracker blocking, Android Auto as a user app, launcher count badges,
+  calendar month icon, Hide-from-microG
+- Quad9 DNS defaults, private space disabled, Contacts phone-only default
+- FP4 audio/VoIP/CarrierConfig fixes, 3 security fixes 24.0 lacks
+
+The a16 → a17 gap list (`port-audit/reports/a16-vs-a17-gap.md`) is now fully triaged: everything is
+carried, already on a17, or skipped with a reason in `patches/README.md`. None of it has been
+compiled yet. Expect build errors in the hand-ported parts first (Settings, SystemUI theming,
+SetupWizard, the Android Auto permission hook).
 
 ## a17 work items (no build needed)
 
@@ -119,7 +131,8 @@ KNOWN_ISSUES.md (Android Auto, theming). None of this has been compiled yet.
       - BlissLauncher3 `a17` is a fresh AOSP-17 rewrite (commits today), so the "316 missing" figure is an
         artefact. Nothing for us to do.
       - SetupWizard: /e/OS's `epic265-a17-bringup` has all /e/ pages, but on a pre-rewrite SUW base
-        (LineageOS rewrote SUW at the end of September). Opt-in `OPTIONAL_MANIFESTS="setupwizard-bringup"`.
+        (LineageOS rewrote SUW at the end of September). Now squashed onto current a17 as
+        `patches/a17/packages/apps/SetupWizard` (the optional manifest is superseded).
       - Settings, frameworks/base, frameworks/libs/systemui: bring-up branch = a17 (no hidden work).
 - [x] Settings: 42 a16 commits walked on a17 → 32 patches (13 hand-resolved), 3 already in
       a17, 7 skipped with reason (`patches/README.md`). Static checks clean; not compiled.
@@ -128,20 +141,24 @@ KNOWN_ISSUES.md (Android Auto, theming). None of this has been compiled yet.
       (KNOWN_ISSUES #1); SystemUI theming left to /e/OS.
 - [x] vendor/lineage: 33 missing a16 commits triaged; only "Disable private space" still matters,
       re-implemented for Android 17 (vendor/eos overlay + vendor/lineage cp2a launcher flag).
+- [x] 2026-10-17, "implement everything" (owner request): /e/ theming everywhere, SetupWizard pages,
+      Android Auto (Kotlin permission service), DeviceKeyHandler role, launcher count badges,
+      DnsResolver tracker blocking, Contacts phone-only default, calendar month icon.
 - [x] frameworks/libs/systemui (25 a16 commits): notification-badge/DotRenderer work for the old
       BlissLauncher. Not carried: /e/OS's new launcher implements count badges inside the launcher
       (`CountBadge`, on BlissLauncher3 `epic265-a17-bringup` only, not yet on `a17`), without these
-      libs/systemui changes. Count badges are therefore a gap on `a17` (KNOWN_ISSUES #4).
-- [x] Remaining forks (DocumentsUI, SettingsIntelligence, WallpaperPicker2, LineageParts
-      translations, Permission theming, SystemUI/SettingsLib palette): theming only, left to /e/OS.
+      libs/systemui changes. Ported onto BlissLauncher3 `a17` (`patches/a17/packages/apps/Launcher3`).
+- [x] Remaining forks (DocumentsUI, SettingsIntelligence, WallpaperPicker2, LineageParts,
+      Permission, SystemUI/SettingsLib palette): theming, now carried.
 - [x] Permission "deviceKeyHandler" role + frameworks/base `config_deviceKeyHandler` resource
 - [x] Verify the 11 a16 security self-carries: 8 present in lineage-24.0, 1 likely (rewritten), 2 still
       vulnerable (Matroska heap write, Telecomm caller check), now carried in `patches/a17/`.
       Worth reporting to LineageOS too.
 - [ ] Prepare /e/OS MRs (a17 branches) for the clean patches, so the series can shrink
 - [ ] Phase C build once crave LOS24 project ID is known (a16 baseline first if possible).
-      Suggested a17 order, one variable per build: (1) a17 + FP4 + patches/a17 with `PATCH_EXCLUDE="packages/apps/Settings"`;
-      (2) + Settings series; (3) + `setupwizard-bringup`.
+      Suggested a17 order, one variable per build: (1) a17 + FP4 + patches/a17 with
+      `PATCH_EXCLUDE="packages/apps/Settings packages/apps/SetupWizard frameworks/base"`;
+      (2) drop frameworks/base from the exclude; (3) drop Settings; (4) drop SetupWizard.
 
 ## Open questions for the owner
 

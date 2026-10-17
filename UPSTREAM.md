@@ -12,7 +12,7 @@ push, open the MR with the text below. Patches keep their original authors.
 
 | repo | patches (`patches/a17/…`) | MR title | notes for reviewers |
 |---|---|---|---|
-| e/os/android_packages_apps_Settings | `packages/apps/Settings/*` (32) | "a17: port /e/OS Settings changes from a16" | Biggest one. 13 commits needed Android 17 adaptations, each explained in its `[a17: …]` note. Consider splitting: (1) home-page entries (Updater, Accounts, Advanced Privacy, Parental control, Find my device, Backup); (2) dev options + telemetry/Sentry; (3) wording/branding; (4) Quad9 private DNS. |
+| e/os/android_packages_apps_Settings | `packages/apps/Settings/*` (33) | "a17: port /e/OS Settings changes from a16" | Biggest one. 13 commits needed Android 17 adaptations, each explained in its `[a17: …]` note. Consider splitting: (1) home-page entries (Updater, Accounts, Advanced Privacy, Parental control, Find my device, Backup); (2) dev options + telemetry/Sentry; (3) wording/branding; (4) Quad9 private DNS. |
 | e/os/android_frameworks_base | `frameworks/base/0001` | "a17: Prevent USB data changes for non-owner users during lockdown mode" | Security fix /e/OS carried on a16, still missing on a17. |
 | e/os/android_frameworks_base | `frameworks/base/0002`, `0003` | "a17: Hide From microG; SNHooks dockmanager" | Clean ports, one validator-list conflict resolved. |
 | e/os/android_vendor_eos | `vendor/eos/0001` | "a17: disable private space via config_user_types" | Re-implementation: a16 flag removed in Android 17. |
@@ -22,7 +22,15 @@ push, open the MR with the text below. Patches keep their original authors.
 | e/os/android_packages_services_Telephony | `packages/services/Telephony/*` | "a17: Use quad9.net for http" | Clean. |
 | e/os/android_packages_modules_Permission | `packages/modules/Permission/*` | "a17: accept null PermGroups in RuntimePermissionsUpgradeController" | Clean crash fix. |
 | e/os/android_packages_apps_ThemePicker | `packages/apps/ThemePicker/*` | "a17: launcher settings permissions for BlissLauncher" | Adapted: requests both package names' permissions (a17 BlissLauncher branches differ). |
-| e/os/android_packages_apps_Contacts | `packages/apps/Contacts/*` | "a17: open AccountManager on 'add account'" | Hand-ported; the a16 activity no longer exists. |
+| e/os/android_packages_apps_Contacts | `packages/apps/Contacts/*` | "a17: open AccountManager on 'add account'; phone-only default" | Hand-ported; the a16 activity no longer exists. |
+| e/os/android_packages_apps_SetupWizard | `packages/apps/SetupWizard/*` | "a17: /e/OS pages on the rewritten SetupWizard" | Alternative to rebasing `epic265-a17-bringup`: one squashed commit on current a17, crediting the bring-up authors. Drops the bundled jackson + zxing-core jars (org.json, a17's zxing-core). |
+| e/os/android_frameworks_base | `frameworks/base/0025`, `0026` | "a17: Android Auto as a user app" | `PermissionManagerServiceImpl` is gone; grant moved into the Kotlin `PermissionService`, constants into `AndroidAutoPackage`. |
+| e/os/android_frameworks_base | theming + Monet + light/dark QS patches | "a17: /e/ palette for system, SystemUI, SettingsLib" | Large; each skipped/adapted commit is noted in its message. |
+| e/os/android_packages_modules_Permission | `packages/modules/Permission/0004` | "a17: Android Auto as user app 2/2" | Pairs with the frameworks/base MR. |
+| e/os/android_packages_modules_DnsResolver | `packages/modules/DnsResolver/*` | "a17: Advanced Privacy tracker blocking" | Clean cherry-picks of the a16 series. |
+| e/os/android_frameworks_libs_systemui | `frameworks/libs/systemui/*` | "a17: calendar month icon" | Clean. |
+| e/os/android_packages_apps_Launcher3 | `packages/apps/Launcher3/*` | "a17: notification count badges" | Rebased from the bring-up branch. |
+| DocumentsUI, SettingsIntelligence, WallpaperPicker2, LineageParts, ThemePicker | theming patches | "a17: theme app according to our palette" | One MR per repo. |
 | e/os/android_packages_apps_FMRadio, e/os/android_vendor_qcom_opensource_fm-commonsys | `…/FMRadio/*`, `…/fm/*` | "a17: new app icon" | Resource-only. |
 
 Not for /e/OS: `frameworks/av` and `packages/services/Telecomm` (LineageOS repos on a17, see below),
