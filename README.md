@@ -53,7 +53,8 @@ Your customisations = forks of the relevant repos, referenced from the local man
 1. `local_manifests/<target>/*.xml`: FP4 device tree, kernel and blobs (LineageOS + TheMuppets).
 2. `patches/<target>/<project path>/*.patch`: port work this project carries (see
    `patches/README.md`). `apply-patches.sh` applies them after sync, skips any patch the project
-   already has, and undoes them before the next sync.
+   already has, and undoes them before the next sync. `patches/<target>/blob-fixups.txt` lists
+   same-length string edits it then makes in the synced proprietary blobs (no blobs in this repo).
 3. Optional, per build, set in `build.sh`:
    - `OPTIONAL_MANIFESTS="<name>"` adds `local_manifests/<target>/optional/<name>.xml`
    - `PATCH_EXCLUDE="packages/apps/Settings"` leaves that project's series out
