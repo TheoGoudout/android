@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: TheScarastic <warabhishek@e.email>
 Date: Fri, 15 Jul 2022 05:02:01 +0000
-Subject: [PATCH 07/32] Settings: Notify users all their accounts will be
+Subject: [PATCH 07/33] Settings: Notify users all their accounts will be
  removed and not just google
 
 (cherry picked from commit 45e5d4ddbd35f910182930e215ef4de45ae5ec35)

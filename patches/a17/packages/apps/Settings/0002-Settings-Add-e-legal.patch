@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: TheScarastic <warabhishek@e.email>
 Date: Mon, 22 Aug 2022 13:43:49 +0000
-Subject: [PATCH 02/32] Settings: Add /e/ legal
+Subject: [PATCH 02/33] Settings: Add /e/ legal
 
 [a17: LineageOS moved the legal screen to a Kotlin catalyst screen; the XML
  keeps only the /e/ entry, and LegalSettingsScreen gets an "elicense" entry by

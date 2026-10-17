@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nishith Khanna <nishithkhanna@e.email>
 Date: Mon, 11 Sep 2023 13:03:28 +0530
-Subject: [PATCH 16/32] Update remove account dialog message to make it more
+Subject: [PATCH 16/33] Update remove account dialog message to make it more
  clear
 
 (cherry picked from commit e2b02673588558ac0a2515e0a2221748b89c3c81)

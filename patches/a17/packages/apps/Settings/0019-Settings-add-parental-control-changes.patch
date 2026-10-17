@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Mohammed Althaf Thayyil <althafvly@gmail.com>
 Date: Thu, 13 Jun 2024 16:09:41 +0000
-Subject: [PATCH 19/32] Settings: add parental control changes
+Subject: [PATCH 19/33] Settings: add parental control changes
 
 (cherry picked from commit 9b6b67f13ed4f1fb509b7e5c153ed18fcb3eac6f)
 ---

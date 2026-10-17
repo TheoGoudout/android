@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nishith Khanna <nishithkhanna@e.email>
 Date: Mon, 2 Mar 2026 17:16:09 +0530
-Subject: [PATCH 29/32] Replace cloudfare with quadnine as dns provider
+Subject: [PATCH 29/33] Replace cloudfare with quadnine as dns provider
 
 (cherry picked from commit 2bf25777fd40ade24fe2a9c9ce550f7892bb4e36)
 ---

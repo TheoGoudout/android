@@ -54,13 +54,13 @@ Not carried, with reason:
 - overlays/Lineage icon-pack/shape overlays: LineageOS 24.0 dropped icon packs and shapes; nothing on
   a17 references them.
 
-### packages/apps/Settings (32 patches, hand-ported)
+### packages/apps/Settings (33 patches, hand-ported)
 /e/OS's `a17` Settings branch has no /e/OS changes yet. All 42 a16 commits were walked in order on
-top of /e/OS `a17`: 32 carried (13 needed manual resolution, each noted in its commit message
+top of /e/OS `a17`: 33 carried (incl. the /e/ theming: palette, round /e/ homepage icons) (13 needed manual resolution, each noted in its commit message
 under `[a17: …]`), 3 security fixes already in a17, 7 skipped:
 - DNS churn (add Quad9 / revert / reapply Cloudflare / revert…). Its net effect is carried as
   "Replace cloudfare with quadnine as dns provider".
-- "Add license", "Theme app components according to our palette" (theming left to /e/OS)
+- "Add license"
 - "fix security screen in setup wizard being cut in potrait mode of tablet" (tablet-only; code rewritten)
 
 What a17 changed and how it was handled:

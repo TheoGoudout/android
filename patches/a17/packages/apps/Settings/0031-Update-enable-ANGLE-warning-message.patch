@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuxin Hu <yuxinhu@google.com>
 Date: Mon, 30 Mar 2026 19:46:29 -0700
-Subject: [PATCH 31/32] Update enable ANGLE warning message
+Subject: [PATCH 31/33] Update enable ANGLE warning message
 
 The warning message is updated to align with partner's
 internal style, as requested in b/493778441.

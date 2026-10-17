@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nishith Khanna <nishithkhanna@e.email>
 Date: Mon, 26 May 2025 11:37:18 +0530
-Subject: [PATCH 26/32] Change default highlight key which makes top entries
+Subject: [PATCH 26/33] Change default highlight key which makes top entries
  visible in tablet
 
 (cherry picked from commit 47240259c450c14c993dc215a468d69f6adb4904)

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Mohit Mali <futuretechnoworld.mohit@gmail.com>
 Date: Fri, 2 Apr 2021 18:49:03 +0000
-Subject: [PATCH 04/32] Settings: Switch to select prod or staging OTA server
+Subject: [PATCH 04/33] Settings: Switch to select prod or staging OTA server
 
 Settings: display alert dialog when switch ota server
 (cherry picked from commit 8c9f973cea687a60702403f2cd2015262a2a433c)

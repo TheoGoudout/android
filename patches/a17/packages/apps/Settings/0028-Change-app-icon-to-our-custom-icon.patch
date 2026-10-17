@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nishith Khanna <nishithkhanna@e.email>
 Date: Thu, 1 Sep 2022 17:35:32 +0530
-Subject: [PATCH 28/32] Change app icon to our custom icon
+Subject: [PATCH 28/33] Change app icon to our custom icon
 
 (cherry picked from commit 92faf385f04cfa3dec631f3bf7707a3f6ecfa370)
 ---

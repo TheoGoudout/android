@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nishith Khanna <nishithkhanna@e.email>
 Date: Thu, 3 Jul 2025 18:58:24 +0530
-Subject: [PATCH 27/32] Remove smart cleanup card
+Subject: [PATCH 27/33] Remove smart cleanup card
 
 (cherry picked from commit 96aef056c27934682e68e07044f4f17f697294f6)
 ---

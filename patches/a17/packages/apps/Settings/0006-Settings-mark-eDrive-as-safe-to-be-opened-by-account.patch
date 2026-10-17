@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: TheScarastic <warabhishek@e.email>
 Date: Tue, 5 Apr 2022 12:06:30 +0000
-Subject: [PATCH 06/32] Settings: mark eDrive as safe to be opened by
+Subject: [PATCH 06/33] Settings: mark eDrive as safe to be opened by
  accountManager
 
 (cherry picked from commit d7ec63f8aea7d852ecbad63360a0499c4356ed06)

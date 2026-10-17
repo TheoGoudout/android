@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Mohit Mali <futuretechnoworld.mohit@gmail.com>
 Date: Tue, 27 Oct 2020 16:33:04 +0000
-Subject: [PATCH 03/32] Settings: Move updater to top of settings main page
+Subject: [PATCH 03/33] Settings: Move updater to top of settings main page
 
 Signed-off-by: Aayush Gupta <theimpulson@e.email>
 [a17: the home page is grouped into PreferenceCategory blocks now; the update

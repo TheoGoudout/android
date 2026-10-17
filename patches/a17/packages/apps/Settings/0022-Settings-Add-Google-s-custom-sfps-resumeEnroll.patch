@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Kshitij Gupta <kshitijgm@gmail.com>
 Date: Wed, 6 Nov 2024 10:13:48 +0100
-Subject: [PATCH 22/32] Settings: Add Google's custom sfps resumeEnroll()
+Subject: [PATCH 22/33] Settings: Add Google's custom sfps resumeEnroll()
 
 - Needed by tangorpro
 
