@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nishith Khanna <nishithkhanna@e.email>
 Date: Mon, 18 Sep 2023 19:25:54 +0530
-Subject: [PATCH 17/32] Improve wordings for automatic sync
+Subject: [PATCH 17/33] Improve wordings for automatic sync
 
 (cherry picked from commit f416c7be7441090139b66661b5cd5f687b8a7633)
 ---

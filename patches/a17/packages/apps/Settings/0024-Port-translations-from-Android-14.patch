@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nishith Khanna <nishithkhanna@e.email>
 Date: Wed, 21 May 2025 15:25:19 +0530
-Subject: [PATCH 24/32] Port translations from Android 14
+Subject: [PATCH 24/33] Port translations from Android 14
 
 (cherry picked from commit 990e24c830b37be2a256995324441151ce8c59b4)
 ---

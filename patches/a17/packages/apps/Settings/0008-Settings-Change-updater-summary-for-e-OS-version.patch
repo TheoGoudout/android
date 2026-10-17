@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: TheScarastic <warabhishek@e.email>
 Date: Wed, 14 Sep 2022 12:09:39 +0000
-Subject: [PATCH 08/32] Settings: Change updater summary for /e/OS version
+Subject: [PATCH 08/33] Settings: Change updater summary for /e/OS version
 
 (cherry picked from commit 28fca6befb102f5c08cb5ce90bc6a47287a4f804)
 ---

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Aayush Gupta <theimpulson@e.email>
 Date: Wed, 26 May 2021 10:17:03 +0200
-Subject: [PATCH 01/32] Settings: res: Set proper title for system version
+Subject: [PATCH 01/33] Settings: res: Set proper title for system version
 
 Signed-off-by: Aayush Gupta <theimpulson@e.email>
 Change-Id: I3146e445e7b299086a566a66f8a13708699a91f7

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: althafvly <althafvly@gmail.com>
 Date: Wed, 12 Aug 2026 22:17:19 +0530
-Subject: [PATCH 32/32] Move backup entry to top level settings
+Subject: [PATCH 32/33] Move backup entry to top level settings
 
 [a17: the home page is grouped now; the injected backup tile gets
  group_key=top_level_security_privacy_category and order -25 (after Privacy,

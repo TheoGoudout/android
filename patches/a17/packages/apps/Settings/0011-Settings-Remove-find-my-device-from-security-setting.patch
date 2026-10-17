@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: althafvly <althafvly@gmail.com>
 Date: Thu, 8 Dec 2022 12:28:25 +0530
-Subject: [PATCH 11/32] Settings: Remove find my device from security settings
+Subject: [PATCH 11/33] Settings: Remove find my device from security settings
  summary
 
 (cherry picked from commit eb8451bdd2c803d36c3392f62d8113ac3668eae7)

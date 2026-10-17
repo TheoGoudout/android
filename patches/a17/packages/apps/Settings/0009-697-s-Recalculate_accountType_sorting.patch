@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Fahim Salam Chowdhury <fahim@e.email>
 Date: Tue, 1 Nov 2022 05:06:15 +0000
-Subject: [PATCH 09/32] 697-s-Recalculate_accountType_sorting
+Subject: [PATCH 09/33] 697-s-Recalculate_accountType_sorting
 
 (cherry picked from commit a2e1c96ddae056763139af3cadb6b7a68612d60f)
 ---

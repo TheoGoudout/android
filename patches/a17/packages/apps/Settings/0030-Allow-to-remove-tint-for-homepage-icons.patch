@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: althafvly <althafvly@gmail.com>
 Date: Wed, 18 Mar 2026 23:56:21 +0530
-Subject: [PATCH 30/32] Allow to remove tint for homepage icons
+Subject: [PATCH 30/33] Allow to remove tint for homepage icons
 
 [a17: tinting now happens in the async icon callback; same condition applied
  there. Like a16, tiles without metadata are not tinted]
