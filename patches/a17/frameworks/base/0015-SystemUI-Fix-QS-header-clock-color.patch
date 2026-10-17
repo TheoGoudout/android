@@ -1,0 +1,38 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Danny Baumann <dannybaumann@web.de>
+Date: Wed, 20 Jul 2022 15:53:13 +0200
+Subject: [PATCH 15/24] SystemUI: Fix QS header clock color
+
+Now that we're flipping QS colors by theme (dark/light), we can no longer
+rely on wallpaper colors for QS clock. Instead, we now can rely on clock color
+being updated correctly on QS re-inflation (via
+QuickStatusBarHeader.updateResources).
+
+Change-Id: Icdf2484793cb63b7c0ab6ab87e94185e6bdc9ca4
+Signed-off-by: Pranav Vashi <neobuddy89@gmail.com>
+Signed-off-by: Saalim Quadri <danascape@gmail.com>
+[a17: onColorsChanged() is kept as a no-op instead of removed, so Android 17
+ callers still compile]
+
+(cherry picked from commit 6f193e93477867cd611242628bbdc2585abc5a6f)
+---
+ .../src/com/android/systemui/statusbar/policy/Clock.java     | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/policy/Clock.java b/packages/SystemUI/src/com/android/systemui/statusbar/policy/Clock.java
+index 0922292e6fe5..af90102c51fd 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/policy/Clock.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/policy/Clock.java
+@@ -312,10 +312,9 @@ public class Clock extends TextView implements
+     }
+ 
+     // Update text color based when shade scrim changes color.
++    // /e/OS: QS follows the light/dark theme, so the clock keeps the colour of its theme
++    // (refreshed on QS re-inflation) instead of following the wallpaper.
+     public void onColorsChanged(boolean lightTheme) {
+-        final Context context = new ContextThemeWrapper(mContext,
+-                lightTheme ? R.style.Theme_SystemUI_LightWallpaper : R.style.Theme_SystemUI);
+-        setTextColor(Utils.getColorAttrDefaultColor(context, R.attr.wallpaperTextColor));
+     }
+ 
+     public void onDensityOrFontScaleChanged() {

@@ -1,0 +1,26 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishithkhanna@e.email>
+Date: Mon, 26 May 2025 11:22:17 +0530
+Subject: [PATCH 22/24] Don't create dynamic overlay
+
+[a17: mSecondaryOverlay is mAccentOverlay on Android 17]
+
+(cherry picked from commit a159afcdf538efa6e0c43f371da9eb3f81bb1e59)
+---
+ .../src/com/android/systemui/theme/ThemeOverlayController.java | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayController.java b/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayController.java
+index eeb1401b2ad4..8ccc1aaf0d0b 100644
+--- a/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayController.java
++++ b/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayController.java
+@@ -895,7 +895,8 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
+         if (mNeedsOverlayCreation) {
+             mNeedsOverlayCreation = false;
+             fOverlays = new FabricatedOverlay[] {
+-                    mAccentOverlay, mNeutralOverlay, mDynamicOverlay
++                    // /e/OS: no dynamic (wallpaper) overlay, the /e/ palette stays in place
++                    mAccentOverlay, mNeutralOverlay
+             };
+         }
+ 

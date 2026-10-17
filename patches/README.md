@@ -78,25 +78,32 @@ Static checks (no compiler available here): every changed XML parses, every reso
 the first a17 build to be the real test. To build without it, set `PATCH_EXCLUDE="packages/apps/Settings"`
 in `build.sh` (works for any project path).
 
-### frameworks/base (3 patches, on top of /e/OS a17)
+### frameworks/base (24 patches, on top of /e/OS a17)
 /e/OS already carries 36 commits on a17 (signature spoofing, fake location, parental control
-hooks, e colors…). Of the 57 a16 commits missing there:
-- added: `config_deviceKeyHandler` (empty string) so the DeviceKeyHandler role that
-  PermissionController now carries has a resource to resolve (on a16 the name was never
-  declared). Device overlays set it.
-- carried: **Hide From microG** (AppsFilter + `HIDE_MICROG_PACKAGES_FOR_PACKAGE` system setting;
-  validator conflict resolved), the **USB lockdown** security fix (hand-ported; a17 still
-  re-enables USB data for any user), SafetyNetHooks dockmanager Build.TYPE.
+hooks, e colors, e switch…). On top:
+- **Hide From microG**, the **USB lockdown** security fix (hand-ported), SNHooks dockmanager,
+  `config_deviceKeyHandler` for the DeviceKeyHandler role.
+- **/e/ theming**: "Theme system components" (only the `system_*` → `e_*` palette mappings, a17
+  keeps its own numeric AOSP defaults), "SystemUI: Theme according to our palette" (34 files,
+  /e/ values re-applied onto Android 17's `@color/materialColor*` resources), "SettingsLib: Theme
+  according to our palette" + a follow-up mirroring it into the `-v36` resources that shadow the
+  `-v31/-v34` ones on Android 17, emphasized notification colours (re-implemented in
+  `resolveEmphasisColors`).
+- **Monet**: "Don't create dynamic overlay" + "Recreate overlays anyway" + "Re-evaluate system
+  theme on UI mode change": without these, wallpaper colours would override the /e/ palette.
+- **Light/dark quick settings** (LineageOS/kdrag0n series /e/OS ships): QS follows the system
+  theme with dual-tone background; night `Theme.SystemUI.QuickSettings` rebuilt from the a17 day
+  style; light-mode 3-button nav fix re-implemented; QS clock colour hook kept as a no-op.
+  Skipped (code removed or redundant in Android 17): PagedTileLayout height, QSPanelControllerBase
+  crash fix, QSCustomizer reset text / corner radius / background / nav bar, QS page indicator,
+  shade header light/dark (a17 `ShadeHeaderController.updateColors()` already does it) and the
+  QSCarrier visibility fix that depended on it.
 - already in a17: BAL bypass via CDM, LocalImageResolver, suspend restrictions, clipboard per-user.
-- **not carried, needs a re-implementation:** Android Auto as user app (1/2) and "Allow to install
-  Google signed Android Auto APK". Android 17 deleted `PermissionManagerServiceImpl` (pre-UPS
-  permission code), so the privileged-permission grant has to move to the Kotlin permission service
-  (`services/permission/.../AppIdPermissionPolicy.kt` / `PermissionService.kt`). Tracked in
-  KNOWN_ISSUES.md.
-- left to /e/OS: ~25 SystemUI light/dark/QS theming commits (Android 17 SystemUI redesign),
-  UDFPS/Richtap/dock-width tweaks (not FP4 hardware), autofill UI tweaks, build-fix noise.
+- **not carried:** Android Auto (see KNOWN_ISSUES), UDFPS/Richtap/dock-width (not FP4 hardware),
+  autofill UI tweaks, build-fix noise.
 
-Tested with a sparse worktree of e/os frameworks/base a17: applies with `git am`.
+Checks: XML parses, no conflict markers, brace balance unchanged vs a17 for all 24 touched
+Java/Kotlin files (`tools/bracecheck.py --base`), applies with `git am` on a sparse checkout.
 
 ### vendor/eos + vendor/lineage: "Disable private space" (re-implemented)
 The a16 commit set `android.multiuser.enable_private_space_features` DISABLED. That flag no

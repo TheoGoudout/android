@@ -1,0 +1,506 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishithkhanna@e.email>
+Date: Tue, 20 Jan 2026 20:05:25 +0530
+Subject: [PATCH 05/24] Theme system components according to our palette
+
+[a17: only the /e/ palette mappings (system_primary/surface_bright/
+ surface_container/surface_variant, user icon colours) are applied to the
+ Android 17 colors.xml; the a16 copies of AOSP numeric defaults are not
+ carried, so a17 keeps its own defaults]
+
+(cherry picked from commit 4a431f1f2db0e57f093842ca67763607fe9c67f3)
+---
+ core/res/res/drawable/ic_doc_audio.xml        | 31 +++++++++--------
+ core/res/res/drawable/ic_doc_folder.xml       | 31 +++++++++--------
+ core/res/res/drawable/ic_doc_image.xml        | 31 +++++++++--------
+ core/res/res/drawable/ic_doc_pdf.xml          | 31 +++++++++--------
+ core/res/res/drawable/ic_doc_video.xml        | 31 +++++++++--------
+ core/res/res/values-night/values.xml          |  4 +++
+ core/res/res/values/colors.xml                | 34 +++++++++----------
+ .../res/res/values/colors_device_defaults.xml | 32 ++++++++---------
+ core/res/res/values/colors_material.xml       | 24 ++++++-------
+ .../res/res/values/themes_device_defaults.xml | 13 +++----
+ 10 files changed, 136 insertions(+), 126 deletions(-)
+
+diff --git a/core/res/res/drawable/ic_doc_audio.xml b/core/res/res/drawable/ic_doc_audio.xml
+index 454eea3bbad9..46663b88e39c 100644
+--- a/core/res/res/drawable/ic_doc_audio.xml
++++ b/core/res/res/drawable/ic_doc_audio.xml
+@@ -1,24 +1,25 @@
++<?xml version="1.0" encoding="utf-8"?>
+ <!--
+-Copyright (C) 2015 The Android Open Source Project
+-
+-   Licensed under the Apache License, Version 2.0 (the "License");
+-    you may not use this file except in compliance with the License.
+-    You may obtain a copy of the License at
+-
+-         http://www.apache.org/licenses/LICENSE-2.0
+-
+-    Unless required by applicable law or agreed to in writing, software
+-    distributed under the License is distributed on an "AS IS" BASIS,
+-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-    See the License for the specific language governing permissions and
+-    limitations under the License.
+--->
++  ~ Copyright Murena SAS 2022
++  ~ This program is free software: you can redistribute it and/or modify
++  ~ it under the terms of the GNU General Public License as published by
++  ~ the Free Software Foundation, either version 3 of the License, or
++  ~ (at your option) any later version.
++  ~
++  ~ This program is distributed in the hope that it will be useful,
++  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
++  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  ~ GNU General Public License for more details.
++  ~
++  ~ You should have received a copy of the GNU General Public License
++  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
++  -->
+ <vector xmlns:android="http://schemas.android.com/apk/res/android"
+         android:width="24dp"
+         android:height="24dp"
+         android:viewportWidth="24.0"
+         android:viewportHeight="24.0">
+     <path
+-        android:fillColor="#FFDB4437"
++        android:fillColor="@*android:color/accent_device_default"
+         android:pathData="M19 3H5c-1.1 0,-2 .9,-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2,-.9 2,-2V5c0,-1.1,-.9,-2,-2,-2zM7.2 18c-.66 0,-1.2,-.54,-1.2,-1.2V12c0,-3.31 2.69,-6 6,-6s6 2.69 6 6v4.8c0 .66,-.54 1.2,-1.2 1.2H14v-4h2v-2c0,-2.21,-1.79,-4,-4,-4s-4 1.79,-4 4v2h2v4H7.2z"/>
+ </vector>
+diff --git a/core/res/res/drawable/ic_doc_folder.xml b/core/res/res/drawable/ic_doc_folder.xml
+index dcbce010810e..1ec09a5023c0 100644
+--- a/core/res/res/drawable/ic_doc_folder.xml
++++ b/core/res/res/drawable/ic_doc_folder.xml
+@@ -1,24 +1,25 @@
++<?xml version="1.0" encoding="utf-8"?>
+ <!--
+-Copyright (C) 2015 The Android Open Source Project
+-
+-   Licensed under the Apache License, Version 2.0 (the "License");
+-    you may not use this file except in compliance with the License.
+-    You may obtain a copy of the License at
+-
+-         http://www.apache.org/licenses/LICENSE-2.0
+-
+-    Unless required by applicable law or agreed to in writing, software
+-    distributed under the License is distributed on an "AS IS" BASIS,
+-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-    See the License for the specific language governing permissions and
+-    limitations under the License.
+--->
++  ~ Copyright Murena SAS 2022
++  ~ This program is free software: you can redistribute it and/or modify
++  ~ it under the terms of the GNU General Public License as published by
++  ~ the Free Software Foundation, either version 3 of the License, or
++  ~ (at your option) any later version.
++  ~
++  ~ This program is distributed in the hope that it will be useful,
++  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
++  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  ~ GNU General Public License for more details.
++  ~
++  ~ You should have received a copy of the GNU General Public License
++  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
++  -->
+ <vector xmlns:android="http://schemas.android.com/apk/res/android"
+         android:width="24dp"
+         android:height="24dp"
+         android:viewportWidth="24.0"
+         android:viewportHeight="24.0">
+     <path
+-        android:fillColor="#FF737373"
++        android:fillColor="@*android:color/accent_device_default"
+         android:pathData="M10 4H4c-1.1 0,-1.99.9,-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2,-.9 2,-2V8c0,-1.1,-.9,-2,-2,-2h-8l-2,-2z"/>
+ </vector>
+diff --git a/core/res/res/drawable/ic_doc_image.xml b/core/res/res/drawable/ic_doc_image.xml
+index 23953f71fd5e..f6b177724595 100644
+--- a/core/res/res/drawable/ic_doc_image.xml
++++ b/core/res/res/drawable/ic_doc_image.xml
+@@ -1,24 +1,25 @@
++<?xml version="1.0" encoding="utf-8"?>
+ <!--
+-Copyright (C) 2015 The Android Open Source Project
+-
+-   Licensed under the Apache License, Version 2.0 (the "License");
+-    you may not use this file except in compliance with the License.
+-    You may obtain a copy of the License at
+-
+-         http://www.apache.org/licenses/LICENSE-2.0
+-
+-    Unless required by applicable law or agreed to in writing, software
+-    distributed under the License is distributed on an "AS IS" BASIS,
+-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-    See the License for the specific language governing permissions and
+-    limitations under the License.
+--->
++  ~ Copyright Murena SAS 2022
++  ~ This program is free software: you can redistribute it and/or modify
++  ~ it under the terms of the GNU General Public License as published by
++  ~ the Free Software Foundation, either version 3 of the License, or
++  ~ (at your option) any later version.
++  ~
++  ~ This program is distributed in the hope that it will be useful,
++  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
++  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  ~ GNU General Public License for more details.
++  ~
++  ~ You should have received a copy of the GNU General Public License
++  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
++  -->
+ <vector xmlns:android="http://schemas.android.com/apk/res/android"
+         android:width="24dp"
+         android:height="24dp"
+         android:viewportWidth="24.0"
+         android:viewportHeight="24.0">
+     <path
+-        android:fillColor="#FFDB4437"
++        android:fillColor="@*android:color/accent_device_default"
+         android:pathData="M21 19V5c0,-1.1,-.9,-2,-2,-2H5c-1.1 0,-2 .9,-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2,-.9 2,-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5,-4.5z"/>
+ </vector>
+diff --git a/core/res/res/drawable/ic_doc_pdf.xml b/core/res/res/drawable/ic_doc_pdf.xml
+index b2d01938c480..b046b10476be 100644
+--- a/core/res/res/drawable/ic_doc_pdf.xml
++++ b/core/res/res/drawable/ic_doc_pdf.xml
+@@ -1,24 +1,25 @@
++<?xml version="1.0" encoding="utf-8"?>
+ <!--
+-Copyright (C) 2015 The Android Open Source Project
+-
+-   Licensed under the Apache License, Version 2.0 (the "License");
+-    you may not use this file except in compliance with the License.
+-    You may obtain a copy of the License at
+-
+-         http://www.apache.org/licenses/LICENSE-2.0
+-
+-    Unless required by applicable law or agreed to in writing, software
+-    distributed under the License is distributed on an "AS IS" BASIS,
+-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-    See the License for the specific language governing permissions and
+-    limitations under the License.
+--->
++  ~ Copyright Murena SAS 2022
++  ~ This program is free software: you can redistribute it and/or modify
++  ~ it under the terms of the GNU General Public License as published by
++  ~ the Free Software Foundation, either version 3 of the License, or
++  ~ (at your option) any later version.
++  ~
++  ~ This program is distributed in the hope that it will be useful,
++  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
++  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  ~ GNU General Public License for more details.
++  ~
++  ~ You should have received a copy of the GNU General Public License
++  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
++  -->
+ <vector xmlns:android="http://schemas.android.com/apk/res/android"
+         android:width="24dp"
+         android:height="24dp"
+         android:viewportWidth="24.0"
+         android:viewportHeight="24.0">
+     <path
+-        android:fillColor="#FFDB4437"
++        android:fillColor="@*android:color/accent_device_default"
+         android:pathData="M7 11.5h1v-1H7v1zM19 3H5c-1.1 0,-2 .9,-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2,-.9 2,-2V5c0,-1.1,-.9,-2,-2,-2zm-9.5 8.5c0 .83,-.67 1.5,-1.5 1.5H7v2H5.5V9H8c.83 0 1.5.67 1.5 1.5v1zm10,-1H17v1h1.5V13H17v2h-1.5V9h4v1.5zm-5 3c0 .83,-.67 1.5,-1.5 1.5h-2.5V9H13c.83 0 1.5.67 1.5 1.5v3zm-2.5 0h1v-3h-1v3z"/>
+ </vector>
+diff --git a/core/res/res/drawable/ic_doc_video.xml b/core/res/res/drawable/ic_doc_video.xml
+index ad4dae89ccdc..e8d452cac725 100644
+--- a/core/res/res/drawable/ic_doc_video.xml
++++ b/core/res/res/drawable/ic_doc_video.xml
+@@ -1,24 +1,25 @@
++<?xml version="1.0" encoding="utf-8"?>
+ <!--
+-Copyright (C) 2015 The Android Open Source Project
+-
+-   Licensed under the Apache License, Version 2.0 (the "License");
+-    you may not use this file except in compliance with the License.
+-    You may obtain a copy of the License at
+-
+-         http://www.apache.org/licenses/LICENSE-2.0
+-
+-    Unless required by applicable law or agreed to in writing, software
+-    distributed under the License is distributed on an "AS IS" BASIS,
+-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-    See the License for the specific language governing permissions and
+-    limitations under the License.
+--->
++  ~ Copyright Murena SAS 2022
++  ~ This program is free software: you can redistribute it and/or modify
++  ~ it under the terms of the GNU General Public License as published by
++  ~ the Free Software Foundation, either version 3 of the License, or
++  ~ (at your option) any later version.
++  ~
++  ~ This program is distributed in the hope that it will be useful,
++  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
++  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  ~ GNU General Public License for more details.
++  ~
++  ~ You should have received a copy of the GNU General Public License
++  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
++  -->
+ <vector xmlns:android="http://schemas.android.com/apk/res/android"
+         android:width="24dp"
+         android:height="24dp"
+         android:viewportWidth="24.0"
+         android:viewportHeight="24.0">
+     <path
+-        android:fillColor="#FFDB4437"
++        android:fillColor="@*android:color/accent_device_default"
+         android:pathData="M18 4l2 4h-3l-2,-4h-2l2 4h-3l-2,-4H8l2 4H7L5 4H4c-1.1 0,-1.99.9,-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2,-.9 2,-2V4h-4z"/>
+ </vector>
+diff --git a/core/res/res/values-night/values.xml b/core/res/res/values-night/values.xml
+index 1571fab66a5b..50c070c28625 100644
+--- a/core/res/res/values-night/values.xml
++++ b/core/res/res/values-night/values.xml
+@@ -22,9 +22,13 @@
+         <item name="colorSecondary">@color/secondary_device_default_settings</item>
+         <item name="colorAccent">@color/accent_device_default_dark</item>
+         <item name="colorError">@color/error_color_device_default_dark</item>
++        <item name="colorSurfaceHeader">@color/e_qs_background_dark</item>
+         <item name="colorControlNormal">?attr/textColorPrimary</item>
+         <item name="alertDialogTheme">@style/Theme.DeviceDefault.Dialog.Alert</item>
+         <item name="forceDarkAllowed">false</item>
++        <item name="colorAccentSecondary">@color/accent_device_default_dark</item>
++        <item name="colorSurface">@color/e_notification_background_dark</item>
++        <item name="android:colorBackgroundFloating">@color/e_qs_background_dark</item>
+     </style>
+ 
+     <style name="Theme.DeviceDefault.SystemUI.Dialog" parent="Theme.DeviceDefault.Dialog" />
+diff --git a/core/res/res/values/colors.xml b/core/res/res/values/colors.xml
+index e018c7c59935..ef4504be97ed 100644
+--- a/core/res/res/values/colors.xml
++++ b/core/res/res/values/colors.xml
+@@ -177,15 +177,15 @@
+     <color name="system_notification_accent_color">#00000000</color>
+ 
+     <!-- Default user icon colors -->
+-    <color name="user_icon_1">#ffe46962</color><!-- red -->
+-    <color name="user_icon_2">#ffaf5cf7</color><!-- purple -->
+-    <color name="user_icon_3">#ff4c8df6</color><!-- blue -->
+-    <color name="user_icon_4">#fff439a0</color><!-- pink -->
+-    <color name="user_icon_5">#ff1ea446</color><!-- green -->
+-    <color name="user_icon_6">#ff129eaf</color><!-- cyan -->
+-    <color name="user_icon_7">#ffb26c00</color><!-- yellow -->
+-    <color name="user_icon_8">#ffe8710a</color><!-- orange -->
+-    <color name="user_icon_default_gray">#ff9e9e9e</color><!-- gray 500 -->
++    <color name="user_icon_1">@color/e_palette_1</color><!-- red -->
++    <color name="user_icon_2">@color/e_palette_4</color><!-- purple -->
++    <color name="user_icon_3">@color/e_palette_5</color><!-- blue -->
++    <color name="user_icon_4">@color/e_palette_8</color><!-- pink -->
++    <color name="user_icon_5">@color/e_palette_10</color><!-- green -->
++    <color name="user_icon_6">@color/e_palette_12</color><!-- cyan -->
++    <color name="user_icon_7">@color/e_palette_2</color><!-- yellow -->
++    <color name="user_icon_8">@color/e_palette_7</color><!-- orange -->
++    <color name="user_icon_default_gray">@color/e_palette_3</color><!-- gray 500 -->
+     <color name="user_icon_default_white">#ffffffff</color><!-- white -->
+ 
+     <!-- Default profile badge colors -->
+@@ -610,7 +610,7 @@
+     <!-- Color whose hue and chroma are used to create Tertiary palette and related tokens in light mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+     <color name="system_palette_key_color_tertiary_light">#836E99</color>
+     <!-- Text/icon or fill color for main actions in light mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+-    <color name="system_primary_light">#4C5E8B</color>
++    <color name="system_primary_light">@color/e_accent_light</color>
+     <!-- Fill color for main actions in light mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+     <color name="system_primary_container_light">#B9CBFF</color>
+     <!-- Wear only: Fill color for main actions in light mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+@@ -628,9 +628,9 @@
+     <!-- Default background fill color in light mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+     <color name="system_surface_light">#FAF8FE</color>
+     <!-- Brightened background fill color in light mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+-    <color name="system_surface_bright_light">#FAF8FE</color>
++    <color name="system_surface_bright_light">@color/e_floating_background_light</color>
+     <!-- Background fill color providing emphasis against Surface in light mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+-    <color name="system_surface_container_light">#EDEDF6</color>
++    <color name="system_surface_container_light">@color/e_background_light</color>
+     <!-- Background fill color providing the highest emphasis against Surface in light mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+     <color name="system_surface_container_high_light">#E7E7F1</color>
+     <!-- Background fill color providing higher emphasis against Surface in light mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+@@ -644,7 +644,7 @@
+     <!-- Deprecated background fill color used to create Surface containers in light mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+     <color name="system_surface_tint_light">#4C5E8B</color>
+     <!-- Deprecated background fill color, use Surface Container High instead in light mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+-    <color name="system_surface_variant_light">#E1E2ED</color>
++    <color name="system_surface_variant_light">@color/e_qs_background_light</color>
+     <!-- Text/icon or fill color for differentiated or special actions like badges in light mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+     <color name="system_tertiary_light">#6B5780</color>
+     <!-- Fill color for differentiated or special actions like badges in light mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+@@ -743,7 +743,7 @@
+     <!-- Color whose hue and chroma are used to create Tertiary palette and related tokens in dark mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+     <color name="system_palette_key_color_tertiary_dark">#836E99</color>
+     <!-- Text/icon or fill color for main actions in dark mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+-    <color name="system_primary_dark">#B8C6EE</color>
++    <color name="system_primary_dark">@color/e_accent_dark</color>
+     <!-- Fill color for main actions in dark mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+     <color name="system_primary_container_dark">#445274</color>
+     <!-- Wear only: Fill color for main actions in dark mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+@@ -761,9 +761,9 @@
+     <!-- Default background fill color in dark mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+     <color name="system_surface_dark">#0D0E12</color>
+     <!-- Brightened background fill color in dark mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+-    <color name="system_surface_bright_dark">#292C34</color>
++    <color name="system_surface_bright_dark">@color/e_floating_background_dark</color>
+     <!-- Background fill color providing emphasis against Surface in dark mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+-    <color name="system_surface_container_dark">#17191F</color>
++    <color name="system_surface_container_dark">@color/e_background_dark</color>
+     <!-- Background fill color providing the highest emphasis against Surface in dark mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+     <color name="system_surface_container_high_dark">#1D1F26</color>
+     <!-- Background fill color providing higher emphasis against Surface in dark mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+@@ -777,7 +777,7 @@
+     <!-- Deprecated background fill color used to create Surface containers in dark mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+     <color name="system_surface_tint_dark">#B8C6EE</color>
+     <!-- Deprecated background fill color, use Surface Container High instead in dark mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+-    <color name="system_surface_variant_dark">#23262E</color>
++    <color name="system_surface_variant_dark">@color/e_action_bar_dark</color>
+     <!-- Text/icon or fill color for differentiated or special actions like badges in dark mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+     <color name="system_tertiary_dark">#EDD8FF</color>
+     <!-- Fill color for differentiated or special actions like badges in dark mode. This value can be overlaid at runtime by OverlayManager RROs. -->
+diff --git a/core/res/res/values/colors_device_defaults.xml b/core/res/res/values/colors_device_defaults.xml
+index 4c5a008a3402..2c4cb8fb4151 100644
+--- a/core/res/res/values/colors_device_defaults.xml
++++ b/core/res/res/values/colors_device_defaults.xml
+@@ -17,9 +17,9 @@
+ <!-- Colors specific to DeviceDefault themes. These are mostly pass-throughs to enable
+      overlaying new theme colors. -->
+ <resources>
+-    <color name="primary_device_default_dark">@color/system_neutral1_900</color>
+-    <color name="primary_device_default_light">@color/system_neutral1_50</color>
+-    <color name="primary_device_default_settings">@color/system_neutral1_900</color>
++    <color name="primary_device_default_dark">@color/background_device_default_dark</color>
++    <color name="primary_device_default_light">@color/background_device_default_light</color>
++    <color name="primary_device_default_settings">@color/primary_device_default_dark</color>
+     <color name="primary_device_default_settings_light">@color/primary_device_default_light</color>
+     <color name="primary_dark_device_default_dark">@color/primary_device_default_dark</color>
+     <color name="primary_dark_device_default_light">@color/primary_device_default_light</color>
+@@ -29,36 +29,36 @@
+     <color name="secondary_device_default_settings_light">@color/secondary_material_settings_light</color>
+     <color name="tertiary_device_default_settings">@color/tertiary_material_settings</color>
+     <color name="quaternary_device_default_settings">@color/quaternary_material_settings</color>
+-    <color name="navigation_bar_divider_device_default_settings">#1f000000</color>
++    <color name="navigation_bar_divider_device_default_settings">#00000000</color>
+ 
+     <!--  Accent colors  -->
+-    <color name="accent_device_default_light">@color/system_accent1_600</color>
+-    <color name="accent_device_default_dark">@color/system_accent1_100</color>
++    <color name="accent_device_default_light">@color/e_accent_light</color>
++    <color name="accent_device_default_dark">@color/e_accent_dark</color>
+     <color name="accent_device_default">@color/accent_device_default_light</color>
+-    <color name="accent_primary_device_default">@color/system_accent1_100</color>
++    <color name="accent_primary_device_default">@color/accent_device_default</color>
+     <color name="accent_secondary_device_default">@color/system_accent2_100</color>
+     <color name="accent_tertiary_device_default">@color/system_accent3_100</color>
+ 
+     <!-- Accent variants -->
+-    <color name="accent_primary_variant_light_device_default">@color/system_accent1_600</color>
++    <color name="accent_primary_variant_light_device_default">@color/e_accent_light</color>
+     <color name="accent_secondary_variant_light_device_default">@color/system_accent2_600</color>
+     <color name="accent_tertiary_variant_light_device_default">@color/system_accent3_600</color>
+-    <color name="accent_primary_variant_dark_device_default">@color/system_accent1_300</color>
++    <color name="accent_primary_variant_dark_device_default">@color/e_accent_dark</color>
+     <color name="accent_secondary_variant_dark_device_default">@color/system_accent2_300</color>
+     <color name="accent_tertiary_variant_dark_device_default">@color/system_accent3_300</color>
+ 
+     <!-- Background colors -->
+-    <color name="background_device_default_dark">@color/system_neutral1_900</color>
+-    <color name="background_device_default_light">@color/system_neutral1_50</color>
+-    <color name="background_floating_device_default_dark">@color/background_device_default_dark</color>
+-    <color name="background_floating_device_default_light">@color/background_device_default_light</color>
++    <color name="background_device_default_dark">@color/e_background_dark</color>
++    <color name="background_device_default_light">@color/e_background_light</color>
++    <color name="background_floating_device_default_dark">@color/e_floating_background_dark</color>
++    <color name="background_floating_device_default_light">@color/e_floating_background_light</color>
+ 
+     <!-- Surface colors -->
+-    <color name="surface_header_dark">@color/system_neutral1_700</color>
+-    <color name="surface_header_light">@color/system_neutral1_100</color>
++    <color name="surface_header_dark">@color/e_action_bar_dark</color>
++    <color name="surface_header_light">@color/e_action_bar_light</color>
+     <color name="surface_variant_dark">@color/system_neutral1_700</color>
+     <color name="surface_variant_light">@color/system_neutral2_100</color>
+-    <color name="surface_dark">@color/system_neutral1_800</color>
++    <color name="surface_dark">@color/e_floating_background_dark</color>
+     <color name="surface_highlight_light">@color/system_neutral1_0</color>
+ 
+     <!-- Please refer to text_color_[primary]_device_default_[light].xml for text colors-->
+diff --git a/core/res/res/values/colors_material.xml b/core/res/res/values/colors_material.xml
+index 5b0dd308d05f..4c7292485b61 100644
+--- a/core/res/res/values/colors_material.xml
++++ b/core/res/res/values/colors_material.xml
+@@ -19,17 +19,17 @@
+     <color name="foreground_material_dark">@color/white</color>
+     <color name="foreground_material_light">@color/black</color>
+ 
+-    <color name="background_material_dark">@color/material_grey_850</color>
+-    <color name="background_material_light">@color/material_grey_50</color>
+-    <color name="background_floating_material_dark">@color/material_grey_800</color>
+-    <color name="background_floating_material_light">@color/white</color>
++    <color name="background_material_dark">@color/e_background_dark</color>
++    <color name="background_material_light">@color/e_background_light</color>
++    <color name="background_floating_material_dark">@color/e_floating_background_dark</color>
++    <color name="background_floating_material_light">@color/e_floating_background_light</color>
+ 
+-    <color name="primary_material_dark">@color/material_grey_900</color>
+-    <color name="primary_material_light">@color/material_grey_100</color>
++    <color name="primary_material_dark">@color/e_action_bar_dark</color>
++    <color name="primary_material_light">@color/e_action_bar_light</color>
+     <color name="primary_material_settings">@color/material_blue_grey_900</color>
+     <color name="primary_material_settings_light">@color/material_grey_100</color>
+-    <color name="primary_dark_material_dark">@color/black</color>
+-    <color name="primary_dark_material_light">@color/material_grey_600</color>
++    <color name="primary_dark_material_dark">@color/e_action_bar_dark</color>
++    <color name="primary_dark_material_light">@color/e_action_bar_light</color>
+     <color name="primary_dark_material_light_light_status_bar">@color/material_grey_300</color>
+     <color name="primary_dark_material_settings">@color/material_blue_grey_950</color>
+     <color name="primary_dark_material_settings_light">@color/material_grey_300</color>
+@@ -39,13 +39,13 @@
+     <color name="tertiary_material_settings">@color/material_blue_grey_700</color>
+     <color name="quaternary_material_settings">@color/material_blue_grey_200</color>
+ 
+-    <color name="accent_material_light">@color/material_deep_teal_500</color>
+-    <color name="accent_material_dark">@color/material_deep_teal_200</color>
++    <color name="accent_material_light">@color/e_accent_light</color>
++    <color name="accent_material_dark">@color/e_accent_dark</color>
+ 
+     <color name="button_material_dark">#ff5a595b</color>
+     <color name="button_material_light">#ffd6d7d7</color>
+-    <color name="error_color_material_dark">#ff7043</color><!-- deep orange 400 -->
+-    <color name="error_color_material_light">#ff5722</color><!-- deep orange 500 -->
++    <color name="error_color_material_dark">#FB3846</color><!-- deep orange 400 -->
++    <color name="error_color_material_light">#FB3846</color><!-- deep orange 500 -->
+ 
+     <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
+     <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
+diff --git a/core/res/res/values/themes_device_defaults.xml b/core/res/res/values/themes_device_defaults.xml
+index 9fdc430d8714..2b37709a2943 100644
+--- a/core/res/res/values/themes_device_defaults.xml
++++ b/core/res/res/values/themes_device_defaults.xml
+@@ -2324,16 +2324,16 @@ easier.
+         <item name="colorPrimaryDark">@color/primary_dark_device_default_settings_light</item>
+         <item name="colorSecondary">@color/secondary_device_default_settings_light</item>
+         <item name="colorAccent">@color/accent_device_default_light</item>
+-        <item name="colorAccentPrimary">@color/accent_primary_device_default</item>
+-        <item name="colorAccentSecondary">@color/system_secondary_dark</item>
+-        <item name="colorAccentTertiary">@color/system_tertiary_dark</item>
+-        <item name="colorAccentPrimaryVariant">@color/system_primary_container_light</item>
++        <item name="colorAccentPrimary">@color/accent_device_default</item>
++        <item name="colorAccentSecondary">@color/accent_device_default</item>
++        <item name="colorAccentTertiary">@color/accent_device_default</item>
++        <item name="colorAccentPrimaryVariant">@color/accent_device_default</item>
+         <item name="colorAccentSecondaryVariant">@color/system_secondary_container_light</item>
+         <item name="colorAccentTertiaryVariant">@color/system_tertiary_container_light</item>
+-        <item name="colorSurface">@color/system_surface_container_light</item>
++        <item name="colorSurface">@color/e_notification_background_light</item>
+         <item name="colorSurfaceHighlight">@color/system_surface_bright_light</item>
+         <item name="colorSurfaceVariant">@color/system_surface_container_high_light</item>
+-        <item name="colorSurfaceHeader">@color/system_surface_container_highest_light</item>
++        <item name="colorSurfaceHeader">@color/e_qs_background_light</item>
+         <item name="colorError">@color/error_color_device_default_light</item>
+         <item name="colorControlNormal">?attr/textColorPrimary</item>
+         <item name="alertDialogTheme">@style/Theme.DeviceDefault.Light.Dialog.Alert</item>
+@@ -2351,6 +2351,7 @@ easier.
+ 
+         <!-- Toolbar attributes -->
+         <item name="toolbarStyle">@style/Widget.DeviceDefault.Toolbar</item>
++        <item name="android:colorBackgroundFloating">@color/e_qs_background_light</item>
+ 
+     </style>
+ 

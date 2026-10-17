@@ -1,0 +1,602 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishithkhanna@e.email>
+Date: Tue, 20 Jan 2026 20:05:13 +0530
+Subject: [PATCH 07/24] SettingsLib: Theme according to our palette
+
+Themes various elements in settings app like spinner, dropdown menu,
+tabs, switch, etc
+Changes reference for colors in compose to our colors to better match
+palette
+
+[a17: action button shapes lost their fill upstream, the /e/ fill is re-added;
+ the spinner dropdown background moved from drawable-v33 to drawable]
+
+(cherry picked from commit 3cad110c0cb62a277b6fd4241595d056a2f51b43)
+---
+ .../res/drawable/half_rounded_left_bk.xml     |  3 ++-
+ .../res/drawable/half_rounded_right_bk.xml    |  3 ++-
+ .../res/drawable/square_bk.xml                |  3 ++-
+ .../settingslib_main_switch_text_color.xml    | 23 ------------------
+ .../settingslib_main_switch_text_color.xml    |  4 ++--
+ .../settingslib_main_switch_text_color.xml    |  4 ++--
+ .../settingslib_main_switch_text_color.xml    |  4 ++--
+ .../settingslib_tabs_indicator_color.xml      | 19 ---------------
+ .../settingslib_tabs_text_color.xml           | 21 ----------------
+ .../settingslib_tabs_indicator_color.xml      |  2 +-
+ .../settingslib_arrow_drop_down.xml           |  2 +-
+ .../settingslib_spinner_background.xml        |  2 +-
+ ...ettingslib_spinner_dropdown_background.xml |  2 +-
+ .../res/values-night-v31/colors.xml           |  2 +-
+ .../res/values-night-v34/colors.xml           | 14 +++++------
+ .../res/values-night-v36/colors.xml           | 15 ++++++++----
+ .../res/values-night-v36/styles.xml           | 24 -------------------
+ .../SettingsTheme/res/values-v31/colors.xml   | 14 +++++------
+ .../SettingsTheme/res/values-v31/styles.xml   |  8 +++----
+ .../SettingsTheme/res/values-v34/colors.xml   | 14 +++++------
+ .../SettingsTheme/res/values-v36/colors.xml   | 14 +++++------
+ .../SettingsTheme/res/values-v36/styles.xml   |  6 ++---
+ .../SettingsTheme/res/values-v36/themes.xml   |  6 +++--
+ 23 files changed, 66 insertions(+), 143 deletions(-)
+ delete mode 100644 packages/SettingsLib/MainSwitchPreference/res/color-night-v34/settingslib_main_switch_text_color.xml
+ delete mode 100644 packages/SettingsLib/ProfileSelector/res/color-night/settingslib_tabs_indicator_color.xml
+ delete mode 100644 packages/SettingsLib/ProfileSelector/res/color-night/settingslib_tabs_text_color.xml
+ delete mode 100644 packages/SettingsLib/SettingsTheme/res/values-night-v36/styles.xml
+
+diff --git a/packages/SettingsLib/ActionButtonsPreference/res/drawable/half_rounded_left_bk.xml b/packages/SettingsLib/ActionButtonsPreference/res/drawable/half_rounded_left_bk.xml
+index 4ad4a3f26df3..9aa91520fd58 100644
+--- a/packages/SettingsLib/ActionButtonsPreference/res/drawable/half_rounded_left_bk.xml
++++ b/packages/SettingsLib/ActionButtonsPreference/res/drawable/half_rounded_left_bk.xml
+@@ -19,10 +19,11 @@
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:targetApi="28"
+        android:shape="rectangle">
++    <solid android:color="@color/settingslib_state_on_color"/>
+     <corners
+         android:topLeftRadius="?android:attr/dialogCornerRadius"
+         android:topRightRadius="0dp"
+         android:bottomLeftRadius="?android:attr/dialogCornerRadius"
+         android:bottomRightRadius="0dp"
+     />
+-</shape>
+\ No newline at end of file
++</shape>
+diff --git a/packages/SettingsLib/ActionButtonsPreference/res/drawable/half_rounded_right_bk.xml b/packages/SettingsLib/ActionButtonsPreference/res/drawable/half_rounded_right_bk.xml
+index a1125dbe451f..b2b9369a406d 100644
+--- a/packages/SettingsLib/ActionButtonsPreference/res/drawable/half_rounded_right_bk.xml
++++ b/packages/SettingsLib/ActionButtonsPreference/res/drawable/half_rounded_right_bk.xml
+@@ -19,10 +19,11 @@
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:targetApi="28"
+        android:shape="rectangle">
++    <solid android:color="@color/settingslib_state_on_color" />
+     <corners
+         android:topLeftRadius="0dp"
+         android:topRightRadius="?android:attr/dialogCornerRadius"
+         android:bottomLeftRadius="0dp"
+         android:bottomRightRadius="?android:attr/dialogCornerRadius"
+     />
+-</shape>
+\ No newline at end of file
++</shape>
+diff --git a/packages/SettingsLib/ActionButtonsPreference/res/drawable/square_bk.xml b/packages/SettingsLib/ActionButtonsPreference/res/drawable/square_bk.xml
+index d55f4a2d6682..53b0192a5b14 100644
+--- a/packages/SettingsLib/ActionButtonsPreference/res/drawable/square_bk.xml
++++ b/packages/SettingsLib/ActionButtonsPreference/res/drawable/square_bk.xml
+@@ -17,7 +17,8 @@
+ 
+ <shape xmlns:android="http://schemas.android.com/apk/res/android"
+        android:shape="rectangle">
++    <solid android:color="@color/settingslib_state_on_color" />
+     <corners
+         android:radius="0dp"
+     />
+-</shape>
+\ No newline at end of file
++</shape>
+diff --git a/packages/SettingsLib/MainSwitchPreference/res/color-night-v34/settingslib_main_switch_text_color.xml b/packages/SettingsLib/MainSwitchPreference/res/color-night-v34/settingslib_main_switch_text_color.xml
+deleted file mode 100644
+index a7ccfc2e88dd..000000000000
+--- a/packages/SettingsLib/MainSwitchPreference/res/color-night-v34/settingslib_main_switch_text_color.xml
++++ /dev/null
+@@ -1,23 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!--
+-  Copyright (C) 2023 The Android Open Source Project
+-
+-  Licensed under the Apache License, Version 2.0 (the "License");
+-  you may not use this file except in compliance with the License.
+-  You may obtain a copy of the License at
+-
+-       http://www.apache.org/licenses/LICENSE-2.0
+-
+-  Unless required by applicable law or agreed to in writing, software
+-  distributed under the License is distributed on an "AS IS" BASIS,
+-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  See the License for the specific language governing permissions and
+-  limitations under the License.
+--->
+-
+-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+-    <item android:state_enabled="false"
+-          android:color="@android:color/system_accent1_100"
+-          android:alpha="?android:attr/disabledAlpha" />
+-    <item android:color="@android:color/system_accent1_100"/>
+-</selector>
+\ No newline at end of file
+diff --git a/packages/SettingsLib/MainSwitchPreference/res/color-night-v36/settingslib_main_switch_text_color.xml b/packages/SettingsLib/MainSwitchPreference/res/color-night-v36/settingslib_main_switch_text_color.xml
+index ea15a67e93cd..bf009841b5e2 100644
+--- a/packages/SettingsLib/MainSwitchPreference/res/color-night-v36/settingslib_main_switch_text_color.xml
++++ b/packages/SettingsLib/MainSwitchPreference/res/color-night-v36/settingslib_main_switch_text_color.xml
+@@ -17,7 +17,7 @@
+ 
+ <selector xmlns:android="http://schemas.android.com/apk/res/android">
+     <item android:state_enabled="false"
+-          android:color="@color/settingslib_materialColorOnPrimaryContainer"
++          android:color="@*android:color/e_primary_text_color_dark"
+           android:alpha="?android:attr/disabledAlpha" />
+-    <item android:color="@color/settingslib_materialColorOnPrimaryContainer"/>
++    <item android:color="@*android:color/e_primary_text_color_dark"/>
+ </selector>
+\ No newline at end of file
+diff --git a/packages/SettingsLib/MainSwitchPreference/res/color-v34/settingslib_main_switch_text_color.xml b/packages/SettingsLib/MainSwitchPreference/res/color-v34/settingslib_main_switch_text_color.xml
+index e33905bf1cbc..00d5d80c5a15 100644
+--- a/packages/SettingsLib/MainSwitchPreference/res/color-v34/settingslib_main_switch_text_color.xml
++++ b/packages/SettingsLib/MainSwitchPreference/res/color-v34/settingslib_main_switch_text_color.xml
+@@ -17,7 +17,7 @@
+ 
+ <selector xmlns:android="http://schemas.android.com/apk/res/android">
+     <item android:state_enabled="false"
+-          android:color="@android:color/system_accent1_900"
++          android:color="@*android:color/e_primary_text_color"
+           android:alpha="?android:attr/disabledAlpha" />
+-    <item android:color="@android:color/system_accent1_900"/>
++    <item android:color="@*android:color/e_primary_text_color"/>
+ </selector>
+\ No newline at end of file
+diff --git a/packages/SettingsLib/MainSwitchPreference/res/color-v36/settingslib_main_switch_text_color.xml b/packages/SettingsLib/MainSwitchPreference/res/color-v36/settingslib_main_switch_text_color.xml
+index ea15a67e93cd..60de5928a6ec 100644
+--- a/packages/SettingsLib/MainSwitchPreference/res/color-v36/settingslib_main_switch_text_color.xml
++++ b/packages/SettingsLib/MainSwitchPreference/res/color-v36/settingslib_main_switch_text_color.xml
+@@ -17,7 +17,7 @@
+ 
+ <selector xmlns:android="http://schemas.android.com/apk/res/android">
+     <item android:state_enabled="false"
+-          android:color="@color/settingslib_materialColorOnPrimaryContainer"
++          android:color="@*android:color/e_primary_text_color_light"
+           android:alpha="?android:attr/disabledAlpha" />
+-    <item android:color="@color/settingslib_materialColorOnPrimaryContainer"/>
++    <item android:color="@*android:color/e_primary_text_color_light"/>
+ </selector>
+\ No newline at end of file
+diff --git a/packages/SettingsLib/ProfileSelector/res/color-night/settingslib_tabs_indicator_color.xml b/packages/SettingsLib/ProfileSelector/res/color-night/settingslib_tabs_indicator_color.xml
+deleted file mode 100644
+index 9a093601a92c..000000000000
+--- a/packages/SettingsLib/ProfileSelector/res/color-night/settingslib_tabs_indicator_color.xml
++++ /dev/null
+@@ -1,19 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!--
+-     Copyright (C) 2022 The Android Open Source Project
+-
+-     Licensed under the Apache License, Version 2.0 (the "License");
+-     you may not use this file except in compliance with the License.
+-     You may obtain a copy of the License at
+-
+-          http://www.apache.org/licenses/LICENSE-2.0
+-
+-     Unless required by applicable law or agreed to in writing, software
+-     distributed under the License is distributed on an "AS IS" BASIS,
+-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-     See the License for the specific language governing permissions and
+-     limitations under the License.
+--->
+-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+-    <item android:color="@color/settingslib_colorAccentSecondary" />
+-</selector>
+\ No newline at end of file
+diff --git a/packages/SettingsLib/ProfileSelector/res/color-night/settingslib_tabs_text_color.xml b/packages/SettingsLib/ProfileSelector/res/color-night/settingslib_tabs_text_color.xml
+deleted file mode 100644
+index 33f96df8d5b5..000000000000
+--- a/packages/SettingsLib/ProfileSelector/res/color-night/settingslib_tabs_text_color.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!--
+-     Copyright (C) 2022 The Android Open Source Project
+-
+-     Licensed under the Apache License, Version 2.0 (the "License");
+-     you may not use this file except in compliance with the License.
+-     You may obtain a copy of the License at
+-
+-          http://www.apache.org/licenses/LICENSE-2.0
+-
+-     Unless required by applicable law or agreed to in writing, software
+-     distributed under the License is distributed on an "AS IS" BASIS,
+-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-     See the License for the specific language governing permissions and
+-     limitations under the License.
+--->
+-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+-    <item android:state_selected="true" android:color="?android:attr/textColorPrimaryInverse"/>
+-    <item android:state_enabled="false" android:color="?android:attr/textColorTertiary"/>
+-    <item android:color="?android:attr/textColorSecondary"/>
+-</selector>
+\ No newline at end of file
+diff --git a/packages/SettingsLib/ProfileSelector/res/color/settingslib_tabs_indicator_color.xml b/packages/SettingsLib/ProfileSelector/res/color/settingslib_tabs_indicator_color.xml
+index 57fef52f15bd..e6ae8fd7861e 100644
+--- a/packages/SettingsLib/ProfileSelector/res/color/settingslib_tabs_indicator_color.xml
++++ b/packages/SettingsLib/ProfileSelector/res/color/settingslib_tabs_indicator_color.xml
+@@ -15,5 +15,5 @@
+      limitations under the License.
+ -->
+ <selector xmlns:android="http://schemas.android.com/apk/res/android">
+-    <item android:color="@color/settingslib_colorAccentPrimary" />
++    <item android:color="@*android:color/e_accent" />
+ </selector>
+\ No newline at end of file
+diff --git a/packages/SettingsLib/SettingsTheme/res/drawable-v33/settingslib_arrow_drop_down.xml b/packages/SettingsLib/SettingsTheme/res/drawable-v33/settingslib_arrow_drop_down.xml
+index 770a69d3e8e6..b27c82acbb04 100644
+--- a/packages/SettingsLib/SettingsTheme/res/drawable-v33/settingslib_arrow_drop_down.xml
++++ b/packages/SettingsLib/SettingsTheme/res/drawable-v33/settingslib_arrow_drop_down.xml
+@@ -22,5 +22,5 @@
+         android:height="24dp">
+     <path
+         android:pathData="M7 10l5 5 5 -5z"
+-        android:fillColor="@android:color/black"/>
++        android:fillColor="@*android:color/e_primary_text_color"/>
+ </vector>
+diff --git a/packages/SettingsLib/SettingsTheme/res/drawable-v33/settingslib_spinner_background.xml b/packages/SettingsLib/SettingsTheme/res/drawable-v33/settingslib_spinner_background.xml
+index fbda83272ddd..4ec12294f2f1 100644
+--- a/packages/SettingsLib/SettingsTheme/res/drawable-v33/settingslib_spinner_background.xml
++++ b/packages/SettingsLib/SettingsTheme/res/drawable-v33/settingslib_spinner_background.xml
+@@ -30,7 +30,7 @@
+ 
+                 <shape>
+                     <corners android:radius="28dp"/>
+-                    <solid android:color="@android:color/system_accent1_100"/>
++                    <solid android:color="@*android:color/e_background"/>
+                     <size android:height="@dimen/settingslib_spinner_height"/>
+                 </shape>
+             </item>
+diff --git a/packages/SettingsLib/SettingsTheme/res/drawable/settingslib_spinner_dropdown_background.xml b/packages/SettingsLib/SettingsTheme/res/drawable/settingslib_spinner_dropdown_background.xml
+index 6702cda4cead..9350c60061a2 100644
+--- a/packages/SettingsLib/SettingsTheme/res/drawable/settingslib_spinner_dropdown_background.xml
++++ b/packages/SettingsLib/SettingsTheme/res/drawable/settingslib_spinner_dropdown_background.xml
+@@ -28,7 +28,7 @@
+             <item>
+                 <shape>
+                     <corners android:radius="10dp"/>
+-                    <solid android:color="@color/settingslib_materialColorSecondaryFixed"/>
++                    <solid android:color="@*android:color/e_floating_background"/>
+                 </shape>
+             </item>
+         </layer-list>
+diff --git a/packages/SettingsLib/SettingsTheme/res/values-night-v31/colors.xml b/packages/SettingsLib/SettingsTheme/res/values-night-v31/colors.xml
+index 8873116be306..8b8ba0ddd084 100644
+--- a/packages/SettingsLib/SettingsTheme/res/values-night-v31/colors.xml
++++ b/packages/SettingsLib/SettingsTheme/res/values-night-v31/colors.xml
+@@ -39,7 +39,7 @@
+     <!--Deprecated. After sdk 35 don't use it.-->
+     <color name="settingslib_colorSurfaceVariant">@android:color/system_neutral1_700</color>
+ 
+-    <color name="settingslib_colorSurfaceHeader">@android:color/system_neutral1_700</color>
++    <color name="settingslib_colorSurfaceHeader">@*android:color/e_action_bar_dark</color>
+ 
+     <!-- copy from accent_primary_variant_dark_device_default-->
+     <!-- TODO: deprecate it after moving into partner code-->
+diff --git a/packages/SettingsLib/SettingsTheme/res/values-night-v34/colors.xml b/packages/SettingsLib/SettingsTheme/res/values-night-v34/colors.xml
+index 00a1f27c162a..6108e9181dbd 100644
+--- a/packages/SettingsLib/SettingsTheme/res/values-night-v34/colors.xml
++++ b/packages/SettingsLib/SettingsTheme/res/values-night-v34/colors.xml
+@@ -17,10 +17,10 @@
+ 
+ <resources>
+     <!-- Material next state on color-->
+-    <color name="settingslib_state_on_color">@android:color/system_accent1_700</color>
++    <color name="settingslib_state_on_color">@*android:color/e_action_bar_dark</color>
+ 
+     <!-- Material next state off color-->
+-    <color name="settingslib_state_off_color">@android:color/system_accent1_700</color>
++    <color name="settingslib_state_off_color">@*android:color/e_action_bar_dark</color>
+ 
+     <!-- Material next thumb disable color-->
+     <color name="settingslib_thumb_disabled_color">@color/settingslib_thumb_off_color</color>
+@@ -43,14 +43,14 @@
+     <!--Deprecated. After sdk 35 don't use it. using materialColorOnSurfaceVariant-->
+     <color name="settingslib_text_color_secondary_device_default">@android:color/system_on_surface_variant_dark</color>
+ 
+-    <color name="settingslib_materialColorPrimary">@android:color/system_primary_dark</color>
++    <color name="settingslib_materialColorPrimary">@*android:color/e_accent_dark</color>
+     <color name="settingslib_materialColorOnPrimary">@android:color/system_on_primary_dark</color>
+-    <color name="settingslib_materialColorPrimaryContainer">@android:color/system_primary_container_dark</color>
+-    <color name="settingslib_materialColorOnPrimaryContainer">@android:color/system_on_primary_container_dark</color>
++    <color name="settingslib_materialColorPrimaryContainer">@*android:color/e_background_dark</color>
++    <color name="settingslib_materialColorOnPrimaryContainer">@*android:color/e_primary_text_color_dark</color>
+     <color name="settingslib_materialColorPrimaryInverse">@android:color/system_primary_light</color>
+     <color name="settingslib_materialColorSecondary">@android:color/system_secondary_dark</color>
+     <color name="settingslib_materialColorOnSecondary">@android:color/system_on_secondary_dark</color>
+-    <color name="settingslib_materialColorSecondaryContainer">@android:color/system_secondary_container_dark</color>
++    <color name="settingslib_materialColorSecondaryContainer">@*android:color/e_floating_background_dark</color>
+     <color name="settingslib_materialColorOnSecondaryContainer">@android:color/system_on_secondary_container_dark</color>
+     <color name="settingslib_materialColorTertiary">@android:color/system_tertiary_dark</color>
+     <color name="settingslib_materialColorOnTertiary">@android:color/system_on_tertiary_dark</color>
+@@ -72,7 +72,7 @@
+     <color name="settingslib_materialColorOnSurfaceInverse">@android:color/system_on_surface_light</color>
+     <color name="settingslib_materialColorSurfaceBright">@android:color/system_surface_bright_dark</color>
+     <color name="settingslib_materialColorSurfaceDim">@android:color/system_surface_dim_dark</color>
+-    <color name="settingslib_materialColorSurfaceContainer">@android:color/system_surface_container_dark</color>
++    <color name="settingslib_materialColorSurfaceContainer">@*android:color/e_background_dark</color>
+     <color name="settingslib_materialColorSurfaceContainerLow">@android:color/system_surface_container_low_dark</color>
+     <color name="settingslib_materialColorSurfaceContainerLowest">@android:color/system_surface_container_lowest_dark</color>
+     <color name="settingslib_materialColorSurfaceContainerHigh">@android:color/system_surface_container_high_dark</color>
+diff --git a/packages/SettingsLib/SettingsTheme/res/values-night-v36/colors.xml b/packages/SettingsLib/SettingsTheme/res/values-night-v36/colors.xml
+index e31e80176625..9e7ae09df0bb 100644
+--- a/packages/SettingsLib/SettingsTheme/res/values-night-v36/colors.xml
++++ b/packages/SettingsLib/SettingsTheme/res/values-night-v36/colors.xml
+@@ -17,10 +17,10 @@
+ 
+ <resources>
+     <!-- Material next state on color-->
+-    <color name="settingslib_state_on_color">@color/settingslib_materialColorPrimaryContainer</color>
++    <color name="settingslib_state_on_color">@*android:color/e_action_bar_dark</color>
+ 
+     <!-- Material next state off color-->
+-    <color name="settingslib_state_off_color">@color/settingslib_materialColorPrimaryContainer</color>
++    <color name="settingslib_state_off_color">@*android:color/e_action_bar_dark</color>
+ 
+     <!-- Material next thumb disable color-->
+     <color name="settingslib_thumb_disabled_color">@color/settingslib_materialColorOutline</color>
+@@ -38,12 +38,17 @@
+     <color name="settingslib_track_off_color">@color/settingslib_materialColorSurfaceContainerHighest</color>
+ 
+     <!-- Dialog text button color. -->
+-    <color name="settingslib_dialog_accent">@color/settingslib_materialColorPrimary</color>
++    <color name="settingslib_dialog_accent">@*android:color/e_accent_dark</color>
+ 
+     <!-- Dialog background color. -->
+-    <color name="settingslib_dialog_background">@color/settingslib_materialColorSurfaceContainerHigh</color>
++    <color name="settingslib_dialog_background">@*android:color/e_floating_background_dark</color>
+ 
+-    <color name="settingslib_colorSurfaceHeader">@color/settingslib_materialColorSurfaceVariant</color>
++    <color name="settingslib_colorSurfaceHeader">@*android:color/e_action_bar_dark</color>
+ 
+     <color name="settingslib_text_color_preference_category_title">@color/settingslib_materialColorPrimary</color>
++
++    <!-- The text color of spinner title -->
++    <color name="settingslib_spinner_title_color">@*android:color/e_primary_text_color_dark</color>
++    <!-- The text color of dropdown item title -->
++    <color name="settingslib_spinner_dropdown_color">@*android:color/e_primary_text_color_dark</color>
+ </resources>
+diff --git a/packages/SettingsLib/SettingsTheme/res/values-night-v36/styles.xml b/packages/SettingsLib/SettingsTheme/res/values-night-v36/styles.xml
+deleted file mode 100644
+index ca99d449b6b3..000000000000
+--- a/packages/SettingsLib/SettingsTheme/res/values-night-v36/styles.xml
++++ /dev/null
+@@ -1,24 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!--
+-    Copyright (C) 2025 The Android Open Source Project
+-
+-    Licensed under the Apache License, Version 2.0 (the "License");
+-    you may not use this file except in compliance with the License.
+-    You may obtain a copy of the License at
+-
+-         http://www.apache.org/licenses/LICENSE-2.0
+-
+-    Unless required by applicable law or agreed to in writing, software
+-    distributed under the License is distributed on an "AS IS" BASIS,
+-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-    See the License for the specific language governing permissions and
+-    limitations under the License.
+-  -->
+-<resources>
+-    <style name="Seekbar.SettingsLib" parent="@android:style/Widget.Material.SeekBar">
+-        <item name="android:thumbTint">@android:color/system_accent1_100</item>
+-        <item name="android:progressTint">@android:color/system_accent1_100</item>
+-        <item name="android:progressBackgroundTint">@android:color/system_neutral2_500</item>
+-        <item name="android:progressBackgroundTintMode">src_over</item>
+-    </style>
+-</resources>
+\ No newline at end of file
+diff --git a/packages/SettingsLib/SettingsTheme/res/values-v31/colors.xml b/packages/SettingsLib/SettingsTheme/res/values-v31/colors.xml
+index e000423784c6..fb0c65919943 100644
+--- a/packages/SettingsLib/SettingsTheme/res/values-v31/colors.xml
++++ b/packages/SettingsLib/SettingsTheme/res/values-v31/colors.xml
+@@ -36,22 +36,22 @@
+ 
+     <!-- Dialog accent color -->
+     <!--Deprecated. After sdk 35 don't use it, using materialColorPrimary-->
+-    <color name="settingslib_dialog_accent">@android:color/system_accent1_600</color>
++    <color name="settingslib_dialog_accent">@*android:color/e_accent</color>
+     <!-- Dialog background color -->
+-    <color name="settingslib_dialog_background">@color/settingslib_surface_light</color>
++    <color name="settingslib_dialog_background">@*android:color/e_floating_background</color>
+     <!-- Dialog error color. -->
+     <color name="settingslib_dialog_colorError">#d93025</color> <!-- Red 600 -->
+ 
+     <!--Deprecated. After sdk 35 don't use it.-->
+     <color name="settingslib_colorSurfaceVariant">@android:color/system_neutral2_100</color>
+ 
+-    <color name="settingslib_colorSurfaceHeader">@android:color/system_neutral1_100</color>
++    <color name="settingslib_colorSurfaceHeader">@*android:color/e_action_bar_light</color>
+ 
+     <!--Deprecated. After sdk 35 don't use it.-->
+-    <color name="settingslib_accent_device_default_dark">@android:color/system_accent1_100</color>
++    <color name="settingslib_accent_device_default_dark">@*android:color/e_accent_dark</color>
+ 
+     <!--Deprecated. After sdk 35 don't use it.-->
+-    <color name="settingslib_accent_device_default_light">@android:color/system_accent1_600</color>
++    <color name="settingslib_accent_device_default_light">@*android:color/e_accent_light</color>
+ 
+     <!--Deprecated. After sdk 35 don't use it.-->
+     <color name="settingslib_primary_dark_device_default_settings">@android:color/system_neutral1_900</color>
+@@ -88,8 +88,8 @@
+     <!--Deprecated. After sdk 35, don't use it-->
+     <color name="settingslib_colorSurface">@color/settingslib_surface_light</color>
+ 
+-    <color name="settingslib_spinner_title_color">@android:color/system_neutral1_900</color>
+-    <color name="settingslib_spinner_dropdown_color">@android:color/system_neutral2_700</color>
++    <color name="settingslib_spinner_title_color">@*android:color/e_primary_text_color</color>
++    <color name="settingslib_spinner_dropdown_color">@*android:color/e_primary_text_color</color>
+ 
+     <color name="settingslib_list_divider_color">@android:color/system_neutral1_200</color>
+ 
+diff --git a/packages/SettingsLib/SettingsTheme/res/values-v31/styles.xml b/packages/SettingsLib/SettingsTheme/res/values-v31/styles.xml
+index 44e6fcb48186..971d404c193b 100644
+--- a/packages/SettingsLib/SettingsTheme/res/values-v31/styles.xml
++++ b/packages/SettingsLib/SettingsTheme/res/values-v31/styles.xml
+@@ -35,14 +35,14 @@
+ 
+     <style name="Switch.SettingsLib" parent="@android:style/Widget.Material.CompoundButton.Switch">
+         <item name="android:minHeight">@dimen/settingslib_preferred_minimum_touch_target</item>
+-        <item name="android:track">@drawable/settingslib_switch_track</item>
+-        <item name="android:thumb">@drawable/settingslib_switch_thumb</item>
++        <item name="android:track">@*android:drawable/e_switch_track</item>
++        <item name="android:thumb">@*android:drawable/e_switch_thumb</item>
+     </style>
+ 
+     <style name="SwitchCompat.SettingsLib" parent="@style/Widget.AppCompat.CompoundButton.Switch">
+         <item name="android:minHeight">@dimen/settingslib_preferred_minimum_touch_target</item>
+-        <item name="track">@drawable/settingslib_switch_track</item>
+-        <item name="android:thumb">@drawable/settingslib_switch_thumb</item>
++        <item name="track">@*android:drawable/e_switch_track</item>
++        <item name="android:thumb">@*android:drawable/e_switch_thumb</item>
+     </style>
+ 
+     <style name="HorizontalProgressBar.SettingsLib"
+diff --git a/packages/SettingsLib/SettingsTheme/res/values-v34/colors.xml b/packages/SettingsLib/SettingsTheme/res/values-v34/colors.xml
+index 60642e617a81..de56decd5e30 100644
+--- a/packages/SettingsLib/SettingsTheme/res/values-v34/colors.xml
++++ b/packages/SettingsLib/SettingsTheme/res/values-v34/colors.xml
+@@ -17,10 +17,10 @@
+ 
+ <resources>
+     <!-- Material next state on color-->
+-    <color name="settingslib_state_on_color">@android:color/system_accent1_100</color>
++    <color name="settingslib_state_on_color">@*android:color/e_qs_background_light</color>
+ 
+     <!-- Material next state off color-->
+-    <color name="settingslib_state_off_color">@android:color/system_accent1_100</color>
++    <color name="settingslib_state_off_color">@*android:color/e_qs_background_light</color>
+ 
+     <!-- Material next thumb disable color-->
+     <color name="settingslib_thumb_disabled_color">@color/settingslib_thumb_off_color</color>
+@@ -44,10 +44,10 @@
+     <!--Deprecated. After sdk 35 don't use it. using materialColorOnSurfaceVariant-->
+     <color name="settingslib_text_color_secondary_device_default">@android:color/system_on_surface_variant_light</color>
+ 
+-    <color name="settingslib_materialColorPrimary">@android:color/system_primary_light</color>
++    <color name="settingslib_materialColorPrimary">@*android:color/e_accent_light</color>
+     <color name="settingslib_materialColorOnPrimary">@android:color/system_on_primary_light</color>
+-    <color name="settingslib_materialColorPrimaryContainer">@android:color/system_primary_container_light</color>
+-    <color name="settingslib_materialColorOnPrimaryContainer">@android:color/system_on_primary_container_light</color>
++    <color name="settingslib_materialColorPrimaryContainer">@*android:color/e_background_light</color>
++    <color name="settingslib_materialColorOnPrimaryContainer">@*android:color/e_primary_text_color_light</color>
+     <color name="settingslib_materialColorPrimaryInverse">@android:color/system_primary_dark</color>
+     <color name="settingslib_materialColorPrimaryFixed">@android:color/system_primary_fixed</color>
+     <color name="settingslib_materialColorPrimaryFixedDim">@android:color/system_primary_fixed_dim</color>
+@@ -55,7 +55,7 @@
+     <color name="settingslib_materialColorOnPrimaryFixedVariant">@android:color/system_on_primary_fixed_variant</color>
+     <color name="settingslib_materialColorSecondary">@android:color/system_secondary_light</color>
+     <color name="settingslib_materialColorOnSecondary">@android:color/system_on_secondary_light</color>
+-    <color name="settingslib_materialColorSecondaryContainer">@android:color/system_secondary_container_light</color>
++    <color name="settingslib_materialColorSecondaryContainer">@*android:color/e_floating_background_light</color>
+     <color name="settingslib_materialColorOnSecondaryContainer">@android:color/system_on_secondary_container_light</color>
+     <color name="settingslib_materialColorSecondaryFixed">@android:color/system_secondary_fixed</color>
+     <color name="settingslib_materialColorSecondaryFixedDim">@android:color/system_secondary_fixed_dim</color>
+@@ -85,7 +85,7 @@
+     <color name="settingslib_materialColorOnSurfaceInverse">@android:color/system_on_surface_dark</color>
+     <color name="settingslib_materialColorSurfaceBright">@android:color/system_surface_bright_light</color>
+     <color name="settingslib_materialColorSurfaceDim">@android:color/system_surface_dim_light</color>
+-    <color name="settingslib_materialColorSurfaceContainer">@android:color/system_surface_container_light</color>
++    <color name="settingslib_materialColorSurfaceContainer">@*android:color/e_background_light</color>
+     <color name="settingslib_materialColorSurfaceContainerLow">@android:color/system_surface_container_low_light</color>
+     <color name="settingslib_materialColorSurfaceContainerLowest">@android:color/system_surface_container_lowest_light</color>
+     <color name="settingslib_materialColorSurfaceContainerHigh">@android:color/system_surface_container_high_light</color>
+diff --git a/packages/SettingsLib/SettingsTheme/res/values-v36/colors.xml b/packages/SettingsLib/SettingsTheme/res/values-v36/colors.xml
+index b1b37b12c572..d28a2e28e44f 100644
+--- a/packages/SettingsLib/SettingsTheme/res/values-v36/colors.xml
++++ b/packages/SettingsLib/SettingsTheme/res/values-v36/colors.xml
+@@ -17,10 +17,10 @@
+ 
+ <resources>
+     <!-- Material next state on color-->
+-    <color name="settingslib_state_on_color">@color/settingslib_materialColorPrimaryContainer</color>
++    <color name="settingslib_state_on_color">@*android:color/e_qs_background_light</color>
+ 
+     <!-- Material next state off color-->
+-    <color name="settingslib_state_off_color">@color/settingslib_materialColorPrimaryContainer</color>
++    <color name="settingslib_state_off_color">@*android:color/e_qs_background_light</color>
+ 
+     <!-- Material next thumb disable color-->
+     <color name="settingslib_thumb_disabled_color">@color/settingslib_materialColorOutline</color>
+@@ -38,20 +38,20 @@
+     <color name="settingslib_track_off_color">@color/settingslib_materialColorSurfaceContainerHighest</color>
+ 
+     <!-- Dialog text button color. -->
+-    <color name="settingslib_dialog_accent">@color/settingslib_materialColorPrimary</color>
++    <color name="settingslib_dialog_accent">@*android:color/e_accent_light</color>
+ 
+     <!-- Dialog background color. -->
+-    <color name="settingslib_dialog_background">@color/settingslib_materialColorSurfaceContainerHigh</color>
++    <color name="settingslib_dialog_background">@*android:color/e_floating_background_light</color>
+ 
+     <!-- Material next track outline color-->
+     <color name="settingslib_track_online_color">@color/settingslib_switch_track_outline_color</color>
+ 
+-    <color name="settingslib_colorSurfaceHeader">@color/settingslib_materialColorSurfaceVariant</color>
++    <color name="settingslib_colorSurfaceHeader">@*android:color/e_action_bar_light</color>
+ 
+     <color name="settingslib_text_color_preference_category_title">@color/settingslib_materialColorPrimary</color>
+ 
+     <!-- The text color of spinner title -->
+-    <color name="settingslib_spinner_title_color">@color/settingslib_materialColorOnPrimaryContainer</color>
++    <color name="settingslib_spinner_title_color">@*android:color/e_primary_text_color_light</color>
+     <!-- The text color of dropdown item title -->
+-    <color name="settingslib_spinner_dropdown_color">@color/settingslib_materialColorOnPrimaryContainer</color>
++    <color name="settingslib_spinner_dropdown_color">@*android:color/e_primary_text_color_light</color>
+ </resources>
+\ No newline at end of file
+diff --git a/packages/SettingsLib/SettingsTheme/res/values-v36/styles.xml b/packages/SettingsLib/SettingsTheme/res/values-v36/styles.xml
+index a31983a04753..3f94d670e227 100644
+--- a/packages/SettingsLib/SettingsTheme/res/values-v36/styles.xml
++++ b/packages/SettingsLib/SettingsTheme/res/values-v36/styles.xml
+@@ -16,9 +16,9 @@
+   -->
+ <resources>
+     <style name="Seekbar.SettingsLib" parent="@android:style/Widget.Material.SeekBar">
+-        <item name="android:thumbTint">@android:color/system_accent1_800</item>
+-        <item name="android:progressTint">@android:color/system_accent1_800</item>
+-        <item name="android:progressBackgroundTint">@color/settingslib_neutral_variant55</item>
++        <item name="android:thumbTint">@*android:color/e_accent</item>
++        <item name="android:progressTint">@*android:color/e_accent</item>
++        <item name="android:progressBackgroundTint">@*android:color/e_alpha_accent</item>
+         <item name="android:progressBackgroundTintMode">src_over</item>
+     </style>
+ </resources>
+\ No newline at end of file
+diff --git a/packages/SettingsLib/SettingsTheme/res/values-v36/themes.xml b/packages/SettingsLib/SettingsTheme/res/values-v36/themes.xml
+index 54bd069f2fc3..7ac4d243e31f 100644
+--- a/packages/SettingsLib/SettingsTheme/res/values-v36/themes.xml
++++ b/packages/SettingsLib/SettingsTheme/res/values-v36/themes.xml
+@@ -18,7 +18,7 @@
+ <resources>
+     <style name="Theme.SettingsBase_v36" parent="Theme.SettingsBase_v33" >
+         <item name="android:colorAccent">@color/settingslib_materialColorPrimary</item>
+-        <item name="android:colorBackground">@color/settingslib_materialColorSurfaceContainer</item>
++        <item name="android:colorBackground">@*android:color/e_background</item>
+         <item name="android:textColorPrimary">@color/settingslib_materialColorOnSurface</item>
+         <item name="android:textColorSecondary">@color/settingslib_text_color_secondary</item>
+         <item name="android:textColorTertiary">@color/settingslib_materialColorOutline</item>
+@@ -26,7 +26,9 @@
+         <!-- Set up edge-to-edge configuration for top app bar -->
+         <item name="android:clipToPadding">false</item>
+         <item name="android:clipChildren">false</item>
++        <item name="android:switchStyle">@style/Switch.SettingsLib</item>
++        <item name="switchStyle">@style/SwitchCompat.SettingsLib</item>
+     </style>
+ 
+     <style name="Theme.SettingsBase" parent="Theme.SettingsBase_v36" />
+-</resources>
+\ No newline at end of file
++</resources>

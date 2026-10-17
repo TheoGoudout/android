@@ -1,0 +1,25 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishith.khanna@gmail.com>
+Date: Mon, 1 Jun 2026 18:56:56 +0530
+Subject: [PATCH 24/24] fix: long pressing notifications crashing SystemUI
+
+This is a regression from March security patch
+
+(cherry picked from commit 15fedcb11df9bd628accdfaf994c2ec69564a766)
+---
+ .../statusbar/notification/row/NotificationGutsManager.java     | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/notification/row/NotificationGutsManager.java b/packages/SystemUI/src/com/android/systemui/statusbar/notification/row/NotificationGutsManager.java
+index b1f3bba0a734..1384134b88b1 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/notification/row/NotificationGutsManager.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/notification/row/NotificationGutsManager.java
+@@ -802,7 +802,7 @@ public class NotificationGutsManager implements NotifGutsViewManager, CoreStarta
+         if (row.getEntryAdapter().isBundle()) {
+             return false;
+         }
+-        int userId = row.getEntryAdapter().getSbn().getNormalizedUserId();
++        int userId = row.getEntryLegacy().getSbn().getNormalizedUserId();
+         return mUserManager.isManagedProfile(userId)
+                 && mLockscreenUserManager.isLockscreenPublicMode(userId);
+     }

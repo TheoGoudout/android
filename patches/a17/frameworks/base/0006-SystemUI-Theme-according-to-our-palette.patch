@@ -1,0 +1,745 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishithkhanna@e.email>
+Date: Tue, 20 Jan 2026 20:04:16 +0530
+Subject: [PATCH 06/24] SystemUI: Theme according to our palette
+
+Theme quick settings to match our palette
+Theme switches in various sub dialogs in quick settings
+Theme screen record dialog
+Theme internet dialog
+Theme power menu
+
+[a17: /e/ colours re-applied onto the Android 17 resources (which moved from
+ @androidprv:color to @color/materialColor* tokens); QS shade/under-surface use
+ the day/night e_qs aliases because a17 has no night QuickSettings style; the
+ clipboard chip text uses e_background (overlayButtonTextColor is gone);
+ global_actions_lite and media_dialog colours stay as a17 defines them; three
+ files removed upstream are not re-added]
+
+(cherry picked from commit d14df14b509c48d78b9b7f3bb820f33dd6b6365a)
+---
+ .../spa/framework/theme/MaterialColors.kt     | 40 +++++++++++++++----
+ .../color/numpad_key_color_secondary.xml      |  2 +-
+ .../drawable/ic_backspace_24dp.xml            |  2 +-
+ .../drawable/ic_keyboard_tab_36dp.xml         |  2 +-
+ .../kg_emergency_button_background.xml        |  2 +-
+ .../SystemUI/res-keyguard/values/styles.xml   |  2 +-
+ .../color/connected_network_primary_color.xml |  2 +-
+ .../qs_dialog_btn_filled_large_background.xml |  4 +-
+ .../color/qs_dialog_btn_filled_large_text.xml |  4 +-
+ .../res/drawable/action_chip_background.xml   |  2 +-
+ .../clipboard_minimized_background.xml        |  2 +-
+ .../grant_permissions_buttons_bottom.xml      |  2 +-
+ .../grant_permissions_buttons_top.xml         |  2 +-
+ .../drawable/notif_footer_btn_background.xml  |  2 +-
+ .../res/drawable/notification_material_bg.xml |  2 +-
+ ...ecord_options_spinner_popup_background.xml |  2 +-
+ .../screenrecord_spinner_background.xml       |  2 +-
+ .../drawable/screenshot_edit_background.xml   |  2 +-
+ .../drawable/settingslib_thumb_selector.xml   | 29 ++++----------
+ .../drawable/settingslib_track_selector.xml   | 29 ++++----------
+ .../drawable/shelf_action_chip_background.xml |  2 +-
+ .../SystemUI/res/layout/clipboard_overlay.xml |  6 +--
+ .../SystemUI/res/layout/long_screenshot.xml   |  2 +-
+ .../res/layout/privacy_dialog_item_v2.xml     |  2 +-
+ .../screen_share_dialog_spinner_item_text.xml |  2 +-
+ .../SystemUI/res/layout/shelf_action_chip.xml |  4 +-
+ packages/SystemUI/res/values/colors.xml       |  6 +--
+ packages/SystemUI/res/values/dimens.xml       |  2 +-
+ packages/SystemUI/res/values/styles.xml       | 22 +++++-----
+ .../constants/KeyguardBouncerConstants.kt     |  3 +-
+ .../navigationbar/gestural/BackPanel.kt       | 22 +++-------
+ .../systemui/privacy/OngoingPrivacyChip.kt    |  6 +--
+ .../statusbar/phone/ScrimController.java      |  4 +-
+ .../policy/ui/dialog/ModesDialogDelegate.kt   |  3 +-
+ 34 files changed, 104 insertions(+), 118 deletions(-)
+
+diff --git a/packages/SettingsLib/Spa/spa/src/com/android/settingslib/spa/framework/theme/MaterialColors.kt b/packages/SettingsLib/Spa/spa/src/com/android/settingslib/spa/framework/theme/MaterialColors.kt
+index d6704a534c3a..45f1dd1c65c1 100644
+--- a/packages/SettingsLib/Spa/spa/src/com/android/settingslib/spa/framework/theme/MaterialColors.kt
++++ b/packages/SettingsLib/Spa/spa/src/com/android/settingslib/spa/framework/theme/MaterialColors.kt
+@@ -17,6 +17,7 @@
+ package com.android.settingslib.spa.framework.theme
+ 
+ import android.os.Build
++import android.content.Context
+ import androidx.compose.material3.ColorScheme
+ import androidx.compose.material3.darkColorScheme
+ import androidx.compose.material3.dynamicDarkColorScheme
+@@ -31,17 +32,40 @@ import androidx.compose.ui.platform.LocalContext
+ internal fun materialColorScheme(isDarkTheme: Boolean): ColorScheme {
+     val context = LocalContext.current
+     return remember(isDarkTheme) {
+-        when {
+-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+-                if (isDarkTheme) dynamicDarkColorScheme(context)
+-                else dynamicLightColorScheme(context)
+-            }
+-            isDarkTheme -> darkColorScheme()
+-            else -> lightColorScheme()
+-        }
++      customTheme(isDarkTheme, context)
+     }
+ }
+ 
++private fun customTheme(isDarkTheme: Boolean, context: Context): ColorScheme {
++  return if (isDarkTheme) {
++    dynamicDarkColorScheme(context)
++      .copy(
++        primary = Color(0xFF5DB2FF),
++        secondaryContainer = Color(0xFF1E1E1E),
++        onSecondaryContainer = Color(0xDEFFFFFF),
++        primaryContainer = Color(0xFF121212),
++        onPrimaryContainer = Color(0xDEFFFFFF),
++        surfaceContainer = Color(0xFF121212),
++        surfaceVariant = Color(0xFF272727),
++        surface = Color(0xFF272727),
++        surfaceContainerHigh = Color(0xFF1E1E1E),
++      )
++  } else {
++    dynamicLightColorScheme(context)
++      .copy(
++        primary = Color(0xFF0086FF),
++        secondaryContainer = Color(0xFFFFFFFF),
++        onSecondaryContainer = Color(0xDE000000),
++        primaryContainer = Color(0xFFFFFFFF),
++        onPrimaryContainer = Color(0xDE000000),
++        surfaceContainer = Color(0xFFFFFFFF),
++        surfaceVariant = Color(0xFFFFFFFF),
++        surface = Color(0xFFF1F0F3),
++        surfaceContainerHigh = Color(0xFFFFFFFF),
++      )
++  }
++}
++
+ val ColorScheme.divider: Color
+     get() = onSurface.copy(SettingsOpacity.Divider)
+ 
+diff --git a/packages/SystemUI/res-keyguard/color/numpad_key_color_secondary.xml b/packages/SystemUI/res-keyguard/color/numpad_key_color_secondary.xml
+index a6889e9b97e2..ce7e6a57b532 100644
+--- a/packages/SystemUI/res-keyguard/color/numpad_key_color_secondary.xml
++++ b/packages/SystemUI/res-keyguard/color/numpad_key_color_secondary.xml
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <selector xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:androidprv="http://schemas.android.com/apk/prv/res/android">
+-    <item android:color="@color/materialColorSecondaryFixedDim"/>
++    <item android:color="@*android:color/e_accent"/>
+ </selector>
+\ No newline at end of file
+diff --git a/packages/SystemUI/res-keyguard/drawable/ic_backspace_24dp.xml b/packages/SystemUI/res-keyguard/drawable/ic_backspace_24dp.xml
+index 1eec8204a7f2..dd35dd91f5d6 100644
+--- a/packages/SystemUI/res-keyguard/drawable/ic_backspace_24dp.xml
++++ b/packages/SystemUI/res-keyguard/drawable/ic_backspace_24dp.xml
+@@ -20,6 +20,6 @@
+         android:viewportWidth="24.0"
+         android:viewportHeight="24.0">
+     <path
+-        android:fillColor="?android:attr/textColorPrimaryInverse"
++        android:fillColor="?android:attr/colorBackground"
+         android:pathData="M9,15.59L12.59,12L9,8.41L10.41,7L14,10.59L17.59,7L19,8.41L15.41,12L19,15.59L17.59,17L14,13.41L10.41,17L9,15.59zM21,6H8l-4.5,6L8,18h13V6M21,4c1.1,0 2,0.9 2,2v12c0,1.1 -0.9,2 -2,2H8c-0.63,0 -1.22,-0.3 -1.6,-0.8L1,12l5.4,-7.2C6.78,4.3 7.37,4 8,4H21L21,4z"/>
+ </vector>
+diff --git a/packages/SystemUI/res-keyguard/drawable/ic_keyboard_tab_36dp.xml b/packages/SystemUI/res-keyguard/drawable/ic_keyboard_tab_36dp.xml
+index 2ad5e54eb92a..6ab18d610c3c 100644
+--- a/packages/SystemUI/res-keyguard/drawable/ic_keyboard_tab_36dp.xml
++++ b/packages/SystemUI/res-keyguard/drawable/ic_keyboard_tab_36dp.xml
+@@ -20,7 +20,7 @@
+      android:viewportWidth="36"
+      android:width="36sp">
+ 
+-  <path android:fillColor="?android:attr/textColorPrimaryInverse"
++  <path android:fillColor="?android:attr/colorBackground"
+         android:pathData="M17.59,13.41L21.17,17H7v2h14.17l-3.59,3.59L19,24l6,-6l-6,-6L17.59,
+                           13.41zM26,12v12h2V12H26z"/>
+ </vector>
+diff --git a/packages/SystemUI/res-keyguard/drawable/kg_emergency_button_background.xml b/packages/SystemUI/res-keyguard/drawable/kg_emergency_button_background.xml
+index b02c14ed9af2..2b1512f130dc 100644
+--- a/packages/SystemUI/res-keyguard/drawable/kg_emergency_button_background.xml
++++ b/packages/SystemUI/res-keyguard/drawable/kg_emergency_button_background.xml
+@@ -19,7 +19,7 @@
+     android:color="?attr/wallpaperTextColorSecondary">
+     <item android:id="@android:id/background">
+         <shape android:shape="rectangle">
+-            <solid android:color="@color/materialColorTertiaryFixed"/>
++            <solid android:color="@*android:color/e_accent"/>
+             <corners android:radius="24dp"/>
+         </shape>
+     </item>
+diff --git a/packages/SystemUI/res-keyguard/values/styles.xml b/packages/SystemUI/res-keyguard/values/styles.xml
+index b9754b86b5e1..8a0cc6ba8cb5 100644
+--- a/packages/SystemUI/res-keyguard/values/styles.xml
++++ b/packages/SystemUI/res-keyguard/values/styles.xml
+@@ -44,7 +44,7 @@
+         <item name="android:textColor">@color/materialColorOnSurface</item>
+     </style>
+     <style name="Keyguard.TextView.EmergencyButton" parent="Theme.SystemUI">
+-        <item name="android:textColor">@color/materialColorOnTertiaryFixed</item>
++        <item name="android:textColor">?android:attr/colorBackground</item>
+         <item name="android:textSize">16sp</item>
+         <item name="android:background">@drawable/kg_emergency_button_background</item>
+         <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
+diff --git a/packages/SystemUI/res/color/connected_network_primary_color.xml b/packages/SystemUI/res/color/connected_network_primary_color.xml
+index f41caee16486..5f8008859d75 100644
+--- a/packages/SystemUI/res/color/connected_network_primary_color.xml
++++ b/packages/SystemUI/res/color/connected_network_primary_color.xml
+@@ -16,5 +16,5 @@
+ 
+ <selector xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:androidprv="http://schemas.android.com/apk/prv/res/android">
+-    <item android:color="@color/materialColorOnPrimaryContainer" />
++    <item android:color="@*android:color/e_primary_text_color" />
+ </selector>
+\ No newline at end of file
+diff --git a/packages/SystemUI/res/color/qs_dialog_btn_filled_large_background.xml b/packages/SystemUI/res/color/qs_dialog_btn_filled_large_background.xml
+index a04482c2b5bb..fed4f0779c0d 100644
+--- a/packages/SystemUI/res/color/qs_dialog_btn_filled_large_background.xml
++++ b/packages/SystemUI/res/color/qs_dialog_btn_filled_large_background.xml
+@@ -16,7 +16,7 @@
+ <selector xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:androidprv="http://schemas.android.com/apk/prv/res/android">
+     <item android:state_enabled="false"
+-        android:color="@color/materialColorPrimaryFixed"
++        android:color="@*android:color/e_accent"
+         android:alpha="0.30"/>
+-    <item android:color="@color/materialColorPrimaryFixed"/>
++    <item android:color="@*android:color/e_accent"/>
+ </selector>
+\ No newline at end of file
+diff --git a/packages/SystemUI/res/color/qs_dialog_btn_filled_large_text.xml b/packages/SystemUI/res/color/qs_dialog_btn_filled_large_text.xml
+index 183bc3dba8a1..7d34e3ef1cef 100644
+--- a/packages/SystemUI/res/color/qs_dialog_btn_filled_large_text.xml
++++ b/packages/SystemUI/res/color/qs_dialog_btn_filled_large_text.xml
+@@ -16,7 +16,7 @@
+ <selector xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:androidprv="http://schemas.android.com/apk/prv/res/android">
+     <item android:state_enabled="false"
+-        android:color="@color/materialColorOnPrimaryFixed"
++        android:color="@*android:color/e_background"
+         android:alpha="0.30"/>
+-    <item android:color="@color/materialColorOnPrimaryFixed"/>
++    <item android:color="@*android:color/e_background"/>
+ </selector>
+\ No newline at end of file
+diff --git a/packages/SystemUI/res/drawable/action_chip_background.xml b/packages/SystemUI/res/drawable/action_chip_background.xml
+index 7f63af56256b..e837068de5a6 100644
+--- a/packages/SystemUI/res/drawable/action_chip_background.xml
++++ b/packages/SystemUI/res/drawable/action_chip_background.xml
+@@ -20,7 +20,7 @@
+     android:color="@color/overlay_button_ripple">
+     <item android:id="@android:id/background">
+         <shape android:shape="rectangle">
+-            <solid android:color="@color/materialColorSecondary"/>
++            <solid android:color="@*android:color/e_accent"/>
+             <corners android:radius="@dimen/overlay_button_corner_radius"/>
+         </shape>
+     </item>
+diff --git a/packages/SystemUI/res/drawable/clipboard_minimized_background.xml b/packages/SystemUI/res/drawable/clipboard_minimized_background.xml
+index cf2a6c2f24ef..94c04eb0fd4c 100644
+--- a/packages/SystemUI/res/drawable/clipboard_minimized_background.xml
++++ b/packages/SystemUI/res/drawable/clipboard_minimized_background.xml
+@@ -18,6 +18,6 @@
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
+     android:shape="rectangle">
+-    <solid android:color="@color/materialColorSecondary"/>
++    <solid android:color="@*android:color/e_accent"/>
+     <corners android:radius="10dp"/>
+ </shape>
+diff --git a/packages/SystemUI/res/drawable/grant_permissions_buttons_bottom.xml b/packages/SystemUI/res/drawable/grant_permissions_buttons_bottom.xml
+index a800f15b297e..af59acdea6df 100644
+--- a/packages/SystemUI/res/drawable/grant_permissions_buttons_bottom.xml
++++ b/packages/SystemUI/res/drawable/grant_permissions_buttons_bottom.xml
+@@ -17,7 +17,7 @@
+ 
+ <shape xmlns:android="http://schemas.android.com/apk/res/android"
+        android:shape="rectangle">
+-    <solid android:color="@android:color/system_accent1_100"/>
++    <solid android:color="@*android:color/e_accent"/>
+     <corners android:topLeftRadius="4dp" android:topRightRadius="4dp"
+              android:bottomLeftRadius="12dp" android:bottomRightRadius="12dp"/>
+ </shape>
+\ No newline at end of file
+diff --git a/packages/SystemUI/res/drawable/grant_permissions_buttons_top.xml b/packages/SystemUI/res/drawable/grant_permissions_buttons_top.xml
+index 2bf803e340ec..19f4ecbe2e55 100644
+--- a/packages/SystemUI/res/drawable/grant_permissions_buttons_top.xml
++++ b/packages/SystemUI/res/drawable/grant_permissions_buttons_top.xml
+@@ -17,7 +17,7 @@
+ 
+ <shape xmlns:android="http://schemas.android.com/apk/res/android"
+        android:shape="rectangle">
+-    <solid android:color="@android:color/system_accent1_100"/>
++    <solid android:color="@*android:color/e_accent"/>
+     <corners android:topLeftRadius="12dp" android:topRightRadius="12dp"
+              android:bottomLeftRadius="4dp" android:bottomRightRadius="4dp"/>
+ </shape>
+\ No newline at end of file
+diff --git a/packages/SystemUI/res/drawable/notif_footer_btn_background.xml b/packages/SystemUI/res/drawable/notif_footer_btn_background.xml
+index 7ffcc53e6df1..ee7f91ab5562 100644
+--- a/packages/SystemUI/res/drawable/notif_footer_btn_background.xml
++++ b/packages/SystemUI/res/drawable/notif_footer_btn_background.xml
+@@ -29,7 +29,7 @@
+                 <!-- TODO(b/294830092): Update to the blur surface effect color token when
+                                         the resource workaround is resolved and
+                                         notification_shade_blur is enabled. -->
+-                <solid android:color="@color/materialColorSurfaceContainerHigh" />
++                <solid android:color="@*android:color/e_notification_background" />
+             </shape>
+         </inset>
+     </item>
+diff --git a/packages/SystemUI/res/drawable/notification_material_bg.xml b/packages/SystemUI/res/drawable/notification_material_bg.xml
+index eb8d70c23267..8697aa08f77b 100644
+--- a/packages/SystemUI/res/drawable/notification_material_bg.xml
++++ b/packages/SystemUI/res/drawable/notification_material_bg.xml
+@@ -20,7 +20,7 @@
+         android:color="?android:attr/colorControlHighlight">
+     <item>
+         <shape>
+-            <solid android:color="@color/materialColorSurfaceContainerHigh" />
++            <solid android:color="@*android:color/e_notification_background" />
+         </shape>
+     </item>
+     <item>
+diff --git a/packages/SystemUI/res/drawable/screenrecord_options_spinner_popup_background.xml b/packages/SystemUI/res/drawable/screenrecord_options_spinner_popup_background.xml
+index 3735703ccc0a..33354abdcaa8 100644
+--- a/packages/SystemUI/res/drawable/screenrecord_options_spinner_popup_background.xml
++++ b/packages/SystemUI/res/drawable/screenrecord_options_spinner_popup_background.xml
+@@ -17,5 +17,5 @@
+         xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
+         android:shape="rectangle">
+     <corners android:radius="@dimen/screenrecord_spinner_background_radius"/>
+-    <solid android:color="@color/materialColorSurfaceContainer" />
++    <solid android:color="@*android:color/e_floating_background" />
+ </shape>
+\ No newline at end of file
+diff --git a/packages/SystemUI/res/drawable/screenrecord_spinner_background.xml b/packages/SystemUI/res/drawable/screenrecord_spinner_background.xml
+index 4ac00fac028b..5f64bd6879e6 100644
+--- a/packages/SystemUI/res/drawable/screenrecord_spinner_background.xml
++++ b/packages/SystemUI/res/drawable/screenrecord_spinner_background.xml
+@@ -19,5 +19,5 @@
+         android:shape="rectangle"
+         android:padding="12dp">
+     <corners android:radius="24dp"/>
+-    <solid android:color="@color/materialColorSecondaryContainer" />
++    <solid android:color="@*android:color/e_floating_background" />
+ </shape>
+\ No newline at end of file
+diff --git a/packages/SystemUI/res/drawable/screenshot_edit_background.xml b/packages/SystemUI/res/drawable/screenshot_edit_background.xml
+index ea82fb4d19c1..c1e4632c9fa4 100644
+--- a/packages/SystemUI/res/drawable/screenshot_edit_background.xml
++++ b/packages/SystemUI/res/drawable/screenshot_edit_background.xml
+@@ -20,7 +20,7 @@
+         android:color="@color/overlay_button_ripple">
+     <item android:id="@android:id/background">
+         <shape android:shape="rectangle">
+-            <solid android:color="@color/materialColorSecondaryFixedDim"/>
++            <solid android:color="@*android:color/e_accent"/>
+             <corners android:radius="16dp"/>
+         </shape>
+     </item>
+diff --git a/packages/SystemUI/res/drawable/settingslib_thumb_selector.xml b/packages/SystemUI/res/drawable/settingslib_thumb_selector.xml
+index 06bb779b91ef..fd5a053739eb 100644
+--- a/packages/SystemUI/res/drawable/settingslib_thumb_selector.xml
++++ b/packages/SystemUI/res/drawable/settingslib_thumb_selector.xml
+@@ -1,22 +1,9 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<!--
+-  Copyright (C) 2020 The Android Open Source Project
+-
+-  Licensed under the Apache License, Version 2.0 (the "License");
+-  you may not use this file except in compliance with the License.
+-  You may obtain a copy of the License at
+-
+-       http://www.apache.org/licenses/LICENSE-2.0
+-
+-  Unless required by applicable law or agreed to in writing, software
+-  distributed under the License is distributed on an "AS IS" BASIS,
+-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  See the License for the specific language governing permissions and
+-  limitations under the License.
+-  -->
+-
+-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+-    <item android:drawable="@drawable/settingslib_thumb_on" android:state_checked="true"/>
+-    <item android:drawable="@drawable/settingslib_thumb_off" android:state_checked="false"/>
+-    <item android:drawable="@drawable/settingslib_thumb_disabled" android:state_enabled="false"/>
+-</selector>
++<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
++    <item android:top="2dp" android:left="2dp" android:right="2dp" android:bottom="2dp">
++        <shape android:shape="oval" >
++            <size android:height="20dp" android:width="20dp" />
++            <solid android:color="@*android:color/e_switch_thumb_color" />
++        </shape>
++    </item>
++</layer-list>
+diff --git a/packages/SystemUI/res/drawable/settingslib_track_selector.xml b/packages/SystemUI/res/drawable/settingslib_track_selector.xml
+index a38c3b4241a3..58183d545e43 100644
+--- a/packages/SystemUI/res/drawable/settingslib_track_selector.xml
++++ b/packages/SystemUI/res/drawable/settingslib_track_selector.xml
+@@ -1,22 +1,9 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<!--
+-  Copyright (C) 2020 The Android Open Source Project
+-
+-  Licensed under the Apache License, Version 2.0 (the "License");
+-  you may not use this file except in compliance with the License.
+-  You may obtain a copy of the License at
+-
+-       http://www.apache.org/licenses/LICENSE-2.0
+-
+-  Unless required by applicable law or agreed to in writing, software
+-  distributed under the License is distributed on an "AS IS" BASIS,
+-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  See the License for the specific language governing permissions and
+-  limitations under the License.
+-  -->
+-
+-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+-    <item android:drawable="@drawable/settingslib_track_on_background" android:state_checked="true"/>
+-    <item android:drawable="@drawable/settingslib_track_off_background" android:state_checked="false"/>
+-    <item android:drawable="@drawable/settingslib_track_disabled_background" android:state_enabled="false"/>
+-</selector>
++<shape
++    xmlns:android="http://schemas.android.com/apk/res/android"
++    android:shape="rectangle"
++    android:width="36dp"
++    android:height="20dp">
++    <solid android:color="@*android:color/e_switch_track_color" />
++    <corners android:radius="50dp" />
++</shape>
+diff --git a/packages/SystemUI/res/drawable/shelf_action_chip_background.xml b/packages/SystemUI/res/drawable/shelf_action_chip_background.xml
+index e35333f86421..2cf5dc61b4fe 100644
+--- a/packages/SystemUI/res/drawable/shelf_action_chip_background.xml
++++ b/packages/SystemUI/res/drawable/shelf_action_chip_background.xml
+@@ -20,7 +20,7 @@
+     android:color="@color/overlay_button_ripple">
+     <item android:id="@android:id/background">
+         <shape android:shape="rectangle">
+-            <solid android:color="@color/materialColorSecondary"/>
++            <solid android:color="@*android:color/e_accent"/>
+             <corners android:radius="10000dp"/>  <!-- fully-rounded radius -->
+         </shape>
+     </item>
+diff --git a/packages/SystemUI/res/layout/clipboard_overlay.xml b/packages/SystemUI/res/layout/clipboard_overlay.xml
+index dbee8232796b..7894650a3b59 100644
+--- a/packages/SystemUI/res/layout/clipboard_overlay.xml
++++ b/packages/SystemUI/res/layout/clipboard_overlay.xml
+@@ -149,9 +149,9 @@
+                   android:autoSizeTextType="uniform"
+                   android:autoSizeMinTextSize="@dimen/clipboard_overlay_min_font"
+                   android:autoSizeMaxTextSize="@dimen/clipboard_overlay_max_font"
+-                  android:textColor="@color/materialColorOnSecondary"
+-                  android:textColorLink="@color/materialColorOnSecondary"
+-                  android:background="@color/materialColorSecondary"
++                  android:textColor="@*android:color/e_background"
++                  android:textColorLink="@*android:color/e_background"
++                  android:background="@*android:color/e_accent"
+                   android:layout_width="@dimen/clipboard_preview_size"
+                   android:layout_height="@dimen/clipboard_preview_size"/>
+         <ImageView
+diff --git a/packages/SystemUI/res/layout/long_screenshot.xml b/packages/SystemUI/res/layout/long_screenshot.xml
+index 6305657e18eb..6807e537bbdd 100644
+--- a/packages/SystemUI/res/layout/long_screenshot.xml
++++ b/packages/SystemUI/res/layout/long_screenshot.xml
+@@ -147,7 +147,7 @@
+         android:background="@drawable/screenshot_edit_background"
+         android:src="@drawable/ic_screenshot_edit"
+         android:contentDescription="@string/screenshot_edit_label"
+-        android:tint="@color/materialColorOnSecondaryFixed"
++        android:tint="@*android:color/e_background"
+         android:padding="16dp"
+         android:scaleType="fitCenter"
+         app:layout_constraintBottom_toBottomOf="parent"
+diff --git a/packages/SystemUI/res/layout/privacy_dialog_item_v2.xml b/packages/SystemUI/res/layout/privacy_dialog_item_v2.xml
+index 7b30ae1902c5..d148122bcb58 100644
+--- a/packages/SystemUI/res/layout/privacy_dialog_item_v2.xml
++++ b/packages/SystemUI/res/layout/privacy_dialog_item_v2.xml
+@@ -25,7 +25,7 @@
+     android:foreground="?android:attr/selectableItemBackground"
+     app:cardCornerRadius="28dp"
+     app:cardElevation="0dp"
+-    app:cardBackgroundColor="@color/materialColorSurfaceBright">
++    app:cardBackgroundColor="@*android:color/e_floating_background_variant">
+     <LinearLayout
+         android:orientation="vertical"
+         android:layout_width="match_parent"
+diff --git a/packages/SystemUI/res/layout/screen_share_dialog_spinner_item_text.xml b/packages/SystemUI/res/layout/screen_share_dialog_spinner_item_text.xml
+index 1d644848ca7c..cddc2fb49ed4 100644
+--- a/packages/SystemUI/res/layout/screen_share_dialog_spinner_item_text.xml
++++ b/packages/SystemUI/res/layout/screen_share_dialog_spinner_item_text.xml
+@@ -30,7 +30,7 @@
+         android:ellipsize="marquee"
+         android:singleLine="true"
+         android:textAppearance="?android:attr/textAppearanceMedium"
+-        android:textColor="@color/menu_item_text" />
++        android:textColor="?android:attr/textColorPrimary" />
+ 
+     <TextView
+         android:id="@android:id/text2"
+diff --git a/packages/SystemUI/res/layout/shelf_action_chip.xml b/packages/SystemUI/res/layout/shelf_action_chip.xml
+index 71040ba3b122..b06bd9d5d1cf 100644
+--- a/packages/SystemUI/res/layout/shelf_action_chip.xml
++++ b/packages/SystemUI/res/layout/shelf_action_chip.xml
+@@ -27,7 +27,7 @@
+     >
+     <ImageView
+         android:id="@+id/overlay_action_chip_icon"
+-        android:tint="@color/materialColorOnSecondary"
++        android:tint="@*android:color/e_background"
+         android:tintMode="src_in"
+         android:layout_width="@dimen/overlay_action_chip_icon_size"
+         android:layout_height="@dimen/overlay_action_chip_icon_size"/>
+@@ -37,5 +37,5 @@
+         android:layout_height="wrap_content"
+         android:fontFamily="@*android:string/config_headlineFontFamilyMedium"
+         android:textSize="@dimen/overlay_action_chip_text_size"
+-        android:textColor="@color/materialColorOnSecondary"/>
++        android:textColor="@*android:color/e_background"/>
+ </LinearLayout>
+diff --git a/packages/SystemUI/res/values/colors.xml b/packages/SystemUI/res/values/colors.xml
+index 49e2bebedcdc..c4da6f1bebd9 100644
+--- a/packages/SystemUI/res/values/colors.xml
++++ b/packages/SystemUI/res/values/colors.xml
+@@ -52,7 +52,7 @@
+     <color name="global_actions_grid_background_blur_fallback">@android:color/system_accent1_200</color>
+ 
+     <!-- Colors for Power Menu Lite -->
+-    <color name="global_actions_lite_button_background_focused">#808080</color>
++    <color name="global_actions_lite_button_background_focused">#666666</color>
+     <color name="global_actions_lite_emergency_background">#D8372D</color>
+     <color name="global_actions_lite_emergency_icon">#FFFFFF</color>
+ 
+@@ -71,7 +71,7 @@
+     <!-- Color of background circle of user avatars in keyguard user switcher -->
+     <color name="user_avatar_color_bg">?android:attr/colorBackgroundFloating</color>
+     <!-- Color of border for keyguard password input when focused -->
+-    <color name="bouncer_password_focus_color">@*android:color/system_secondary_light</color>
++    <color name="bouncer_password_focus_color">@*android:color/e_accent</color>
+ 
+     <!-- Icon color for user avatars in user switcher quick settings -->
+     <color name="qs_user_switcher_avatar_icon_color">#3C4043</color>
+@@ -244,7 +244,7 @@
+     <color name="screenrecord_status_color">#E94235</color>
+     <color name="screenrecord_icon_color">#D93025</color><!-- red 600 -->
+ 
+-    <color name="privacy_chip_background">#3ddc84</color>
++    <color name="privacy_chip_background">@*android:color/e_accent</color>
+     <color name="privacy_chip_location_only_background">#4e8ff8</color>
+     <color name="privacy_chip_location_only_outline">#ffffff</color>
+ 
+diff --git a/packages/SystemUI/res/values/dimens.xml b/packages/SystemUI/res/values/dimens.xml
+index 937b1a03c4d0..fd5ce8b635fa 100644
+--- a/packages/SystemUI/res/values/dimens.xml
++++ b/packages/SystemUI/res/values/dimens.xml
+@@ -1890,7 +1890,7 @@
+     <!-- Size of switch thumb -->
+     <dimen name="settingslib_switch_thumb_size">20dp</dimen>
+     <!-- Width of switch track -->
+-    <dimen name="settingslib_switch_track_width">52dp</dimen>
++    <dimen name="settingslib_switch_track_width">48dp</dimen>
+     <!-- Height of switch track -->
+     <dimen name="settingslib_switch_track_height">28dp</dimen>
+     <!-- Radius of switch track -->
+diff --git a/packages/SystemUI/res/values/styles.xml b/packages/SystemUI/res/values/styles.xml
+index cd3198c8edf3..436ae93afb17 100644
+--- a/packages/SystemUI/res/values/styles.xml
++++ b/packages/SystemUI/res/values/styles.xml
+@@ -456,7 +456,7 @@
+         <item name="darkIconTheme">@style/DualToneDarkTheme</item>
+         <item name="wallpaperTextColor">@*android:color/primary_text_material_dark</item>
+         <item name="wallpaperTextColorSecondary">@*android:color/secondary_text_material_dark</item>
+-        <item name="wallpaperTextColorAccent">@color/material_dynamic_primary90</item>
++        <item name="wallpaperTextColorAccent">@*android:color/e_accent_dark</item>
+         <item name="android:colorError">@*android:color/error_color_material_dark</item>
+         <item name="*android:lockPatternStyle">@style/LockPatternViewStyle</item>
+         <item name="lockPatternStyle">@style/LockPatternContainerStyle</item>
+@@ -536,11 +536,11 @@
+         <item name="shadeActive">@color/customColorShadeActive</item>
+         <item name="onShadeActive">@color/customColorOnShadeActive</item>
+         <item name="onShadeActiveVariant">@color/customColorOnShadeActiveVariant</item>
+-        <item name="shadeInactive">@color/customColorShadeInactive</item>
++        <item name="shadeInactive">@*android:color/e_qs_tile_inactive</item>
+         <item name="onShadeInactive">@color/customColorOnShadeInactive</item>
+         <item name="onShadeInactiveVariant">@color/customColorOnShadeInactiveVariant</item>
+         <item name="shadeDisabled">@color/customColorShadeDisabled</item>
+-        <item name="underSurface">@color/customColorUnderSurface</item>
++        <item name="underSurface">@*android:color/e_qs_background</item>
+         <item name="android:itemTextAppearance">@style/Control.MenuItem</item>
+     </style>
+ 
+@@ -979,10 +979,10 @@
+ 
+     <style name="ScreenRecord.Switch">
+         <item name="android:textAppearance">@style/TextAppearance.ScreenRecord.SwitchLabel</item>
+-        <item name="android:switchMinWidth">52dp</item>
++        <item name="android:switchMinWidth">48dp</item>
+         <item name="android:minHeight">48dp</item>
+-        <item name="android:track">@drawable/settingslib_switch_track</item>
+-        <item name="android:thumb">@drawable/settingslib_switch_thumb</item>
++        <item name="android:track">@*android:drawable/e_switch_track</item>
++        <item name="android:thumb">@*android:drawable/e_switch_thumb</item>
+     </style>
+ 
+     <style name="Theme.SystemUI.Dialog.ScreenCapture">
+@@ -1370,8 +1370,8 @@
+     </style>
+ 
+     <style name="Widget.Dialog.Button.BorderButton">
+-        <item name="android:background">@drawable/qs_dialog_btn_outline</item>
+-        <item name="android:textColor">@color/qs_dialog_btn_outline_text</item>
++        <item name="android:background">@android:color/transparent</item>
++        <item name="android:textColor">@*android:color/e_accent</item>
+     </style>
+ 
+     <style name="Widget.Dialog.Button.Large">
+@@ -1437,7 +1437,7 @@
+ 
+     <style name="InternetDialog.NetworkTitle.Active">
+         <item name="android:textAppearance">@style/TextAppearance.InternetDialog.Active</item>
+-        <item name="android:textColor">@color/materialColorOnPrimaryContainer</item>
++        <item name="android:textColor">@*android:color/e_primary_text_color</item>
+     </style>
+ 
+     <style name="InternetDialog.NetworkSummary">
+@@ -1450,7 +1450,7 @@
+     <style name="InternetDialog.NetworkSummary.Active">
+         <item name="android:textAppearance">@style/TextAppearance.InternetDialog.Secondary.Active
+         </item>
+-        <item name="android:textColor">@color/materialColorOnPrimaryContainer</item>
++        <item name="android:textColor">@*android:color/e_primary_text_color</item>
+     </style>
+ 
+     <style name="TextAppearance.InternetDialog">
+@@ -1682,7 +1682,7 @@
+     </style>
+ 
+     <style name="Theme.PrivacyDialog" parent="@style/Theme.SystemUI.Dialog">
+-        <item name="android:colorBackground">@color/materialColorSurfaceContainer</item>
++        <item name="android:colorBackground">@*android:color/e_floating_background</item>
+     </style>
+ 
+     <style name="Theme.SystemUI.Dialog.StickyKeys" parent="@style/Theme.SystemUI.Dialog">
+diff --git a/packages/SystemUI/src/com/android/systemui/bouncer/shared/constants/KeyguardBouncerConstants.kt b/packages/SystemUI/src/com/android/systemui/bouncer/shared/constants/KeyguardBouncerConstants.kt
+index 61dd7ac44cdf..e3123cb06619 100644
+--- a/packages/SystemUI/src/com/android/systemui/bouncer/shared/constants/KeyguardBouncerConstants.kt
++++ b/packages/SystemUI/src/com/android/systemui/bouncer/shared/constants/KeyguardBouncerConstants.kt
+@@ -19,6 +19,7 @@ package com.android.systemui.bouncer.shared.constants
+ import com.android.app.animation.Interpolators
+ import com.android.internal.R.color as colors
+ import com.android.systemui.Flags
++import com.android.systemui.bouncer.shared.constants.KeyguardBouncerConstants.ColorId.NUM_PAD_BACKGROUND
+ import com.android.systemui.bouncer.shared.constants.KeyguardBouncerConstants.ColorId.NUM_PAD_BACKGROUND_PRESSED
+ import com.android.systemui.bouncer.shared.constants.KeyguardBouncerConstants.ColorId.NUM_PAD_BUTTON
+ import com.android.systemui.bouncer.shared.constants.KeyguardBouncerConstants.ColorId.NUM_PAD_KEY
+@@ -112,7 +113,7 @@ object PinBouncerConstants {
+         val bgPressed = c(old = NUM_PAD_BACKGROUND_PRESSED, colors.materialColorPrimaryContainer)
+         @JvmField
+         val actionWithAutoConfirm = c(old = NUM_PAD_KEY, new = colors.materialColorOnSurface)
+-        @JvmField val action = c(old = NUM_PAD_BUTTON, new = colors.materialColorOnSurface)
++        @JvmField val action = c(old = NUM_PAD_BACKGROUND, new = colors.materialColorOnSurface)
+     }
+ 
+     object Animation {
+diff --git a/packages/SystemUI/src/com/android/systemui/navigationbar/gestural/BackPanel.kt b/packages/SystemUI/src/com/android/systemui/navigationbar/gestural/BackPanel.kt
+index 76f7b994e4b7..3d273213d58d 100644
+--- a/packages/SystemUI/src/com/android/systemui/navigationbar/gestural/BackPanel.kt
++++ b/packages/SystemUI/src/com/android/systemui/navigationbar/gestural/BackPanel.kt
+@@ -12,6 +12,7 @@ import androidx.dynamicanimation.animation.FloatPropertyCompat
+ import androidx.dynamicanimation.animation.SpringAnimation
+ import androidx.dynamicanimation.animation.SpringForce
+ import com.android.internal.util.LatencyTracker
++import com.android.settingslib.Utils
+ import com.android.systemui.navigationbar.gestural.BackPanelController.DelayedOnAnimationEndListener
+ 
+ private const val TAG = "BackPanel"
+@@ -156,23 +157,10 @@ class BackPanel(context: Context, private val latencyTracker: LatencyTracker) :
+             resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
+                 Configuration.UI_MODE_NIGHT_YES
+ 
+-        arrowPaint.color =
+-            context.getColor(
+-                if (isDeviceInNightTheme) {
+-                    com.android.internal.R.color.materialColorOnSecondaryContainer
+-                } else {
+-                    com.android.internal.R.color.materialColorOnSecondaryFixed
+-                }
+-            )
+-
+-        arrowBackgroundPaint.color =
+-            context.getColor(
+-                if (isDeviceInNightTheme) {
+-                    com.android.internal.R.color.materialColorSecondaryContainer
+-                } else {
+-                    com.android.internal.R.color.materialColorSecondaryFixedDim
+-                }
+-            )
++        arrowPaint.color = Utils.getColorAttrDefaultColor(context, com.android.internal.R.attr.colorBackground)
++
++        arrowBackgroundPaint.color = Utils.getColorAttrDefaultColor(context, com.android.internal.R.attr.colorAccent)
++
+     }
+ 
+     inner class AnimatedFloat(
+diff --git a/packages/SystemUI/src/com/android/systemui/privacy/OngoingPrivacyChip.kt b/packages/SystemUI/src/com/android/systemui/privacy/OngoingPrivacyChip.kt
+index 7851ad5aa1ff..56c61954d7e3 100644
+--- a/packages/SystemUI/src/com/android/systemui/privacy/OngoingPrivacyChip.kt
++++ b/packages/SystemUI/src/com/android/systemui/privacy/OngoingPrivacyChip.kt
+@@ -118,12 +118,10 @@ constructor(
+ 
+     override fun onConfigurationChanged(newConfig: Configuration?) {
+         super.onConfigurationChanged(newConfig)
++        updateResources()
+         if (newConfig != null) {
+             val diff = newConfig.diff(configuration)
+             configuration.setTo(newConfig)
+-            if (diff.and(ActivityInfo.CONFIG_DENSITY.or(ActivityInfo.CONFIG_FONT_SCALE)) != 0) {
+-                updateResources()
+-            }
+         }
+     }
+ 
+@@ -132,7 +130,7 @@ constructor(
+             context.resources.getDimensionPixelSize(R.dimen.ongoing_appops_chip_icon_margin)
+         iconSize = context.resources.getDimensionPixelSize(R.dimen.ongoing_appops_chip_icon_size)
+         iconColor =
+-            Utils.getColorAttrDefaultColor(context, com.android.internal.R.attr.colorPrimary)
++            Utils.getColorAttrDefaultColor(context, com.android.internal.R.attr.colorBackground)
+ 
+         val height = context.resources.getDimensionPixelSize(R.dimen.ongoing_appops_chip_height)
+         val padding =
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/phone/ScrimController.java b/packages/SystemUI/src/com/android/systemui/statusbar/phone/ScrimController.java
+index 433bccf4c010..7b68d0c46994 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/phone/ScrimController.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/phone/ScrimController.java
+@@ -1668,9 +1668,9 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
+                 com.android.internal.R.color.materialColorSurfaceDim);
+         int accent = mContext.getColor(
+                 com.android.internal.R.color.materialColorPrimary);
+-        mColors.setMainColor(background);
++        mColors.setMainColor(surfaceBackground);
+         mColors.setSecondaryColor(accent);
+-        final boolean isBackgroundLight = !ContrastColorUtil.isColorDark(background);
++        final boolean isBackgroundLight = !ContrastColorUtil.isColorDark(surfaceBackground);
+         mColors.setSupportsDarkText(isBackgroundLight);
+ 
+         int surface;
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/policy/ui/dialog/ModesDialogDelegate.kt b/packages/SystemUI/src/com/android/systemui/statusbar/policy/ui/dialog/ModesDialogDelegate.kt
+index ed9abc7ee614..39aa025b9755 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/policy/ui/dialog/ModesDialogDelegate.kt
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/policy/ui/dialog/ModesDialogDelegate.kt
+@@ -33,6 +33,7 @@ import androidx.compose.ui.semantics.testTagsAsResourceId
+ import androidx.lifecycle.DefaultLifecycleObserver
+ import androidx.lifecycle.LifecycleOwner
+ import com.android.compose.PlatformButton
++import com.android.compose.PlatformTextButton
+ import com.android.compose.PlatformOutlinedButton
+ import com.android.compose.dialog.AlertDialogContent
+ import com.android.internal.annotations.VisibleForTesting
+@@ -125,7 +126,7 @@ constructor(
+             },
+             content = { ModeTileGrid(viewModel.get()) },
+             neutralButton = {
+-                PlatformOutlinedButton(onClick = { openSettings(dialog) }) {
++                PlatformTextButton(onClick = { openSettings(dialog) }) {
+                     Text(stringResource(R.string.zen_modes_dialog_settings))
+                 }
+             },
