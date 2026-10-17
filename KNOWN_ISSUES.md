@@ -6,7 +6,7 @@ Never paste raw device logs here (public repo): quote only the relevant, redacte
 | # | Symptom | Build / date | Suspected repo | Status |
 |---|---|---|---|---|
 | 1 | Android Auto cannot run as a user app (a16 feature) | port, no build yet | frameworks/base (+ Permission 2/2) | Open: Android 17 removed PermissionManagerServiceImpl; the grant must be re-implemented in the Kotlin permission service. Not ported. |
-| 2 | SetupWizard has no /e/ pages on plain a17 | port | SetupWizard | Workaround: `OPTIONAL_MANIFESTS="setupwizard-bringup"` (/e/OS WIP branch) |
+| 2 | SetupWizard has no /e/ pages on plain a17 | port | SetupWizard | Ported: `patches/a17/packages/apps/SetupWizard` (/e/OS bring-up squashed onto the rewritten a17 SUW). Verify on device: every page, the restore flow, 6-tap QR provisioning |
 | 4 | Launcher shows plain notification dots, not count badges (a16 feature) | port | BlissLauncher3 | Ported: `patches/a17/packages/apps/Launcher3` (rebased from /e/OS bring-up a0a4e32c5e) |
 | 3 | /e/ palette theming on Android 17 | port | many | Ported (Settings, SystemUI, SettingsLib, system, 6 apps, light/dark QS). Verify on device: Android 17 expressive surfaces may still show stock tones where no /e/ value existed |
 

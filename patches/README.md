@@ -105,6 +105,24 @@ hooks, e colors, e switch…). On top:
 Checks: XML parses, no conflict markers, brace balance unchanged vs a17 for all 24 touched
 Java/Kotlin files (`tools/bracecheck.py --base`), applies with `git am` on a sparse checkout.
 
+### packages/apps/SetupWizard (1 patch, hand-ported)
+/e/OS's SetupWizard pages live on `epic265-a17-bringup`, which sits on a SetupWizard base from before
+LineageOS rewrote it (Glif expressive layouts, toggle groups, Android TV) in late September. The
+bring-up branch is squashed onto current e/os `a17` as one commit, crediting its authors:
+- wizard script from the bring-up branch: welcome → locale → network → SIM → date/time → /e/ account →
+  restore → parental control → location → device → biometric → lock screen → Find my device → theme →
+  navigation → finish, plus the MDM branch (6 taps on the welcome page → QR → Headwind MDM provisioning).
+- `WelcomeActivity` and `RestoreIntroActivity` are a17's Kotlin activities with the /e/ behaviour added
+  back (/e/ wording, QR taps, restore through the /e/ backup app). The lottie welcome animation is
+  replaced by the /e/ logo, and the /e/ palette goes into `Theme.Setup`.
+- The theme and navigation pages are skipped after a backup restore (`isSkipped()` hook in the base class).
+- Dependencies: a17 already ships `zxing-core`, so the bundled zxing jar is dropped (duplicate
+  classes), and the QR payload is parsed with `org.json` instead of three bundled jackson jars. Only
+  the Apache-2.0 `zxing-android-embedded` aar (scanner UI, from Maven Central) stays, as a binary
+  hunk in the patch.
+
+The optional `setupwizard-bringup` manifest is superseded (see its comment).
+
 ### vendor/eos + vendor/lineage: "Disable private space" (re-implemented)
 The a16 commit set `android.multiuser.enable_private_space_features` DISABLED. That flag no
 longer exists in Android 17 (private space shipped), so:
