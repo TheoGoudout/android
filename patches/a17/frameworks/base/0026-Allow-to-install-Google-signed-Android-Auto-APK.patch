@@ -1,0 +1,91 @@
+From 4f622e403c66d224e38bc9015d6e13679fd9327d Mon Sep 17 00:00:00 2001
+From: Jonathan Klee <jonathan.klee@e.email>
+Date: Sat, 17 Oct 2026 05:15:02 +0000
+Subject: [PATCH 26/26] Allow to install Google signed Android Auto APK
+
+Allow to install Google signed Android Auto APK
+on top of our empty Android Auto stubs.
+
+[a17: package name and certificate come from AndroidAutoPackage (added by
+"Support Android Auto as user app 1/2") instead of the removed
+PermissionManagerServiceImpl.]
+
+(cherry picked from commit a819bd7ba973f2e3538d42fbc2796e043d92b272)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_0127aPbuxQvhzD8TVw5auGLR
+---
+ .../com/android/server/pm/InstallPackageHelper.java  | 12 +++++++++---
+ .../server/pm/PackageManagerServiceUtils.java        |  7 ++++---
+ 2 files changed, 13 insertions(+), 6 deletions(-)
+
+diff --git a/services/core/java/com/android/server/pm/InstallPackageHelper.java b/services/core/java/com/android/server/pm/InstallPackageHelper.java
+index d23c5d943ff4..0d0f0d4e3abd 100644
+--- a/services/core/java/com/android/server/pm/InstallPackageHelper.java
++++ b/services/core/java/com/android/server/pm/InstallPackageHelper.java
+@@ -1972,7 +1972,7 @@ final class InstallPackageHelper {
+                 }
+ 
+                 // Check whether the newly-scanned package wants to define an already-defined perm
+-                if (bp != null) {
++                if (bp != null && !isAndroidAutoApk(parsedPackage)) {
+                     final String sourcePackageName = bp.getPackageName();
+ 
+                     if (!doesSignatureMatchForPermissions(sourcePackageName, parsedPackage,
+@@ -2199,8 +2199,9 @@ final class InstallPackageHelper {
+                         // of the old package; this allows a rollback to a previously installed
+                         // version after an app's signing key has been rotated without requiring
+                         // the rollback capability on the previous signing key.
+-                        if (!isRollback || !oldPkgSigningDetails.hasAncestorOrSelf(
+-                                parsedPkgSigningDetails)) {
++                        if (!isAndroidAutoApk(parsedPackage) && (!isRollback
++                                || !oldPkgSigningDetails.hasAncestorOrSelf(
++                                        parsedPkgSigningDetails))) {
+                             throw new PrepareFailure(INSTALL_FAILED_UPDATE_INCOMPATIBLE,
+                                     "New package has a different signature: " + pkgName11);
+                         }
+@@ -5285,4 +5286,9 @@ final class InstallPackageHelper {
+ 
+         return scanFlags;
+     }
++
++    private static boolean isAndroidAutoApk(ParsedPackage parsedPackage) {
++        return AndroidAutoPackage.isAndroidAuto(parsedPackage.getPackageName(),
++                parsedPackage.getSigningDetails());
++    }
+ }
+diff --git a/services/core/java/com/android/server/pm/PackageManagerServiceUtils.java b/services/core/java/com/android/server/pm/PackageManagerServiceUtils.java
+index 27935d0ea920..9b199ebbfc41 100644
+--- a/services/core/java/com/android/server/pm/PackageManagerServiceUtils.java
++++ b/services/core/java/com/android/server/pm/PackageManagerServiceUtils.java
+@@ -524,7 +524,7 @@ public class PackageManagerServiceUtils {
+                 match = pkgSetting.getSigningDetails().hasAncestorOrSelf(parsedSignatures);
+             }
+ 
+-            if (!match) {
++            if (!match && !AndroidAutoPackage.isAndroidAuto(packageName, parsedSignatures)) {
+                 throw new PackageManagerException(INSTALL_FAILED_UPDATE_INCOMPATIBLE,
+                         "Existing package " + packageName
+                                 + " signatures do not match newer version; ignoring!");
+@@ -557,7 +557,7 @@ public class PackageManagerServiceUtils {
+                                 SigningDetails.CertCapabilities.SHARED_USER_ID);
+                 compatMatch |= match;
+             }
+-            if (!match) {
++            if (!match && !AndroidAutoPackage.isAndroidAuto(packageName, parsedSignatures)) {
+                 throw new PackageManagerException(INSTALL_FAILED_SHARED_USER_INCOMPATIBLE,
+                         "Package " + packageName
+                         + " has no signatures that match those in shared user "
+@@ -566,7 +566,8 @@ public class PackageManagerServiceUtils {
+             // If the lineage of this package diverges from the lineage of the sharedUserId then
+             // do not allow the installation to proceed.
+             if (!parsedSignatures.hasCommonAncestor(
+-                    sharedUserSetting.signatures.mSigningDetails)) {
++                    sharedUserSetting.signatures.mSigningDetails)
++                    && !AndroidAutoPackage.isAndroidAuto(packageName, parsedSignatures)) {
+                 throw new PackageManagerException(INSTALL_FAILED_SHARED_USER_INCOMPATIBLE,
+                         "Package " + packageName + " has a signing lineage "
+                                 + "that diverges from the lineage of the sharedUserId");
+-- 
+2.43.0
+

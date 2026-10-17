@@ -47,7 +47,6 @@ are left to /e/OS because they collide with the Material 3 Expressive redesign).
 | packages/apps/FMRadio, vendor/qcom/opensource/commonsys/fm | new app icon | resource-only |
 
 Not carried, with reason:
-- Permission "Android Auto as user app 2/2": needs frameworks/base 1/2 (conflicts there).
 - Contacts "Default to phone-only if no account": the activity it patched is gone in AOSP 17
   (CP2 default-account APIs). Needs a fresh design check on a device.
 - Dialer call recording default: already the LineageOS 24.0 default.
@@ -78,7 +77,7 @@ Static checks (no compiler available here): every changed XML parses, every reso
 the first a17 build to be the real test. To build without it, set `PATCH_EXCLUDE="packages/apps/Settings"`
 in `build.sh` (works for any project path).
 
-### frameworks/base (24 patches, on top of /e/OS a17)
+### frameworks/base (26 patches, on top of /e/OS a17)
 /e/OS already carries 36 commits on a17 (signature spoofing, fake location, parental control
 hooks, e colors, e switch…). On top:
 - **Hide From microG**, the **USB lockdown** security fix (hand-ported), SNHooks dockmanager,
@@ -99,10 +98,18 @@ hooks, e colors, e switch…). On top:
   shade header light/dark (a17 `ShadeHeaderController.updateColors()` already does it) and the
   QSCarrier visibility fix that depended on it.
 - already in a17: BAL bypass via CDM, LocalImageResolver, suspend restrictions, clipboard per-user.
-- **not carried:** Android Auto (see KNOWN_ISSUES), UDFPS/Richtap/dock-width (not FP4 hardware),
+- **Android Auto as a user app** (1/2 + "Allow to install Google signed Android Auto APK"): Android 17
+  removed `PermissionManagerServiceImpl`, so the package/certificate/permission list moves to a new
+  `com.android.server.pm.AndroidAutoPackage` and the grant is checked in the Kotlin
+  `PermissionService.isPermissionGranted()` (used by both `checkPermission` and
+  `checkUidPermission`). The install-time signature exemptions in `InstallPackageHelper` and
+  `PackageManagerServiceUtils` are the a16 ones. Pairs with `packages/modules/Permission` 2/2
+  (automotive projection role no longer system-only) and with /e/'s `AndroidAutoStub` prebuilt,
+  which a17 already installs.
+- **not carried:** UDFPS/Richtap/dock-width (not FP4 hardware),
   autofill UI tweaks, build-fix noise.
 
-Checks: XML parses, no conflict markers, brace balance unchanged vs a17 for all 24 touched
+Checks: XML parses, no conflict markers, brace balance unchanged vs a17 for all touched
 Java/Kotlin files (`tools/bracecheck.py --base`), applies with `git am` on a sparse checkout.
 
 ### packages/apps/SetupWizard (1 patch, hand-ported)
