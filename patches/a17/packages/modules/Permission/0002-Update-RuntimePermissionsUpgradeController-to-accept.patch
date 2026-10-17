@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nate Myren <ntmyren@google.com>
 Date: Fri, 5 Dec 2025 14:38:26 -0800
-Subject: [PATCH 2/2] Update RuntimePermissionsUpgradeController to accept null
+Subject: [PATCH 2/3] Update RuntimePermissionsUpgradeController to accept null
  PermGroups
 
 Now that PermStateLiveData can return invalid, the upgrade controller

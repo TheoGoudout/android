@@ -1,0 +1,79 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishithkhanna@e.email>
+Date: Sat, 17 Oct 2026 04:42:09 +0000
+Subject: [PATCH] Theme app according to our palette
+
+[a17: re-implemented for the Material 3 resources. Android 17 ships DocumentsUI
+ with com.android.documentsui.flags.use_material3 ENABLED (READ_ONLY in the
+ release configs), so the a16 changes to the legacy themes would be dead code.
+ The /e/ palette is mapped onto the M3 colour resources (primary/background/
+ header) and the Material 3 surface/on-surface/outline tokens of
+ DocumentsDefaultThemeM3.]
+(cherry picked from commit 8a8e000b8026c9b36eceb291f744a242b0b85ca8)
+---
+ .../values-night-v31/colors_m3.xml                   |  6 +++---
+ .../values-v31/colors_m3.xml                         |  6 +++---
+ .../values/themes_m3.xml                             | 12 ++++++++++++
+ 3 files changed, 18 insertions(+), 6 deletions(-)
+
+diff --git a/res/flag(com.android.documentsui.flags.use_material3)/values-night-v31/colors_m3.xml b/res/flag(com.android.documentsui.flags.use_material3)/values-night-v31/colors_m3.xml
+index 7e5d87af8..10f574e5c 100644
+--- a/res/flag(com.android.documentsui.flags.use_material3)/values-night-v31/colors_m3.xml
++++ b/res/flag(com.android.documentsui.flags.use_material3)/values-night-v31/colors_m3.xml
+@@ -15,11 +15,11 @@
+ 
+ <resources>
+   <!-- ?attr/colorSurfaceContainer -->
+-  <color name="app_background_color_m3">@color/m3_ref_palette_dynamic_neutral_variant12</color>
++  <color name="app_background_color_m3">@*android:color/e_background</color>
+   <!-- ?attr/colorPrimary -->
+-  <color name="primary_m3">@android:color/system_accent1_200</color>
++  <color name="primary_m3">@*android:color/e_accent</color>
+   <!-- ?attr/colorSurfaceContainerHigh -->
+-  <color name="color_surface_header_m3">@color/m3_ref_palette_dynamic_neutral_variant17</color>
++  <color name="color_surface_header_m3">@*android:color/e_action_bar</color>
+ 
+   <!-- All drag drop badge colors, we can only use system color tokens because there's no theme
+        context inside the view.
+diff --git a/res/flag(com.android.documentsui.flags.use_material3)/values-v31/colors_m3.xml b/res/flag(com.android.documentsui.flags.use_material3)/values-v31/colors_m3.xml
+index 649d1703c..52f6a90a4 100644
+--- a/res/flag(com.android.documentsui.flags.use_material3)/values-v31/colors_m3.xml
++++ b/res/flag(com.android.documentsui.flags.use_material3)/values-v31/colors_m3.xml
+@@ -15,11 +15,11 @@
+ 
+ <resources>
+   <!-- ?attr/colorSurfaceContainer -->
+-  <color name="app_background_color_m3">@color/m3_ref_palette_dynamic_neutral_variant94</color>
++  <color name="app_background_color_m3">@*android:color/e_background</color>
+   <!-- ?attr/colorPrimary -->
+-  <color name="primary_m3">@android:color/system_accent1_600</color>
++  <color name="primary_m3">@*android:color/e_accent</color>
+   <!-- ?attr/colorSurfaceContainerHigh -->
+-  <color name="color_surface_header_m3">@color/m3_ref_palette_dynamic_neutral_variant92</color>
++  <color name="color_surface_header_m3">@*android:color/e_action_bar</color>
+ 
+   <!-- All drag drop badge colors, we can only use system color tokens because there's no theme
+        context inside the view.
+diff --git a/res/flag(com.android.documentsui.flags.use_material3)/values/themes_m3.xml b/res/flag(com.android.documentsui.flags.use_material3)/values/themes_m3.xml
+index 657ce3114..c643b8cf6 100644
+--- a/res/flag(com.android.documentsui.flags.use_material3)/values/themes_m3.xml
++++ b/res/flag(com.android.documentsui.flags.use_material3)/values/themes_m3.xml
+@@ -44,6 +44,18 @@
+         <item name="colorPrimary">@color/primary_m3</item>
+         <item name="colorAccent">@color/primary_m3</item>
+ 
++        <!-- /e/OS palette -->
++        <item name="colorSurface">@*android:color/e_background</item>
++        <item name="colorSurfaceContainer">@*android:color/e_action_bar</item>
++        <item name="colorSurfaceContainerLow">@*android:color/e_background</item>
++        <item name="colorSurfaceContainerHigh">@*android:color/e_floating_background</item>
++        <item name="colorSurfaceContainerHighest">@*android:color/e_floating_background_variant</item>
++        <item name="colorOnSurface">@*android:color/e_primary_text_color</item>
++        <item name="colorOnSurfaceVariant">@*android:color/e_secondary_text_color</item>
++        <item name="colorSecondaryContainer">@*android:color/e_alpha_accent</item>
++        <item name="colorOutlineVariant">@*android:color/e_divider_color</item>
++        <item name="colorControlHighlight">@*android:color/e_ripple_color</item>
++
+         <!-- TODO need to solve the error handle in GridItemThumbnail -->
+         <item name="gridItemTint">@color/item_doc_grid_tint_m3</item>
+ 

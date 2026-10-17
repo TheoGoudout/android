@@ -1,0 +1,49 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishithkhanna@e.email>
+Date: Wed, 24 Jul 2024 14:22:31 +0530
+Subject: [PATCH] Theme app according to our palette
+
+[a17: the two switch layouts were removed upstream ("M3E love for everyone");
+ switches now come from SettingsLib, so only the accent/text colours and the
+ list item theme are carried]
+
+(cherry picked from commit d030b07ca62a6833c553f425b41e1ad41e11fff2)
+---
+ res/layout/long_screen_list_item.xml | 3 +--
+ res/values/styles.xml                | 4 ++--
+ 2 files changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/res/layout/long_screen_list_item.xml b/res/layout/long_screen_list_item.xml
+index 59d60b0..c1c407a 100644
+--- a/res/layout/long_screen_list_item.xml
++++ b/res/layout/long_screen_list_item.xml
+@@ -45,6 +45,5 @@
+         android:id="@+id/state"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:background="@null"
+-        android:theme="@style/Theme.Material3.DynamicColors.DayNight" />
++        android:background="@null" />
+ </LinearLayout>
+diff --git a/res/values/styles.xml b/res/values/styles.xml
+index 65336c4..8024cdd 100644
+--- a/res/values/styles.xml
++++ b/res/values/styles.xml
+@@ -31,7 +31,7 @@
+     </style>
+ 
+     <style name="OnBoardingStyle" parent="Theme.AppCompat.DayNight">
+-        <item name="colorAccent">#167c80</item>
++        <item name="colorAccent">@*android:color/accent_device_default</item>
+         <item name="windowActionBar">false</item>
+         <item name="windowNoTitle">true</item>
+     </style>
+@@ -43,7 +43,7 @@
+ 
+     <style name="PrimaryButtonStyle" parent="ThemeOverlay.Material3.Button">
+         <item name="android:background">@drawable/button_background</item>
+-        <item name="android:textColor">@android:color/black</item>
++        <item name="android:textColor">?android:attr/colorBackground</item>
+     </style>
+ 
+ </resources>

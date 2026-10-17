@@ -1,0 +1,71 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: althafvly <althafvly@gmail.com>
+Date: Sat, 17 Oct 2026 04:43:58 +0000
+Subject: [PATCH 3/4] ThemePicker: Remove wallpaper color selection
+
+[a17: DefaultCustomizationSections.java was removed upstream; the new
+ customization picker gates the colour entry on isColorCustomizationAvailable,
+ which now also requires the overlayable e_color_customization_enabled (false)]
+(cherry picked from commit aa582fc0bcca4d2a3ad3b765903b5c90d4d693bb)
+---
+ res/values/config.xml                               |  4 ++++
+ .../ThemePickerCustomizationOptionsViewModel.kt     | 13 +++++++++++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
+
+diff --git a/res/values/config.xml b/res/values/config.xml
+index ad81e67c..1c55760c 100644
+--- a/res/values/config.xml
++++ b/res/values/config.xml
+@@ -23,4 +23,8 @@
+     <!-- ID for the a11y actions on carousel -->
+     <item type="id" name="action_scroll_forward" />
+     <item type="id" name="action_scroll_backward" />
++
++    <!-- /e/OS: show the theme colour (wallpaper / basic colours) section. /e/OS uses its own
++         palette, so it is hidden by default. -->
++    <bool name="e_color_customization_enabled">false</bool>
+ </resources>
+\ No newline at end of file
+diff --git a/src/com/android/wallpaper/customization/ui/viewmodel/ThemePickerCustomizationOptionsViewModel.kt b/src/com/android/wallpaper/customization/ui/viewmodel/ThemePickerCustomizationOptionsViewModel.kt
+index 9cba76da..e6d08af4 100644
+--- a/src/com/android/wallpaper/customization/ui/viewmodel/ThemePickerCustomizationOptionsViewModel.kt
++++ b/src/com/android/wallpaper/customization/ui/viewmodel/ThemePickerCustomizationOptionsViewModel.kt
+@@ -26,6 +26,7 @@ import com.android.customization.picker.icon.ui.viewmodel.AppIconPickerViewModel
+ import com.android.customization.picker.mode.ui.viewmodel.DarkModeViewModel
+ import com.android.customization.picker.quickaffordance.ui.viewmodel.KeyguardQuickAffordancePickerViewModel2
+ import com.android.customization.picker.settings.ui.viewmodel.ColorContrastSectionViewModel2
++import com.android.themepicker.R
+ import com.android.wallpaper.config.BaseFlags
+ import com.android.wallpaper.customization.ui.util.ThemePickerCustomizationOptionUtil
+ import com.android.wallpaper.customization.ui.util.ThemePickerCustomizationOptionUtil.ThemePickerHomeCustomizationOption.APP_ICONS
+@@ -116,7 +117,7 @@ constructor(
+                     isGridCustomizationAvailable = isGridCustomizationAvailable,
+                     isIconStyleAvailable = isIconStyleAvailable,
+                     isShapeAvailable = isShapeOptionsAvailable,
+-                    isColorCustomizationAvailable = !ActivityUtils.isSUWMode(appContext),
++                    isColorCustomizationAvailable = isColorCustomizationAvailable(),
+                 )
+             }
+         } else {
+@@ -129,7 +130,7 @@ constructor(
+                     isGridCustomizationAvailable = isGridCustomizationAvailable,
+                     isIconStyleAvailable = isThemedIconAvailable,
+                     isShapeAvailable = isShapeOptionsAvailable,
+-                    isColorCustomizationAvailable = !ActivityUtils.isSUWMode(appContext),
++                    isColorCustomizationAvailable = isColorCustomizationAvailable(),
+                 )
+             }
+         }
+@@ -357,4 +358,12 @@ constructor(
+             @Assisted("shortcutSlotId") initialDeepLinkShortcutSlotId: String?,
+         ): ThemePickerCustomizationOptionsViewModel
+     }
++
++    /**
++     * /e/OS: the theme colour section is hidden (e_color_customization_enabled = false) since
++     * /e/OS applies its own palette instead of wallpaper/basic colours. Overlayable.
++     */
++    private fun isColorCustomizationAvailable(): Boolean =
++        !ActivityUtils.isSUWMode(appContext) &&
++            appContext.resources.getBoolean(R.bool.e_color_customization_enabled)
+ }

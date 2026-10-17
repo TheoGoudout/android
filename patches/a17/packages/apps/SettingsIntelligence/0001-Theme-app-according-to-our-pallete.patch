@@ -1,0 +1,52 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishithkhanna@e.email>
+Date: Sat, 17 Oct 2026 04:39:32 +0000
+Subject: [PATCH] Theme app according to our pallete
+
+[a17: LineageOS rebuilt the search bar as a MaterialCardView and dropped
+ res/values/colors.xml; the /e/ colours become e_search_bar_background
+ (light system_neutral1_50, dark e_action_bar_dark) on the card]
+(cherry picked from commit a6da1ca20b7dac70acdd2123f1a63233b7a83a6a)
+---
+ res/layout/search_panel.xml   | 2 +-
+ res/values-night/e_colors.xml | 5 +++++
+ res/values/e_colors.xml       | 5 +++++
+ 3 files changed, 11 insertions(+), 1 deletion(-)
+ create mode 100644 res/values-night/e_colors.xml
+ create mode 100644 res/values/e_colors.xml
+
+diff --git a/res/layout/search_panel.xml b/res/layout/search_panel.xml
+index a92c3e3..11425c2 100644
+--- a/res/layout/search_panel.xml
++++ b/res/layout/search_panel.xml
+@@ -34,7 +34,7 @@
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:theme="@style/Theme.MaterialComponents.DayNight"
+-            app:cardBackgroundColor="@color/materialColorSurfaceContainerLowest"
++            app:cardBackgroundColor="@color/e_search_bar_background"
+             app:cardCornerRadius="@dimen/search_bar_corner_radius"
+             app:cardElevation="0dp"
+             app:strokeColor="@color/materialColorOutlineVariant"
+diff --git a/res/values-night/e_colors.xml b/res/values-night/e_colors.xml
+new file mode 100644
+index 0000000..5458b26
+--- /dev/null
++++ b/res/values-night/e_colors.xml
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Copyright (C) 2024-2026 ECORP SAS - Apache License 2.0 -->
++<resources>
++    <color name="e_search_bar_background">@*android:color/e_action_bar_dark</color>
++</resources>
+diff --git a/res/values/e_colors.xml b/res/values/e_colors.xml
+new file mode 100644
+index 0000000..1a353d7
+--- /dev/null
++++ b/res/values/e_colors.xml
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Copyright (C) 2024-2026 ECORP SAS - Apache License 2.0 -->
++<resources>
++    <color name="e_search_bar_background">@android:color/system_neutral1_50</color>
++</resources>

@@ -1,0 +1,100 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishithkhanna@e.email>
+Date: Fri, 4 Oct 2024 19:32:54 +0530
+Subject: [PATCH] Theme app according to our palette
+
+[a17: kept the new themed icon preview colours; wallpaper_quick_switch_section.xml
+ was removed upstream, so its transparent-background hunk is dropped]
+
+(cherry picked from commit 6797b617aad4ac7958d4a9143604418b1d0a4110)
+---
+ res/color/text_color_on_accent.xml |  2 +-
+ res/values-night/colors.xml        |  8 ++------
+ res/values/colors.xml              | 17 ++++++++---------
+ 3 files changed, 11 insertions(+), 16 deletions(-)
+
+diff --git a/res/color/text_color_on_accent.xml b/res/color/text_color_on_accent.xml
+index 27800d9a5..b53ab4c4c 100644
+--- a/res/color/text_color_on_accent.xml
++++ b/res/color/text_color_on_accent.xml
+@@ -18,5 +18,5 @@
+ <selector xmlns:android="http://schemas.android.com/apk/res/android">
+     <item android:state_enabled="false"
+         android:color="@android:color/system_neutral1_400"/>
+-    <item android:color="@android:color/system_neutral1_900"/>
++    <item android:color="@*android:color/e_background"/>
+ </selector>
+\ No newline at end of file
+diff --git a/res/values-night/colors.xml b/res/values-night/colors.xml
+index ffff1217b..4c523323d 100644
+--- a/res/values-night/colors.xml
++++ b/res/values-night/colors.xml
+@@ -34,21 +34,17 @@
+     <color name="system_on_secondary_container">@android:color/system_on_secondary_container_dark</color>
+     <color name="system_on_surface">@android:color/system_on_surface_dark</color>
+     <color name="system_on_surface_variant">@android:color/system_on_surface_variant_dark</color>
+-    <color name="system_surface_container">@android:color/system_surface_container_dark</color>
+     <color name="system_surface_container_low">@android:color/system_surface_container_low_dark</color>
+     <color name="system_surface_container_high">@android:color/system_surface_container_high_dark</color>
+-    <color name="system_surface_container_highest">@android:color/system_surface_container_highest_dark</color>
+     <color name="system_surface_bright">@android:color/system_surface_bright_dark</color>
+     <color name="system_outline">@android:color/system_outline_dark</color>
+     <color name="system_outline_variant">@android:color/system_outline_variant_dark</color>
+     <color name="system_secondary_container">@android:color/system_secondary_container_dark</color>
+ 
+     <!-- UI elements with Dark/Light Theme Variances -->
+-    <color name="option_item_background">@color/system_surface_bright</color>
++    <color name="option_item_background">@*android:color/e_floating_background_variant_dark</color>
+     <color name="clock_color_and_size_button_background">@color/system_surface_container_high</color>
+-    <color name="connected_sections_background">@color/system_surface_container_high</color>
+-    <color name="picker_section_icon_background">@color/system_surface_container_high</color>
+-    <color name="picker_fragment_background">@color/system_surface_container_high</color>
++    <color name="picker_fragment_background">@*android:color/e_floating_background_dark</color>
+     <color name="floating_toolbar_background">@color/system_surface_container_high</color>
+ 
+     <!-- Icon preview color -->
+diff --git a/res/values/colors.xml b/res/values/colors.xml
+index 389824eca..bcea539f3 100755
+--- a/res/values/colors.xml
++++ b/res/values/colors.xml
+@@ -44,10 +44,10 @@
+     <color name="myphoto_background_cloud">@color/google_grey200</color>
+     <color name="preview_toolbar_text_light">@android:color/system_neutral1_50</color>
+ 
+-    <color name="color_accent_primary">@android:color/system_accent1_100</color>
++    <color name="color_accent_primary">@*android:color/e_accent</color>
+     <color name="color_accent_primary_variant">@android:color/system_accent1_600</color>
+     <color name="color_accent_secondary">@color/settingslib_accent_secondary_device_default</color>
+-    <color name="color_surface">@color/settingslib_colorSurface</color>
++    <color name="color_surface">@*android:color/e_background</color>
+     <color name="color_surface_variant">@color/settingslib_colorSurfaceVariant</color>
+     <color name="text_color_primary">@color/settingslib_text_color_primary</color>
+     <color name="text_color_primary_inverse">@android:color/system_neutral1_900</color>
+@@ -72,21 +72,20 @@
+     <color name="system_on_secondary_container">@android:color/system_on_secondary_container_light</color>
+     <color name="system_on_surface">@android:color/system_on_surface_light</color>
+     <color name="system_on_surface_variant">@android:color/system_on_surface_variant_light</color>
+-    <color name="system_surface_container">@android:color/system_surface_container_light</color>
+-    <color name="system_surface_container_low">@android:color/system_surface_container_low_light</color>
++    <color name="system_surface_container">@*android:color/e_background</color>
+     <color name="system_surface_container_high">@android:color/system_surface_container_high_light</color>
+-    <color name="system_surface_container_highest">@android:color/system_surface_container_highest_light</color>
++    <color name="system_surface_container_highest">@*android:color/e_action_bar</color>
+     <color name="system_surface_bright">@android:color/system_surface_bright_light</color>
+     <color name="system_outline">@android:color/system_outline_light</color>
+     <color name="system_outline_variant">@android:color/system_outline_variant_light</color>
+     <color name="system_secondary_container">@android:color/system_secondary_container_light</color>
+ 
+     <!-- UI elements with Dark/Light Theme Variances -->
+-    <color name="option_item_background">@color/system_surface_container_low</color>
++    <color name="option_item_background">@*android:color/e_floating_background_variant_light</color>
+     <color name="clock_color_and_size_button_background">@color/system_surface_bright</color>
+-    <color name="connected_sections_background">@color/system_surface_bright</color>
+-    <color name="picker_section_icon_background">@color/system_surface_bright</color>
+-    <color name="picker_fragment_background">@color/system_surface_bright</color>
++    <color name="connected_sections_background">@*android:color/e_floating_background_variant</color>
++    <color name="picker_section_icon_background">@*android:color/e_floating_background_variant</color>
++    <color name="picker_fragment_background">@*android:color/e_background_variant_light</color>
+     <color name="floating_toolbar_background">@color/system_surface_bright</color>
+ 
+     <!-- Icon preview color -->
