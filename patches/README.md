@@ -33,8 +33,8 @@ perf/power-HAL switches, abl pin, widevine revert, and the FCM-level/soong-bool/
 (those only make sense with /e/OS's older 23.0 blobs, while lineage-24.0 ships 15.20.0 blobs).
 
 ### /e/OS forks whose a17 branch has no /e/OS changes yet
-Replayed from /e/OS `a16` onto /e/OS `a17` (functional changes only; palette/theming commits
-are left to /e/OS because they collide with the Material 3 Expressive redesign).
+Replayed from /e/OS `a16` onto /e/OS `a17`. Palette/theming commits for these apps are carried
+too, adapted to the Material 3 Expressive resources.
 
 | project | patches | note |
 |---|---|---|
