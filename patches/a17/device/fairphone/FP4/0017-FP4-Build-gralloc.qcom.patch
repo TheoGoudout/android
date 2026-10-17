@@ -1,0 +1,34 @@
+From e3128b019ce06b99b2ab2161b051dc2cd799265e Mon Sep 17 00:00:00 2001
+From: LuK1337 <priv.luk@gmail.com>
+Date: Thu, 30 Jul 2026 11:10:53 +0530
+Subject: [PATCH] FP4: Build gralloc.qcom
+
+Camera HAL wants it and crashes if it loads default gralloc
+implementation instead.
+
+07-30 10:50:56.742  1104  5091 E CamX    : [ERROR][UTILS  ] camxosutilslinux.cpp:2404 SetupGralloc1Device() Gralloc Device init failed
+07-30 10:50:56.742  1104  5091 E CamX    : [ERROR][CORE   ] camxnode.cpp:575 InitializeNonSinkPortBufferProperties() Node::MorphoVideoEISPreviewEIS_IPE0 pGralloc is NULL
+07-30 10:50:56.742  1104  5091 E CamX    : [ERROR][CORE   ] camxnode.cpp:575 InitializeNonSinkPortBufferProperties() Node::MorphoVideoEISPreviewEIS_IPE0 pGralloc is NULL
+
+Fixes: https://gitlab.com/LineageOS/issues/android/-/issues/8059
+Change-Id: I47965713c822cfdfc369975f8975f21f70133608
+(cherry picked from commit 7be29aa2fdba4dc310c75809450034b4407c78b6)
+---
+ device.mk | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/device.mk b/device.mk
+index 91df9b5..0a5c245 100644
+--- a/device.mk
++++ b/device.mk
+@@ -111,6 +111,7 @@ PRODUCT_SET_DEBUGFS_RESTRICTIONS := true
+ PRODUCT_PACKAGES += \
+     android.hardware.graphics.mapper@3.0-impl-qti-display \
+     android.hardware.graphics.mapper@4.0-impl-qti-display \
++    gralloc.qcom \
+     init.qti.display_boot.rc \
+     init.qti.display_boot.sh \
+     vendor.qti.hardware.display.allocator-service \
+-- 
+2.43.0
+

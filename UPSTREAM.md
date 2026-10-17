@@ -47,13 +47,17 @@ or report to the LineageOS team so they merge the ASB change):
 | LineageOS/android_frameworks_av | `frameworks/av/0001` "[media] Fix heap out-of-bounds write in MatroskaSource::read" | AOSP commit carried by /e/OS a16 (2026-04-08) |
 | LineageOS/android_packages_services_Telecomm | `packages/services/Telecomm/0001` "Check caller in CSW#queryRemoteConnectionServices" | AOSP commit carried by /e/OS a16 (2026-05-07) |
 
+Camera (FP4): `frameworks/av/0002` (Fairphone ODM client-package hook) plus `device/fairphone/FP4`
+0011–0017 are what an FP4 maintainer would need on LineageOS too; "Build gralloc.qcom" is LuK1337's
+own change, so ask on the LineageOS FP4 review whether it is still pending.
+
 Before reporting, re-check lineage-24.0: they may already have landed under another subject.
 
 ## FP4 device tree
 
 `patches/a17/device/fairphone/FP4/*` come from /e/OS's own FP4 fork (`e/devices/android_device_fairphone_FP4`,
 branch `a16`, no `a17` yet). Ask /e/OS to create an `a17` branch of that fork based on
-LineageOS `lineage-24.0` and propose these 10 patches there. The audio fixes (earpiece volume,
+LineageOS `lineage-24.0` and propose these 17 patches there. The audio fixes (earpiece volume,
 VoIP direct flag, VoIP stereo) could also be offered to LineageOS's FP4 tree, since they fix
 hardware behaviour for everyone.
 
