@@ -66,6 +66,8 @@ Your customisations = forks of the relevant repos, referenced from the local man
 - `port-audit/port_audit.py`: how much of an /e/OS branch's patch set moves to a new LineageOS.
 - `tools/check_manifest.py --eos-branch a17 [--optional NAME] [--device-tree DIR]`: resolves the
   /e/OS manifest plus local manifests offline (duplicates, dangling removes, missing FP4 paths).
+- `tools/apply_test.sh [a17]`: checks that every patch series still applies to the current upstream tips.
+- `tools/bracecheck.py`, `tools/rescheck.py`, `tools/colorcheck.py`: no-compiler sanity checks for ported code.
 - `tools/port_series.py`: cherry-picks a downstream series onto a new base and exports what applies.
 
 `PLAY_INTEGRITY.md`: what the build carries for Play Integrity BASIC and how to test it.

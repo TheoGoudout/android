@@ -7,7 +7,7 @@ crave LOS24 project ID: pending from owner (ask on crave Discord)
 Project repo: `github.com/TheoGoudout/android`, branches `a16` (baseline, on LineageOS/android lineage-23.0) and `a17` (main work, this file's home, on lineage-24.0)
 crave account: requested by owner 2026-10-16, awaiting approval
 
-Start every session by reading this file and `KNOWN_ISSUES.md`. Agent brief: `AGENT_PLAN.md`.
+Start every session by reading `HANDOFF.md`, this file and `KNOWN_ISSUES.md`. Agent brief: `AGENT_PLAN.md`.
 
 ## Verified facts (2026-10-16)
 
@@ -35,6 +35,7 @@ Start every session by reading this file and `KNOWN_ISSUES.md`. Agent brief: `AG
 
 ## Build log (newest first)
 
+- 2026-10-17: handoff written (`HANDOFF.md`); `tools/apply_test.sh` added (107/107 apply to fresh upstream tips), checkers moved into `tools/`.
 - 2026-10-17: branch `a17` rebased onto LineageOS/android `lineage-24.0` (d4c6331, 2026-10-09); `a16` stays on `lineage-23.0`. Only the unused upstream manifest files changed.
 - 2026-10-17: FP4 camera parity with /e/OS a16: frameworks/av client-package hook, FP4 camera sepolicy/props/eCamera overlay, gralloc.qcom crash fix, build-node blob string fixup (`patches/a17/blob-fixups.txt`). 107 patches, all apply. FPCamera stays out (proprietary).
 - 2026-10-17: Play Integrity source audit: nothing missing vs a16; build log now prints `>> integrity:` checks; owner test in `PLAY_INTEGRITY.md`.

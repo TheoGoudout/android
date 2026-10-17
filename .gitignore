@@ -16,3 +16,4 @@ logcat*.txt
 dmesg*.txt
 # port-audit scratch space (GBs of partial clones)
 port-audit/audit-work/
+__pycache__/
