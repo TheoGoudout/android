@@ -134,7 +134,7 @@ KNOWN_ISSUES.md (Android Auto, theming). None of this has been compiled yet.
       libs/systemui changes. Count badges are therefore a gap on `a17` (KNOWN_ISSUES #4).
 - [x] Remaining forks (DocumentsUI, SettingsIntelligence, WallpaperPicker2, LineageParts
       translations, Permission theming, SystemUI/SettingsLib palette): theming only, left to /e/OS.
-- [ ] Permission "deviceKeyHandler" role: needs frameworks/base `config_deviceKeyHandler` first
+- [x] Permission "deviceKeyHandler" role + frameworks/base `config_deviceKeyHandler` resource
 - [x] Verify the 11 a16 security self-carries: 8 present in lineage-24.0, 1 likely (rewritten), 2 still
       vulnerable (Matroska heap write, Telecomm caller check), now carried in `patches/a17/`.
       Worth reporting to LineageOS too.

@@ -1,0 +1,37 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Rohit Sekhar <merothh@gmail.com>
+Date: Tue, 1 Apr 2025 11:42:31 +0530
+Subject: [PATCH 1/2] PermissionController: Add a role for deviceKeyHandler
+
+(cherry picked from commit 443eb49875a48aa511288d955525fe4c5f826e80)
+---
+ PermissionController/res/xml/roles.xml | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/PermissionController/res/xml/roles.xml b/PermissionController/res/xml/roles.xml
+index dadfd1bf3a..61c7bfed88 100644
+--- a/PermissionController/res/xml/roles.xml
++++ b/PermissionController/res/xml/roles.xml
+@@ -1261,6 +1261,22 @@
+         </app-ops>
+     </role>
+ 
++    <!---
++      ~ A role for the Device KeyHandler
++      -->
++    <role
++        name="android.app.role.DeviceKeyHandler"
++        defaultHolders="config_deviceKeyHandler"
++        exclusive="true"
++        static="true"
++        systemOnly="true"
++        visible="false">
++        <permissions>
++            <permission name="android.permission.MANAGE_SENSOR_PRIVACY" />
++            <permission name="android.permission.OBSERVE_SENSOR_PRIVACY" />
++        </permissions>
++    </role>
++
+     <!---
+       ~ A role for the package responsible for interacting with a TV remote.
+       -->

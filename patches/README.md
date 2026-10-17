@@ -47,8 +47,6 @@ are left to /e/OS because they collide with the Material 3 Expressive redesign).
 | packages/apps/FMRadio, vendor/qcom/opensource/commonsys/fm | new app icon | resource-only |
 
 Not carried, with reason:
-- Permission "Add a role for deviceKeyHandler": needs `config_deviceKeyHandler` from an unported
-  frameworks/base commit. Port together with frameworks/base.
 - Permission "Android Auto as user app 2/2": needs frameworks/base 1/2 (conflicts there).
 - Contacts "Default to phone-only if no account": the activity it patched is gone in AOSP 17
   (CP2 default-account APIs). Needs a fresh design check on a device.
@@ -83,6 +81,9 @@ in `build.sh` (works for any project path).
 ### frameworks/base (3 patches, on top of /e/OS a17)
 /e/OS already carries 36 commits on a17 (signature spoofing, fake location, parental control
 hooks, e colors…). Of the 57 a16 commits missing there:
+- added: `config_deviceKeyHandler` (empty string) so the DeviceKeyHandler role that
+  PermissionController now carries has a resource to resolve (on a16 the name was never
+  declared). Device overlays set it.
 - carried: **Hide From microG** (AppsFilter + `HIDE_MICROG_PACKAGES_FOR_PACKAGE` system setting;
   validator conflict resolved), the **USB lockdown** security fix (hand-ported; a17 still
   re-enables USB data for any user), SafetyNetHooks dockmanager Build.TYPE.
