@@ -33,7 +33,8 @@ kept between builds → incremental rebuilds ~15–30 min).
    `build.sh` clones the branch matching `EOS_BRANCH` and uses `local_manifests/<target>/`.
    Tooling and docs are developed on `a17` and merged into `a16` when relevant. Public only:
    crave forbids private repos. (`default.xml`, `snippets/` and `README.mkdn` are the
-   LineageOS 23.0 manifest this repo was forked from; the build does not use them.)
+   LineageOS manifest each branch is based on: `lineage-24.0` for `a17`, `lineage-23.0` for `a16`.
+   The build does not use them.)
 4. Run `crave clone list` and make the key in `crave.yaml` match the LOS 23.2 project name.
 5. Edit the variables at the top of `build.sh`, then from inside `crave devspace`:
    `./build.sh setup`
