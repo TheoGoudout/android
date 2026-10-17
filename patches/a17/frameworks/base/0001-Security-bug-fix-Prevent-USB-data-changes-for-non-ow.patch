@@ -1,8 +1,8 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: George Chan <georgechan@google.com>
 Date: Thu, 16 Apr 2026 10:13:21 -0700
-Subject: [PATCH 1/4] Security bug fix: Prevent USB data changes for non-owner
- users during lockdown mode.
+Subject: [PATCH 01/24] Security bug fix: Prevent USB data changes for
+ non-owner users during lockdown mode.
 
 The onStrongAuthRequiredChanged callback now only affects USB data for non-guest users. This prevents USB data from being enabled for guest users when the device enters lockdown mode.
 

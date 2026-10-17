@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Claude <noreply@anthropic.com>
 Date: Sat, 17 Oct 2026 04:37:27 +0000
-Subject: [PATCH 4/4] core: Add config_deviceKeyHandler
+Subject: [PATCH 04/24] core: Add config_deviceKeyHandler
 
 Default holder resource for the android.app.role.DeviceKeyHandler role that
 /e/OS defines in PermissionController (MANAGE/OBSERVE_SENSOR_PRIVACY for a

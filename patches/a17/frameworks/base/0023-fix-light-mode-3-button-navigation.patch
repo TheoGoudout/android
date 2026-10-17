@@ -1,0 +1,75 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Mohammed Althaf Thayyil <althafvly@gmail.com>
+Date: Fri, 13 Jun 2025 18:32:48 +0530
+Subject: [PATCH 23/24] fix light mode 3 button navigation
+
+Co-authored-by: Nishith Khanna <nishithkhanna@e.email>
+[a17: re-implemented on the restructured LightBarControllerImpl: QS forces dark
+ bars only in night mode (the a16 boolean expression is replaced by this
+ simpler equivalent of its intent)]
+
+(cherry picked from commit 249534a3e5b5e53b5fe7bc9666eb88119fb39a84)
+---
+ .../statusbar/phone/LightBarControllerImpl.java    | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/phone/LightBarControllerImpl.java b/packages/SystemUI/src/com/android/systemui/statusbar/phone/LightBarControllerImpl.java
+index ac961194aa9a..08082697c34c 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/phone/LightBarControllerImpl.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/phone/LightBarControllerImpl.java
+@@ -23,6 +23,8 @@ import static com.android.systemui.shared.statusbar.phone.BarTransitions.MODE_LI
+ import static com.android.systemui.shared.statusbar.phone.BarTransitions.MODE_OPAQUE_LIGHT;
+ import static com.android.systemui.shared.statusbar.phone.BarTransitions.MODE_TRANSPARENT;
+ 
++import android.content.Context;
++import android.content.res.Configuration;
+ import android.graphics.Rect;
+ import android.util.Log;
+ import android.view.Display;
+@@ -78,6 +80,7 @@ public class LightBarControllerImpl implements
+     private final DumpManager mDumpManager;
+     private final StatusBarModePerDisplayRepository mStatusBarModeRepository;
+     private final CoroutineContext mMainContext;
++    private final Context mContext;
+     private final BiometricUnlockController mBiometricUnlockController;
+ 
+     private LightBarTransitionsController mNavigationBarController;
+@@ -132,6 +135,7 @@ public class LightBarControllerImpl implements
+ 
+     @AssistedInject
+     public LightBarControllerImpl(
++            Context context,
+             @Assisted int displayId,
+             @Assisted CoroutineScope coroutineScope,
+             @Assisted DarkIconDispatcher darkIconDispatcher,
+@@ -141,6 +145,7 @@ public class LightBarControllerImpl implements
+             DumpManager dumpManager,
+             @Main CoroutineContext mainContext,
+             BiometricUnlockController biometricUnlockController) {
++        mContext = context;
+         mCoroutineScope = coroutineScope;
+         mStatusBarIconController = (SysuiDarkIconDispatcher) darkIconDispatcher;
+         mBatteryController = batteryController;
+@@ -232,7 +237,9 @@ public class LightBarControllerImpl implements
+             final boolean ignoreScrimForce = mDirectReplying && mNavbarColorManagedByIme;
+             final boolean darkForScrim = mForceDarkForScrim && !ignoreScrimForce;
+             final boolean lightForScrim = mForceLightForScrim && !ignoreScrimForce;
+-            final boolean darkForQs = (mQsCustomizing || mQsExpanded) && !mBouncerVisible;
++            // /e/OS: QS follows the light/dark theme, so it only forces dark bars in night mode
++            final boolean darkForQs = (mQsCustomizing || mQsExpanded) && !mBouncerVisible
++                    && isNightMode();
+             final boolean darkForTop = darkForQs || mGlobalActionsVisible;
+             mNavigationLight =
+                     ((mHasLightNavigationBar && !darkForScrim) || lightForScrim) && !darkForTop;
+@@ -264,6 +271,11 @@ public class LightBarControllerImpl implements
+         mNavbarColorManagedByIme = navbarColorManagedByIme;
+     }
+ 
++    private boolean isNightMode() {
++        return (mContext.getResources().getConfiguration().uiMode
++                & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
++    }
++
+     @Override
+     public void onNavigationBarModeChanged(int newBarMode) {
+         onNavigationBarAppearanceChanged(mAppearance, true /* nbModeChanged */,

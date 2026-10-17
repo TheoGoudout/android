@@ -1,0 +1,36 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: althafvly <althafvly@gmail.com>
+Date: Tue, 8 Oct 2024 13:31:22 +0530
+Subject: [PATCH 21/24] SystemUI: Recreate overlays anyway
+
+[a17: mSecondaryOverlay is mAccentOverlay on Android 17]
+
+(cherry picked from commit 2f47c7f92bab31cc207db6b6f552ff6d1227932d)
+---
+ .../systemui/theme/ThemeOverlayController.java      | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayController.java b/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayController.java
+index 6fe58a5e7b29..eeb1401b2ad4 100644
+--- a/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayController.java
++++ b/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayController.java
+@@ -684,12 +684,13 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
+ 
+         if (mIsMonetEnabled) {
+             mThemeStyle = fetchThemeStyleFromSetting();
+-            createOverlays(mMainWallpaperColor);
+-            mNeedsOverlayCreation = true;
+-            if (DEBUG) {
+-                Log.d(TAG, "fetched overlays. accent: " + mAccentOverlay
+-                        + " neutral: " + mNeutralOverlay + " dynamic: " + mDynamicOverlay);
+-            }
++        }
++
++        createOverlays(mMainWallpaperColor);
++        mNeedsOverlayCreation = true;
++        if (DEBUG) {
++            Log.d(TAG, "fetched overlays. accent: " + mAccentOverlay
++                    + " neutral: " + mNeutralOverlay + " dynamic: " + mDynamicOverlay);
+         }
+ 
+         updateThemeOverlays(forceReload);

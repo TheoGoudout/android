@@ -1,0 +1,30 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishith.khanna@gmail.com>
+Date: Sat, 17 Oct 2026 04:57:08 +0000
+Subject: [PATCH 09/24] fix color of emphasized notification
+
+[a17: Android 17 resolves emphasized action colours in resolveEmphasisColors();
+ the primary-emphasis button now uses the primary accent with the notification
+ background as text colour, as the a16 change did]
+(cherry picked from commit d7c044b116a798e482335c3abb7b5586addbf053)
+---
+ core/java/android/app/Notification.java | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/core/java/android/app/Notification.java b/core/java/android/app/Notification.java
+index 47d61adc2b3c..caebe0029848 100644
+--- a/core/java/android/app/Notification.java
++++ b/core/java/android/app/Notification.java
+@@ -7625,8 +7625,10 @@ public class Notification implements Parcelable
+                     textColor = ContrastColorUtil.resolvePrimaryColor(mContext,
+                             backgroundColor, mInNightMode);
+                 } else {
+-                    backgroundColor = colors.getPrimaryEmphasisBackground();
+-                    textColor = colors.getPrimaryEmphasisText();
++                    // /e/OS: emphasized buttons use the accent with the notification background
++                    // as text colour
++                    backgroundColor = colors.getPrimaryAccentColor();
++                    textColor = notifBackgroundColor;
+                 }
+             } else {
+                 backgroundColor = Color.TRANSPARENT;

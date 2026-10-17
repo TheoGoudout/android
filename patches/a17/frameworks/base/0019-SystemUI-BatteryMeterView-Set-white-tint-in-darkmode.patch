@@ -1,0 +1,35 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: althafvly <althafvly@gmail.com>
+Date: Wed, 5 Oct 2022 11:30:49 +0530
+Subject: [PATCH 19/24] SystemUI: BatteryMeterView: Set white tint in darkmode
+
+Change-Id: I399e47088d52b43029f1e2a26bc05323ac2785f2
+(cherry picked from commit b270aa7efc3258622e09ae650901fec241900763)
+---
+ .../com/android/systemui/battery/BatteryMeterView.java    | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/battery/BatteryMeterView.java b/packages/SystemUI/src/com/android/systemui/battery/BatteryMeterView.java
+index 1806e4e60b56..cb3cc7256bd4 100644
+--- a/packages/SystemUI/src/com/android/systemui/battery/BatteryMeterView.java
++++ b/packages/SystemUI/src/com/android/systemui/battery/BatteryMeterView.java
+@@ -153,12 +153,18 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
+         updateShowPercent();
+         mDualToneHandler = new DualToneHandler(context);
+         // Init to not dark at all.
+-        onDarkChanged(new ArrayList<Rect>(), 0, DarkIconDispatcher.DEFAULT_ICON_TINT);
++        if (isNightMode()) {
++            onDarkChanged(new ArrayList<Rect>(), 0, DarkIconDispatcher.DEFAULT_ICON_TINT);
++        }
+ 
+         setClipChildren(false);
+         setClipToPadding(false);
+     }
+ 
++    private boolean isNightMode() {
++        return (mContext.getResources().getConfiguration().uiMode
++                & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
++    }
+ 
+     private void setBatteryDrawableState(BatteryDrawableState newState) {
+         if (!NewStatusBarIcons.isEnabled()) return;
