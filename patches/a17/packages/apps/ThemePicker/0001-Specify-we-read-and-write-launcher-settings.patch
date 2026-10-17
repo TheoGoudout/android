@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Luca Stefani <luca.stefani.ge1@gmail.com>
 Date: Fri, 1 Nov 2019 23:17:08 +0100
-Subject: [PATCH 1/2] Specify we read and write launcher settings
+Subject: [PATCH 1/4] Specify we read and write launcher settings
 
 Change-Id: Ifc8196588443b007602118389ca76d34ab531f14
 (cherry picked from commit 2b55c249cd5dcf0fbb78eddb2205926bb9944199)

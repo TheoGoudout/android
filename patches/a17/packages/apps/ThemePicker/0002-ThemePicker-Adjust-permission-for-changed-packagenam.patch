@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: TheScarastic <warabhishek@e.email>
 Date: Tue, 4 Apr 2023 11:21:27 +0000
-Subject: [PATCH 2/2] ThemePicker: Adjust permission for changed packagename
+Subject: [PATCH 2/4] ThemePicker: Adjust permission for changed packagename
 
 Change-Id: If81882ee61b9bcc652ff3c73f2507867c3d5a5a0
 [a17: keep the com.android.launcher3 permissions as well, because /e/OS's
@@ -12,7 +12,7 @@ Change-Id: If81882ee61b9bcc652ff3c73f2507867c3d5a5a0
  1 file changed, 3 insertions(+)
 
 diff --git a/AndroidManifest.xml b/AndroidManifest.xml
-index 3010f428..df6a26e9 100755
+index 3010f428..b60288a1 100755
 --- a/AndroidManifest.xml
 +++ b/AndroidManifest.xml
 @@ -26,6 +26,7 @@
@@ -23,9 +23,7 @@ index 3010f428..df6a26e9 100755
          <package android:name="com.android.settings"/>
          <package android:name="com.android.systemui"/>
          <!-- Package of camera for icon shape -->
-@@ -64,8 +65,10 @@
-         </intent>
-     </queries>
+@@ -66,6 +67,8 @@
  
      <uses-permission android:name="com.android.launcher3.permission.READ_SETTINGS" />
      <uses-permission android:name="com.android.launcher3.permission.WRITE_SETTINGS" />

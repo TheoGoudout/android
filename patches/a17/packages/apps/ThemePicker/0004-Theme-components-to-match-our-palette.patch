@@ -1,0 +1,104 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishithkhanna@e.email>
+Date: Thu, 17 Oct 2024 15:22:42 +0530
+Subject: [PATCH 4/4] Theme components to match our palette
+
+[a17: the old dark mode / notification / themed icon sections were removed
+ upstream, so their Switch swaps are dropped; the new floating-sheet
+ MaterialSwitches are tinted with the framework e_switch_thumb/track colours
+ instead. The two drawable tweaks apply unchanged]
+
+(cherry picked from commit b2c4193ac1a3fa127def04c1eb4ec92b639970c3)
+---
+ res/drawable/clock_color_size_button_background_base.xml | 2 +-
+ res/drawable/option_border.xml                           | 2 +-
+ res/layout/floating_sheet_app_icon.xml                   | 6 ++++++
+ res/layout/floating_sheet_clock_size_content.xml         | 3 +++
+ res/layout/floating_sheet_colors.xml                     | 4 ++++
+ 5 files changed, 15 insertions(+), 2 deletions(-)
+
+diff --git a/res/drawable/clock_color_size_button_background_base.xml b/res/drawable/clock_color_size_button_background_base.xml
+index 2e6f2be5..e29b9f2a 100644
+--- a/res/drawable/clock_color_size_button_background_base.xml
++++ b/res/drawable/clock_color_size_button_background_base.xml
+@@ -17,5 +17,5 @@
+ <shape xmlns:android="http://schemas.android.com/apk/res/android"
+     android:shape="rectangle">
+     <corners android:radius="@dimen/clock_color_size_button_corner_radius" />
+-    <solid android:color="@color/color_surface" />
++    <solid android:color="@*android:color/e_floating_background_variant" />
+ </shape>
+\ No newline at end of file
+diff --git a/res/drawable/option_border.xml b/res/drawable/option_border.xml
+index d0fde5ca..fce16663 100644
+--- a/res/drawable/option_border.xml
++++ b/res/drawable/option_border.xml
+@@ -23,7 +23,7 @@
+     </item>
+     <item>
+         <shape android:shape="rectangle">
+-            <solid android:color="@color/color_surface"/>
++            <solid android:color="@*android:color/e_floating_background_variant"/>
+             <corners android:radius="@dimen/option_tile_radius" />
+         </shape>
+     </item>
+diff --git a/res/layout/floating_sheet_app_icon.xml b/res/layout/floating_sheet_app_icon.xml
+index 07d4a346..b20e4ed1 100644
+--- a/res/layout/floating_sheet_app_icon.xml
++++ b/res/layout/floating_sheet_app_icon.xml
+@@ -133,6 +133,9 @@
+                     app:layout_constraintBottom_toBottomOf="parent" />
+ 
+                 <com.google.android.material.materialswitch.MaterialSwitch
++                app:thumbTint="@*android:color/e_switch_thumb_color"
++                app:trackTint="@*android:color/e_switch_track_color"
++                app:trackDecorationTint="@android:color/transparent"
+                     style="@style/SettingslibSwitchStyle.Expressive"
+                     android:id="@+id/themed_icon_toggle"
+                     android:layout_width="wrap_content"
+@@ -167,6 +170,9 @@
+                 android:importantForAccessibility="no" />
+ 
+             <com.google.android.material.materialswitch.MaterialSwitch
++                app:thumbTint="@*android:color/e_switch_thumb_color"
++                app:trackTint="@*android:color/e_switch_track_color"
++                app:trackDecorationTint="@android:color/transparent"
+                 style="@style/SettingslibSwitchStyle.Expressive"
+                 android:id="@+id/show_app_labels_switch"
+                 android:layout_width="wrap_content"
+diff --git a/res/layout/floating_sheet_clock_size_content.xml b/res/layout/floating_sheet_clock_size_content.xml
+index b1384a7a..31245e5d 100644
+--- a/res/layout/floating_sheet_clock_size_content.xml
++++ b/res/layout/floating_sheet_clock_size_content.xml
+@@ -48,6 +48,9 @@
+         app:layout_constraintBottom_toBottomOf="parent" />
+ 
+     <com.google.android.material.materialswitch.MaterialSwitch
++                app:thumbTint="@*android:color/e_switch_thumb_color"
++                app:trackTint="@*android:color/e_switch_track_color"
++                app:trackDecorationTint="@android:color/transparent"
+         style="@style/SettingslibSwitchStyle.Expressive"
+         android:id="@+id/clock_style_clock_size_switch"
+         android:layout_width="wrap_content"
+diff --git a/res/layout/floating_sheet_colors.xml b/res/layout/floating_sheet_colors.xml
+index 4c0efc72..db24a988 100644
+--- a/res/layout/floating_sheet_colors.xml
++++ b/res/layout/floating_sheet_colors.xml
+@@ -15,6 +15,7 @@
+   -->
+ 
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:paddingHorizontal="@dimen/floating_sheet_horizontal_padding"
+@@ -50,6 +51,9 @@
+             android:clipToPadding="false" />
+ 
+         <com.google.android.material.materialswitch.MaterialSwitch
++                app:thumbTint="@*android:color/e_switch_thumb_color"
++                app:trackTint="@*android:color/e_switch_track_color"
++                app:trackDecorationTint="@android:color/transparent"
+             style="@style/SettingslibSwitchStyle.Expressive"
+             android:id="@+id/dark_mode_toggle"
+             android:layout_width="match_parent"

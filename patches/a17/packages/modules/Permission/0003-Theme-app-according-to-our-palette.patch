@@ -1,0 +1,240 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nishith Khanna <nishithkhanna@e.email>
+Date: Wed, 16 Oct 2024 19:33:05 +0530
+Subject: [PATCH 3/3] Theme app according to our palette
+
+Fix button to match our accent
+Fix extended fab color in permission manager
+Fix permission dialog
+Fix security & privacy page from QS
+
+[a17: Theme.SafetyCenterQsBase lost its colour items upstream; only the /e/
+ colorBackground line is kept there]
+
+(cherry picked from commit 0fa4a03d518a50397beb0085176f1084b69e93a9)
+---
+ .../grant_permissions_buttons_bottom.xml      |  2 +-
+ .../grant_permissions_buttons_middle.xml      |  2 +-
+ .../grant_permissions_buttons_top.xml         |  2 +-
+ .../permission_details_extended_fab.xml       |  4 +++
+ .../res/values-night-v31/styles.xml           | 30 -------------------
+ .../res/values-night/themes.xml               |  2 +-
+ .../res/values-v31/styles.xml                 |  8 ++---
+ .../res/values-v33/themes.xml                 |  3 ++
+ .../res/values-v34/colors.xml                 |  4 +--
+ PermissionController/res/values/themes.xml    |  1 +
+ .../v31/PermissionUsageDetailsFragment.java   | 15 ----------
+ 11 files changed, 18 insertions(+), 55 deletions(-)
+ delete mode 100644 PermissionController/res/values-night-v31/styles.xml
+
+diff --git a/PermissionController/res/drawable-v31/grant_permissions_buttons_bottom.xml b/PermissionController/res/drawable-v31/grant_permissions_buttons_bottom.xml
+index d316f78dda..249ca1c46d 100644
+--- a/PermissionController/res/drawable-v31/grant_permissions_buttons_bottom.xml
++++ b/PermissionController/res/drawable-v31/grant_permissions_buttons_bottom.xml
+@@ -17,7 +17,7 @@
+ 
+ <shape xmlns:android="http://schemas.android.com/apk/res/android"
+        android:shape="rectangle">
+-    <solid android:color="@android:color/system_accent1_100"/>
++    <solid android:color="@*android:color/e_accent"/>
+     <corners android:topLeftRadius="4dp" android:topRightRadius="4dp"
+              android:bottomLeftRadius="12dp" android:bottomRightRadius="12dp"/>
+ </shape>
+diff --git a/PermissionController/res/drawable-v31/grant_permissions_buttons_middle.xml b/PermissionController/res/drawable-v31/grant_permissions_buttons_middle.xml
+index d0cdc22794..f9f0391241 100644
+--- a/PermissionController/res/drawable-v31/grant_permissions_buttons_middle.xml
++++ b/PermissionController/res/drawable-v31/grant_permissions_buttons_middle.xml
+@@ -17,6 +17,6 @@
+ 
+ <shape xmlns:android="http://schemas.android.com/apk/res/android"
+        android:shape="rectangle">
+-    <solid android:color="@android:color/system_accent1_100"/>
++    <solid android:color="@*android:color/e_accent"/>
+     <corners android:radius="4dp" />
+ </shape>
+diff --git a/PermissionController/res/drawable-v31/grant_permissions_buttons_top.xml b/PermissionController/res/drawable-v31/grant_permissions_buttons_top.xml
+index f52fb13240..e8895b2a38 100644
+--- a/PermissionController/res/drawable-v31/grant_permissions_buttons_top.xml
++++ b/PermissionController/res/drawable-v31/grant_permissions_buttons_top.xml
+@@ -17,7 +17,7 @@
+ 
+ <shape xmlns:android="http://schemas.android.com/apk/res/android"
+        android:shape="rectangle">
+-    <solid android:color="@android:color/system_accent1_100"/>
++    <solid android:color="@*android:color/e_accent"/>
+     <corners android:topLeftRadius="12dp" android:topRightRadius="12dp"
+              android:bottomLeftRadius="4dp" android:bottomRightRadius="4dp"/>
+ </shape>
+diff --git a/PermissionController/res/layout-v31/permission_details_extended_fab.xml b/PermissionController/res/layout-v31/permission_details_extended_fab.xml
+index b3fa7d8807..8ff6c7d77b 100644
+--- a/PermissionController/res/layout-v31/permission_details_extended_fab.xml
++++ b/PermissionController/res/layout-v31/permission_details_extended_fab.xml
+@@ -18,7 +18,11 @@
+ 
+ <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+     xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:id="@+id/extended_fab"
+     android:theme="@style/Theme.MaterialComponents.DayNight"
+     android:visibility="gone"
++    app:backgroundTint="@*android:color/e_accent"
++    app:iconTint="@*android:color/e_background"
++    android:textColor="@*android:color/e_background"
+     style="@style/PermissionFrameExtendedFloatingActionButton" />
+diff --git a/PermissionController/res/values-night-v31/styles.xml b/PermissionController/res/values-night-v31/styles.xml
+deleted file mode 100644
+index c89c5bb907..0000000000
+--- a/PermissionController/res/values-night-v31/styles.xml
++++ /dev/null
+@@ -1,30 +0,0 @@
+-<!--
+-  ~ Copyright (C) 2021 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-  -->
+-
+-<resources>
+-
+-    <!-- START PERMISSION GRANT DIALOG -->
+-
+-    <style name="PermissionGrantTitleIconMaterial3">
+-        <item name="android:layout_width">32dp</item>
+-        <item name="android:layout_height">32dp</item>
+-        <item name="android:layout_marginBottom">12dp</item>
+-        <item name="android:tint">@android:color/system_accent1_300</item>
+-        <item name="android:scaleType">fitCenter</item>
+-    </style>
+-
+-    <!-- END PERMISSION GRANT DIALOG -->
+-</resources>
+diff --git a/PermissionController/res/values-night/themes.xml b/PermissionController/res/values-night/themes.xml
+index 8c6a10db57..98793de8e5 100644
+--- a/PermissionController/res/values-night/themes.xml
++++ b/PermissionController/res/values-night/themes.xml
+@@ -28,7 +28,7 @@
+ 
+     <style name="Theme.PermissionGrantDialog"
+            parent="@android:style/Theme.DeviceDefault.Dialog">
+-        <item name="android:colorBackground">@color/google_grey_800</item>
++        <item name="android:colorBackground">@*android:color/e_floating_background_dark</item>
+         <item name="android:divider">@drawable/list_divider</item>
+     </style>
+ 
+diff --git a/PermissionController/res/values-v31/styles.xml b/PermissionController/res/values-v31/styles.xml
+index 20fb847018..756ddfd615 100644
+--- a/PermissionController/res/values-v31/styles.xml
++++ b/PermissionController/res/values-v31/styles.xml
+@@ -46,7 +46,7 @@
+         <item name="android:layout_width">32dp</item>
+         <item name="android:layout_height">32dp</item>
+         <item name="android:layout_marginBottom">12dp</item>
+-        <item name="android:tint">@android:color/system_accent1_600</item>
++        <item name="android:tint">@*android:color/e_accent</item>
+         <item name="android:scaleType">fitCenter</item>
+     </style>
+ 
+@@ -69,7 +69,7 @@
+         <item name="android:layout_marginBottom">2dp</item>
+         <item name="android:fontFamily">google-sans-medium</item>
+         <item name="android:textSize">14sp</item>
+-        <item name="android:textColor">@android:color/system_neutral1_900</item>
++        <item name="android:textColor">@*android:color/e_background</item>
+         <item name="android:background">@drawable/grant_permissions_buttons_top</item>
+     </style>
+ 
+@@ -84,7 +84,7 @@
+         <item name="android:layout_marginBottom">2dp</item>
+         <item name="android:fontFamily">google-sans-medium</item>
+         <item name="android:textSize">14sp</item>
+-        <item name="android:textColor">@android:color/system_neutral1_900</item>
++        <item name="android:textColor">@*android:color/e_background</item>
+         <item name="android:background">@drawable/grant_permissions_buttons_middle</item>
+     </style>
+ 
+@@ -99,7 +99,7 @@
+         <item name="android:layout_marginBottom">2dp</item>
+         <item name="android:fontFamily">google-sans-medium</item>
+         <item name="android:textSize">14sp</item>
+-        <item name="android:textColor">@android:color/system_neutral1_900</item>
++        <item name="android:textColor">@*android:color/e_background</item>
+         <item name="android:background">@drawable/grant_permissions_buttons_bottom</item>
+     </style>
+ 
+diff --git a/PermissionController/res/values-v33/themes.xml b/PermissionController/res/values-v33/themes.xml
+index 7440371906..d89b9fac8f 100644
+--- a/PermissionController/res/values-v33/themes.xml
++++ b/PermissionController/res/values-v33/themes.xml
+@@ -19,6 +19,9 @@
+     <style name="Theme.SafetyCenterQsBase" parent="@android:style/Theme.DeviceDefault.NoActionBar">
+         <item name="android:filterTouchesWhenObscured">true</item>
+ 
++        <!-- Safety Center Quick Settings uses dark mode resources -->
++        <item name="android:colorBackground">@*android:color/e_background_dark</item>
++
+         <item name="scStatusTitleAndSummaryContainerStyle">
+             @style/SafetyCenterStatusTitleAndSummaryContainer.Fixed
+         </item>
+diff --git a/PermissionController/res/values-v34/colors.xml b/PermissionController/res/values-v34/colors.xml
+index 1bc2371884..8664bc29a3 100644
+--- a/PermissionController/res/values-v34/colors.xml
++++ b/PermissionController/res/values-v34/colors.xml
+@@ -19,8 +19,8 @@
+     <!-- colorAccentPrimaryVariant is not visible from mainline, so UX provided this alternative -->
+     <color name="permission_rationale_accent_primary_variant">@android:color/system_accent1_600</color>
+ 
+-    <color name="sc_surface_light">@android:color/system_surface_bright_light</color>
+-    <color name="sc_surface_dark">@android:color/system_surface_bright_dark</color>
++    <color name="sc_surface_light">@*android:color/e_floating_background_variant_light</color>
++    <color name="sc_surface_dark">@*android:color/e_floating_background_variant_dark</color>
+ 
+     <color name="sc_surface_variant_light">@android:color/system_surface_container_high_light</color>
+     <color name="sc_surface_variant_dark">@android:color/system_surface_container_high_dark</color>
+diff --git a/PermissionController/res/values/themes.xml b/PermissionController/res/values/themes.xml
+index d83d10f179..176d3373a0 100644
+--- a/PermissionController/res/values/themes.xml
++++ b/PermissionController/res/values/themes.xml
+@@ -90,6 +90,7 @@
+ 
+     <style name="Theme.PermissionGrantDialog"
+            parent="@android:style/Theme.DeviceDefault.Light.Dialog">
++        <item name="android:colorBackground">@*android:color/e_floating_background_light</item>
+         <item name="android:divider">@drawable/list_divider</item>
+     </style>
+ 
+diff --git a/PermissionController/src/com/android/permissioncontroller/permission/ui/handheld/v31/PermissionUsageDetailsFragment.java b/PermissionController/src/com/android/permissioncontroller/permission/ui/handheld/v31/PermissionUsageDetailsFragment.java
+index 9078f1a0a1..5765be932d 100644
+--- a/PermissionController/src/com/android/permissioncontroller/permission/ui/handheld/v31/PermissionUsageDetailsFragment.java
++++ b/PermissionController/src/com/android/permissioncontroller/permission/ui/handheld/v31/PermissionUsageDetailsFragment.java
+@@ -143,22 +143,7 @@ public class PermissionUsageDetailsFragment extends SettingsWithLargeHeader {
+         // Load the background tint color from the application theme
+         // rather than the Material Design theme
+         Activity activity = getActivity();
+-        ColorStateList backgroundColor =
+-                activity.getColorStateList(android.R.color.system_accent3_100);
+-        extendedFab.setBackgroundTintList(backgroundColor);
+         extendedFab.setText(R.string.manage_permission);
+-        boolean isUiModeNight =
+-                (activity.getResources().getConfiguration().uiMode
+-                                & Configuration.UI_MODE_NIGHT_MASK)
+-                        == Configuration.UI_MODE_NIGHT_YES;
+-        int textColorAttr =
+-                isUiModeNight
+-                        ? android.R.attr.textColorPrimaryInverse
+-                        : android.R.attr.textColorPrimary;
+-        TypedArray typedArray = activity.obtainStyledAttributes(new int[] {textColorAttr});
+-        ColorStateList textColor = typedArray.getColorStateList(0);
+-        typedArray.recycle();
+-        extendedFab.setTextColor(textColor);
+         extendedFab.setIcon(activity.getDrawable(R.drawable.ic_settings_outline));
+         extendedFab.setVisibility(View.VISIBLE);
+         extendedFab.setOnClickListener(
