@@ -29,4 +29,4 @@ Never paste raw device logs here (public repo): quote only the relevant, redacte
 | OTA Updater (app opens; no official channel expected for UNOFFICIAL) | | | |
 | Default apps set (Mail, Browser, Camera, etc.) | | | |
 | ih8sn running, `/system/etc/ih8sn.conf` present | | | |
-| Play Integrity BASIC (phase 2) | | | |
+| Play Integrity BASIC (phase 2) | | | test steps: `PLAY_INTEGRITY.md` |

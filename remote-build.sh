@@ -65,6 +65,16 @@ set -e
 make installclean
 mka target-files-package otatools
 
+# Play Integrity BASIC prerequisites (AGENT_PLAN §8): report what actually shipped, don't fail
+if [ "$INCLUDE_IH8SN" = "true" ]; then
+  for f in system/bin/ih8sn system/etc/ih8sn.conf system/etc/init/ih8sn.rc; do
+    [ -e "$OUT/$f" ] && echo ">> integrity: $f present" || echo ">> WARNING integrity: $f missing"
+  done
+  [ -e "$OUT/system/etc/ih8sn.conf" ] && sed 's/^/>> integrity: ih8sn.conf: /' "$OUT/system/etc/ih8sn.conf"
+fi
+find "$OUT/system" "$OUT/system_ext" "$OUT/product" -maxdepth 3 -type d -name 'GmsCore*' 2>/dev/null \
+  | grep -q . && echo ">> integrity: microG GmsCore present" || echo ">> WARNING integrity: microG GmsCore not found"
+
 BUILD_NUMBER="$(date -u +%Y%m%d)"
 TF_IN="$(find "$OUT/obj/PACKAGING/target_files_intermediates/" -name '*-target_files*.zip' -print -quit)"
 [ -n "$TF_IN" ] || { echo ">> target-files zip not found"; exit 1; }
