@@ -1,0 +1,161 @@
+From ff2ae572f0877b4fe30274f67bdd7cdd7b974f2a Mon Sep 17 00:00:00 2001
+From: sn00x <90611925+sn-00-x@users.noreply.github.com>
+Date: Sat, 17 Oct 2026 05:14:29 +0000
+Subject: [PATCH 25/26] Android Auto: Support Android Auto as user app 1/2
+
+[a17: Android 17 removed PermissionManagerServiceImpl. The package/signature/
+permission list moves to com.android.server.pm.AndroidAutoPackage and the
+grant is checked in the Kotlin PermissionService.isPermissionGranted(), which
+both checkPermission() and checkUidPermission() go through. config.xml part
+unchanged.]
+
+(cherry picked from commit fe1f4a825e9a851fd179bd283aba2b0e552bc02f)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_0127aPbuxQvhzD8TVw5auGLR
+---
+ core/res/res/values/config.xml                | 10 ++-
+ .../android/server/pm/AndroidAutoPackage.java | 64 +++++++++++++++++++
+ .../access/permission/PermissionService.kt    | 13 ++++
+ 3 files changed, 84 insertions(+), 3 deletions(-)
+ create mode 100644 services/core/java/com/android/server/pm/AndroidAutoPackage.java
+
+diff --git a/core/res/res/values/config.xml b/core/res/res/values/config.xml
+index e29b0855b45c..a26df82d2968 100644
+--- a/core/res/res/values/config.xml
++++ b/core/res/res/values/config.xml
+@@ -2537,7 +2537,7 @@
+     <!-- The name of the package that will hold the system gallery role. -->
+     <string name="config_systemGallery" translatable="false">com.android.gallery3d</string>
+     <!-- The names of the packages that will hold the automotive projection role. -->
+-    <string name="config_systemAutomotiveProjection" translatable="false"></string>
++    <string name="config_systemAutomotiveProjection" translatable="false">com.google.android.projection.gearhead:fdb00c43dbde8b51cb312aa81d3b5fa17713adb94b28f598d77f8eb89daceedf</string>
+ 
+     <!-- /e/OS: package that holds the android.app.role.DeviceKeyHandler role (granted sensor
+          privacy permissions, for devices with hardware privacy switches). Empty: no holder. -->
+@@ -5166,7 +5166,9 @@
+          Note that config_companionDevicePackages and config_companionDeviceCerts are
+          parallel arrays.
+      -->
+-    <string-array name="config_companionDevicePackages" translatable="false"></string-array>
++    <string-array name="config_companionDevicePackages" translatable="false">
++        <item>com.google.android.projection.gearhead</item>
++    </string-array>
+ 
+     <!-- A list of SHA256 Certificates managing companion device(s) by the same manufacturers as
+          the main device. It will fall back to showing a prompt if the association has been called
+@@ -5175,7 +5177,9 @@
+          arrays.
+          Example: "1A:2B:3C:4D"
+      -->
+-    <string-array name="config_companionDeviceCerts" translatable="false"></string-array>
++    <string-array name="config_companionDeviceCerts" translatable="false">
++        <item>FD:B0:0C:43:DB:DE:8B:51:CB:31:2A:A8:1D:3B:5F:A1:77:13:AD:B9:4B:28:F5:98:D7:7F:8E:B8:9D:AC:EE:DF</item>
++    </string-array>
+ 
+     <!-- A list of packages that auto-enable permissions sync feature.
+          Note that config_companionPermSyncEnabledPackages and config_companionPermSyncEnabledCerts
+diff --git a/services/core/java/com/android/server/pm/AndroidAutoPackage.java b/services/core/java/com/android/server/pm/AndroidAutoPackage.java
+new file mode 100644
+index 000000000000..36a1d677c5ed
+--- /dev/null
++++ b/services/core/java/com/android/server/pm/AndroidAutoPackage.java
+@@ -0,0 +1,64 @@
++/*
++ * Copyright (C) 2023 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.server.pm;
++
++import android.Manifest;
++import android.annotation.NonNull;
++import android.content.pm.SigningDetails;
++import android.util.ArraySet;
++
++import java.util.Set;
++
++/**
++ * Android Auto (Google-signed com.google.android.projection.gearhead) running as a user app:
++ * the privileged permissions it needs are granted to that package and signature only.
++ */
++public final class AndroidAutoPackage {
++    public static final String PACKAGE_NAME = "com.google.android.projection.gearhead";
++    private static final String SIGNATURE =
++            "FDB00C43DBDE8B51CB312AA81D3B5FA17713ADB94B28F598D77F8EB89DACEEDF";
++    public static final Set<String> CERTS = Set.of(SIGNATURE);
++    private static final Set<String> PERMISSIONS = new ArraySet<>(new String[] {
++            Manifest.permission.INTERNAL_SYSTEM_WINDOW,
++            Manifest.permission.MANAGE_COMPANION_DEVICES,
++            Manifest.permission.MANAGE_USB,
++            Manifest.permission.MODIFY_AUDIO_ROUTING,
++            Manifest.permission.READ_PHONE_STATE,
++            Manifest.permission.READ_PRIVILEGED_PHONE_STATE,
++            Manifest.permission.REQUEST_COMPANION_SELF_MANAGED,
++            Manifest.permission.BLUETOOTH_PRIVILEGED,
++            Manifest.permission.LOCAL_MAC_ADDRESS,
++            Manifest.permission.CONTROL_INCALL_EXPERIENCE,
++            Manifest.permission.COMPANION_APPROVE_WIFI_CONNECTIONS,
++            Manifest.permission.START_ACTIVITIES_FROM_BACKGROUND
++    });
++
++    private AndroidAutoPackage() {}
++
++    /** Whether {@code packageName} signed with {@code signingDetails} is Google's Android Auto. */
++    public static boolean isAndroidAuto(@NonNull String packageName,
++            @NonNull SigningDetails signingDetails) {
++        return PACKAGE_NAME.equals(packageName)
++                && signingDetails.hasAncestorOrSelfWithDigest(CERTS);
++    }
++
++    /** Whether {@code permissionName} is always granted to Google's Android Auto. */
++    public static boolean isGrantedPermission(@NonNull String packageName,
++            @NonNull SigningDetails signingDetails, @NonNull String permissionName) {
++        return PERMISSIONS.contains(permissionName) && isAndroidAuto(packageName, signingDetails);
++    }
++}
+diff --git a/services/permission/java/com/android/server/permission/access/permission/PermissionService.kt b/services/permission/java/com/android/server/permission/access/permission/PermissionService.kt
+index be35a31613f7..fcba20ab2034 100644
+--- a/services/permission/java/com/android/server/permission/access/permission/PermissionService.kt
++++ b/services/permission/java/com/android/server/permission/access/permission/PermissionService.kt
+@@ -90,6 +90,7 @@ import com.android.server.permission.access.util.andInv
+ import com.android.server.permission.access.util.hasAnyBit
+ import com.android.server.permission.access.util.hasBits
+ import com.android.server.permission.access.util.withClearedCallingIdentity
++import com.android.server.pm.AndroidAutoPackage
+ import com.android.server.pm.KnownPackages
+ import com.android.server.pm.PackageInstallerService
+ import com.android.server.pm.PackageManagerLocal
+@@ -674,6 +675,18 @@ class PermissionService(private val service: AccessCheckingService) :
+         permissionName: String,
+         deviceId: String,
+     ): Boolean {
++        val androidPackage = packageState.androidPackage
++        if (
++            androidPackage != null &&
++                AndroidAutoPackage.isGrantedPermission(
++                    packageState.packageName,
++                    androidPackage.signingDetails,
++                    permissionName,
++                )
++        ) {
++            return true
++        }
++
+         val appId = packageState.appId
+         // Note that instant apps can't have shared UIDs, so we only need to check the current
+         // package state.
+-- 
+2.43.0
+

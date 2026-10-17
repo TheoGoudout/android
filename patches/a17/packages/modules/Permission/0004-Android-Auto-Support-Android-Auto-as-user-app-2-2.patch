@@ -1,0 +1,25 @@
+From 00687ec2dac589217719b206db1f1f89879c0579 Mon Sep 17 00:00:00 2001
+From: sn00x <90611925+sn-00-x@users.noreply.github.com>
+Date: Tue, 26 Dec 2023 13:48:31 +0000
+Subject: [PATCH] Android Auto: Support Android Auto as user app 2/2
+
+(cherry picked from commit 96015cc3d0a76cfb5033d9241783ca0c2f3aef96)
+---
+ PermissionController/res/xml/roles.xml | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/PermissionController/res/xml/roles.xml b/PermissionController/res/xml/roles.xml
+index 61c7bfed88..443cc68f5e 100644
+--- a/PermissionController/res/xml/roles.xml
++++ b/PermissionController/res/xml/roles.xml
+@@ -627,7 +627,6 @@
+         exclusivity="user"
+         minSdkVersion="31"
+         static="true"
+-        systemOnly="true"
+         visible="false">
+         <permissions>
+             <permission-set name="microphone" />
+-- 
+2.43.0
+
