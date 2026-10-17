@@ -17,7 +17,8 @@ LMANIFEST_BRANCH="$EOS_BRANCH"
 DEVICE="FP4"
 BUILD_TYPE="userdebug"
 # Space-separated names from local_manifests/<target>/optional/*.xml to add to this build
-# (opt-in experiments, so each can be its own build iteration). a17: "setupwizard-bringup".
+# (opt-in experiments, so each can be its own build iteration). a17: "setupwizard-bringup" (superseded
+# by patches/a17/packages/apps/SetupWizard; also add that path to PATCH_EXCLUDE if you use it).
 OPTIONAL_MANIFESTS=""
 # Space-separated project paths whose patches/<target>/<path> series should NOT be applied
 # (to isolate a failing series, e.g. "packages/apps/Settings").

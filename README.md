@@ -55,7 +55,7 @@ Your customisations = forks of the relevant repos, referenced from the local man
    `patches/README.md`). `apply-patches.sh` applies them after sync, skips any patch the project
    already has, and undoes them before the next sync.
 3. Optional, per build, set in `build.sh`:
-   - `OPTIONAL_MANIFESTS="setupwizard-bringup"` adds `local_manifests/<target>/optional/<name>.xml`
+   - `OPTIONAL_MANIFESTS="<name>"` adds `local_manifests/<target>/optional/<name>.xml`
    - `PATCH_EXCLUDE="packages/apps/Settings"` leaves that project's series out
    Change one of these per build iteration so a failure points at one cause.
 
