@@ -1,0 +1,489 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: althafvly <althafvly@gmail.com>
+Date: Tue, 29 Sep 2026 18:55:15 +0530
+Subject: [PATCH] Show the notification count in a badge on the icon corner
+
+Change-Id: I1f8a78406d98be863befaeec195dae19ff2b716a
+[a17: rebased from epic265-a17-bringup onto BlissLauncher3 a17: badge hiding goes
+ through the new clearWobble()/applyWobbleBadges() helpers; the FolderBackgroundBlur
+ alpha hunk is dropped because a17 replaced that class with wallpaper-based blur]
+
+(cherry picked from commit a0a4e32c5e81867fdcabb24bf35b5f85767422c6)
+---
+ src/com/android/launcher3/BubbleTextView.java | 95 +++++++++++++++++--
+ src/com/android/launcher3/Workspace.java      | 18 ++++
+ src/com/android/launcher3/dot/CountBadge.java | 94 ++++++++++++++++++
+ src/com/android/launcher3/dot/DotInfo.java    |  2 +-
+ .../android/launcher3/dot/FolderDotInfo.java  |  4 +-
+ src/com/android/launcher3/folder/Folder.java  | 33 ++++++-
+ .../android/launcher3/folder/FolderIcon.java  | 19 +++-
+ 7 files changed, 250 insertions(+), 15 deletions(-)
+ create mode 100644 src/com/android/launcher3/dot/CountBadge.java
+
+diff --git a/src/com/android/launcher3/BubbleTextView.java b/src/com/android/launcher3/BubbleTextView.java
+index fb62cad772..ca25c6fe91 100644
+--- a/src/com/android/launcher3/BubbleTextView.java
++++ b/src/com/android/launcher3/BubbleTextView.java
+@@ -55,6 +55,7 @@ import android.graphics.RectF;
+ import android.graphics.drawable.ColorDrawable;
+ import android.graphics.drawable.Drawable;
+ import android.icu.text.MessageFormat;
++import android.os.SystemProperties;
+ import android.text.Spannable;
+ import android.text.SpannableString;
+ import android.text.StaticLayout;
+@@ -83,6 +84,7 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
+ import com.android.launcher3.accessibility.BaseAccessibilityDelegate;
+ import com.android.launcher3.anim.AnimatedFloat;
+ import com.android.launcher3.apppairs.AppPairIcon;
++import com.android.launcher3.dot.CountBadge;
+ import com.android.launcher3.dot.DotInfo;
+ import com.android.launcher3.dragndrop.DragOptions.PreDragCondition;
+ import com.android.launcher3.dragndrop.DraggableView;
+@@ -101,6 +103,7 @@ import com.android.launcher3.model.data.AppInfo;
+ import com.android.launcher3.model.data.ItemInfo;
+ import com.android.launcher3.model.data.ItemInfoWithIcon;
+ import com.android.launcher3.model.data.WorkspaceItemInfo;
++import com.android.launcher3.notification.NotificationKeyData;
+ import com.android.launcher3.popup.IconViewController;
+ import com.android.launcher3.popup.Poppable;
+ import com.android.launcher3.popup.PoppableType;
+@@ -124,6 +127,7 @@ import com.android.launcher3.views.OptionsPopupView;
+ import java.text.NumberFormat;
+ import java.util.HashMap;
+ import java.util.Locale;
++import java.util.Random;
+ 
+ /**
+  * TextView that draws a bubble behind the text. We cannot use a LineBackgroundSpan
+@@ -219,9 +223,16 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
+     private final int mUninstallBadgeLineColor;
+     private final int mUninstallBadgeShadowColor;
+     private boolean mIsUninstallBadgeVisible;
++    private boolean mIsWobbling;
+     private final RectF mUninstallBadgeBounds = new RectF();
+     private final Rect mUninstallBadgeIconBounds = new Rect();
+     private final Paint mUninstallBadgePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
++
++    // The badge with the number of notifications, shown on the other side than the uninstall
++    // badge
++    private final CountBadge mCountBadge = new CountBadge();
++    // The count is kept while the badge is hidden with an animation
++    private int mLastDotCount;
+     private float mTouchDownX;
+     private float mTouchDownY;
+     // So that a click from a key or accessibility doesn't use the position of an older touch
+@@ -850,6 +861,15 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
+         return onDelegateTouchEvent(event);
+     }
+ 
++    /** Hides the notification dot while the workspace wobbles. */
++    public void setWobbling(boolean wobbling) {
++        if (mIsWobbling != wobbling) {
++            mIsWobbling = wobbling;
++            invalidate();
++        }
++    }
++
++    /** Shows the badge to uninstall the app, while the workspace wobbles. */
+     public void setUninstallBadgeVisible(boolean visible) {
+         if (mIsUninstallBadgeVisible != visible) {
+             mIsUninstallBadgeVisible = visible;
+@@ -879,16 +899,41 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
+ 
+     /** Centered on the top right corner of the icon outline, so it fits any icon shape. */
+     private void updateUninstallBadgeBounds() {
+-        getIconBounds(mUninstallBadgeIconBounds);
+-        float halfIconSize = mUninstallBadgeIconBounds.width() * ICON_VISIBLE_AREA_FACTOR / 2;
+-        float centerX = mUninstallBadgeIconBounds.exactCenterX()
+-                + (mIsRtl ? -halfIconSize : halfIconSize);
+-        float centerY = mUninstallBadgeIconBounds.exactCenterY() - halfIconSize;
++        float centerX = getBadgeCornerX(mIsRtl);
++        float centerY = getBadgeCornerY();
+         float radius = UNINSTALL_BADGE_SIZE_FACTOR * mIconSize / 2;
+         mUninstallBadgeBounds.set(centerX - radius, centerY - radius, centerX + radius,
+                 centerY + radius);
+     }
+ 
++    /** The x of the top left or top right corner of the square outline of the icon. */
++    private float getBadgeCornerX(boolean left) {
++        getIconBounds(mUninstallBadgeIconBounds);
++        float halfIconSize = mUninstallBadgeIconBounds.width() * ICON_VISIBLE_AREA_FACTOR / 2;
++        return mUninstallBadgeIconBounds.exactCenterX() + (left ? -halfIconSize : halfIconSize);
++    }
++
++    /** The y of the top corners of the square outline of the icon. */
++    private float getBadgeCornerY() {
++        getIconBounds(mUninstallBadgeIconBounds);
++        float halfIconSize = mUninstallBadgeIconBounds.width() * ICON_VISIBLE_AREA_FACTOR / 2;
++        return mUninstallBadgeIconBounds.exactCenterY() - halfIconSize;
++    }
++
++    /**
++     * Draws the number of notifications on the top left corner of the icon, the top right if RTL,
++     * so on the other side than the uninstall badge.
++     */
++    private void drawCountBadge(Canvas canvas, int count, float scale) {
++        final int scrollX = getScrollX();
++        final int scrollY = getScrollY();
++        canvas.translate(scrollX, scrollY);
++        mCountBadge.draw(canvas, count, getBadgeCornerX(!mIsRtl), getBadgeCornerY(), mIconSize,
++                !mIsRtl, scale);
++        canvas.translate(-scrollX, -scrollY);
++    }
++
++    /** Draws the badge as a circle with a minus sign in its center. */
+     private void drawUninstallBadgeIfNecessary(Canvas canvas) {
+         if (!mIsUninstallBadgeVisible) {
+             return;
+@@ -1062,9 +1107,18 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
+             }
+             return;
+         }
++        if (mIsWobbling) {
++            return;
++        }
+         if (!mForceHideDot && (hasDot() || mDotParams.scale > 0)) {
++            if (mLastDotCount > 0) {
++                drawCountBadge(canvas, mLastDotCount, mDotParams.scale);
++                return;
++            }
+             getIconBounds(mDotParams.iconBounds);
+             Utilities.scaleRectAboutCenter(mDotParams.iconBounds, ICON_VISIBLE_AREA_FACTOR);
++            // On the same side as the count badge
++            mDotParams.leftAlign = !mIsRtl;
+             final int scrollX = getScrollX();
+             final int scrollY = getScrollY();
+             canvas.translate(scrollX, scrollY);
+@@ -1453,11 +1507,40 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
+         return pid;
+     }
+ 
++    /**
++     * Returns the notification dot of the item, like {@link ActivityContext#getDotInfoForItem}.
++     *
++     * <p>TEMP: fake notification dots with random counts from 0 (no dot) to 9999, the same for
++     * each app, to test their design.
++     */
++    @Nullable
++    public static DotInfo getDotInfoForItem(ActivityContext activity, ItemInfo itemInfo) {
++        DotInfo dotInfo = activity.getDotInfoForItem(itemInfo);
++        if (BuildConfig.IS_DEBUG_DEVICE && dotInfo == null
++                && SystemProperties.getBoolean("debug.launcher.fake_dots", false)
++                && itemInfo.getTargetComponent() != null) {
++            Random random = new Random(itemInfo.getTargetComponent().hashCode());
++            // As many 1 to 4 digit counts, so that all the badge widths are shown
++            int digits = random.nextInt(4) + 1;
++            int count = random.nextInt((int) Math.pow(10, digits));
++            if (count > 0) {
++                NotificationKeyData key = new NotificationKeyData("fake_dot");
++                key.count = count;
++                dotInfo = new DotInfo();
++                dotInfo.addOrUpdateNotificationKey(key);
++            }
++        }
++        return dotInfo;
++    }
++
+     public void applyDotState(ItemInfo itemInfo, boolean animate) {
+         if (mIcon != null) {
+             boolean wasDotted = mDotInfo != null;
+-            mDotInfo = mActivity.getDotInfoForItem(itemInfo);
++            mDotInfo = getDotInfoForItem(mActivity, itemInfo);
+             boolean isDotted = mDotInfo != null;
++            if (isDotted) {
++                mLastDotCount = mDotInfo.getNotificationCount();
++            }
+             float newDotScale = isDotted ? 1f : 0;
+             if (wasDotted || isDotted) {
+                 // Animate when a dot is first added or when it is removed.
+diff --git a/src/com/android/launcher3/Workspace.java b/src/com/android/launcher3/Workspace.java
+index 8d845a35b4..7bfa588913 100644
+--- a/src/com/android/launcher3/Workspace.java
++++ b/src/com/android/launcher3/Workspace.java
+@@ -3899,9 +3899,12 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
+         view.clearAnimation();
+         if (view instanceof BubbleTextView icon) {
+             icon.setUninstallBadgeVisible(false);
++            icon.setWobbling(false);
+             icon.setForceHideDot(false);
+             icon.setLongPressTimeoutFactor(
+                     CheckLongPressHelper.DEFAULT_LONG_PRESS_TIMEOUT_FACTOR);
++        } else if (view instanceof FolderIcon folderIcon) {
++            folderIcon.setForceHideDot(false);
+         }
+     }
+ 
+@@ -3940,11 +3943,26 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
+         }
+         view.startAnimation(AnimationUtils.loadAnimation(getContext(),
+                 index % 2 == 0 ? R.anim.wobble : R.anim.wobble_reverse));
++        applyWobbleBadges(view);
++    }
++
++    /**
++     * Hides the notification dot of the icon and shows its uninstall badge if the icons wobble,
++     * without making it wobble, like the icons of a folder while it opens.
++     */
++    public void applyWobbleBadges(View view) {
++        if (!mIsWobbling) {
++            return;
++        }
+         if (view instanceof BubbleTextView icon) {
+             // A dragged icon hides its dot until the long press popup, not shown in this mode
+             icon.setForceHideDot(false);
+             icon.setLongPressTimeoutFactor(WOBBLE_LONG_PRESS_TIMEOUT_FACTOR);
+             updateUninstallBadge(icon);
++            icon.setWobbling(true);
++        } else if (view instanceof FolderIcon folderIcon) {
++            // Like the notification dots of the apps
++            folderIcon.setForceHideDot(true);
+         }
+     }
+ 
+diff --git a/src/com/android/launcher3/dot/CountBadge.java b/src/com/android/launcher3/dot/CountBadge.java
+new file mode 100644
+index 0000000000..92b4b957d4
+--- /dev/null
++++ b/src/com/android/launcher3/dot/CountBadge.java
+@@ -0,0 +1,94 @@
++/*
++ * Copyright (C) 2026 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package com.android.launcher3.dot;
++
++import android.graphics.Canvas;
++import android.graphics.Color;
++import android.graphics.Paint;
++import android.graphics.RectF;
++import android.graphics.Typeface;
++
++/**
++ * Draws the number of notifications in a pill, in the place of the notification dot, for the
++ * icons of the apps and the folders.
++ */
++public class CountBadge {
++
++    private static final float SIZE_FACTOR = 0.28f;
++    private static final float TEXT_SIZE_FACTOR = 0.64f;
++    private static final float PADDING_FACTOR = 0.3f;
++    private static final int COLOR = 0xFF01D066;
++    private static final int TEXT_COLOR = Color.WHITE;
++
++    private final RectF mBounds = new RectF();
++    private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
++    private final Paint mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
++
++    public CountBadge() {
++        mPaint.setColor(COLOR);
++        mTextPaint.setColor(TEXT_COLOR);
++        mTextPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
++        mTextPaint.setTextAlign(Paint.Align.CENTER);
++    }
++
++    /**
++     * Draws the badge. The round end of the pill is centered on the corner of the icon, and the
++     * pill gets longer over the icon.
++     *
++     * @param cornerX  the x of the top corner of the square outline of the icon
++     * @param cornerY  the y of the top corners of the square outline of the icon
++     * @param iconSize the size of the icon, which sets the size of the badge
++     * @param isLeft   whether the corner is the top left one, so the pill gets longer to the right
++     * @param scale    the scale of the badge, which grows from the corner when it appears
++     */
++    public void draw(Canvas canvas, int count, float cornerX, float cornerY, float iconSize,
++            boolean isLeft, float scale) {
++        if (scale <= 0 || count <= 0) {
++            return;
++        }
++        float height = SIZE_FACTOR * iconSize;
++        mTextPaint.setTextSize(height * TEXT_SIZE_FACTOR);
++        String text = format(count);
++        float width = Math.max(height, mTextPaint.measureText(text) + 2 * height * PADDING_FACTOR);
++
++        float halfHeight = height / 2;
++        if (isLeft) {
++            mBounds.set(cornerX - halfHeight, cornerY - halfHeight,
++                    cornerX - halfHeight + width, cornerY + halfHeight);
++        } else {
++            mBounds.set(cornerX + halfHeight - width, cornerY - halfHeight,
++                    cornerX + halfHeight, cornerY + halfHeight);
++        }
++
++        canvas.save();
++        canvas.scale(scale, scale, cornerX, cornerY);
++        canvas.drawRoundRect(mBounds, halfHeight, halfHeight, mPaint);
++        Paint.FontMetrics fm = mTextPaint.getFontMetrics();
++        canvas.drawText(text, mBounds.centerX(),
++                mBounds.centerY() - (fm.ascent + fm.descent) / 2, mTextPaint);
++        canvas.restore();
++    }
++
++    /** Returns the count as is below 1000, and like 1.5k from 1000. */
++    private static String format(int count) {
++        if (count < 1000) {
++            return Integer.toString(count);
++        }
++        // Rounded down, so that 9999 is 9.9k and not 10k
++        int tenths = count / 100;
++        return tenths % 10 == 0 ? (tenths / 10) + "k" : (tenths / 10) + "." + (tenths % 10) + "k";
++    }
++}
+diff --git a/src/com/android/launcher3/dot/DotInfo.java b/src/com/android/launcher3/dot/DotInfo.java
+index 64864b01cd..3f5dcafcb2 100644
+--- a/src/com/android/launcher3/dot/DotInfo.java
++++ b/src/com/android/launcher3/dot/DotInfo.java
+@@ -28,7 +28,7 @@ import java.util.List;
+  */
+ public class DotInfo {
+ 
+-    public static final int MAX_COUNT = 999;
++    public static final int MAX_COUNT = 9999;
+ 
+     /**
+      * The keys of the notifications that this dot represents.
+diff --git a/src/com/android/launcher3/dot/FolderDotInfo.java b/src/com/android/launcher3/dot/FolderDotInfo.java
+index cb91db7654..e14ec73f1a 100644
+--- a/src/com/android/launcher3/dot/FolderDotInfo.java
++++ b/src/com/android/launcher3/dot/FolderDotInfo.java
+@@ -22,7 +22,7 @@ import com.android.launcher3.Utilities;
+ 
+ /**
+  * Subclass of DotInfo that only contains the dot count, which is
+- * the sum of all the Folder's items' notifications (each counts as 1).
++ * the sum of the notification counts of all the Folder's items, like shown on their dots.
+  */
+ public class FolderDotInfo extends DotInfo {
+ 
+@@ -38,7 +38,7 @@ public class FolderDotInfo extends DotInfo {
+         if (dotToAdd == null) {
+             return;
+         }
+-        mNumNotifications += dotToAdd.getNotificationKeys().size();
++        mNumNotifications += dotToAdd.getNotificationCount();
+         mNumNotifications = Utilities.boundToRange(
+                 mNumNotifications, MIN_COUNT, DotInfo.MAX_COUNT);
+     }
+diff --git a/src/com/android/launcher3/folder/Folder.java b/src/com/android/launcher3/folder/Folder.java
+index 3787e8b318..a18ab4990b 100644
+--- a/src/com/android/launcher3/folder/Folder.java
++++ b/src/com/android/launcher3/folder/Folder.java
+@@ -878,6 +878,17 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
+                 }
+                 mFolderIcon.setIconVisible(false);
+                 mFolderIcon.drawLeaveBehindIfExists();
++                for (View view : getIconsInReadingOrder()) {
++                    if (view instanceof BubbleTextView icon) {
++                        // Hidden while closing, which may not have completed
++                        icon.setForceHideDot(false);
++                    }
++                    if (mActivityContext instanceof Launcher launcher) {
++                        // The icons wobble once open, but show the badges of the wobbling
++                        // icons from the start, instead of their notification dots
++                        launcher.getWorkspace().applyWobbleBadges(view);
++                    }
++                }
+             }
+ 
+             @Override
+@@ -993,11 +1004,17 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
+         if (!animate && mCurrentAnimator != null && mCurrentAnimator.isRunning()) {
+             mCurrentAnimator.cancel();
+         }
+-        // The icons are reused for the next folders, even if the workspace still wobbles
+-        if (mActivityContext instanceof Launcher launcher
+-                && launcher.getWorkspace().isWobbling()) {
+-            for (View icon : getIconsInReadingOrder()) {
+-                launcher.getWorkspace().clearWobble(icon);
++        // The icons are reused for the next folders, even if the workspace still wobbles. They
++        // also hide their notification dots while they move back to the folder icon, which the
++        // folder preview doesn't show
++        boolean wobbling = mActivityContext instanceof Launcher launcher
++                && launcher.getWorkspace().isWobbling();
++        for (View view : getIconsInReadingOrder()) {
++            if (wobbling) {
++                ((Launcher) mActivityContext).getWorkspace().clearWobble(view);
++            }
++            if (view instanceof BubbleTextView icon) {
++                icon.setForceHideDot(true);
+             }
+         }
+ 
+@@ -1147,6 +1164,12 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
+         }
+         mActivityContext.getDragController().removeDropTarget(this);
+         clearFocus();
++        // Show the notification dots again the next time the folder opens
++        for (View view : getIconsInReadingOrder()) {
++            if (view instanceof BubbleTextView icon) {
++                icon.setForceHideDot(false);
++            }
++        }
+         if (mFolderIcon != null) {
+             mFolderIcon.setVisibility(View.VISIBLE);
+             mFolderIcon.setIconVisible(true);
+diff --git a/src/com/android/launcher3/folder/FolderIcon.java b/src/com/android/launcher3/folder/FolderIcon.java
+index f7f44a2603..ff34facd52 100644
+--- a/src/com/android/launcher3/folder/FolderIcon.java
++++ b/src/com/android/launcher3/folder/FolderIcon.java
+@@ -64,6 +64,7 @@ import com.android.launcher3.Workspace;
+ import com.android.launcher3.allapps.ActivityAllAppsContainerView;
+ import com.android.launcher3.anim.AnimatedFloat;
+ import com.android.launcher3.celllayout.CellLayoutLayoutParams;
++import com.android.launcher3.dot.CountBadge;
+ import com.android.launcher3.dot.FolderDotInfo;
+ import com.android.launcher3.dragndrop.BaseItemDragListener;
+ import com.android.launcher3.dragndrop.DragLayer;
+@@ -143,6 +144,10 @@ public class FolderIcon extends FrameLayout implements FloatingIconViewCompanion
+     private boolean mForceHideDot;
+     @ViewDebug.ExportedProperty(category = "launcher", deepExport = true)
+     private final FolderDotInfo mDotInfo = new FolderDotInfo();
++    // The number of notifications of the apps, shown like on their icons. The count is kept
++    // while the badge is hidden with an animation.
++    private final CountBadge mCountBadge = new CountBadge();
++    private int mLastDotCount;
+     private DotRenderer mDotRenderer;
+     @ViewDebug.ExportedProperty(category = "launcher", deepExport = true)
+     private final DotRenderer.DrawParams mDotParams;
+@@ -510,9 +515,12 @@ public class FolderIcon extends FrameLayout implements FloatingIconViewCompanion
+         boolean hadDot = mDotInfo.hasDot();
+         mDotInfo.reset();
+         for (ItemInfo si : mInfo.getContents()) {
+-            mDotInfo.addDotInfo(mActivity.getDotInfoForItem(si));
++            mDotInfo.addDotInfo(BubbleTextView.getDotInfoForItem(mActivity, si));
+         }
+         boolean isDotted = mDotInfo.hasDot();
++        if (isDotted) {
++            mLastDotCount = mDotInfo.getNotificationCount();
++        }
+         float newDotScale = isDotted ? 1f : 0f;
+         // Animate when a dot is first added or when it is removed.
+         if ((hadDot ^ isDotted) && isShown()) {
+@@ -650,6 +658,15 @@ public class FolderIcon extends FrameLayout implements FloatingIconViewCompanion
+ 
+             // If we are animating to the accepting state, animate the dot out.
+             mDotParams.scale = Math.max(0, mDotScale - mBackground.getAcceptScaleProgress());
++            if (mLastDotCount > 0) {
++                // On the top left corner of the preview background, the top right if RTL, like
++                // the apps
++                boolean isRtl = Utilities.isRtl(getResources());
++                mCountBadge.draw(canvas, mLastDotCount,
++                        isRtl ? iconBounds.right : iconBounds.left, iconBounds.top, iconSize,
++                        !isRtl, mDotParams.scale);
++                return;
++            }
+             mDotRenderer.draw(canvas, mDotParams);
+         }
+     }
