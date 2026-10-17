@@ -1,0 +1,104 @@
+From fa8f7c02437d726739d29d2ab2a5a0ef4b1e6d58 Mon Sep 17 00:00:00 2001
+From: Alexandre Roux <alexandre.roux.danzi@lostpod.me>
+Date: Wed, 2 Mar 2022 13:00:25 +0000
+Subject: [PATCH 1/4] dnsresolver: use dns blocker app to filter trackers
+
+[TheScarastic] : Adapt for android r
+
+(cherry picked from commit 2c34badb8fa968f5b7b8b0004a4856304860ce0a)
+---
+ getaddrinfo.cpp | 64 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
+
+diff --git a/getaddrinfo.cpp b/getaddrinfo.cpp
+index 6738d9b..d646a19 100644
+--- a/getaddrinfo.cpp
++++ b/getaddrinfo.cpp
+@@ -3,6 +3,7 @@
+ 
+ /*
+  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
++ * Copyright (C) 2021 ECORP
+  * All rights reserved.
+  *
+  * Redistribution and use in source and binary forms, with or without
+@@ -334,6 +335,63 @@ void fill_sin6_scope_id_if_needed(const res_target& query, addrinfo* addr_info)
+ 
+ }  // namespace
+ 
++int shouldBlockRequest(const char* hostname, int uid){
++        int sock;
++	struct sockaddr_in server;
++	char message[1000], server_reply[2000];
++
++	//Create socket
++	sock = socket(AF_INET, SOCK_STREAM | SOCK_CLOEXEC, IPPROTO_TCP);
++	if (sock == -1) {
++		LOG(DEBUG) << "Socket: Could not create socket";
++	}
++	LOG(DEBUG) << "Socket: created";
++
++	server.sin_addr.s_addr = inet_addr("127.0.0.1");
++	server.sin_family = AF_INET;
++	server.sin_port = htons( 8888 );
++
++	//Connect to remote server
++	if (connect(sock, (struct sockaddr *)&server, sizeof(server)) < 0) {
++		LOG(DEBUG) << "Socket: connect failed. Error";
++                close(sock);
++		return -1;
++	}
++
++	LOG(DEBUG) << "Socket: Connected";
++
++	//keep communicating with server
++	snprintf(message, sizeof(message), "%s,%d", hostname, uid);
++
++	//Send some data
++	if(send(sock, message, strlen(message), 0) < 0) {
++		LOG(DEBUG) << "Socket: Send failed";
++		close(sock);
++		return 0;
++	}
++	shutdown(sock, SHUT_WR);
++	//Receive a reply from the server
++	if (recv(sock, server_reply, 2000, 0) < 0) {
++		LOG(DEBUG) << "Socket:recv failed";
++		close(sock);
++		return 0;
++	}
++
++	LOG(DEBUG) << "Socket: Server reply : " << server_reply;
++	if (strncmp(server_reply, "pass", 4) == 0) {
++		LOG(DEBUG) << "Socket: Shouldn't block";
++		close(sock);
++		return 0;
++	} else {
++	        LOG(DEBUG) << "Socket: should block";
++		close(sock);
++		return 1;
++	}
++	close(sock);
++	return 0;
++
++}
++
+ int android_getaddrinfofornetcontext(const char* hostname, const char* servname,
+                                      const addrinfo* hints, const android_net_context* netcontext,
+                                      addrinfo** res, NetworkDnsEventReported* event) {
+@@ -429,6 +487,12 @@ int resolv_getaddrinfo(const char* _Nonnull hostname, const char* servname, cons
+     if (hostname == nullptr && servname == nullptr) return EAI_NONAME;
+     if (hostname == nullptr) return EAI_NODATA;
+ 
++    if (shouldBlockRequest(hostname, netcontext->uid)) {
++	char* dest = new char[10];
++        strncpy(dest, "localhost", strlen("localhost"));
++        hostname = dest;
++    }
++
+     // servname is allowed to be nullptr
+     // hints is allowed to be nullptr
+     assert(res != nullptr);
+-- 
+2.43.0
+

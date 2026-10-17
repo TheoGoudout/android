@@ -43,13 +43,16 @@ are left to /e/OS because they collide with the Material 3 Expressive redesign).
 | packages/services/Telephony | Use quad9.net for http | |
 | packages/modules/Permission | RuntimePermissionsUpgradeController accepts null PermGroups | crash fix |
 | packages/apps/ThemePicker | launcher-settings permissions for `foundation.e.blisslauncher` | ThemePicker ↔ BlissLauncher |
-| packages/apps/Contacts | "Add account" opens AccountManager, not Google-only | hand-ported: `ContactEditorAccountsChangedActivity` was removed upstream |
+| packages/apps/Contacts | "Add account" opens AccountManager, not Google-only; default to a phone-only contact when the device account is the only one | both hand-ported: `ContactEditorAccountsChangedActivity` was removed upstream, the second now lives in `ContactEditorFragment.selectAccountAndCreateContact()` |
+| packages/modules/DnsResolver | Advanced Privacy tracker blocking: `getaddrinfo` asks the Advanced Privacy app (abstract Unix socket) whether to resolve each host (4 patches) | clean cherry-picks; the a16 series as-is |
+| frameworks/libs/systemui | Calendar launcher icon with month background + day foreground | clean cherry-pick (iconloaderlib, used by BlissLauncher3) |
 | packages/apps/FMRadio, vendor/qcom/opensource/commonsys/fm | new app icon | resource-only |
 
 Not carried, with reason:
-- Contacts "Default to phone-only if no account": the activity it patched is gone in AOSP 17
-  (CP2 default-account APIs). Needs a fresh design check on a device.
 - Dialer call recording default: already the LineageOS 24.0 default.
+- frameworks/libs/systemui notification-dot/badge series: BlissLauncher3 a17 draws count badges itself
+  (see packages/apps/Launcher3).
+- LineageParts "rename microG into App compatibility": already on a17 under another subject.
 - overlays/Lineage icon-pack/shape overlays: LineageOS 24.0 dropped icon packs and shapes; nothing on
   a17 references them.
 
