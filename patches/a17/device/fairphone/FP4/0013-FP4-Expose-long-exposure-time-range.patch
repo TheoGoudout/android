@@ -1,0 +1,30 @@
+From 6a96ffab5b486630cdd419e9635188328d7e3d85 Mon Sep 17 00:00:00 2001
+From: Rohit Sekhar <merothh@gmail.com>
+Date: Thu, 30 Jul 2026 10:24:55 +0530
+Subject: [PATCH 13/16] FP4: Expose long exposure time range
+
+* FPCamera, auto night mode requires & crashes otherwise.
+
+[SahilSonar]
+  - Move to /system_ext
+
+(cherry picked from commit a5af217848002dbb60a5be104ebe61568edd2fc4)
+---
+ system_ext.prop | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/system_ext.prop b/system_ext.prop
+index d5ef3fc..13adf27 100644
+--- a/system_ext.prop
++++ b/system_ext.prop
+@@ -2,6 +2,7 @@
+ persist.vendor.cne.feature=1
+ 
+ # Camera
++persist.vendor.camera.tctrom=1
+ persist.vendor.camera.privapp.list=com.fp.camera,foundation.e.camera
+ 
+ # DPM
+-- 
+2.43.0
+

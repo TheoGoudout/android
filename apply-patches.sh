@@ -38,6 +38,32 @@ case "$mode" in
           || { echo ">> $(basename "$p") does not apply to $proj: refresh the series" >&2; exit 1; }
       done
     done
+    # Same-length string edits in synced proprietary blobs (what LineageOS's extract-files.py
+    # blob_fixup().binary_regex_replace() does at extraction time). Done here on the build node,
+    # so no blob or binary diff ever lives in this public repo. Format, tab-separated:
+    #   <project path> <file in project> <old string> <new string>   (new is NUL-padded)
+    fx="$pdir/blob-fixups.txt"
+    [ -f "$fx" ] || exit 0
+    grep -v '^#' "$fx" | while IFS=$'\t' read -r proj file old new; do
+      [ -n "$proj" ] || continue
+      if [[ " ${PATCH_EXCLUDE:-} " == *" $proj "* ]]; then echo "   ~ $proj: blob fixups excluded (PATCH_EXCLUDE)"; continue; fi
+      [ -f "$proj/$file" ] || { echo ">> blob fixup: $proj/$file not found" >&2; exit 1; }
+      grep -q "^$proj " "$LEDGER" 2>/dev/null || echo "$proj $(git -C "$proj" rev-parse HEAD)" >> "$LEDGER"
+      python3 - "$proj/$file" "$old" "$new" <<'PY' || exit 1
+import sys
+path, old, new = sys.argv[1], sys.argv[2].encode(), sys.argv[3].encode()
+if len(new) > len(old):
+    sys.exit(f">> blob fixup: replacement longer than original in {path}")
+new = new.ljust(len(old), b"\0")
+data = open(path, "rb").read()
+n = data.count(old)
+if n == 0:
+    print(f"   = {path}: already fixed or string absent" if new in data else f">> blob fixup: '{old.decode()}' not in {path}")
+    sys.exit(0 if new in data else 1)
+open(path, "wb").write(data.replace(old, new))
+print(f"   * {path}: {old.decode()} -> {new.rstrip(chr(0).encode()).decode()} ({n}x)")
+PY
+    done
     ;;
   *) echo "usage: $0 undo | apply <patch-dir>" >&2; exit 1 ;;
 esac

@@ -1,0 +1,7 @@
+# Applied by apply-patches.sh after the .patch series (see the comment there). Tab-separated.
+# FP4 camera HAL: read the client package name from the property frameworks/av sets
+# (frameworks/av 0002 + device/fairphone/FP4 0011/0016), as /e/OS a16 does in extract-files.py.
+vendor/fairphone/FP4	proprietary/vendor/lib64/hw/camera.qcom.so	vendor.debug.camera.pkgname	debug.camera.packagename
+vendor/fairphone/FP4	proprietary/vendor/lib64/hw/com.qti.chi.override.bitra.so	vendor.debug.camera.pkgname	debug.camera.packagename
+vendor/fairphone/FP4	proprietary/vendor/lib64/hw/com.qti.chi.override.so	vendor.debug.camera.pkgname	debug.camera.packagename
+vendor/fairphone/FP4	proprietary/vendor/lib64/camera/components/com.qti.node.gpu.so	vendor.debug.camera.pkgname	debug.camera.packagename

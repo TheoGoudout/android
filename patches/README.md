@@ -14,7 +14,7 @@ Checked on 2026-10-16: the whole a17 set applies to fresh checkouts of /e/OS `a1
 
 ## a17
 
-### device/fairphone/FP4 (LineageOS lineage-24.0 tree)
+### device/fairphone/FP4 (LineageOS lineage-24.0 tree, 17 patches)
 From /e/OS's own FP4 fork `e/devices/android_device_fairphone_FP4` @ `a16`, which has no `a17`
 branch. /e/OS's fork also imports Fairphone's proprietary camera (FPCamera) from a private blob
 set. That part is out of scope, so we stay on LineageOS's tree + TheMuppets blobs and carry only:
@@ -27,8 +27,31 @@ set. That part is out of scope, so we stay on LineageOS's tree + TheMuppets blob
 | Switch to Murena Bootanimation | uses `TARGET_USES_MURENA_BOOTANIMATION`, present in a17 vendor/lineage |
 | audio: Fix low earpiece audio | v4.3.x FP4 earpiece fix (aw882xx rx volume) |
 | Revert "Remove direct flag for VOIP RX", Disable Stereo for VoIP | /e/OS FP4 VoIP audio fixes ("chipmunk" voice) |
+| Allow debug.camera.packagename (sepolicy), skip stream size check (`persist.vendor.camera.privapp.list`), expose clientpkgname | lets the camera HAL treat /e/ Camera (`foundation.e.camera`) as a privileged camera app (full sensor modes/lenses), see "FP4 camera" below |
+| Expose long exposure time range, chown `ois_gain_get` | camera HAL props/permissions /e/OS sets |
+| eCamera: exclude unwanted camera IDs, default resolution | RRO for /e/ Camera (hides the logical camera 3, 4000x3000 default on the main sensor) |
+| Build gralloc.qcom | LineageOS (LuK1337) fix not merged in lineage-23.0/24.0: the camera HAL crashes in the Morpho EIS node without it |
 
-Deliberately **not** carried: FPCamera/eCamera and their props/sepolicy/backup agent, diag_mdlog,
+**FP4 camera.** The camera HAL unlocks extra features for apps in `persist.vendor.camera.privapp.list`
+and learns the current app from a property. On /e/OS a16 that takes three parts, all carried:
+1. frameworks/av "libcameraservice: Customize camera stack based on active app" (Fairphone ODM,
+   `patches/a17/frameworks/av/0002`): cameraserver writes the client package name to the property
+   named by the `camera/target_camera_expose_clientpkgname` soong variable.
+2. FP4 tree: that variable = `debug.camera.packagename`, its sepolicy, and the privapp list.
+3. The HAL blobs read `vendor.debug.camera.pkgname`, which cameraserver (a core domain) may not set,
+   so /e/OS renames the string in the blobs when extracting. We use TheMuppets' blobs, so the same
+   same-length rename runs on the build node: `patches/a17/blob-fixups.txt`, applied by
+   `apply-patches.sh` after the patches and reset by `undo`. No blob or binary diff is in this repo.
+   Checked: each of the four lineage-24.0 blobs contains the original string exactly once.
+
+**FPCamera (Fairphone's own camera app) is not carried and can't be:** /e/OS imports it from a
+private Fairphone blob set; it is proprietary and not redistributable from a public repo. /e/ Camera
+with the privileged access above is the open replacement. "Add backup agent for camera app" and
+"Wire up a service to toggle fairphone camera" only serve FPCamera.
+
+Deliberately **not** carried: FPCamera and its props/sepolicy/backup agent/toggle service,
+`override_format_from_reserved` (no consumer left in LineageOS 23.0/24.0 or /e/OS a16 frameworks/av),
+the extract-time morpho `libui-v34` fixup (TheMuppets' 24.0 blobs come from LineageOS's own script), diag_mdlog,
 perf/power-HAL switches, abl pin, widevine revert, and the FCM-level/soong-bool/tinyxml2 reverts
 (those only make sense with /e/OS's older 23.0 blobs, while lineage-24.0 ships 15.20.0 blobs).
 

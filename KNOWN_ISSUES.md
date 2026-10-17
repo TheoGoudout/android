@@ -5,6 +5,7 @@ Never paste raw device logs here (public repo): quote only the relevant, redacte
 
 | # | Symptom | Build / date | Suspected repo | Status |
 |---|---|---|---|---|
+| 5 | /e/ Camera on FP4: privileged camera features (all lenses/modes) depend on the HAL seeing the app name | port | frameworks/av + FP4 tree + blob fixup | Ported (see patches/README "FP4 camera"). Verify on device: `adb shell getprop debug.camera.packagename` while /e/ Camera is open → `foundation.e.camera`; ultrawide and video stabilisation work. FPCamera (proprietary) not available |
 | 1 | Android Auto cannot run as a user app (a16 feature) | port, no build yet | frameworks/base + Permission | Ported: grant re-implemented in the Kotlin `PermissionService` (`frameworks/base` 0025/0026, `Permission` 0004), /e/'s `AndroidAutoStub` already ships on a17. Verify on device: install Google's Android Auto over the stub, connect a car or the desktop head unit |
 | 2 | SetupWizard has no /e/ pages on plain a17 | port | SetupWizard | Ported: `patches/a17/packages/apps/SetupWizard` (/e/OS bring-up squashed onto the rewritten a17 SUW). Verify on device: every page, the restore flow, 6-tap QR provisioning |
 | 4 | Launcher shows plain notification dots, not count badges (a16 feature) | port | BlissLauncher3 | Ported: `patches/a17/packages/apps/Launcher3` (rebased from /e/OS bring-up a0a4e32c5e) |

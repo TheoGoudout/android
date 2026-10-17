@@ -1,0 +1,76 @@
+From 005ee1cbe6cebdf36e3083366e4ff7c329021e1a Mon Sep 17 00:00:00 2001
+From: Rohit Sekhar <merothh@e.email>
+Date: Fri, 22 Sep 2023 13:05:57 +0530
+Subject: [PATCH 15/16] FP4: eCamera: Exclude unwanted cameraIDs & set default
+ resolution
+
+Change-Id: Id96a06aaad46972d300a46688e18102237cc17cc
+(cherry picked from commit d062eda672d4b181accc78b177505b04682415f1)
+---
+ device.mk                                |  1 +
+ overlay/eCameraSys/Android.bp            |  4 ++++
+ overlay/eCameraSys/AndroidManifest.xml   |  9 +++++++++
+ overlay/eCameraSys/res/values/config.xml | 12 ++++++++++++
+ 4 files changed, 26 insertions(+)
+ create mode 100644 overlay/eCameraSys/Android.bp
+ create mode 100644 overlay/eCameraSys/AndroidManifest.xml
+ create mode 100644 overlay/eCameraSys/res/values/config.xml
+
+diff --git a/device.mk b/device.mk
+index 24eeb71..55b891c 100644
+--- a/device.mk
++++ b/device.mk
+@@ -239,6 +239,7 @@ PRODUCT_ENFORCE_RRO_TARGETS := *
+ PRODUCT_PACKAGES += \
+     ApertureOverlayFP4 \
+     CarrierConfigResCommon \
++    eCameraSys \
+     FrameworksResCommon \
+     FrameworksResTarget \
+     LineageSdkOverlayFP4 \
+diff --git a/overlay/eCameraSys/Android.bp b/overlay/eCameraSys/Android.bp
+new file mode 100644
+index 0000000..4ad5ff6
+--- /dev/null
++++ b/overlay/eCameraSys/Android.bp
+@@ -0,0 +1,4 @@
++runtime_resource_overlay {
++    name: "eCameraSys",
++    system_ext_specific: true,
++}
+diff --git a/overlay/eCameraSys/AndroidManifest.xml b/overlay/eCameraSys/AndroidManifest.xml
+new file mode 100644
+index 0000000..856e1e0
+--- /dev/null
++++ b/overlay/eCameraSys/AndroidManifest.xml
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="foundation.e.camera.FP4">
++
++    <overlay
++        android:isStatic="true"
++        android:priority="800"
++        android:targetPackage="foundation.e.camera" />
++</manifest>
+diff --git a/overlay/eCameraSys/res/values/config.xml b/overlay/eCameraSys/res/values/config.xml
+new file mode 100644
+index 0000000..06c92fa
+--- /dev/null
++++ b/overlay/eCameraSys/res/values/config.xml
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <!-- Add default resolution for each camera IDs -->
++    <string-array name="config_e_os_camera_default_resolution_lens">
++        <item>0:4000x3000</item>
++    </string-array>
++
++    <!-- List of ID of cameras that must be ignored by the app. -->
++    <string-array name="config_ignoredCameraIds">
++        <item>3</item>
++    </string-array>
++</resources>
+-- 
+2.43.0
+

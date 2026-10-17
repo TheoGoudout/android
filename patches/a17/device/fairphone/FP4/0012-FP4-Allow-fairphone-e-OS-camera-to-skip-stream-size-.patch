@@ -1,0 +1,29 @@
+From 4ef7c899ce17b031b3f325e0de4e4409541c4dd4 Mon Sep 17 00:00:00 2001
+From: Adarsh Grewal <adarshgrewal@gmail.com>
+Date: Fri, 16 Aug 2024 21:42:19 +0530
+Subject: [PATCH 12/16] FP4: Allow fairphone & /e/OS camera to skip stream size
+ check
+
+Change-Id: I3f88ec115c146bf83a01d21047282addf26b975f
+(cherry picked from commit 0de5ca87e2fb8b0091f9c72a7ebed259b76a351b)
+---
+ system_ext.prop | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/system_ext.prop b/system_ext.prop
+index 2d66b7a..d5ef3fc 100644
+--- a/system_ext.prop
++++ b/system_ext.prop
+@@ -1,6 +1,9 @@
+ # CNE
+ persist.vendor.cne.feature=1
+ 
++# Camera
++persist.vendor.camera.privapp.list=com.fp.camera,foundation.e.camera
++
+ # DPM
+ persist.vendor.dpm.feature=11
+ 
+-- 
+2.43.0
+

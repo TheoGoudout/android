@@ -1,0 +1,69 @@
+From fba42611844d0e6b8cef44557b83eeabb34677ec Mon Sep 17 00:00:00 2001
+From: Fairphone ODM <fairphone-odm@localhost>
+Date: Sat, 8 May 2021 16:55:51 +0800
+Subject: [PATCH] libcameraservice: Customize camera stack based on active app
+
+The camera stack needs to expose different features depending on whether
+the FP4 specific camera or third party apps are using it. This is
+achieved via a system property that's configured while the camera is in
+use.
+
+Change-Id: I834c6155de872bf4218a7b0a749f2c0143d8bc1f
+
+[a17: carried by /e/OS a16 for FP4 (merged 2026-07); LineageOS 24.0 lacks it. With
+the FP4 tree's target_camera_expose_clientpkgname it tells the camera HAL which app
+is connected, so /e/ Camera gets the privileged-app camera features.]
+
+(cherry picked from commit 0db081f6ff05d4bc7412a2b769a5f2889d726822)
+---
+ services/camera/libcameraservice/Android.bp        | 11 +++++++++--
+ services/camera/libcameraservice/CameraService.cpp |  4 ++++
+ 2 files changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/services/camera/libcameraservice/Android.bp b/services/camera/libcameraservice/Android.bp
+index 362a390..8d0efcd 100644
+--- a/services/camera/libcameraservice/Android.bp
++++ b/services/camera/libcameraservice/Android.bp
+@@ -243,7 +243,11 @@ cc_library {
+         "-Wextra",
+         "-Werror",
+         "-Wno-ignored-qualifiers",
+-    ],
++    ] + select(soong_config_variable("camera", "target_camera_expose_clientpkgname"), {
++        any @ flag_val: ["-DCAMERA_EXPOSE_CLIENTPKGNAME=" + "\"" + flag_val + "\""],
++        default: [],
++    }),
++
+ }
+ 
+ cc_library_static {
+@@ -306,7 +310,10 @@ cc_library_static {
+         "-Wextra",
+         "-Werror",
+         "-Wno-ignored-qualifiers",
+-    ],
++    ] + select(soong_config_variable("camera", "target_camera_expose_clientpkgname"), {
++        any @ flag_val: ["-DCAMERA_EXPOSE_CLIENTPKGNAME=" + "\"" + flag_val + "\""],
++        default: [],
++    }),
+ }
+ 
+ cc_library_static {
+diff --git a/services/camera/libcameraservice/CameraService.cpp b/services/camera/libcameraservice/CameraService.cpp
+index cc7dab4..1023499 100644
+--- a/services/camera/libcameraservice/CameraService.cpp
++++ b/services/camera/libcameraservice/CameraService.cpp
+@@ -2579,6 +2579,10 @@ Status CameraService::connectHelper(const sp<CALLBACK>& cameraCb, const std::str
+     const std::string clientPackageName =
+             clientAttribution.packageName.value_or(kUnknownPackageName);
+ 
++#ifdef CAMERA_EXPOSE_CLIENTPKGNAME
++    property_set(CAMERA_EXPOSE_CLIENTPKGNAME, clientPackageName.c_str());
++#endif
++
+     {
+         // Acquire mServiceLock and prevent other clients from connecting
+         std::unique_ptr<AutoConditionLock> lock =
+-- 
+2.43.0
+

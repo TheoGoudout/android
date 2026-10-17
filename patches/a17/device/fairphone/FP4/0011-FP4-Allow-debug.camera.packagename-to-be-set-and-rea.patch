@@ -1,0 +1,65 @@
+From a6228ff615c68da4303c181b533e19d5e7cf426c Mon Sep 17 00:00:00 2001
+From: Rohit Sekhar <merothh@gmail.com>
+Date: Fri, 17 Jan 2025 12:46:53 +0530
+Subject: [PATCH 11/16] FP4: Allow debug.camera.packagename to be set and read
+
+(cherry picked from commit 6f16fd89b54cefde5e78d8aee51d2b1461e9b770)
+---
+ BoardConfig.mk                     | 1 +
+ sepolicy/private/property_contexts | 5 ++++-
+ sepolicy/public/property.te        | 2 ++
+ sepolicy/vendor/cameraserver.te    | 1 +
+ sepolicy/vendor/hal_camera.te      | 1 +
+ 5 files changed, 9 insertions(+), 1 deletion(-)
+ create mode 100644 sepolicy/public/property.te
+ create mode 100644 sepolicy/vendor/cameraserver.te
+ create mode 100644 sepolicy/vendor/hal_camera.te
+
+diff --git a/BoardConfig.mk b/BoardConfig.mk
+index 2905ce8..2862fb7 100644
+--- a/BoardConfig.mk
++++ b/BoardConfig.mk
+@@ -179,6 +179,7 @@ include device/lineage/sepolicy/libion/sepolicy.mk
+ include device/qcom/sepolicy_vndr/SEPolicy.mk
+ BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
+ SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
++SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/public
+ 
+ # Verified Boot
+ BOARD_AVB_ENABLE := true
+diff --git a/sepolicy/private/property_contexts b/sepolicy/private/property_contexts
+index e3ea0fc..c27bf34 100644
+--- a/sepolicy/private/property_contexts
++++ b/sepolicy/private/property_contexts
+@@ -1,2 +1,5 @@
++# Camera
++debug.camera.packagename u:object_r:debug_camera_prop:s0
++
+ # Radio
+-persist.ril.sim.mcc.mnc u:object_r:radio_prop:s0
++persist.ril.sim.mcc.mnc  u:object_r:radio_prop:s0
+diff --git a/sepolicy/public/property.te b/sepolicy/public/property.te
+new file mode 100644
+index 0000000..0334ca2
+--- /dev/null
++++ b/sepolicy/public/property.te
+@@ -0,0 +1,2 @@
++# Camera
++system_public_prop(debug_camera_prop)
+diff --git a/sepolicy/vendor/cameraserver.te b/sepolicy/vendor/cameraserver.te
+new file mode 100644
+index 0000000..c730fb4
+--- /dev/null
++++ b/sepolicy/vendor/cameraserver.te
+@@ -0,0 +1 @@
++set_prop(cameraserver, debug_camera_prop)
+diff --git a/sepolicy/vendor/hal_camera.te b/sepolicy/vendor/hal_camera.te
+new file mode 100644
+index 0000000..e0ceab4
+--- /dev/null
++++ b/sepolicy/vendor/hal_camera.te
+@@ -0,0 +1 @@
++get_prop(hal_camera, debug_camera_prop)
+-- 
+2.43.0
+

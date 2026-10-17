@@ -1,0 +1,27 @@
+From f24fd97d2f4bdb7365a95bf1267af0127a0844aa Mon Sep 17 00:00:00 2001
+From: Rohit Sekhar <merothh@gmail.com>
+Date: Fri, 17 May 2024 12:35:17 +0530
+Subject: [PATCH 14/16] FP4: init.target.rc: Chown ois_gain_get node
+
+* Used by com.morpho.node.moviesolid.so
+
+(cherry picked from commit 992b0046eb19dbd7a21e912d3b43534ea844f946)
+---
+ init/init.target.rc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/init/init.target.rc b/init/init.target.rc
+index 0994902..84a17e6 100644
+--- a/init/init.target.rc
++++ b/init/init.target.rc
+@@ -48,6 +48,7 @@ on init
+     start keymaster-4-0
+     chmod 0660 /dev/fpsensor
+     chown system system /dev/fpsensor
++    chown system camera /sys/devices/platform/soc/ac4a000.qcom,cci0/ac4a000.qcom,cci0:qcom,ois@0/ois_gain_get
+ 
+ on early-fs
+     start vold
+-- 
+2.43.0
+

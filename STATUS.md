@@ -35,6 +35,7 @@ Start every session by reading this file and `KNOWN_ISSUES.md`. Agent brief: `AG
 
 ## Build log (newest first)
 
+- 2026-10-17: FP4 camera parity with /e/OS a16: frameworks/av client-package hook, FP4 camera sepolicy/props/eCamera overlay, gralloc.qcom crash fix, build-node blob string fixup (`patches/a17/blob-fixups.txt`). 107 patches, all apply. FPCamera stays out (proprietary).
 - 2026-10-17: Play Integrity source audit: nothing missing vs a16; build log now prints `>> integrity:` checks; owner test in `PLAY_INTEGRITY.md`.
 - 2026-10-17: rest of the a17 port (owner: "implement everything"). 99 patches over 23 projects,
   all apply to fresh checkouts (`apply-patches.sh` on /e/OS a17 + lineage-24.0 FP4). Not compiled.
@@ -106,7 +107,7 @@ LineageOS 24.0 dropped it on purpose. It may matter for FP4 camera apps.
 
 **Reading (updated 2026-10-17):** plain /e/OS a17 = LineageOS 24.0 + /e/OS branding, prebuilt
 apps, microG signature spoofing, fake location, parental-control hooks, BlissLauncher3, but stock
-LineageOS Settings/SetupWizard and no /e/ theming. With `patches/a17/` (99 patches, 23 projects)
+LineageOS Settings/SetupWizard and no /e/ theming. With `patches/a17/` (107 patches, 23 projects, + build-node blob fixups)
 the build also gets:
 - /e/ Settings (Advanced Privacy, Parental control, Find my device, Updater/Accounts on top, /e/
   legal + version, /e/ dev options, Quad9)
@@ -116,7 +117,8 @@ the build also gets:
 - Advanced Privacy DNS tracker blocking, Android Auto as a user app, launcher count badges,
   calendar month icon, Hide-from-microG
 - Quad9 DNS defaults, private space disabled, Contacts phone-only default
-- FP4 audio/VoIP/CarrierConfig fixes, 3 security fixes 24.0 lacks
+- FP4 audio/VoIP/CarrierConfig fixes, /e/ Camera privileged camera access + camera HAL crash fix,
+  3 security fixes 24.0 lacks
 
 The a16 → a17 gap list (`port-audit/reports/a16-vs-a17-gap.md`) is now fully triaged: everything is
 carried, already on a17, or skipped with a reason in `patches/README.md`. None of it has been

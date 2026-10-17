@@ -1,0 +1,33 @@
+From 03793e2740783a4ec44167de144fa0048a6a9064 Mon Sep 17 00:00:00 2001
+From: Rohit Sekhar <merothh@gmail.com>
+Date: Sat, 17 Oct 2026 05:38:22 +0000
+Subject: [PATCH 16/16] FP4: Set target_camera_expose_clientpkgname -> true
+
+[a17: only the expose_clientpkgname line. The neighbouring
+override_format_from_reserved soong variable from the a16 tree has no
+consumer in LineageOS 24.0, so it is not carried.]
+
+(cherry picked from commit 39d006649082494993c2aff55320bd76a1b866f4)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_0127aPbuxQvhzD8TVw5auGLR
+---
+ device.mk | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/device.mk b/device.mk
+index 55b891c..91df9b5 100644
+--- a/device.mk
++++ b/device.mk
+@@ -99,6 +99,8 @@ PRODUCT_COPY_FILES += \
+     frameworks/native/data/etc/android.hardware.camera.full.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.full.xml \
+     frameworks/native/data/etc/android.hardware.camera.raw.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.raw.xml
+ 
++$(call soong_config_set,camera,target_camera_expose_clientpkgname,debug.camera.packagename)
++
+ # Dalvik
+ $(call inherit-product, frameworks/native/build/phone-xhdpi-6144-dalvik-heap.mk)
+ 
+-- 
+2.43.0
+
