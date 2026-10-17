@@ -8,6 +8,10 @@
   SUW (Glif layouts, ToggleGroups, ATV) at the end of September. Rebasing it is UI development, so
   until /e/OS merges it this pins the bring-up branch as-is.
 
+  Superseded: patches/a17/packages/apps/SetupWizard now ports those pages onto the current a17
+  SetupWizard, so a normal build already has them. Kept for comparison only. If you enable it,
+  also set PATCH_EXCLUDE="packages/apps/SetupWizard" (the patch does not apply to this branch).
+
   Enable with OPTIONAL_MANIFESTS="setupwizard-bringup" in build.sh.
 -->
 <manifest>
