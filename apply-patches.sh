@@ -34,7 +34,7 @@ case "$mode" in
         if grep -qxF -- "$subj" <<<"$have"; then echo "   = $proj: already has: $subj"; continue; fi
         echo "   + $proj: $subj"
         GIT_COMMITTER_NAME=eos-builder GIT_COMMITTER_EMAIL=eos-builder@localhost \
-          git -C "$proj" am -3 -q --keep-cr "$(realpath "$p")" \
+          git -C "$proj" am -3 -q --keep-cr --committer-date-is-author-date "$(realpath "$p")" \
           || { echo ">> $(basename "$p") does not apply to $proj: refresh the series" >&2; exit 1; }
       done
     done
