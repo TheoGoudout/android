@@ -35,6 +35,7 @@ Start every session by reading `HANDOFF.md`, this file and `KNOWN_ISSUES.md`. Ag
 
 ## Build log (newest first)
 
+- 2026-10-20: re-checked: LineageOS `lineage-24.0` still lacks the Matroska heap-write fix (frameworks/av @ 937eb90) and the Telecomm `queryRemoteConnectionServices` caller check (@ d75099e), by subject and by content (both patches still apply as real changes). Keep carrying them.
 - 2026-10-20: BlissLauncher3 a16→a17 feature comparison (HANDOFF 6C). /e/OS merged count badges upstream (our port dropped); a17 already has workspace-as-drawer, the widgets page (weather, suggestions, swipe search), wobble, folders, blur. Ported 3 small a16 behaviours (hidden overview screenshot button, App Lounge PWA shortcuts placed directly, no shortcut badge in drawer mode). 109 patches, all apply.
 - 2026-10-20: forks (HANDOFF 6A): `GITLAB_TOKEN` works (user `Theobalt`, scope `api`), but gitlab.e.foundation gives the account `projects_limit` 0, so no fork can be created. Access requested from /e/ in https://gitlab.e.foundation/e/backlog/-/work_items/9788. `tools/publish_forks.py` written and dry-run: 23 fork branches `a17-fp4` (107 commits, reproducible ids), manifest `optional/forks.xml` validates. Upstream table moved to `tools/upstreams.txt`; `apply-patches.sh` now uses committer date = author date. Series re-checked: 107/107 apply.
 - 2026-10-17: handoff written (`HANDOFF.md`); `tools/apply_test.sh` added (107/107 apply to fresh upstream tips), checkers moved into `tools/`.
