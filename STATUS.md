@@ -35,6 +35,7 @@ Start every session by reading `HANDOFF.md`, this file and `KNOWN_ISSUES.md`. Ag
 
 ## Build log (newest first)
 
+- 2026-10-20: BlissLauncher3 a16→a17 feature comparison (HANDOFF 6C). /e/OS merged count badges upstream (our port dropped); a17 already has workspace-as-drawer, the widgets page (weather, suggestions, swipe search), wobble, folders, blur. Ported 3 small a16 behaviours (hidden overview screenshot button, App Lounge PWA shortcuts placed directly, no shortcut badge in drawer mode). 109 patches, all apply.
 - 2026-10-20: forks (HANDOFF 6A): `GITLAB_TOKEN` works (user `Theobalt`, scope `api`), but gitlab.e.foundation gives the account `projects_limit` 0, so no fork can be created. Access requested from /e/ in https://gitlab.e.foundation/e/backlog/-/work_items/9788. `tools/publish_forks.py` written and dry-run: 23 fork branches `a17-fp4` (107 commits, reproducible ids), manifest `optional/forks.xml` validates. Upstream table moved to `tools/upstreams.txt`; `apply-patches.sh` now uses committer date = author date. Series re-checked: 107/107 apply.
 - 2026-10-17: handoff written (`HANDOFF.md`); `tools/apply_test.sh` added (107/107 apply to fresh upstream tips), checkers moved into `tools/`.
 - 2026-10-17: branch `a17` rebased onto LineageOS/android `lineage-24.0` (d4c6331, 2026-10-09); `a16` stays on `lineage-23.0`. Only the unused upstream manifest files changed.
@@ -110,14 +111,14 @@ LineageOS 24.0 dropped it on purpose. It may matter for FP4 camera apps.
 
 **Reading (updated 2026-10-17):** plain /e/OS a17 = LineageOS 24.0 + /e/OS branding, prebuilt
 apps, microG signature spoofing, fake location, parental-control hooks, BlissLauncher3, but stock
-LineageOS Settings/SetupWizard and no /e/ theming. With `patches/a17/` (107 patches, 23 projects, + build-node blob fixups)
+LineageOS Settings/SetupWizard and no /e/ theming. With `patches/a17/` (109 patches, 23 projects, + build-node blob fixups)
 the build also gets:
 - /e/ Settings (Advanced Privacy, Parental control, Find my device, Updater/Accounts on top, /e/
   legal + version, /e/ dev options, Quad9)
 - /e/ SetupWizard (/e/ account, restore, parental control, Find my device, MDM QR)
 - /e/ palette across the system (Settings, SystemUI incl. light/dark QS, SettingsLib, framework, 6
   apps; Monet disabled)
-- Advanced Privacy DNS tracker blocking, Android Auto as a user app, launcher count badges,
+- Advanced Privacy DNS tracker blocking, Android Auto as a user app, App Lounge PWA shortcuts placed directly,
   calendar month icon, Hide-from-microG
 - Quad9 DNS defaults, private space disabled, Contacts phone-only default
 - FP4 audio/VoIP/CarrierConfig fixes, /e/ Camera privileged camera access + camera HAL crash fix,
@@ -153,7 +154,8 @@ SetupWizard, the Android Auto permission hook).
 - [x] frameworks/libs/systemui (25 a16 commits): notification-badge/DotRenderer work for the old
       BlissLauncher. Not carried: /e/OS's new launcher implements count badges inside the launcher
       (`CountBadge`, on BlissLauncher3 `epic265-a17-bringup` only, not yet on `a17`), without these
-      libs/systemui changes. Ported onto BlissLauncher3 `a17` (`patches/a17/packages/apps/Launcher3`).
+      libs/systemui changes. Ported onto BlissLauncher3 `a17`, then merged by /e/OS itself (2026-10-19).
+- [x] BlissLauncher3 feature parity with a16 (2026-10-20): 3 small ports, rest in KNOWN_ISSUES #6.
 - [x] Remaining forks (DocumentsUI, SettingsIntelligence, WallpaperPicker2, LineageParts,
       Permission, SystemUI/SettingsLib palette): theming, now carried.
 - [x] Permission "deviceKeyHandler" role + frameworks/base `config_deviceKeyHandler` resource

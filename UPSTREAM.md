@@ -29,7 +29,7 @@ push, open the MR with the text below. Patches keep their original authors.
 | e/os/android_packages_modules_Permission | `packages/modules/Permission/0004` | "a17: Android Auto as user app 2/2" | Pairs with the frameworks/base MR. |
 | e/os/android_packages_modules_DnsResolver | `packages/modules/DnsResolver/*` | "a17: Advanced Privacy tracker blocking" | Clean cherry-picks of the a16 series. |
 | e/os/android_frameworks_libs_systemui | `frameworks/libs/systemui/*` | "a17: calendar month icon" | Clean. |
-| e/os/android_packages_apps_Launcher3 | `packages/apps/Launcher3/*` | "a17: notification count badges" | Rebased from the bring-up branch. |
+| e/os/BlissLauncher3 | `packages/apps/Launcher3/*` | "a17: hide overview screenshot, App Lounge PWA shortcuts, no shortcut badge in drawer mode" | Small ports of a16 commits; the count badges landed upstream on 2026-10-19. |
 | DocumentsUI, SettingsIntelligence, WallpaperPicker2, LineageParts, ThemePicker | theming patches | "a17: theme app according to our palette" | One MR per repo. |
 | e/os/android_packages_apps_FMRadio, e/os/android_vendor_qcom_opensource_fm-commonsys | `…/FMRadio/*`, `…/fm/*` | "a17: new app icon" | Resource-only. |
 

@@ -74,10 +74,32 @@ too, adapted to the Material 3 Expressive resources.
 Not carried, with reason:
 - Dialer call recording default: already the LineageOS 24.0 default.
 - frameworks/libs/systemui notification-dot/badge series: BlissLauncher3 a17 draws count badges itself
-  (see packages/apps/Launcher3).
+  (`CountBadge`, merged by /e/OS on 2026-10-19).
 - LineageParts "rename microG into App compatibility": already on a17 under another subject.
 - overlays/Lineage icon-pack/shape overlays: LineageOS 24.0 dropped icon packs and shapes; nothing on
   a17 references them.
+
+### packages/apps/Launcher3 (BlissLauncher3 `a17`, 3 patches)
+/e/OS rewrote BlissLauncher3 for a17 on AOSP 17 Launcher3, so a16 commits can't be matched by
+subject. Feature comparison with a16 (2026-10-20, BlissLauncher3 `a17` @ e38398ac8b):
+
+| a16 feature | a17 |
+|---|---|
+| notification count badges | upstream ("Show the notification count in a badge on the icon corner", merged 2026-10-19). Our earlier port of the same bring-up commit was dropped |
+| single layer (no drawer), auto arrange, hide some apps from home, no long-press options menu | upstream, as "workspace as drawer" mode (`WorkspaceAsDrawerPolicy`, on by default) |
+| -1 widgets page: default weather widget, app suggestions (usage stats), swipe-down search with Murena/Qwant/DDG suggestions, resize/remove widgets, widgets pinned by apps go to the page | upstream (`widgetspanel/`) |
+| wobble to move/uninstall, 3x3 grid folders, wallpaper blur (folders, hotseat), sharp square icons, Sentry, /e/ name+icon | upstream |
+| **overview screenshot button hidden** | ported, `0001` (one-line layout change) |
+| **App Lounge PWA shortcuts placed without the confirmation sheet** | ported, `0002` (`AddItemActivity` is Kotlin now) |
+| **no App Lounge badge on shortcuts among the app icons** | ported, `0003`, tied to workspace-as-drawer mode; the a16 follow-up that also hid work-profile badges on dragged icons is not carried |
+
+Not ported (record only; see KNOWN_ISSUES #6): status bar hidden on the widgets page (the a17 page is
+an overlay with its own window-insets handling, not a workspace page), Magic Earth shown as "Maps"
+(alias array + custom caching logic; check first that /e/OS a17 still ships Magic Earth), webapks
+skipped in `AddWorkspaceItemsTask` during early setup (needs a17 App Lounge to confirm the
+`foundation.e.webapk` package prefix), taskbar/tablet hotseat tuning (FP4 is a phone), Bliss1 →
+Bliss3 database/widget migration (only matters when upgrading an a16 install; this build is a clean
+install, test keys).
 
 ### packages/apps/Settings (33 patches, hand-ported)
 /e/OS's `a17` Settings branch has no /e/OS changes yet. All 42 a16 commits were walked in order on

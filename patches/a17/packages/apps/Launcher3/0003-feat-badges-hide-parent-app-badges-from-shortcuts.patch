@@ -1,0 +1,68 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yash Garg <yash.garg.ext@murena.com>
+Date: Tue, 4 Apr 2023 15:54:53 +0530
+Subject: [PATCH 3/3] feat(badges): hide parent app badges from shortcuts
+
+[a17: single layer mode is now "workspace as drawer"
+ (WorkspaceAsDrawerPolicy); the IconCache and full-drawable code moved to Kotlin
+ (IconCache.getShortcutIcon(), IconLoader.getFullDrawable()). Only the shortcut
+ badge is hidden: the follow-up a16 commit da9f748e55 also dropped the user
+ (work profile) badge from dragged icons, which is not carried]
+
+(cherry picked from commit 4dfa07f981befbbc2de56832c6ca32be67426b22)
+---
+ src/com/android/launcher3/graphics/IconLoader.kt | 5 ++++-
+ src/com/android/launcher3/icons/IconCache.kt     | 7 ++++++-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/src/com/android/launcher3/graphics/IconLoader.kt b/src/com/android/launcher3/graphics/IconLoader.kt
+index b6e42d3..fee08a3 100644
+--- a/src/com/android/launcher3/graphics/IconLoader.kt
++++ b/src/com/android/launcher3/graphics/IconLoader.kt
+@@ -45,6 +45,7 @@ import com.android.launcher3.shortcuts.ShortcutRequest
+ import com.android.launcher3.util.FlagOp
+ import com.android.launcher3.views.ActivityContext
+ import com.android.launcher3.widget.PendingAddShortcutInfo
++import foundation.e.blisslauncher.WorkspaceAsDrawerPolicy
+ import javax.inject.Inject
+ 
+ /** Class to load full drawable for an ItemInfo */
+@@ -101,7 +102,9 @@ constructor(
+                 val si = siList[0]
+                 mainIcon = getIcon(context, si, idp.fillResIconDpi)
+                 // Only fetch badge if the icon is on workspace
+-                if (info.id != ItemInfo.NO_ID && badge == null) {
++                if (info.id != ItemInfo.NO_ID && WorkspaceAsDrawerPolicy.isEnabled(context)) {
++                    badge = ColorDrawable(Color.TRANSPARENT)
++                } else if (info.id != ItemInfo.NO_ID && badge == null) {
+                     val badgeInfo =
+                         iconCache.getShortcutInfoBadge(
+                             si,
+diff --git a/src/com/android/launcher3/icons/IconCache.kt b/src/com/android/launcher3/icons/IconCache.kt
+index d867171..8fe352f 100644
+--- a/src/com/android/launcher3/icons/IconCache.kt
++++ b/src/com/android/launcher3/icons/IconCache.kt
+@@ -75,6 +75,7 @@ import com.android.launcher3.util.InstantAppResolver
+ import com.android.launcher3.util.LooperExecutor
+ import com.android.launcher3.util.PackageUserKey
+ import com.android.launcher3.widget.WidgetSections
++import foundation.e.blisslauncher.WorkspaceAsDrawerPolicy
+ import java.util.concurrent.Executor
+ import java.util.function.Supplier
+ import javax.inject.Inject
+@@ -276,7 +277,11 @@ constructor(
+             bitmapInfo = getDefaultIcon(user)
+         }
+         if (isDefaultIcon(bitmapInfo, user)) return
+-        info.bitmap = bitmapInfo.withBadgeInfo(getShortcutInfoBadge(si.shortcutInfo, lookupFlags))
++        // No parent app badge on shortcuts (e.g. web apps from App Lounge) in workspace as
++        // drawer mode, where they sit among the app icons
++        info.bitmap =
++            if (WorkspaceAsDrawerPolicy.isEnabled(context)) bitmapInfo
++            else bitmapInfo.withBadgeInfo(getShortcutInfoBadge(si.shortcutInfo, lookupFlags))
+     }
+ 
+     /** Returns the badging info for the shortcut */
+-- 
+2.43.0
+

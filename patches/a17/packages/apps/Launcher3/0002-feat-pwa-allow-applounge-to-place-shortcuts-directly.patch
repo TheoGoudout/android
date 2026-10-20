@@ -1,0 +1,45 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yash Garg <yash.garg.ext@murena.com>
+Date: Mon, 20 Mar 2023 15:11:55 +0530
+Subject: [PATCH 2/3] feat(pwa): allow applounge to place shortcuts directly
+
+[a17: AddItemActivity is Kotlin now; the shortcut is placed through the
+ existing onPlaceAutomaticallyClick(), which already finishes the activity, so
+ the null checks on the slide-in view are no longer needed; the package name
+ lives in the companion object instead of a BlissConstants class]
+
+(cherry picked from commit f5e39f301c3152eca7e5f7f52db1f1b9788a8222)
+---
+ src/com/android/launcher3/dragndrop/AddItemActivity.kt | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/src/com/android/launcher3/dragndrop/AddItemActivity.kt b/src/com/android/launcher3/dragndrop/AddItemActivity.kt
+index 7b596ad..0802b5f 100644
+--- a/src/com/android/launcher3/dragndrop/AddItemActivity.kt
++++ b/src/com/android/launcher3/dragndrop/AddItemActivity.kt
+@@ -117,6 +117,14 @@ open class AddItemActivity :
+             finish()
+             return
+         }
++        if (
++            pinItemRequest.requestType == LauncherApps.PinItemRequest.REQUEST_TYPE_SHORTCUT &&
++                pinItemRequest.shortcutInfo?.getPackage() == APP_LOUNGE_PACKAGE
++        ) {
++            // App Lounge pins the shortcuts of the web apps it installs: place them directly
++            onPlaceAutomaticallyClick(/*view*/ null)
++            return
++        }
+         val info = ApplicationInfoWrapper(this, targetApp.packageName, targetApp.user).getInfo()
+         if (info == null) {
+             finish()
+@@ -335,6 +343,7 @@ open class AddItemActivity :
+ 
+         private const val REQUEST_BIND_APPWIDGET = 1
+         private const val STATE_EXTRA_WIDGET_ID = "state.widget.id"
++        private const val APP_LOUNGE_PACKAGE = "foundation.e.apps"
+ 
+         private fun PackageItemInfo.toPackageUserKey() =
+             if (widgetCategory != -1) {
+-- 
+2.43.0
+

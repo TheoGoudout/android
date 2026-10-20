@@ -11,7 +11,7 @@ owner's original brief: its hard rules still apply (summarised in section 2).
 This public repo (`github.com/TheoGoudout/android`) is the build kit for an **unofficial /e/OS
 build for the Fairphone 4 (FP4)** on crave.io (a free build cluster for open-source ROMs). Target
 `a17` = /e/OS on LineageOS 24.0 / Android 17, which /e/OS has not finished porting. The repo holds
-local manifests, build wrappers, and **107 patches over 23 projects** (+ 4 build-time blob string
+local manifests, build wrappers, and **109 patches over 23 projects** (+ 4 build-time blob string
 fixups) that bring /e/OS a16 features and look-and-feel to a17. Everything **applies** to current
 upstream tips, but **nothing has been compiled**: the owner has no crave account yet, and the agent
 sandbox can't build Android. The next big moments are (a) the owner's first crave builds and the
@@ -105,7 +105,7 @@ All 23 series, upstream repo and branch they apply to, and the gist. Details and
 | frameworks/libs/systemui | e/os/android_frameworks_libs_systemui `a17` | 1 | calendar month icon |
 | packages/apps/Contacts | e/os `a17` | 2 | AccountManager on "add account"; phone-only default |
 | packages/apps/DocumentsUI, FMRadio, LineageParts, SettingsIntelligence, WallpaperPicker2 | e/os `a17` | 1 each | theming / icon |
-| packages/apps/Launcher3 | e/os/BlissLauncher3 `a17` | 1 | notification count badges |
+| packages/apps/Launcher3 | e/os/BlissLauncher3 `a17` | 3 | hidden overview screenshot button, App Lounge PWA shortcuts placed directly, no shortcut badge in drawer mode (count badges are upstream since 2026-10-19) |
 | packages/apps/Settings | e/os `a17` | 33 | /e/ Settings (home page entries, dev options, Quad9, legal/version, wording), theming |
 | packages/apps/SetupWizard | e/os `a17` | 1 | squashed /e/ SetupWizard (account, restore, parental control, Find my device, MDM QR, branding); contains a binary hunk (Apache-2.0 zxing-android-embedded aar) |
 | packages/apps/ThemePicker | e/os `a17` | 4 | BlissLauncher permissions, no wallpaper colours, theming |
@@ -122,14 +122,14 @@ Plus `blob-fixups.txt`: 4 FP4 camera blobs, `vendor.debug.camera.pkgname` → `d
 (checked: each lineage-24.0 TheMuppets blob contains the string once).
 
 Checked without a device/compiler: all apply (section 5; last run 2026-10-17 against freshly
-fetched upstream tips: 107/107), brace balance unchanged vs base for every
+fetched upstream tips: 107/107; 109/109 on 2026-10-20), brace balance unchanged vs base for every
 touched Java/Kotlin file, XML parses, resource and colour references resolve (where checkable), no
 conflict markers. Play Integrity: a17 already has every piece a16 had (`PLAY_INTEGRITY.md`).
 
 Fully triaged = every a16 /e/OS commit is carried, already on a17, or skipped with a reason in
 `patches/README.md`. Exception: **BlissLauncher3** was rewritten by /e/OS for a17, so commit
-matching doesn't apply; only count badges and the calendar icon were ported, and no feature-level
-comparison with the a16 launcher has been done (task C below).
+matching doesn't apply; a feature-level comparison was done on 2026-10-20 (task C, table in
+`patches/README.md`).
 
 ---
 
@@ -142,7 +142,7 @@ Nothing from the previous sandbox survives except this repo. Everything else is 
 tools/apply_test.sh a17 ../apply-test-a17     # shallow blobless clones + sparse checkouts, ~10 min
 ```
 It fetches each project's upstream branch (table above), checks out only the files the series
-touches, and runs the real `apply-patches.sh`. Expect `>> all patches/a17 series apply (107 patches)`.
+touches, and runs the real `apply-patches.sh`. Expect `>> all patches/a17 series apply (109 patches)`.
 Re-running reuses the clones. (Limitation in the script header: depth-1 clones can't show
 "already upstream" skips.)
 
@@ -228,7 +228,9 @@ in -v36, QS styles), SetupWizard (Kotlin API drift, `setupdesign` styles `SudGli
 public type; vendor rules on `cameraserver`). After first boot: fill the parity table in
 `KNOWN_ISSUES.md` with the owner; no raw logs in the repo.
 
-### C. BlissLauncher3 feature parity (no blocker)
+### C. BlissLauncher3 feature parity (done 2026-10-20)
+Done: a17 has nearly everything; 3 small ports, the rest recorded (`patches/README.md`, KNOWN_ISSUES #6).
+Re-check when /e/OS lands more launcher work. Original task:
 Compare /e/OS a16 BlissLauncher (repo `e/os/BlissLauncher3` branch `a16`, and the older launcher
 behaviour) with `a17` + our badge patch, feature by feature (widgets panel, folders, search, icon
 shapes/packs, notification dots/badges, wallpaper handling, settings). Port what's missing and
