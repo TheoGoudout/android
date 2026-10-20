@@ -42,7 +42,7 @@ def load(root_dir, rel, projects, removed, problems, origin):
             if path in projects:
                 problems.append(f"{origin}/{rel}: duplicate path {path} "
                                 f"({projects[path]['name']} vs {a['name']})")
-            projects[path] = {"name": a["name"], "origin": f"{origin}/{rel}",
+            projects[path] = {"name": a["name"], "origin": f"{origin}/{rel}", "el": el,
                               "links": [c.get("dest") for c in el if c.tag in ("linkfile", "copyfile")]}
             removed.pop(path, None)
 

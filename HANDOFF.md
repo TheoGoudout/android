@@ -169,7 +169,14 @@ branch `a16`; LineageOS bases on GitHub `LineageOS/<repo>` branches `lineage-23.
 
 ## 6. Pending work, in priority order
 
-### A. Publish forks + manifest (owner asked; blocked on a GitLab token)
+### A. Publish forks + manifest (owner asked; blocked on /e/ granting a project quota)
+**Update 2026-10-20:** token present and valid, but the account has `projects_limit: 0` /
+`can_create_project: false` and no group. Owner chose to ask /e/ for a quota; request filed (at the
+owner's request) as https://gitlab.e.foundation/e/backlog/-/work_items/9788: check it each session.
+`tools/publish_forks.py` (steps 1-6 below) is written and dry-runs clean; once the quota exists:
+`tools/publish_forks.py --only packages/modules/DnsResolver --push` (probe), then
+`tools/publish_forks.py --push` (all + writes `local_manifests/a17/optional/forks.xml`, commit it),
+then step 7. Plan as originally agreed:
 The owner asked whether, given a GitLab PAT, the agent could create forks with our patches on top
 and an updated manifest. Agreed approach (not started, no script yet):
 - **Token**: the owner adds it in the cloud environment settings (environment menu in the session

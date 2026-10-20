@@ -1,0 +1,25 @@
+# <target> <project path> <upstream git url> <branch>
+# Upstream of every patches/<target>/ series. Read by tools/apply_test.sh and tools/publish_forks.py.
+a17 device/fairphone/FP4 https://github.com/LineageOS/android_device_fairphone_FP4 lineage-24.0
+a17 frameworks/av https://github.com/LineageOS/android_frameworks_av lineage-24.0
+a17 frameworks/base https://gitlab.e.foundation/e/os/android_frameworks_base.git a17
+a17 frameworks/libs/systemui https://gitlab.e.foundation/e/os/android_frameworks_libs_systemui.git a17
+a17 packages/apps/Contacts https://gitlab.e.foundation/e/os/android_packages_apps_Contacts.git a17
+a17 packages/apps/DocumentsUI https://gitlab.e.foundation/e/os/android_packages_apps_DocumentsUI.git a17
+a17 packages/apps/FMRadio https://gitlab.e.foundation/e/os/android_packages_apps_FMRadio.git a17
+a17 packages/apps/Launcher3 https://gitlab.e.foundation/e/os/BlissLauncher3.git a17
+a17 packages/apps/LineageParts https://gitlab.e.foundation/e/os/android_packages_apps_LineageParts.git a17
+a17 packages/apps/Settings https://gitlab.e.foundation/e/os/android_packages_apps_Settings.git a17
+a17 packages/apps/SettingsIntelligence https://gitlab.e.foundation/e/os/android_packages_apps_SettingsIntelligence.git a17
+a17 packages/apps/SetupWizard https://gitlab.e.foundation/e/os/android_packages_apps_SetupWizard.git a17
+a17 packages/apps/ThemePicker https://gitlab.e.foundation/e/os/android_packages_apps_ThemePicker.git a17
+a17 packages/apps/WallpaperPicker2 https://gitlab.e.foundation/e/os/android_packages_apps_WallpaperPicker2.git a17
+a17 packages/modules/Connectivity https://gitlab.e.foundation/e/os/android_packages_modules_Connectivity.git a17
+a17 packages/modules/DnsResolver https://gitlab.e.foundation/e/os/android_packages_modules_DnsResolver.git a17
+a17 packages/modules/Permission https://gitlab.e.foundation/e/os/android_packages_modules_Permission.git a17
+a17 packages/services/Telecomm https://github.com/LineageOS/android_packages_services_Telecomm lineage-24.0
+a17 packages/services/Telephony https://gitlab.e.foundation/e/os/android_packages_services_Telephony.git a17
+a17 system/core https://gitlab.e.foundation/e/os/android_system_core.git a17
+a17 vendor/eos https://gitlab.e.foundation/e/os/android_vendor_eos.git a17
+a17 vendor/lineage https://gitlab.e.foundation/e/os/android_vendor_lineage.git a17
+a17 vendor/qcom/opensource/commonsys/fm https://gitlab.e.foundation/e/os/android_vendor_qcom_opensource_fm-commonsys.git a17

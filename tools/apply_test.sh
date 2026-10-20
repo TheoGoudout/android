@@ -16,17 +16,10 @@ WORK="${2:-$HERE/../apply-test-$TARGET}"
 PDIR="$HERE/patches/$TARGET"
 mkdir -p "$WORK"; WORK="$(cd "$WORK" && pwd)"
 
-# project path -> "<git url> <branch>"
+# project path -> "<git url> <branch>" (table: tools/upstreams.txt)
 upstream() {
-  case "$TARGET:$1" in
-    a17:device/fairphone/FP4)        echo "https://github.com/LineageOS/android_device_fairphone_FP4 lineage-24.0" ;;
-    a17:frameworks/av)               echo "https://github.com/LineageOS/android_frameworks_av lineage-24.0" ;;
-    a17:packages/services/Telecomm)  echo "https://github.com/LineageOS/android_packages_services_Telecomm lineage-24.0" ;;
-    a17:packages/apps/Launcher3)     echo "https://gitlab.e.foundation/e/os/BlissLauncher3.git a17" ;;
-    a17:vendor/qcom/opensource/commonsys/fm) echo "https://gitlab.e.foundation/e/os/android_vendor_qcom_opensource_fm-commonsys.git a17" ;;
-    a17:*) echo "https://gitlab.e.foundation/e/os/android_$(echo "$1" | tr / _).git a17" ;;
-    *) echo "no upstream mapping for $TARGET:$1" >&2; return 1 ;;
-  esac
+  awk -v t="$TARGET" -v p="$1" '$1 == t && $2 == p { print $3, $4; f = 1 } END { exit !f }' "$HERE/tools/upstreams.txt" \
+    || { echo "no upstream for $TARGET:$1 in tools/upstreams.txt" >&2; return 1; }
 }
 
 cd "$WORK"

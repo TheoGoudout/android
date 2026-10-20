@@ -35,6 +35,7 @@ Start every session by reading `HANDOFF.md`, this file and `KNOWN_ISSUES.md`. Ag
 
 ## Build log (newest first)
 
+- 2026-10-20: forks (HANDOFF 6A): `GITLAB_TOKEN` works (user `Theobalt`, scope `api`), but gitlab.e.foundation gives the account `projects_limit` 0, so no fork can be created. Access requested from /e/ in https://gitlab.e.foundation/e/backlog/-/work_items/9788. `tools/publish_forks.py` written and dry-run: 23 fork branches `a17-fp4` (107 commits, reproducible ids), manifest `optional/forks.xml` validates. Upstream table moved to `tools/upstreams.txt`; `apply-patches.sh` now uses committer date = author date. Series re-checked: 107/107 apply.
 - 2026-10-17: handoff written (`HANDOFF.md`); `tools/apply_test.sh` added (107/107 apply to fresh upstream tips), checkers moved into `tools/`.
 - 2026-10-17: branch `a17` rebased onto LineageOS/android `lineage-24.0` (d4c6331, 2026-10-09); `a16` stays on `lineage-23.0`. Only the unused upstream manifest files changed.
 - 2026-10-17: FP4 camera parity with /e/OS a16: frameworks/av client-package hook, FP4 camera sepolicy/props/eCamera overlay, gralloc.qcom crash fix, build-node blob string fixup (`patches/a17/blob-fixups.txt`). 107 patches, all apply. FPCamera stays out (proprietary).
