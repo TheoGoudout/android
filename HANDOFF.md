@@ -247,6 +247,8 @@ lineage-24.0 still lacks the frameworks/av and Telecomm security fixes.
 forks; don't do it unprompted.
 
 ### F. Keep `a16` sensible
+2026-10-20: `a16` @ 00df3e3 has the current `apply-patches.sh` and `.gitignore` (stale `.pyc` removed);
+`build.sh`/`remote-build.sh` are identical on both branches. Nothing else on `a17` matters to an a16 build.
 `a16` is the baseline build branch. It got all tooling/docs up to c8652df but not the rebase,
 `tools/apply_test.sh`, the checkers, or this file. Cherry-pick tooling changes that matter for an
 a16 build (e.g. `apply-patches.sh` blob-fixup support is harmless there: no `patches/a16/`).
